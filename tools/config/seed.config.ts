@@ -322,6 +322,7 @@ export class SeedConfig {
       '@angular/platform-browser': `node_modules/@angular/platform-browser/bundles/platform-browser.umd.js`,
       '@angular/platform-browser-dynamic': `node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js`,
       '@angular/router': `node_modules/@angular/router/index.js`,
+      'ng2-bootstrap/ng2-bootstrap': 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.js',
       'rxjs/*': `node_modules/rxjs/*`,
       'app/*': `/app/*`,
       '*': `node_modules/*`
