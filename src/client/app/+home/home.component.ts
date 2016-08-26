@@ -15,6 +15,7 @@ import {ServiceWorkerService} from '../shared/index';
   styleUrls: ['home.component.css'],
   directives: [DROPDOWN_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
+
 export class HomeComponent implements OnInit {
   serviceWorkerSubscription: Subscription;
   newName: string = '';

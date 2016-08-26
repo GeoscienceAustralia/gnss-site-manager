@@ -73,11 +73,11 @@ export class SeedConfig {
 
   /**
    * The path for the base of the application at runtime.
-   * The default path is based on the environment ('/' for development and '' for production),
+   * The default path is based on the environment '/',
    * which can be overriden by the `--base` flag when running `npm start`.
    * @type {string}
    */
-  APP_BASE = argv['base'] || (this.ENV === ENVIRONMENTS.DEVELOPMENT ? '/' : '');
+  APP_BASE = argv['base'] || '/';
 
   /**
    * The base path of node modules.
@@ -115,7 +115,7 @@ export class SeedConfig {
    * The default directory is `app`.
    * @type {string}
    */
-  BOOTSTRAP_DIR = 'app';
+  BOOTSTRAP_DIR = argv['app'] || 'app';
 
   /**
    * The directory where the client files are located.
@@ -435,6 +435,7 @@ export class SeedConfig {
       server: {
         baseDir: `${this.DIST_DIR}/empty/`,
         routes: {
+          [`${this.APP_BASE}${this.APP_SRC}`]: this.APP_SRC,
           [`${this.APP_BASE}${this.APP_DEST}`]: this.APP_DEST,
           [`${this.APP_BASE}node_modules`]: 'node_modules',
           [`${this.APP_BASE.replace(/\/$/, '')}`]: this.APP_DEST
@@ -443,7 +444,7 @@ export class SeedConfig {
     },
 
     // Note: you can customize the location of the file
-    'environment-config': require('../env/config.json'),
+    'environment-config': join(this.PROJECT_ROOT, this.TOOLS_DIR, 'env'),
 
     /**
      * The options to pass to gulp-sass (and then to node-sass).
