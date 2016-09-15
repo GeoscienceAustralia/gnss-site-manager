@@ -3,8 +3,7 @@ import * as gulpdebug from 'gulp-debug';
 import * as gulpif from 'gulp-if';
 import { join } from 'path';
 import { argv } from 'yargs';
-
-import { JS_DEST, TMP_DIR, PROD_DEST } from '../../config';
+import Config from '../../config';
 
 /**
  * This sample task should come late in the build chain after the .ts are transpiled into .js under dist/tmp.  
@@ -18,7 +17,7 @@ import { JS_DEST, TMP_DIR, PROD_DEST } from '../../config';
  */
 export = () => {
     let debug: boolean = argv.debug;
-    let dir=join(TMP_DIR, 'jslocal');
+    let dir=join(Config.TMP_DIR, 'jslocal');
     let serviceWorkerFiles = join(dir, '**/service-worker*.js');
     let normalFiles=[join(dir, '**/*.js'),
                     '!' + serviceWorkerFiles];
@@ -28,8 +27,8 @@ export = () => {
     }
     gulp.src(normalFiles)
         .pipe(gulpif(debug, gulpdebug({title:'copy.js.local normal files'})))
-        .pipe(gulp.dest(JS_DEST));
+        .pipe(gulp.dest(Config.JS_DEST));
     gulp.src(serviceWorkerFiles)
         .pipe(gulpif(debug, gulpdebug({title:'copy.js.local service worker files'})))
-        .pipe(gulp.dest(PROD_DEST));
+        .pipe(gulp.dest(Config.PROD_DEST));
 };
