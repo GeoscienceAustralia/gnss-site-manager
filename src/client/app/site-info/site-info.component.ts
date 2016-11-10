@@ -277,7 +277,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
         that.status.hasNewAntenna = false;
         that.status.hasNewReceiver = false;
         let siteLogJson: any = { 'geo:siteLog': that.siteLogModel };
-        that.siteLogService.saveSiteLog(siteLogJson).subscribe(
+        that.siteLogService.saveSiteLog(siteLogJson, that.siteId).subscribe(
           (responseJson: any) => {
             //if (form)form.pristine = true;  // Note: pristine has no setter method in ng2-form!
             that.isLoading = false;

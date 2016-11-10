@@ -86,6 +86,7 @@ self.addEventListener('fetch', (event: FetchEvent) => {
     self.caches.open(cacheName).then((cache: Cache) => {  // 'cache-v.3'
       return cache.match(event.request).then((response: Response) => {
         if (response) {
+          console.info('  matched: ', response.url);
           return response;
         }
         return self.fetch(event.request).then((response: Response) => {
@@ -94,6 +95,11 @@ self.addEventListener('fetch', (event: FetchEvent) => {
               cache.put(event.request, response.clone());
               console.debug('cache: ', event.request.url);
             }
+          } else if (event.request.method.toString() === 'POST') {
+            // DEBUG for GEOD-232
+            console.debug('  POST fetch event - url: ', event.request.url.toString());
+            // let url = getServiceOfInterest(event.request.url.toString());
+            // PERSUING not going through POST as can't interact with the App - using 'update_cache_entry' message from the Service
           }
           return response;
         });
@@ -139,6 +145,65 @@ function getCache(event: MessageEvent): Promise<string[]> {
   });
 }
 
+/**
+ * Delete a specific entry from the cache. This will force the SW to go to the network to get a fresh copy.
+ *
+ * @param url
+ * @returns: promise<boolean> - true if deleted an entry
+ */
+function deleteCacheEntry(url: string): Promise<boolean> {
+  console.log('deleteCacheEntry - url: ', url);
+  return new Promise((resolve: Function, reject: Function) => {
+    self.caches.has(cacheName).then(() => {
+      self.caches.open(cacheName).then((cache: Cache) => {
+        cache.keys().then((cacheKeys: Request[]) => {
+          cacheKeys.map((request: Request) => {
+            let requestUrl: string = request.url.toString().toLowerCase();
+            // console.debug('  deleteCacheEntry - consider cache entry: ' + requestUrl);
+            if (requestUrl.length === url.length && requestUrl.includes(url.toLowerCase())) {
+              console.debug('deleteCacheEntry - do so for url: ', url);
+              cache.delete(request);
+            }
+            resolve(true);
+          });
+        }, (error: Error) => {
+          // AFAIK this error happens when there are no keys
+          console.error('deleteCacheEntry - no keys (not an error AFAIK): ', error);
+          resolve(false); // TODO what should this be?
+        });
+      }, (error: Error) => {
+        console.error('deleteCacheEntry - self.caches.open error: ', error);
+        reject(error);
+      });
+    }, (error: Error) => {
+      console.error('deleteCacheEntry - self.caches.has error: ', error);
+      reject(error);
+    });
+  });
+}
+
+/**
+ * Update the cache at url with a clone of the given response
+ * @param url - key in cache
+ * @param response - new data
+ */
+function updateCacheEntry(request: Request, response: Response): Promise<boolean> {
+  console.debug('updateCacheEntry - url: '+ request.url + ', reponse: ', response);
+  return new Promise((resolve: Function, reject: Function) => {
+    self.caches.open(cacheName).then((cache: Cache) => {
+      cache.put(request, response.clone()).then(
+        () => {
+          console.debug('updateCacheEntry success: ', request.url);
+          resolve(true);
+        },
+        (error: Error) => {
+          console.error('updateCacheEntry error for url: ' + request.url + ' - ', error);
+          reject(false);
+        });
+    });
+  });
+}
+
 self.addEventListener('message', (event: MessageEvent) => {
   debugEvent(event);
   let messageObject: MessageObject = event.data;
@@ -158,6 +223,13 @@ self.addEventListener('message', (event: MessageEvent) => {
     }, (error: Error) => {
       throw new Error('message - operation: get_cache ERROR');
     });
+  } else if (operation === 'delete_cache_entry') {
+    deleteCacheEntry(messageObject.message);
+  } else if (operation === 'update_cache_entry') {
+    // the message is a stringified request object
+    updateCacheEntry(JSON.parse(messageObject.message), messageObject.object);
+  } else {
+    console.log('UNKNOWN MESSAGE TYPE');
   }
 });
 

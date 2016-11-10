@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MessageObject } from './messages.interface';
+import { Response } from '@angular/http';
 
 /**
  * This class provides the service for the application's service worker that is global to the browser.
  */
 @Injectable()
 export class ServiceWorkerService {
-  // Setup Observables (BehaviorSubject's to be specific) to communicate between components
+  // Setup Observables to communicate between components
   private clearCacheFlag = new BehaviorSubject<boolean>(false);
-  // Observable
   public clearCacheObservable = this.clearCacheFlag.asObservable();
+
+  private static isServiceWorkerReady(): boolean {
+    // !! forces truthy (error otherwise in this situation)
+    return (!!('serviceWorker' in navigator) && !!navigator.serviceWorker
+    && !!('controller' in navigator.serviceWorker)
+    && !!navigator.serviceWorker.controller);
+  }
 
   /**
    *
@@ -33,25 +40,48 @@ export class ServiceWorkerService {
     return this.postMessage({operation: 'get_cache'});
   }
 
+  deleteCacheEntry(url: string): Promise<boolean> {
+    let message: MessageObject = { message: url, operation: 'delete_cache_entry'};
+    return this.postMessage(message);
+  }
+
   /**
-   * Generic method to post messages to the service worker and return a promise to the caller
-   * @param operation to be performed
-   * @param message is the optional message to be sent with that operation
-   * @returns {Promise<T>} that is appropriate to the client of this method
+   * Update a Service Worker cache entry with the given url with the given response.
+   *
+   * @param response as new data
+   * @param request of entry in cache to update
+   * @returns {Promise<boolean>} - if successful
    */
+  updateCacheEntry(request: Request, response: Response): Promise<boolean> {
+    return new Promise((resolve: Function, reject: Function) => {
+      let requestString: string = JSON.stringify(request);
+      let message: MessageObject = {message: request.url, operation: 'delete_cache_entry'};
+      this.postMessage(message).then(
+        (success: any) => {
+          message = {message: requestString, operation: 'update_cache_entry', object: response};
+          return this.postMessage(message);
+        },
+        (error: Error) => {
+          console.error('ERROR deleting cache entry for url: ', request.url);
+          return new Promise((resolve: Function, reject: Function) => {
+              reject(false);
+            }
+          );
+        }
+      );
+    });
+  }
 
-
-  /**
+    /**
    * Generic method to post messages to the service worker and return a promise to the caller
    * @param message MessageObject with fields 'operation' and optional message.
    * @returns {Promise<T>} that is appropriate to the client of this method
    */
   postMessage(message: MessageObject): Promise<any> {
+    console.debug('ServiceWorkerService - postMessage: ', message);
     // let messageObject = {operation: operation, message: message} as MessageObject;
     return new Promise((resolve: Function, reject: Function) => {
-      if ('serviceWorker' in navigator && navigator.serviceWorker
-        && 'controller' in navigator.serviceWorker
-        && navigator.serviceWorker.controller) {
+      if (ServiceWorkerService.isServiceWorkerReady()) {
         var messageChannel = new MessageChannel();
         messageChannel.port1.onmessage = function (event: MessageEvent) {
           if (event.data.error) {

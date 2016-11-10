@@ -48,6 +48,7 @@ gulpfile.js.map
 
 # Ignore typescript to js generated artifacts
 src/client/app/**/*.js
+src/client/app/**/*.js.map
 
 # OS X trash files
 .DS_Store
