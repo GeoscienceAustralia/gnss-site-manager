@@ -18,6 +18,7 @@ export class JsonCheckService {
     frequencyStandards: [],
     humiditySensors: [],
     pressureSensors: [],
+    temperatureSensors: [],
     localEpisodicEventsSet: []
   };
 
@@ -163,7 +164,26 @@ export class JsonCheckService {
   
   private pressureSensor: any = {
     dataSamplingInterval: 0,
-    accuracyPercentRelativeHumidity: 0,
+    accuracyPercentRelativeHumidity: 0, //TODO should be accuracyHPa
+    notes: '',
+    manufacturer: '',
+    serialNumber: '',
+    heightDiffToAntenna: 0,
+    calibrationDate: { value: [''] },
+    validTime: {
+      abstractTimePrimitive: {
+        'gml:TimePeriod': {
+          beginPosition: { value: [''] },
+          endPosition: { value: [''] }
+        }
+      }
+    }
+  };
+  
+  private temperatureSensor: any = {
+    dataSamplingInterval: 0,
+    accuracyDegreesCelcius: 0,
+    aspiration: '',
     notes: '',
     manufacturer: '',
     serialNumber: '',
@@ -268,6 +288,15 @@ export class JsonCheckService {
 
   public getNewPressureSensor(): any {
     return this.pressureSensor;
+  }
+
+  public getValidTemperatureSensor(json: any): any {
+    this.merge(json, this.temperatureSensor);
+    return json;
+  }
+
+  public getNewTemperatureSensor(): any {
+    return this.temperatureSensor;
   }
 
   public getValidEpisodicEffect(json: any): any {

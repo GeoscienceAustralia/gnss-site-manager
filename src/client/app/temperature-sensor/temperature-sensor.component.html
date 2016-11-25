@@ -1,0 +1,145 @@
+<div class="panel panel-level-1">
+    <div class="panel-heading">
+        <span class="panel-title cursor-ptr" (click)="status.isTemperatureSensorsGroupOpen = !status.isTemperatureSensorsGroupOpen">
+            <i class="glyphicon"
+               [ngClass]="{'glyphicon-minus-sign': status.isTemperatureSensorsGroupOpen, 'glyphicon-plus-sign': !status.isTemperatureSensorsGroupOpen}">
+            </i>
+            Temperature Sensors
+        </span>
+        <span class="pull-right">
+            <button class="btn btn-similar btn-xs" title="Add a new temperature sensor as current one"
+                    [disabled]="status.hasNewTemperatureSensor" (click)="addNewTemperatureSensor()">
+            <i class="glyphicon glyphicon-plus-sign"></i>
+            New Temperature Sensor
+            </button>
+        </span>
+    </div>
+    <div class="panel-body" *ngIf="status.isTemperatureSensorsGroupOpen">
+        <div *ngIf="temperatureSensors == null || temperatureSensors.length == 0 ">
+            No information available for Temperature Sensors
+        </div>
+        <div *ngFor="let temperatureSensor of temperatureSensors; let i = index">
+            <div class="panel panel-level-2">
+                <div class="panel-heading">
+                    <span class="panel-sub-title cursor-ptr"
+                          (click)="status.isTemperatureSensorsOpen[i] = !status.isTemperatureSensorsOpen[i]">
+                      <i class="glyphicon"
+                         [ngClass]="{'glyphicon-minus-sign': status.isTemperatureSensorsOpen[i], 'glyphicon-plus-sign': !status.isTemperatureSensorsOpen[i]}"></i>
+                    </span>
+                     <span *ngIf="i == 0">
+                        Current Temperature Sensor (Since {{ getDate(temperatureSensor.validTime.abstractTimePrimitive['gml:TimePeriod'].beginPosition.value[0]) }})
+                     </span>
+                     <span *ngIf="i != 0">
+                        Previous Temperature Sensor ({{ getDate(temperatureSensor.validTime.abstractTimePrimitive['gml:TimePeriod'].beginPosition.value[0]) }} &ndash; {{ getDate(temperatureSensor.validTime.abstractTimePrimitive['gml:TimePeriod'].endPosition.value[0]) }})
+                    </span>
+                    <span class="pull-right" *ngIf="i == 0 && status.hasNewTemperatureSensor">
+                      <button class="btn btn-danger btn-xs" title="Remove the new current temperatureSensor"
+                              (click)="removeNewTemperatureSensors()">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        Remove
+                      </button>
+                    </span>
+                    <span *ngIf="i == 1 && temperatureSensors.length >= 3" class="pull-right">
+                      <button class="btn-toggle" *ngIf="!arePrevTemperatureSensorsOpen()"
+                              (click)="togglePrevTemperatureSensors(true)"
+                              title="Show all previous temperatureSensors">
+                        <i class="glyphicon glyphicon-collapse-down"></i>
+                      </button>
+                      <button class="btn-toggle" *ngIf="!arePrevTemperatureSensorsClosed()"
+                              (click)="togglePrevTemperatureSensors(false)"
+                              title="Hide all previous temperatureSensors">
+                        <i class="glyphicon glyphicon-collapse-up"></i>
+                      </button>
+                    </span>
+                </div>
+                <div class="panel-body" *ngIf="status.isTemperatureSensorsOpen[i]">
+                    <div *ngIf=" temperatureSensor == null ">
+                        No information available for current GNSS temperature sensor
+                    </div>
+                    <div *ngIf=" temperatureSensor != null ">
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">Manufacturer</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <input required type="text" maxlength="100" class="form-control"
+                                       [(ngModel)]="temperatureSensor.manufacturer"
+                                       name="temperatureSensorManufacturer_{{i}}"
+                                       #manufacturer="ngModel"/>
+                                 <small [hidden]="manufacturer.valid || manufacturer.pristine"
+                         			class="alert alert-danger">
+                    				"Manufacturer" is required       
+                    			 </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">Serial Number</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <input required type="text" maxlength="100" class="form-control"
+                                       [(ngModel)]="temperatureSensor.serialNumber"
+                                       name="temperatureSensorSerialNumber_{{i}}"
+                                       #serialNumber="ngModel"/>
+                                 <small [hidden]="serialNumber.valid || serialNumber.pristine"
+                         			class="alert alert-danger">
+                    				"Serial Number" is required    
+                    			 </small>	
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Data Sampling Interval (seconds)</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <input type="number" min="0" maxlength="100" class="form-control"
+                                       [(ngModel)]="temperatureSensor.dataSamplingInterval"
+                                       name="temperatureSensorDataSamplingInterval_{{i}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Accuracy (&deg;C)</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <input type="number" min="0" maxlength="100" class="form-control"
+                                       [(ngModel)]="temperatureSensor.accuracyDegreesCelcius"
+                                       name="temperatureSensorAccuracyDegreesCelcius_{{i}}"/>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Height Diff to Antenna (m)</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <input required type="number" step="0.001" maxlength="100" class="form-control"
+                                       [(ngModel)]="temperatureSensor.heightDiffToAntenna"
+                                       name="temperatureSensorHeightDiffToAntenna_{{i}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Calibration Date</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <datetime-picker [(datetime)]="temperatureSensor.calibrationDate.value[0]" [name]=" 'calibrationDate' "
+                                                 [required]="false"></datetime-picker>    
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Date Installed (UTC)</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <datetime-picker [(datetime)]="temperatureSensor.validTime.abstractTimePrimitive['gml:TimePeriod'].beginPosition.value[0]" [name]=" 'effectiveDateStart' "
+                                                 [required]="false"></datetime-picker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Date Removed (UTC)</label>
+                            <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                                <datetime-picker [(datetime)]="temperatureSensor.validTime.abstractTimePrimitive['gml:TimePeriod'].endPosition.value[0]" [name]=" 'effectiveDateEnd' "
+                                                 [required]="false"></datetime-picker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Notes</label>
+                            <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
+                                <textarea maxlength="2000" rows="2" class="form-textarea"
+                                [(ngModel)]="temperatureSensor.notes"
+                                name="temperatureSensorNotes_{{i}}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
