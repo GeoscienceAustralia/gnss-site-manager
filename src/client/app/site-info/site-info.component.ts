@@ -26,6 +26,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   private episodicEffects: Array<any> = [];
   private humiditySensors: Array<any> = [];
   private pressureSensors: Array<any> = [];
+  private temperatureSensors: Array<any> = [];
   private errorMessage: string;
   private siteInfoTab: any = null;
   private submitted: boolean = false;
@@ -53,7 +54,10 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     hasNewHumiditySensor: false,
     isPressureSensorsGroupOpen: false,
     isPressureSensorsOpen: [],
-    hasNewPressureSensor: false
+    hasNewPressureSensor: false,
+    isTemperatureSensorsGroupOpen: false,
+    isTemperatureSensorsOpen: [],
+    hasNewTemperatureSensor: false
   };
 
   /**
@@ -91,7 +95,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
       frequencyStandards: [],
       localEpisodicEventsSet: [],
       humiditySensors: [],
-      pressureSensors: []
+      pressureSensors: [],
+      temperatureSensors: []
     };
 
     this.siteLogOrigin = {
@@ -100,7 +105,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
       frequencyStandards: [],
       localEpisodicEventsSet: [],
       humiditySensors: [],
-      pressureSensors: []
+      pressureSensors: [],
+      temperatureSensors: []
     };
 
     this.loadSiteInfoData();
@@ -131,7 +137,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.episodicEffects.length = 0;
     this.humiditySensors.length = 0;
     this.pressureSensors.length = 0;
-    
+    this.temperatureSensors.length = 0;
+        
     this.siteInfoTab = this.route.params.subscribe(() => {
       this.siteLogService.getSiteLogByFourCharacterIdUsingGeodesyML(this.siteId).subscribe(
         (responseJson: any) => {
@@ -150,6 +157,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
           this.setEpisodicEffects(this.siteLogModel.localEpisodicEventsSet);
           this.setHumiditySensors(this.siteLogModel.humiditySensors);
           this.setPressureSensors(this.siteLogModel.pressureSensors);
+          this.setTemperatureSensors(this.siteLogModel.temperatureSensors);
           this.backupSiteLogJson();
           this.isLoading = false;
           this.dialogService.showSuccessMessage('Site log info loaded successfully for ' + this.siteId);
@@ -163,7 +171,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
             frequencyStandards: [],
             localEpisodicEventsSet: [],
             humiditySensors: [],
-            pressureSensors: []
+            pressureSensors: [],
+            temperatureSensors: []
           };
           this.dialogService.showErrorMessage('No site log info found for ' + this.siteId);
         }
@@ -188,6 +197,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.episodicEffects.length = 0;
     this.humiditySensors.length = 0;
     this.pressureSensors.length = 0;
+    this.temperatureSensors.length = 0;
     this.errorMessage = '';
     // It seems that ngOnDestroy is called when the object is destroyed, but ngOnInit isn't called every time an
     // object is created.  Hence this field might not have been created.
@@ -495,6 +505,24 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     // the first item in the array is open by default
     this.status.isPressureSensorsOpen.pop();
     this.status.isPressureSensorsOpen.unshift(true);
+  }
+
+  /**
+   * Set current and previous temperature sensors, and their show/hide flags
+   */
+  private setTemperatureSensors(temperatureSensors: any) {
+    this.status.isTemperatureSensorsOpen = [];
+    let currentTemperatureSensor: any = null;
+    for (let temperatureSensorObj of temperatureSensors) {
+      currentTemperatureSensor = this.jsonCheckService.getValidTemperatureSensor(temperatureSensorObj.temperatureSensor);
+      this.temperatureSensors.push(currentTemperatureSensor);
+      this.status.isTemperatureSensorsOpen.push(false);
+    }
+    this.temperatureSensors.sort(this.compareEffectiveStartDates);
+
+    // the first item in the array is open by default
+    this.status.isTemperatureSensorsOpen.pop();
+    this.status.isTemperatureSensorsOpen.unshift(true);
   }
   
   /**

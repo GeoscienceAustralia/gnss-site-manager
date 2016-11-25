@@ -8,6 +8,7 @@ import { EpisodicEffectModule } from '../episodic-effect/episodic-effect.module'
 import { DatetimePickerModule } from '../datetime-picker/datetime-picker.module';
 import { HumiditySensorModule } from '../sensor-humidity/humidity-sensor.module';
 import { PressureSensorModule } from '../pressure-sensor/pressure-sensor.module';
+import { TemperatureSensorModule } from '../temperature-sensor/temperature-sensor.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { PressureSensorModule } from '../pressure-sensor/pressure-sensor.module'
     DatetimePickerModule,
     HumiditySensorModule,
     PressureSensorModule,
+    TemperatureSensorModule,
     EpisodicEffectModule,
     FrequencyStandardModule
   ],
