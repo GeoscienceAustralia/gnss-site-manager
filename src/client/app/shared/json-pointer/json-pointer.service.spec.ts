@@ -1,4 +1,4 @@
-import { JsonPointerService } from './json-pointer.service';
+import {JsonPointerService} from './json-pointer.service';
 
 
 export function main() {
@@ -7,13 +7,13 @@ export function main() {
 
     beforeEach(() => {
       jsonObj = {
-        standardType: { value: '' },
+        standardType: {value: ''},
         inputFrequency: '',
         validTime: {
           abstractTimePrimitive: {
             'gml:TimePeriod': {
-              beginPosition: { value: [''] },
-              endPosition: { value: [''] }
+              beginPosition: {value: ['1234']},
+              endPosition: {value: ['9876']}
             }
           }
         },
@@ -57,14 +57,14 @@ export function main() {
 
     it('Test path with array ... ...', () => {
       var item: any = JsonPointerService.get(jsonObj,
-                     '/this/path/doesnt/exist');
+        '/this/path/doesnt/exist');
       expect(item).toBeNull();
       expect(JsonPointerService.exists(jsonObj,
-                    '/contactInfo/ciContact/address/ciAddress/deliveryPoint/0'))
-                    .toEqual(true);
+        '/contactInfo/ciContact/address/ciAddress/deliveryPoint/0'))
+        .toEqual(true);
       expect(JsonPointerService.get(jsonObj,
-              '/contactInfo/ciContact/address/ciAddress/deliveryPoint/0/characterString/gco:CharacterString'))
-              .toEqual('8 Kemba Street, Mitchell, ACT');
+        '/contactInfo/ciContact/address/ciAddress/deliveryPoint/0/characterString/gco:CharacterString'))
+        .toEqual('8 Kemba Street, Mitchell, ACT');
     });
 
     it('Test setting with existing path', () => {
@@ -91,6 +91,13 @@ export function main() {
     it('Test get string when doesnt exist', () => {
       let path: string = '/this/path/doesnt/exist';
       expect(JsonPointerService.getString(jsonObj, path)).toEqual('');
+    });
+
+    fit('test gml:TimePeriod in path', () => {
+      let path: string = '/validTime/abstractTimePrimitive/gml:TimePeriod/beginPosition/value/0';
+      let value: string = JsonPointerService.get(jsonObj, path);
+      expect(value).not.toBeNull();
+      expect(value).toEqual('1234');
     });
   });
 }

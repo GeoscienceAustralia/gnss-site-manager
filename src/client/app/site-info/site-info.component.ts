@@ -157,7 +157,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteInfoTab = this.route.params.subscribe(() => {
       this.siteLogService.getSiteLogByFourCharacterIdUsingGeodesyML(this.siteId).subscribe(
         (responseJson: any) => {
-          this.siteLogModel = this.jsonCheckService.getValidSiteLog(responseJson['geo:siteLog']);
+          this.siteLogModel = this.jsonCheckService.getValidSiteLog(responseJson.siteLog);//['geo:siteLog']);
           this.site = this.siteLogModel.siteIdentification;
           this.siteLocation = this.jsonCheckService.getValidSiteLocation(this.siteLogModel.siteLocation);
           this.siteContacts = [];

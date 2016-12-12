@@ -3,6 +3,7 @@ import { Config, CorsSiteService, CorsSetupService, SiteLogService, DialogServic
           JsonDiffService, JsonCheckService, JsonPointerService, NameListService, ServiceWorkerService,
           JsonixService } from './shared/index';
 import { SiteInfoComponent } from './site-info/site-info.component';
+import {JsonViewModelService} from './shared/json-data-view-model/json-view-model.service';
 
 /**
  * This class represents the main application component. Within the @Routes annotation is the configuration of the
@@ -24,6 +25,7 @@ import { SiteInfoComponent } from './site-info/site-info.component';
     JsonDiffService,
     JsonCheckService,
     JsonPointerService,
+    JsonViewModelService,
   ],
   templateUrl: 'app.component.html',
 })

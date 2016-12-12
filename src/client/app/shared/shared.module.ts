@@ -13,6 +13,7 @@ import { JsonixService } from './jsonix/index';
 import { WFSService } from './wfs/index';
 import { MiscUtilsService } from './global/index';
 import { ConstantsService, HttpUtilsService } from './global/index';
+import { JsonViewModelService } from './json-data-view-model/index';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -29,7 +30,7 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [MiscUtilsService, NameListService, JsonixService, SiteLogService,
-                  CorsSiteService, WFSService, ConstantsService, HttpUtilsService]
+                  CorsSiteService, WFSService, ConstantsService, HttpUtilsService, JsonViewModelService]
     };
   }
 }
