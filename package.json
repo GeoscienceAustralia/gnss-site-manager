@@ -135,7 +135,7 @@
     "@angular/platform-browser": "2.0.2",
     "@angular/platform-browser-dynamic": "2.0.2",
     "@angular/router": "3.0.0",
-    "alertify.js": "^1.0.10",
+    "angular2-notifications": "0.4.41",
     "bootstrap": "3.3.7",
     "core-js": "^2.4.0",
     "es-module-loader": "^1.0.0",

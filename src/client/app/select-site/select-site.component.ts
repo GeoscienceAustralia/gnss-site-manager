@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import { DialogService, MiscUtilsService, CorsSiteService, ServiceWorkerService } from '../shared/index';
+import { NotificationsService } from 'angular2-notifications';
 
 /**
  * This class represents the SelectSiteComponent for searching and selecting CORS sites.
@@ -30,6 +31,21 @@ export class SelectSiteComponent implements OnInit {
   ];
 
 
+  public notificationsOtions: any = {
+    timeOut: 5000,
+    lastOnBottom: true,
+    clickToClose: true,
+    maxLength: 0,
+    maxStack: 7,
+    showProgressBar: true,
+    pauseOnHover: true,
+    preventDuplicates: false,
+    preventLastDuplicates: 'visible',
+    rtl: false,
+    animate: 'scale',
+    position: ['right', 'bottom']
+  };
+
   /**
    * Creates an instance of the SelectSiteComponent with the injected CorsSiteService.
    *
@@ -43,7 +59,9 @@ export class SelectSiteComponent implements OnInit {
               public corsSiteService: CorsSiteService,
               private dialogService: DialogService,
               private miscUtilsService: MiscUtilsService,
-              private serviceWorkerService: ServiceWorkerService) { }
+              private serviceWorkerService: ServiceWorkerService,
+              private notificationsService: NotificationsService
+  ) { }
 
   /**
    * Initialize relevant variables when the directive is instantiated
@@ -90,6 +108,8 @@ export class SelectSiteComponent implements OnInit {
     this.errorMessage = null;
     this.isSearching = true;
     this.sites = [];
+    this.notificationsService.alert('alert', 'content');
+
     this.corsSiteService.getCorsSitesByUsingWFS(fourCharacterId, siteName)
       .subscribe(
         (responseJson: any) => this.sites = responseJson,

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DropdownModule, TooltipModule,  } from 'ng2-bootstrap';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
@@ -19,10 +20,10 @@ import { ConstantsService, HttpUtilsService } from './global/index';
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule, DropdownModule, TooltipModule],
+  imports: [CommonModule, RouterModule, DropdownModule, TooltipModule, SimpleNotificationsModule],
   declarations: [ToolbarComponent, NavbarComponent],
   exports: [ToolbarComponent, NavbarComponent,
-    CommonModule, FormsModule, RouterModule],
+    CommonModule, FormsModule, RouterModule, SimpleNotificationsModule],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

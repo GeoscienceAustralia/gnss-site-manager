@@ -96,7 +96,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     private miscUtilsService: MiscUtilsService,
     private siteLogService: SiteLogService,
     private jsonDiffService: JsonDiffService,
-    private jsonCheckService: JsonCheckService
+    private jsonCheckService: JsonCheckService,
   ) {}
 
   /**

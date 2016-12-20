@@ -26,8 +26,7 @@ import { WaterVaporSensorModule } from '../water-vapor-sensor/water-vapor-sensor
     TemperatureSensorModule,
     WaterVaporSensorModule,
     EpisodicEffectModule,
-    FrequencyStandardModule
-  ],
+    FrequencyStandardModule],
   declarations: [SiteInfoComponent],
   exports: [SiteInfoComponent],
 })
