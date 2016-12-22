@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SiteInfoComponent } from './site-info.component';
 import { ResponsiblePartyModule } from '../responsible-party/responsible-party.module';
 import { GnssReceiverInfoModule } from '../gnss-receiver-info/gnss-receiver-info.module';
+import { GnssAntennaModule } from '../gnss-antenna/gnss-antenna.module';
 import { SurveyedLocalTiesModule } from '../surveyed-local-ties/surveyed-local-ties.module';
 import { FrequencyStandardModule } from '../frequency-standard/frequency-standard.module';
 import { EpisodicEffectModule } from '../episodic-effect/episodic-effect.module';
@@ -19,6 +20,7 @@ import { WaterVaporSensorModule } from '../water-vapor-sensor/water-vapor-sensor
     SharedModule,
     ResponsiblePartyModule,
     GnssReceiverInfoModule,
+    GnssAntennaModule,
     SurveyedLocalTiesModule,
     DatetimePickerModule,
     HumiditySensorModule,
