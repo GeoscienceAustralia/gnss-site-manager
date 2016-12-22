@@ -123,25 +123,26 @@
                                     [dataModelCopy]="siteLogOrigin.siteDataSource"></gnss-responsible-party>
           </div>
         </div>
-        <gnss-receiever-info [status]="status"
-                             [gnssReceivers]="receivers"
-                             [siteLogModel]="siteLogModel"
-                             [siteLogOrigin]="siteLogOrigin"></gnss-receiever-info>
-        <gnss-antenna [status]="status"
-                             [gnssAntennas]="antennas"
-                             [siteLogModel]="siteLogModel"
-                             [siteLogOrigin]="siteLogOrigin"></gnss-antenna>
-        <gnss-surveyed-local-tie [status]="status"
-			[surveyedLocalTies]="surveyedLocalTies" [siteLogModel]="siteLogModel"
-			[siteLogOrigin]="siteLogOrigin"></gnss-surveyed-local-tie>
-        <gnss-frequency-standard [status]="status"
-                        [frequencyStandards]="frequencyStandards"
+        <gnss-receiever [status]="status"
+                        [gnssReceivers]="receivers"
                         [siteLogModel]="siteLogModel"
-                        [siteLogOrigin]="siteLogOrigin"></gnss-frequency-standard>
+                        [siteLogOrigin]="siteLogOrigin"></gnss-receiever>
+        <gnss-antenna [status]="status"
+                      [gnssAntennas]="antennas"
+                      [siteLogModel]="siteLogModel"
+                      [siteLogOrigin]="siteLogOrigin"></gnss-antenna>
+        <gnss-surveyed-local-tie [status]="status"
+                                 [surveyedLocalTies]="surveyedLocalTies"
+                                 [siteLogModel]="siteLogModel"
+                                 [siteLogOrigin]="siteLogOrigin"></gnss-surveyed-local-tie>
+        <gnss-frequency-standard [status]="status"
+                                 [frequencyStandards]="frequencyStandards"
+                                 [siteLogModel]="siteLogModel"
+                                 [siteLogOrigin]="siteLogOrigin"></gnss-frequency-standard>
         <gnss-episodic-effect [status]="status"
-                             [episodicEffects]="episodicEffects"
-                             [siteLogModel]="siteLogModel"
-                             [siteLogOrigin]="siteLogOrigin"></gnss-episodic-effect>
+                              [episodicEffects]="episodicEffects"
+                              [siteLogModel]="siteLogModel"
+                              [siteLogOrigin]="siteLogOrigin"></gnss-episodic-effect>
         <!--<gnss-humidity-sensor [status]="status"-->
                               <!--[humiditySensors]="humiditySensors"-->
                               <!--[siteLogModel]="siteLogModel"-->
