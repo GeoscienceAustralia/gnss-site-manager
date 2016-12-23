@@ -7,10 +7,10 @@ import { MiscUtils, JsonCheckService, ServiceWorkerService } from '../shared/ind
  */
 @Component({
   moduleId: module.id,
-  selector: 'gnss-receiever-info',
-  templateUrl: 'gnss-receiver-info.component.html',
+  selector: 'gnss-receiever',
+  templateUrl: 'gnss-receiver.component.html',
 })
-export class GnssReceiverInfoComponent implements OnInit {
+export class GnssReceiverComponent implements OnInit {
   private serviceWorkerSubscription: Subscription;
   public errorMessage: string;
   private cacheItems: Array<string> = [];
