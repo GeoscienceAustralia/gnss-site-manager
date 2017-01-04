@@ -27,88 +27,90 @@
             No information available for current GNSS humidity sensor
         </div>
         <div *ngIf=" humiditySensor != null ">
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Manufacturer</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="humiditySensor.manufacturer"
-                           name="humiditySensorManufacturer_{{index}}"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Serial Number</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="humiditySensor.serialNumber"
-                           name="humiditySensorSerialNumber_{{index}}"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Data Sampling Interval (seconds)</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="number" step="0.01" maxlength="100" class="form-control"
-                           [(ngModel)]="humiditySensor.dataSamplingInterval"
-                           name="humiditySensorManufacturer_{{index}}"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Accuracy (% rel h)</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="number" step="0.01" maxlength="100" class="form-control"
-                           [(ngModel)]="humiditySensor.accuracyPercentRelativeHumidity"
-                           name="humiditySensorManufacturer_{{index}}"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Aspiration
-                    (unaspirated/natural/fan/etc)</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="humiditySensor.aspiration"
-                           name="humiditySensorAspiration_{{index}}"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Height Diff to Antenna (m)</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="number" step="0.01" maxlength="100" class="form-control"
-                           [(ngModel)]="humiditySensor.heightDiffToAntenna"
-                           name="humiditySensorHeightDiffToAntenna_{{index}}"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Calibration Date</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <datetime-picker [(datetime)]="humiditySensor.calibrationDate" [name]=" 'calibrationDate' "
-                                     [required]="false"></datetime-picker>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Date Installed (UTC)</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <datetime-picker
-                            [(datetime)]="humiditySensor.startDate"
-                            [name]=" 'effectiveDateStart' "
-                            [required]="false"></datetime-picker>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Date Removed (UTC)</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <datetime-picker
-                            [(datetime)]="humiditySensor.endDate"
-                            [name]=" 'effectiveDateEnd' "
-                            [required]="false"></datetime-picker>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Notes</label>
-                <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
-                    <textarea maxlength="2000" rows="2" class="form-textarea"
-                              [(ngModel)]="humiditySensor.notes"
-                              name="humiditySensorNotes_{{index}}"></textarea>
-                </div>
-            </div>
-        </div>
+
+            <text-input
+              [name]="'humiditySensorManufacturer'"
+              [(model)]="humiditySensor.manufacturer"
+              [index]="[i]"
+              [label]="'Manufacturer'"
+              [maxlength]="100"
+              [required]="'required'">
+            </text-input>
+
+            <text-input
+              [name]="'humiditySensorSerialNumber'"
+              [(model)]="humiditySensor.serialNumber"
+              [index]="[i]"
+              [label]="'Serial Number'"
+              [maxlength]="100"
+              [required]="'required'">
+            </text-input>
+
+            <number-input
+              [name]="'humiditySensorDataSamplingInterval'"
+              [(model)]="humiditySensor.dataSamplingInterval"
+              [index]="[i]"
+              [label]="'Data Sampling Interval (seconds)'"
+              [step]="0.01"
+              [maxlength]="100">
+            </number-input>
+
+            <number-input
+              [name]="'humiditySensorAccuracyPercentRelativeHumidity'"
+              [(model)]="humiditySensor.accuracyPercentRelativeHumidity"
+              [index]="[i]"
+              [label]="'Accuracy (% rel h)'"
+              [step]="0.01"
+              [maxlength]="100">
+            </number-input>
+
+            <text-input
+              [name]="'humiditySensorAspiration'"
+              [(model)]="humiditySensor.aspiration"
+              [index]="[i]"
+              [label]="'Aspiration (unaspirated/natural/fan/etc)'"
+              [maxlength]="100">
+            </text-input>
+
+          <number-input
+            [name]="'humiditySensorHeightDiffToAntenna'"
+            [(model)]="humiditySensor.heightDiffToAntenna"
+            [index]="[i]"
+            [label]="'Height Diff to Antenna (m)'"
+            [step]="0.01"
+            [maxlength]="100">
+          </number-input>
+
+          <datetime-input
+            [(datetime)]="humiditySensor.calibrationDate"
+            [name]=" 'calibrationDate' "
+            [required]="false"
+            [label]="'Calibration Date'">
+          </datetime-input>
+
+          <datetime-input
+            [(datetime)]="humiditySensor.startDate"
+            [name]=" 'effectiveDateStart' "
+            [required]="false"
+            [label]="'Date Installed (UTC)'">
+          </datetime-input>
+
+          <datetime-input
+            [(datetime)]="humiditySensor.endDate"
+            [name]=" 'effectiveDateEnd' "
+            [required]="false"
+            [label]="'Date Removed (UTC)'">
+          </datetime-input>
+
+          <textarea-input
+            [name]="'humiditySensorNotes2'"
+            [(model)]="humiditySensor.notes2"
+            [index]="[i]"
+            [label]="'Notes'"
+            [rows]="2"
+            [maxlength]="2000">
+          </textarea-input>
+
+       </div>
     </div>
 </div>

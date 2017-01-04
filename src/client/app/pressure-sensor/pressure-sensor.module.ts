@@ -7,6 +7,6 @@ import { DatetimePickerModule } from '../datetime-picker/datetime-picker.module'
 @NgModule({
   imports: [CommonModule, FormsModule, DatetimePickerModule],
   declarations: [GnssPressureSensorComponent],
-  exports: [GnssPressureSensorComponent],
+  exports: [GnssPressureSensorComponent]
 })
 export class PressureSensorModule { }

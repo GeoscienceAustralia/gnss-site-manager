@@ -60,6 +60,7 @@
                         No information available for current GNSS pressure sensor
                     </div>
                     <div *ngIf=" pressureSensor != null ">
+
                         <div class="form-group">
                             <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">Manufacturer</label>
                             <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
@@ -86,7 +87,8 @@
                     			 </small>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                      <div class="form-group">
                             <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Data Sampling Interval (sec)</label>
                             <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                                 <input type="number" min="0" maxlength="100" class="form-control"
@@ -94,6 +96,7 @@
                                        name="pressureSensorDataSamplingInterval_{{i}}"/>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Accuracy (hPa)</label>
                             <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">

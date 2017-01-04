@@ -1,0 +1,26 @@
+<div class="form-group">
+
+    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label {{required}}">{{label}}</label>
+
+    <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
+
+         <textarea
+             class="form-textarea"
+             required="{{required}}"
+             rows="{{rows}}"
+             maxlength="{{maxlength}}"
+             [ngModel]="model"
+             (ngModelChange)="change($event)"
+             name="{{name}}_{{index}}"
+             #name="ngModel">
+         </textarea>
+
+         <small
+             *ngIf="required == 'required'"
+             [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+             "{{label}}" is required <span *ngIf="minlength && minlength  != ''"> (minimum {{minlength}} characters)</span>
+         </small>
+
+    </div>
+</div>
