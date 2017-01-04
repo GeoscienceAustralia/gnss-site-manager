@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GnssHumiditySensorComponent } from './humidity-sensor.component';
 import { HumiditySensorsGroupComponent } from './humidity-sensors-group.component';
 import { HumiditySensorItemComponent } from './humidity-sensor-item.component';
-import { DatetimePickerModule } from '../datetime-picker/datetime-picker.module';
+import { DynamicFormFieldsModule } from '../shared/dynamic-form-fields/dynamic-form-fields.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, DatetimePickerModule],
-  declarations: [GnssHumiditySensorComponent, HumiditySensorsGroupComponent, HumiditySensorItemComponent],
-  exports: [GnssHumiditySensorComponent, HumiditySensorsGroupComponent, HumiditySensorItemComponent],
+  imports: [CommonModule, FormsModule, DynamicFormFieldsModule],
+  declarations: [HumiditySensorsGroupComponent, HumiditySensorItemComponent],
+  exports: [ HumiditySensorsGroupComponent, HumiditySensorItemComponent, DynamicFormFieldsModule],
 })
 export class HumiditySensorModule { }

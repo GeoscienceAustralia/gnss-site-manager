@@ -1,0 +1,109 @@
+<div class="form-group">
+  <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">{{label}}</label>
+  <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+
+    <div>
+      <small [hidden]="!invalidDatetime" class="alert alert-danger">
+        "{{name}}" is {{ (required && datetime.length == 0) ? "required" : "not valid" }}.
+        (Valid Date Format: YYYY-MM-DD hh:mm:ss)
+      </small>
+      <div class="input-group">
+        <input type="text" maxlength="24"
+               class="form-control z-lowest"
+               [(ngModel)]="datetimeDisplay"
+               [ngClass]="{ 'ng-invalid': invalidDatetime }"
+               (change)="updateCalendar()"
+               (focus)="utilsService.scrollIntoView($event, showDatetimePicker); showDatetimePicker = true;"/>
+        <span class="input-group-btn z-lowest">
+          <button id="calendar-btn" type="button"
+                  class="btn btn-default btn-calendar z-lowest"
+                  (click)="showDatetimePicker = utilsService.scrollIntoView($event, showDatetimePicker)">
+            <span id="calendar-icon" class="glyphicon glyphicon-calendar"></span>
+          </button>
+        </span>
+      </div>
+      <div class="calendar-popup" *ngIf="showDatetimePicker">
+        <datepicker [(ngModel)]="datetimeModel"
+                    [showWeeks]="false"
+                    (selectionDone)="updateDate($event)"></datepicker>
+        <div class="center">
+          <table>
+            <tbody>
+            <tr class="text-center">
+              <td>
+                <a (click)="incrementHours()" class="btn btn-time">
+                  <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <a (click)="incrementMinutes()" class="btn btn-time">
+                  <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <a (click)="incrementSeconds()" class="btn btn-time">
+                  <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td class="form-group" [ngClass]="{'has-error': invalidHours}">
+                <input type="text" [(ngModel)]="hoursString"
+                       (change)="updateHours()"
+                       class="form-control text-center input-time" maxlength="2">
+              </td>
+              <td>:</td>
+              <td class="form-group" [ngClass]="{'has-error': invalidMinutes}">
+                <input type="text" [(ngModel)]="minutesString"
+                       (change)="updateMinutes()"
+                       class="form-control text-center input-time" maxlength="2">
+              </td>
+              <td>:</td>
+              <td class="form-group" [ngClass]="{'has-error': invalidSeconds}">
+                <input type="text" [(ngModel)]="secondsString"
+                       (change)="updateSeconds()"
+                       class="form-control text-center input-time" maxlength="2">
+              </td>
+            </tr>
+            <tr class="text-center">
+              <td>
+                <a (click)="decrementHours()" class="btn btn-time">
+                  <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <a (click)="decrementMinutes()" class="btn btn-time">
+                  <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <a (click)="decrementSeconds()" class="btn btn-time">
+                  <span class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="center-btns">
+          <button class="btn btn-ok btn-xs margin-top5"
+                  (click)="setSelectedDatetime()"
+                  title="Set selected date/time and close calendar">
+            <i class="glyphicon glyphicon-ok"></i>
+            OK
+          </button>
+          <button class="btn btn-cancel btn-xs margin-top5"
+                  (click)="cancelSelectedDatetime()"
+                  title="Cancel selected date/time and close calendar">
+            <i class="glyphicon glyphicon-remove"></i>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
