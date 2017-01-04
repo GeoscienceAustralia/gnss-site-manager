@@ -1,4 +1,5 @@
 import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, DoCheck} from '@angular/core';
+import { MiscUtils } from '../shared/index';
 
 /**
  * This class represents the SelectSiteComponent for searching and selecting CORS sites.
@@ -10,6 +11,7 @@ import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output
   styleUrls: ['datetime-picker.component.css']
 })
 export class DatetimePickerComponent implements OnInit, DoCheck {
+  public miscUtils: any = MiscUtils;
   public datetimeModel: Date;
   private datetimeDisplay: string = '';
   private datetimeSuffix: string = '.000Z';
