@@ -9,11 +9,11 @@
            [(ngModel)]="datetimeDisplay"
            [ngClass]="{ 'ng-invalid': invalidDatetime }"
            (change)="updateCalendar()"
-           (focus)="utilsService.scrollIntoView($event, showDatetimePicker); showDatetimePicker = true;"/>
+           (focus)="miscUtils.scrollIntoView($event, showDatetimePicker); showDatetimePicker = true;"/>
     <span class="input-group-btn z-lowest">
       <button id="calendar-btn" type="button"
               class="btn btn-default btn-calendar z-lowest"
-              (click)="showDatetimePicker = utilsService.scrollIntoView($event, showDatetimePicker)">
+              (click)="showDatetimePicker = miscUtils.scrollIntoView($event, showDatetimePicker)">
         <span id="calendar-icon" class="glyphicon glyphicon-calendar"></span>
       </button>
     </span>
