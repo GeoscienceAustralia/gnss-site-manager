@@ -1,0 +1,27 @@
+<div class="form-group">
+
+    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label {{required}}">{{label}}</label>
+
+    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+
+         <input
+             type="number"
+             class="form-control"
+             required="{{required}}"
+             min="{{min}}"
+             step="{{step}}"
+             maxlength="{{maxlength}}"
+             [ngModel]="model"
+             (ngModelChange)="change($event)"
+             name="{{name}}_{{index}}"
+             #name="ngModel"/>
+
+         <small
+             *ngIf="required == 'required'"
+             [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+             "{{label}}" is required <span *ngIf="min && min  != ''"> (minimum {{min}})</span>
+         </small>
+
+    </div>
+</div>
