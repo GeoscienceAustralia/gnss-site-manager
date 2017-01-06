@@ -5,7 +5,7 @@ import {HumiditySensorViewModel} from './humidity-sensor-view-model';
 import {MiscUtils} from '../shared/global/misc-utils';
 
 /**
- * This class represents the SelectSiteComponent for searching and selecting CORS sites.
+ * This class represents a single Humidity Sensor.
  */
 @Component({
   moduleId: module.id,
