@@ -44,6 +44,11 @@ export class PressureSensorsGroupComponent extends AbstractGroup<PressureSensorV
     }
   }
 
+  /**
+   * Create a new view model and set any required default values .
+   * These are set here so that only selecting "new item" in the UI
+   * sets default values and loading an invalid record from the database does not.
+   */
   newViewModelItem(): PressureSensorViewModel {
     let viewModel = new PressureSensorViewModel();
     let presentDT: string = MiscUtils.getPresentDateTime();

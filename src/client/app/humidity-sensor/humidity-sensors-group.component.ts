@@ -4,7 +4,7 @@ import {AbstractGroup} from '../shared/abstract-groups-items/abstract-group';
 import {HumiditySensorViewModel} from './humidity-sensor-view-model';
 
 /**
- * This class represents the SelectSiteComponent for searching and selecting CORS sites.
+ * This class represents a group of Humidity Sensors.
  */
 @Component({
   moduleId: module.id,
@@ -44,8 +44,10 @@ export class HumiditySensorsGroupComponent extends AbstractGroup<HumiditySensorV
     }
   }
 
-   /* **************************************************
-   * Other methods
+  /**
+   * Create a new view model and set any required default values .
+   * These are set here so that only selecting "new item" in the UI
+   * sets default values and loading an invalid record from the database does not.
    */
   newViewModelItem(): HumiditySensorViewModel {
     let viewModel = new HumiditySensorViewModel();
