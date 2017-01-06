@@ -45,6 +45,10 @@ export class PressureSensorsGroupComponent extends AbstractGroup<PressureSensorV
   }
 
   newViewModelItem(): PressureSensorViewModel {
-    return new PressureSensorViewModel();
+    let viewModel = new PressureSensorViewModel();
+    let presentDT: string = MiscUtils.getPresentDateTime();
+    viewModel.startDate = presentDT;
+    viewModel.calibrationDate = presentDT;
+    return viewModel;
   }
 }

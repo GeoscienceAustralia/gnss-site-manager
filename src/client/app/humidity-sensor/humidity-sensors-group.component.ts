@@ -48,6 +48,10 @@ export class HumiditySensorsGroupComponent extends AbstractGroup<HumiditySensorV
    * Other methods
    */
   newViewModelItem(): HumiditySensorViewModel {
-    return new HumiditySensorViewModel();
+    let viewModel = new HumiditySensorViewModel();
+    let presentDT: string = MiscUtils.getPresentDateTime();
+    viewModel.startDate = presentDT;
+    viewModel.calibrationDate = presentDT;
+    return viewModel;
   }
 }
