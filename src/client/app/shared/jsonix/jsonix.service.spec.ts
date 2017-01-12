@@ -24,8 +24,8 @@ export function main() {
  xmlns:gml="http://www.opengis.net/gml/3.2"
  xmlns:ns9="http://www.w3.org/1999/xlink"
  xmlns:gmd="http://www.isotc211.org/2005/gmd"
- xmlns:gmx="http://www.isotc211.org/2005/gmx" 
- xmlns:om="http://www.opengis.net/om/2.0" xmlns:gco="http://www.isotc211.org/2005/gco" 
+ xmlns:gmx="http://www.isotc211.org/2005/gmx"
+ xmlns:om="http://www.opengis.net/om/2.0" xmlns:gco="http://www.isotc211.org/2005/gco"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" gml:id="GeodesyMLType_20">
 <geo:siteLog></geo:siteLog>
 </geo:GeodesyML>`;
@@ -45,8 +45,8 @@ export function main() {
  xmlns:gml="http://www.opengis.net/gml/3.2"
  xmlns:ns9="http://www.w3.org/1999/xlink"
  xmlns:gmd="http://www.isotc211.org/2005/gmd"
- xmlns:gmx="http://www.isotc211.org/2005/gmx" 
- xmlns:om="http://www.opengis.net/om/2.0" xmlns:gco="http://www.isotc211.org/2005/gco" 
+ xmlns:gmx="http://www.isotc211.org/2005/gmx"
+ xmlns:om="http://www.opengis.net/om/2.0" xmlns:gco="http://www.isotc211.org/2005/gco"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" gml:id="GeodesyMLType_20">`;
       expect(function(){
         jsonixService.geodesyMLToJson(geodesyml);
@@ -115,8 +115,56 @@ export function main() {
       console.log('wfs xml marshalled from unmarshalled json (length): ', wfsBackAgain.length);
       expect(wfsBackAgain).not.toBeNull();
     });
+
+    let validJsonWithNullInAnArray = `
+    {
+      "geo:siteLog": {
+        "gnssAntennas": [
+          {
+            "gnssAntenna": {
+              "dateInstalled": {
+                "value": [
+                  "1995-01-01T00:00:00.000Z"
+                ]
+              },
+              "dateRemoved": {
+                "value": [
+                     null
+                ]
+              },
+              "antennaType": {
+                "codeListValue": ""
+              },
+              "serialNumber": "1121",
+              "antennaReferencePoint": {
+                "value": "BPA"
+              },
+              "markerArpEastEcc": 8,
+              "markerArpUpEcc": 0,
+              "markerArpNorthEcc": 8,
+              "alignmentFromTrueNorth": 0,
+              "antennaRadomeType": {
+                "value": "SNOW"
+              },
+              "radomeSerialNumber": "",
+              "antennaCableType": "(vendor & type number)",
+              "antennaCableLength": 0,
+              "notes": ""
+            }
+          }
+        ]
+      }
+    }`;
+
+    fit('should parse valid Json with an array containing a null value', () => {
+      let geodesyMl: string = jsonixService.jsonToGeodesyML(JSON.parse(validJsonWithNullInAnArray));
+      expect(geodesyMl).not.toBeNull();
+      console.log(geodesyMl);
+    });
+
   });
 
 
 
 }
+
