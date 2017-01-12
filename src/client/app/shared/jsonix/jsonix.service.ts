@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-
 declare let XLink_1_0: any;
 declare let GML_3_2_1: any;
 declare let ISO19139_GMD_20070417: any;
@@ -69,20 +68,62 @@ export class JsonixService {
    * @returns {string} the valid GeodesyMl
    */
   jsonToGeodesyML(json: any): string {
-      let jsonSObj: string = '';
+      let jsonObj: string = '';
 
       // Ensure JSON is an object
       if (json !== null && typeof json === 'object') {
-          jsonSObj = json;
+          jsonObj = json;
       } else {
-          jsonSObj = JSON.parse(json);
+          jsonObj = JSON.parse(json);
       }
-      // console.debug('JsonixService - jsonToGeodesyML - json (length): ', jsonSObj.length);
-      console.debug('JsonixService - jsonToGeodesyML - json: ', jsonSObj);
+      // console.debug('JsonixService - jsonToGeodesyML - json (length): ', jsonObj.length);
+      console.debug('JsonixService - jsonToGeodesyML - json: ', jsonObj);
 
-      let geodesyMl: string = marshaller.marshalString(jsonSObj);
+      // before marshalling, traverse the object fix up any elements that jsonix can't handle
+      this.traverseJsonObject(jsonObj);
+
+      let geodesyMl: string = marshaller.marshalString(jsonObj);
       // console.log('JsonixService - jsonToGeodesyML - translated geodesyMl: ', geodesyMl);
       console.log('JsonixService - jsonToGeodesyML - translated geodesyMl (length): ', geodesyMl.length);
       return geodesyMl;
   }
+
+
+  /**
+   * Traverse the supplied object and perform preprocessing fixes on it.
+   * For example, jsonix fails when an array element contains a null element.
+   * We may have some elements like that in the json, end dates being one example.
+   */
+  traverseJsonObject(object : any) : void {
+
+      var type = typeof object;
+
+      if (Array.isArray(object)) {
+          console.log('array');
+          if (object.length === 1 && object[0] === null) {
+              console.log('found an array whose sole element is null - removing the element');
+              object.pop();
+          } else {
+              object.forEach(function(element) {
+                  if (typeof element === 'object') {
+                      this.traverseJsonObject(element);
+                  }
+              }, this);
+          }
+      } else {
+          if (type === 'object') {
+              for (var key in object) {
+                  console.log('object key: ', key);
+                  this.traverseJsonObject(object[key]);
+              }
+          } else if (type === 'number') {
+              // check if we have NaN
+              console.log('number type ', type, ' ', object);
+          } else {
+              // it's a primitive
+              console.log('primitive type ', type, ' ', object);
+          }
+      }
+  }
+
 }
