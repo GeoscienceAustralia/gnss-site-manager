@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GnssReceiverComponent } from './gnss-receiver.component';
+import { GnssReceiverItemComponent } from './gnss-receiver-item.component';
+import { GnssReceiverGroupComponent } from './gnss-receiver-group.component';
 import { DatetimePickerModule } from '../datetime-picker/datetime-picker.module';
 
 @NgModule({
   imports: [CommonModule, FormsModule, DatetimePickerModule],
-  declarations: [GnssReceiverComponent],
-  exports: [GnssReceiverComponent],
+  declarations: [GnssReceiverItemComponent, GnssReceiverGroupComponent],
+  exports: [GnssReceiverItemComponent, GnssReceiverGroupComponent],
 })
 export class GnssReceiverModule { }
