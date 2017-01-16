@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SiteLogDataModel, DataSiteLog} from './data-model/site-log-data-model';
+import {GnssReceiverViewModel} from '../../gnss-receiver/gnss-receiver-view-model';
 import {GnssAntennaViewModel} from '../../gnss-antenna/gnss-antenna-view-model';
 import {FrequencyStandardViewModel} from '../../frequency-standard/frequency-standard-view-model';
 import {HumiditySensorViewModel} from '../../humidity-sensor/humidity-sensor-view-model';
@@ -36,7 +37,7 @@ export class JsonViewModelService {
     // siteLogViewModel.siteLocation = SiteLocation.translateDataToView(siteLogDataModel);
     // siteLogViewModel.siteIdentification = SiteIdentification.translateDataToView(siteLogDataModel);
     // siteLogViewModel.siteLocation = SiteLocation.translateDataToView(siteLogDataModel);
-    // siteLogViewModel.gnssReceivers = GnssReceivers.translateDataToView(siteLogDataModel);
+    siteLogViewModel.siteLog.gnssReceivers = this.dataToViewModel(siteLogDataModel['geo:siteLog'].gnssReceivers, GnssReceiverViewModel);
     siteLogViewModel.siteLog.gnssAntennas = this.dataToViewModel(siteLogDataModel['geo:siteLog'].gnssAntennas, GnssAntennaViewModel);
     // siteLogViewModel.surveyedLocalTies = SurveyedLocalTies.translateDataToView(siteLogDataModel);
     siteLogViewModel.siteLog.frequencyStandards = this.dataToViewModel(siteLogDataModel['geo:siteLog'].frequencyStandards,
@@ -64,7 +65,6 @@ export class JsonViewModelService {
     // For now just copy the DataModel parts over that haven't had translate to view written yet
     siteLogViewModel.siteLog.siteIdentification = siteLogDataModel['geo:siteLog'].siteIdentification;
     siteLogViewModel.siteLog.siteLocation = siteLogDataModel['geo:siteLog'].siteLocation;
-    siteLogViewModel.siteLog.gnssReceivers = siteLogDataModel['geo:siteLog'].gnssReceivers;
     //siteLogViewModel.siteLog.gnssAntennas = siteLogDataModel['geo:siteLog'].gnssAntennas;
     siteLogViewModel.siteLog.surveyedLocalTies = siteLogDataModel['geo:siteLog'].surveyedLocalTies;
     //siteLogViewModel.siteLog.frequencyStandards = siteLogDataModel['geo:siteLog'].frequencyStandards;
@@ -94,7 +94,7 @@ export class JsonViewModelService {
     // siteLogViewModel.siteLocation = SiteLocation.translateDataToView(siteLogDataModel);
     // siteLogViewModel.siteIdentification = SiteIdentification.translateDataToView(siteLogDataModel);
     // siteLogViewModel.siteLocation = SiteLocation.translateDataToView(siteLogDataModel);
-    // siteLogViewModel.gnssReceivers = GnssReceivers.translateDataToView(siteLogDataModel);
+    siteLogDataModel['geo:siteLog'].gnssReceivers = this.viewToDataModel(viewModelJson.siteLog.gnssReceivers);
     siteLogDataModel['geo:siteLog'].gnssAntennas = this.viewToDataModel(viewModelJson.siteLog.gnssAntennas);
     // siteLogViewModel.surveyedLocalTies = SurveyedLocalTies.translateDataToView(siteLogDataModel);
     siteLogDataModel['geo:siteLog'].frequencyStandards = this.viewToDataModel(viewModelJson.siteLog.frequencyStandards);
@@ -121,7 +121,6 @@ export class JsonViewModelService {
     // For now just copy the DataModel parts over that haven't had translate to view written yet
     siteLogDataModel['geo:siteLog'].siteIdentification = viewModelJson.siteLog.siteIdentification;
     siteLogDataModel['geo:siteLog'].siteLocation = viewModelJson.siteLog.siteLocation;
-    siteLogDataModel['geo:siteLog'].gnssReceivers = viewModelJson.siteLog.gnssReceivers;
     //siteLogDataModel['geo:siteLog'].gnssAntennas = viewModelJson.siteLog.gnssAntennas;
     siteLogDataModel['geo:siteLog'].surveyedLocalTies = viewModelJson.siteLog.surveyedLocalTies;
     //siteLogDataModel['geo:siteLog'].frequencyStandards = viewModelJson.siteLog.frequencyStandards;

@@ -1,0 +1,110 @@
+<div class="panel panel-level-2" id="receiver_{{index}}">
+  <div class="panel-heading">
+    <span class="panel-title cursor-ptr"
+          (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+      <i class="glyphicon"
+         [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
+      </i>
+      <span *ngIf="index == 0">
+        Current Receiver (Since {{ miscUtils.getDate(receiver.dateInstalled) }})
+      </span>
+      <span *ngIf="index != 0">
+        Previous Receiver ({{ miscUtils.getDate(receiver.dateInstalled) }}
+        &ndash; {{ miscUtils.getDate(receiver.dateRemoved) }})
+      </span>
+    </span>
+    <span class="pull-right">
+      <button class="btn btn-danger btn-rm"
+              title="Remove the new current receiver"
+              (click)="removeItem(index)">
+        <i class="glyphicon glyphicon-remove"></i>
+        <span class="hidden-xs">Remove</span>
+      </button>
+    </span>
+  </div>
+  <div class="panel-body" *ngIf="isOpen">
+    <div *ngIf=" receiver == null " class="margin-bottom15">
+      No information available for current GNSS Receiver
+    </div>
+    <div *ngIf=" receiver != null ">
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Receiver Type</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <input type="text" maxlength="100"
+                 class="form-control"
+                 [(ngModel)]="receiver.receiverType"
+                 name="receiverType_{{index}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Serial Number</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <input type="text" maxlength="100"
+                 class="form-control"
+                 [(ngModel)]="receiver.manufacturerSerialNumber"
+                 name="receiverSerialNumber_{{index}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Firmware Version</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <input type="text" maxlength="100"
+                 class="form-control"
+                 [(ngModel)]="receiver.firmwareVersion"
+                 name="receiverFirmwareVersion_{{index}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Satellite System</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <input type="text" maxlength="100"
+                 class="form-control"
+                 [(ngModel)]="receiver.satelliteSystem"
+                 name="receiverSatelliteSystem_{{index}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Elevation Cutoff Setting (degrees)</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <input type="number" step="1"
+                 class="form-control"
+                 [(ngModel)]="receiver.elevationCutoffSetting"
+                 name="receiverElevetionCutoffSetting_{{index}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Temperature Stabilization (&deg;C)</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <input type="number" step="1" class="form-control"
+                 [(ngModel)]="receiver.temperatureStabilization"
+                 name="receiverTemperatureStabilization_{{index}}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Date Installed (UTC)</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <datetime-picker [(datetime)]="receiver.dateInstalled"
+                           [name]=" 'Date Installed' "
+                           [required]="true"></datetime-picker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Date Removed (UTC)</label>
+        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+          <datetime-picker [(datetime)]="receiver.dateRemoved"
+                           [name]=" 'Date Removed' "
+                           [required]="index != 0"></datetime-picker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Notes</label>
+        <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
+          <textarea maxlength="2000" rows="2"
+                    class="form-textarea"
+                    [(ngModel)]="receiver.notes"
+                    name="receiverNotes_{{index}}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

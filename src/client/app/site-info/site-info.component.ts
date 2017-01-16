@@ -24,7 +24,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   private siteMetadataCustodian: any = {};
   private siteDataCenters: Array<any> = [];
   private siteDataSource: any = {};
-  private receivers: Array<any> = [];
   private surveyedLocalTies: Array<any> = [];
   private episodicEffects: Array<any> = [];
   private humiditySensors: Array<any> = [];
@@ -46,15 +45,12 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     isSiteInfoGroupOpen: true,
     isSiteMediaOpen: false,
     isMetaCustodianOpen: false,
-    isReceiverGroupOpen: false,
-    isReceiversOpen: [],
     isEpisodicEffectGroupOpen: false,
     isEpisodicEffectOpen: [],
     hasNewSiteContact: false,
     hasNewSiteMetadataCustodian: false,
     hasNewSiteDataCenter: false,
     hasNewSiteDataSource: false,
-    hasNewReceiver: false,
     hasNewEpisodicEffect: false,
     isHumiditySensorsGroupOpen: false,
     isHumiditySensorsOpen: [],
@@ -101,7 +97,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     });
 
     this.siteLogModelXXX = {
-      gnssReceivers: [],
       surveyedLocalTies: [],
       localEpisodicEventsSet: [],
       humiditySensors: [],
@@ -111,7 +106,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     };
 
     this.siteLogOrigin = {
-      gnssReceivers: [],
       surveyedLocalTies: [],
       localEpisodicEventsSet: [],
       humiditySensors: [],
@@ -134,11 +128,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
 
     this.isLoading =  true;
     this.submitted = false;
-    this.status.hasNewReceiver = false;
     this.status.hasNewEpisodicEffect = false;
-    this.status.isReceiversOpen.length = 0;
     this.status.isEpisodicEffectOpen.length = 0;
-    this.receivers.length = 0;
     this.surveyedLocalTies.length = 0;
     this.episodicEffects.length = 0;
     this.humiditySensors.length = 0;
@@ -165,7 +156,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
           this.siteDataSource = !this.siteLogModel.siteDataSource.ciResponsibleParty ? null : this.jsonCheckService
                   .getValidResponsibleParty(this.siteLogModel.siteDataSource.ciResponsibleParty);
 
-          this.setGnssReceivers(this.siteLogModel.gnssReceivers);
           this.setSurveyedLocalTies(this.siteLogModel.surveyedLocalTies);
           this.setEpisodicEffects(this.siteLogModel.localEpisodicEventsSet);
           this.backupSiteLogJson();
@@ -176,7 +166,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
           this.errorMessage = <any>error;
           this.isLoading = false;
           this.siteLogModel = {
-            gnssReceivers: [],
             surveyedLocalTies: [],
             localEpisodicEventsSet: [],
             humiditySensors: [],
@@ -203,7 +192,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteDataCenters.length = 0;
     this.siteDataSource = null;
     this.status = null;
-    this.receivers.length = 0;
     this.surveyedLocalTies.length = 0;
     this.episodicEffects.length = 0;
     this.humiditySensors.length = 0;
@@ -238,7 +226,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
         that.status.hasNewSiteMetadataCustodian = false;
         that.status.hasNewSiteDataCenter = false;
         that.status.hasNewSiteDataSource = false;
-        that.status.hasNewReceiver = false;
         that.status.hasNewSurveyedLocalTie = false;
         that.status.hasNewHumiditySensor = false;
         that.status.hasNewPressureSensor = false;
@@ -283,29 +270,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Set current and previous receivers, and their show/hide flags
-   */
-  private setGnssReceivers(gnssReceivers: any) {
-    this.status.isReceiversOpen = [];
-    let currentReceiver: any = null;
-    for (let receiverObj of gnssReceivers) {
-      let receiver = this.jsonCheckService.getValidReceiver(receiverObj.gnssReceiver);
-      if ( !receiver.dateRemoved.value[0] ) {
-        currentReceiver = receiver;
-      } else {
-        this.receivers.push(receiver);
-        this.status.isReceiversOpen.push(false);
-      }
-    }
-    // Sort by dateInstalled for all previous receivers
-    this.receivers.sort(this.compareDateInstalled);
-
-    // Current receiver (even null) are the first item in the arrays and open by default
-    this.receivers.unshift(currentReceiver);
-    this.status.isReceiversOpen.unshift(true);
-  }
-
-  /**
    * Set current and previous Surveyed Local Ties, and their show/hide flags
    */
   private setSurveyedLocalTies(surveyedLocalTies: any) {
@@ -341,20 +305,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     if (this.status.isEpisodicEffectOpen.length > 0) {
       this.status.isEpisodicEffectOpen[0] = true;
     }
-  }
-
-  /**
-   * Sort receivers/antennas based on their Date_Installed values in ascending order
-   */
-  private compareDateInstalled(obj1: any, obj2: any) {
-    if (obj1 === null || obj2 === null) {
-      return 0;
-    } else if (obj1.dateInstalled.value[0] < obj2.dateInstalled.value[0]) {
-      return 1;
-    } else if (obj1.dateInstalled.value[0] > obj2.dateInstalled.value[0]) {
-      return -1;
-    }
-    return 0;
   }
 
   /**
