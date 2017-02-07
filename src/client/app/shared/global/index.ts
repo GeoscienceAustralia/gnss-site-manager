@@ -8,3 +8,4 @@ export * from './json-diff.service';
 export * from './json-check.service';
 export * from './constants.service';
 export * from './http-utils.service';
+export * from './user-auth.service';

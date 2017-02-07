@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Config } from '../config/env.config';
+import {Injectable} from '@angular/core';
+import {Config} from '../config/env.config';
 
 @Injectable()
 export class ConstantsService {
@@ -11,6 +11,7 @@ export class ConstantsService {
 
     private webServiceURL: string = Config.WEB_SERVICE_URL;
     private wfsGeoserverURL: string = Config.WFS_GEOSERVER_URL;
+    private openAMServerURL: string = Config.OPENAM_SERVER_URL;
 
     public getWebServiceURL(): string {
         return this.webServiceURL;
@@ -18,5 +19,9 @@ export class ConstantsService {
 
     public getWFSGeoserverURL(): string {
         return this.wfsGeoserverURL;
+    }
+
+    public getOpenAMServerURL(): string {
+        return this.openAMServerURL;
     }
 }

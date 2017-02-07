@@ -5,6 +5,7 @@ export interface EnvConfig {
   ENV?: string;
   WEB_SERVICE_URL?: string;
   WFS_GEOSERVER_URL?: string;
+  OPENAM_SERVER_URL?: string;
 }
 
 export const Config: EnvConfig = JSON.parse('<%= ENV_CONFIG %>');

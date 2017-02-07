@@ -36,7 +36,7 @@ export class DialogService {
    * along with callbacks to handle the "Delete" and "Cancel" buttons.
    * calls the showDeletePromptDialog with a default message.
    */
-  public confirmDeleteDialog(recordType: string, okCallback: (reason: string) => any, cancelCallback: () => any) : string {
+  public confirmDeleteDialog(recordType: string, okCallback: (reason: string) => any, cancelCallback: () => any) : any {
     let header: string = '<div class="title">Delete ' + recordType + '</div>';
     let body: string = '<div class="body"> Are you sure you want to delete the existing ' + recordType + '?</div>';
     let reasonPrompt: string = '<div class="body reasonPrompt"> Enter a reason: </div>';
@@ -50,7 +50,7 @@ export class DialogService {
    * Handles very basic validation of the input message: if no message supplied
    * adds an error message and redisplays the dialog.
    */
-  public showDeletePromptDialog(msgHtml: string, okCallback: (reason : string) => any, cancelCallback: () => any) : string {
+  public showDeletePromptDialog(msgHtml: string, okCallback: (reason : string) => any, cancelCallback: () => any) : any {
     return this._alertify.okBtn('Delete').cancelBtn('Cancel')
     .prompt(msgHtml, (deleteReason : string, event: any) => {
       event.preventDefault();
@@ -72,28 +72,28 @@ export class DialogService {
    * Displays a dialog with alert message
    */
   public showAlertDialog(message: string) {
-    this._alertify.alert(message);
+      this._alertify.alert(message);
   }
 
   /*
    * Displays a success/yes message in green color for 10 seconds at the bottom-left corner
    */
   public showSuccessMessage(message: string) {
-    this._alertify.maxLogItems(1).closeLogOnClick(true).success(message);
+      this._alertify.maxLogItems(1).closeLogOnClick(true).success(message);
   }
 
   /*
    * Displays an error/no message in red color for 10 seconds at the bottom-left corner
    */
   public showErrorMessage(message: string) {
-    this._alertify.maxLogItems(1).closeLogOnClick(true).error(message);
+      this._alertify.maxLogItems(1).closeLogOnClick(true).error(message);
   }
 
   /*
    * Displays an log message in black color for 10 seconds at the bottom-left corner
    */
   public showLogMessage(message: string) {
-    this._alertify.maxLogItems(1).closeLogOnClick(true).log(message);
+      this._alertify.maxLogItems(1).closeLogOnClick(true).log(message);
   }
 
 }

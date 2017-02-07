@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ConstantsService, DialogService, MiscUtils,
          SiteLogService, JsonDiffService, JsonCheckService } from '../shared/index';
 import {SiteLogViewModel} from '../shared/json-data-view-model/view-model/site-log-view-model';
+import {UserAuthService} from '../shared/global/user-auth.service';
 
 /**
  * This class represents the SiteInfoComponent for viewing and editing the details of site/receiver/antenna.
@@ -59,7 +60,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private siteLogService: SiteLogService,
     private jsonDiffService: JsonDiffService,
-    private jsonCheckService: JsonCheckService
+    private jsonCheckService: JsonCheckService,
+    private userAuthService: UserAuthService
   ) {}
 
   /**
@@ -196,4 +198,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteLogOrigin = MiscUtils.cloneJsonObj(this.siteLogModel);
   }
 
+    isUserLoggedIn(): boolean {
+      return this.userAuthService.getUserName() !== '';
+    }
 }
