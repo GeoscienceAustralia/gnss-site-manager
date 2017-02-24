@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import {Observable, Subject} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {JsonixService} from '../jsonix/jsonix.service';
@@ -16,6 +16,8 @@ import {SiteLogDataModel} from '../json-data-view-model/data-model/site-log-data
  */
 @Injectable()
 export class SiteLogService {
+    private savedSubject: Subject<boolean> = new Subject();
+
     private handleXMLData(response: Response): string {
         if (response.status === 200) {
             var geodesyMl: any = response.text();
@@ -156,6 +158,21 @@ export class SiteLogService {
     }
 
     /**
+     * Inform subscribers when the save action completed successfully.
+     */
+    private sendSavedMessage() {
+        this.savedSubject.next(true);
+    }
+
+    /**
+     * Method to allow clients to subscribe to know when the siteLog has been saved (successfully)
+     * @return {Observable<boolean>}
+     */
+    getSavedSubscription(): Observable<boolean> {
+        return this.savedSubject.asObservable();
+    }
+
+    /**
      * Take JSON input as handled by the client-side, convert to GeodesyML and post to backend service.
      *
      * @param siteLogJson in Json (that will be translated to GeodesyML before posting to the backend service)
@@ -181,8 +198,24 @@ export class SiteLogService {
         geodesyMl += siteLogML + '</geo:GeodesyML>';
         // console.log('saveSiteLog - geodesyMl: ', geodesyMl);
         console.log('saveSiteLog - geodesyMl (length): ', geodesyMl.length);
-        return this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl)
-            .map(HttpUtilsService.handleJsonData)
-            .catch(HttpUtilsService.handleError);
+        // return this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl)
+        //     .map(HttpUtilsService.handleJsonData)
+        //     .catch(HttpUtilsService.handleError);
+        //
+        // ---------
+        return new Observable((observer: any) => {
+            try {
+                this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl).subscribe(
+                    (responseJson: Response) => {
+                        // send saved message to subscribers
+                        this.sendSavedMessage();
+                        observer.next(responseJson);
+                    },
+                    (error: Error) => HttpUtilsService.handleError
+                );
+            } catch (error) {
+                observer.error(new Error(error));
+            }
+        });
     }
 }

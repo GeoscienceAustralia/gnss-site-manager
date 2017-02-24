@@ -1,8 +1,12 @@
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
-import { EventEmitter, DoCheck, OnInit } from '@angular/core';
+import {EventEmitter, DoCheck, OnInit, OnDestroy} from '@angular/core';
 import { DialogService } from '../index';
+import {SiteLogService} from '../site-log/site-log.service';
+import {Subscription} from 'rxjs';
 
-export abstract class AbstractItem implements DoCheck, OnInit {
+export abstract class AbstractItem implements DoCheck, OnInit, OnDestroy {
+    private subscription: Subscription;
+
     protected isNew: boolean = false;
 
     protected isOpen: boolean = false;
@@ -40,14 +44,25 @@ export abstract class AbstractItem implements DoCheck, OnInit {
    *
    * @param {DialogService} dialogService - The injected DialogService.
    */
-  constructor(
-    protected dialogService: DialogService
-  ) {}
+    constructor(protected dialogService: DialogService, protected siteLogService: SiteLogService) {
+      this.setupSubscriptions();
+    }
+
+    private setupSubscriptions() {
+        this.subscription = this.siteLogService.getSavedSubscription().subscribe(saved => {
+            console.log('Abstract item for '+ this.getItemName() + ' - isNew: '+ this.isNew +', changed to false');
+            this.isNew = false;
+        });
+    }
 
     ngOnInit() {
         this.isOpen = this.getIndex() === 0 ? true : false;
     }
 
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.subscription.unsubscribe();
+    }
     /**
      * Angular doesn't detect changes in objects and need to perform the check with this lifecycle hook ourselves.
      *

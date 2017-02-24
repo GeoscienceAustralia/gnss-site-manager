@@ -4,6 +4,7 @@ import {GeodesyEvent} from '../shared/events-messages/Event';
 import {PressureSensorViewModel} from './pressure-sensor-view-model';
 import {MiscUtils} from '../shared/global/misc-utils';
 import { DialogService } from '../shared/index';
+import {SiteLogService} from '../shared/site-log/site-log.service';
 
 /**
  * This component represents a single Pressure Sensor.
@@ -41,8 +42,8 @@ export class PressureSensorItemComponent extends AbstractItem {
    */
   @Output() returnEvents = new EventEmitter<GeodesyEvent>();
 
-  constructor(protected dialogService: DialogService) {
-    super(dialogService);
+  constructor(protected dialogService: DialogService, protected siteLogService: SiteLogService) {
+      super(dialogService, siteLogService);
   }
 
   getGeodesyEvent(): GeodesyEvent {
