@@ -16,7 +16,7 @@ import {SiteLogDataModel} from '../json-data-view-model/data-model/site-log-data
  */
 @Injectable()
 export class SiteLogService {
-    private savedSubject: Subject<boolean> = new Subject();
+    private isSavedSubject: Subject<null> = new Subject();
 
     private handleXMLData(response: Response): string {
         if (response.status === 200) {
@@ -161,15 +161,15 @@ export class SiteLogService {
      * Inform subscribers when the save action completed successfully.
      */
     private sendSavedMessage() {
-        this.savedSubject.next(true);
+        this.isSavedSubject.next();
     }
 
     /**
      * Method to allow clients to subscribe to know when the siteLog has been saved (successfully)
      * @return {Observable<boolean>}
      */
-    getSavedSubscription(): Observable<boolean> {
-        return this.savedSubject.asObservable();
+    getIsSavedSubscription(): Observable<null> {
+        return this.isSavedSubject.asObservable();
     }
 
     /**
@@ -198,11 +198,6 @@ export class SiteLogService {
         geodesyMl += siteLogML + '</geo:GeodesyML>';
         // console.log('saveSiteLog - geodesyMl: ', geodesyMl);
         console.log('saveSiteLog - geodesyMl (length): ', geodesyMl.length);
-        // return this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl)
-        //     .map(HttpUtilsService.handleJsonData)
-        //     .catch(HttpUtilsService.handleError);
-        //
-        // ---------
         return new Observable((observer: any) => {
             try {
                 this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl).subscribe(

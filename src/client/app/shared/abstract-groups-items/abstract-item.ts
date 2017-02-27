@@ -5,7 +5,7 @@ import {SiteLogService} from '../site-log/site-log.service';
 import {Subscription} from 'rxjs';
 
 export abstract class AbstractItem implements DoCheck, OnInit, OnDestroy {
-    private subscription: Subscription;
+    private isSavedSubscription: Subscription;
 
     protected isNew: boolean = false;
 
@@ -49,7 +49,7 @@ export abstract class AbstractItem implements DoCheck, OnInit, OnDestroy {
     }
 
     private setupSubscriptions() {
-        this.subscription = this.siteLogService.getSavedSubscription().subscribe(saved => {
+        this.isSavedSubscription = this.siteLogService.getIsSavedSubscription().subscribe(() => {
             console.log('Abstract item for '+ this.getItemName() + ' - isNew: '+ this.isNew +', changed to false');
             this.isNew = false;
         });
@@ -61,7 +61,7 @@ export abstract class AbstractItem implements DoCheck, OnInit, OnDestroy {
 
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks
-        this.subscription.unsubscribe();
+        this.isSavedSubscription.unsubscribe();
     }
     /**
      * Angular doesn't detect changes in objects and need to perform the check with this lifecycle hook ourselves.
