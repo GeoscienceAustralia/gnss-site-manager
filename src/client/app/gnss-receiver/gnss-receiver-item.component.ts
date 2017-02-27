@@ -1,10 +1,10 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {AbstractItem} from '../shared/abstract-groups-items/abstract-item';
-import {GeodesyEvent} from '../shared/events-messages/Event';
-import {GnssReceiverViewModel} from './gnss-receiver-view-model';
-import {MiscUtils} from '../shared/global/misc-utils';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { AbstractItem } from '../shared/abstract-groups-items/abstract-item';
+import { GeodesyEvent } from '../shared/events-messages/Event';
+import { GnssReceiverViewModel } from './gnss-receiver-view-model';
+import { MiscUtils } from '../shared/global/misc-utils';
 import { DialogService } from '../shared/index';
-import {SiteLogService} from '../shared/site-log/site-log.service';
+import { SiteLogService } from '../shared/site-log/site-log.service';
 
 /**
  * This component represents a single GNSS Receiver.

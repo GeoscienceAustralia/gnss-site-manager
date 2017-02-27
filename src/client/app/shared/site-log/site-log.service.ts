@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
-import {Observable, Subject} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable, Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {JsonixService} from '../jsonix/jsonix.service';
-import {WFSService, SelectSiteSearchType} from '../wfs/wfs.service';
-import {HttpUtilsService} from '../global/http-utils.service';
-import {ConstantsService} from '../global/constants.service';
-import {JsonViewModelService} from '../json-data-view-model/json-view-model.service';
-import {SiteLogViewModel} from '../json-data-view-model/view-model/site-log-view-model';
-import {SiteLogDataModel} from '../json-data-view-model/data-model/site-log-data-model';
+import { JsonixService } from '../jsonix/jsonix.service';
+import { WFSService, SelectSiteSearchType } from '../wfs/wfs.service';
+import { HttpUtilsService } from '../global/http-utils.service';
+import { ConstantsService } from '../global/constants.service';
+import { JsonViewModelService } from '../json-data-view-model/json-view-model.service';
+import { SiteLogViewModel } from '../json-data-view-model/view-model/site-log-view-model';
+import { SiteLogDataModel } from '../json-data-view-model/data-model/site-log-data-model';
 
 /**
  * This class provides the service with methods to retrieve CORS Setup info from DB.
@@ -183,8 +183,8 @@ export class SiteLogService {
         console.log('saveSiteLog - siteLogDataModel: ', siteLogDataModel);
 
         // wrap the JSON object in a "geo:siteLog" element before converting to GeodesyML
-        let siteLogJsonObj : any = {
-            'geo:siteLog' : siteLogDataModel
+        let siteLogJsonObj: any = {
+            'geo:siteLog': siteLogDataModel
         };
 
         let siteLogML: string = this.jsonixService.jsonToGeodesyML(siteLogJsonObj);
