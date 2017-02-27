@@ -12,24 +12,21 @@
     </ul>
   </span>
   <span class="title">GNSS Site Manager</span>
-  <span class="pull-right" *ngIf="siteId">
-    <div class="hidden-xs">
-      <button class="btn small-btn" type="submit" (click)="save()"
-              [disabled]="!hasFormChanged()" title="Save changes">Save
-      </button>
-      <button class="btn small-btn" type="submit" (click)="revert()" title="Discard changes">Revert
-      </button>
-      <button class="btn small-btn" type="submit" (click)="close()"
-              title="Close current page and go back to Home page">Close
-      </button>
-      <span class="id-label">{{siteId}}</span>
-    </div>
-    <div class="hidden-sm hidden-md hidden-lg">
-      <div dropdown class="btn-group pull-left">
-        <button dropdownToggle id="right-menu" type="button" class="btn wrap-btn">
+  <span class="pull-right">
+    <span class="hidden-xs">
+      <span *ngIf="siteId">
+        <span class="id-label">Selected Site: {{siteId}}</span>
+        <button class="btn small-btn" (click)="save()" [disabled]="!hasFormChanged()" title="Save changes">Save</button>
+        <button class="btn small-btn" (click)="revert()" title="Discard changes">Revert</button>
+        <button class="btn small-btn" (click)="close()" title="Close current page and go back to Home page">Close</button>
+      </span>
+    </span>
+    <span class="hidden-sm hidden-md hidden-lg" *ngIf="siteId">
+      <div dropdown class="pull-left">
+        <nav dropdownToggle id="right-menu" class="menu-label">
           <span class="btn-label">{{siteId}}</span>
-          <i class="glyphicon glyphicon-option-vertical"></i>
-        </button>
+          <i class="glyphicon glyphicon-triangle-bottom dropdown-icon"></i>
+        </nav>
         <ul dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu-right">
           <li role="menuitem"><a (click)="save()">Save</a></li>
           <li role="menuitem"><a (click)="revert()" title="Discard changes">Revert</a></li>
@@ -37,6 +34,20 @@
           <li role="menuitem"><a (click)="close()">Close</a></li>
         </ul>
       </div>
-    </div>
+    </span>
+    <span *ngIf="!user">
+        <button class="btn small-btn" (click)="login()">Login</button>
+    </span>
+    <span *ngIf="user">
+        <div dropdown class="pull-right">
+            <nav dropdownToggle id="user-menu" class="menu-label">
+              <span class="btn-label">{{user.profile.sub}}</span>
+              <i class="glyphicon glyphicon-triangle-bottom dropdown-icon"></i>
+            </nav>
+            <ul dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu-right">
+              <li role="menuitem"><a (click)="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </span>
   </span>
 </div>

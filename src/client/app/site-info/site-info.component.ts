@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ConstantsService, DialogService, MiscUtils,
          SiteLogService, JsonDiffService, JsonCheckService } from '../shared/index';
 import {SiteLogViewModel} from '../shared/json-data-view-model/view-model/site-log-view-model';
+import { UserAuthService } from '../shared/global/user-auth.service';
+import { User } from 'oidc-client';
 
 /**
  * This class represents the SiteInfoComponent for viewing and editing the details of site/receiver/antenna.
@@ -27,6 +29,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   private siteInfoTab: any = null;
   private submitted: boolean = false;
   public miscUtils: any = MiscUtils;
+  private user: User;
+  private loadedUserSub: any;
 
   public siteContactName: string = ConstantsService.SITE_CONTACT;
   public siteMetadataCustodianName: string = ConstantsService.SITE_METADATA_CUSTODIAN;
@@ -53,14 +57,14 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
    * @param {SiteLogService} siteLogService - The injected SiteLogService.
    * @param {JsonDiffService} jsonDiffService - The injected JsonDiffService.
    */
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialogService: DialogService,
-    private siteLogService: SiteLogService,
-    private jsonDiffService: JsonDiffService,
-    private jsonCheckService: JsonCheckService
-  ) {}
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private dialogService: DialogService,
+              private siteLogService: SiteLogService,
+              private jsonDiffService: JsonDiffService,
+              private jsonCheckService: JsonCheckService,
+              private userAuthService: UserAuthService) {
+  }
 
   /**
    * Initialise all data on loading the site-info page
@@ -72,6 +76,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     });
 
     this.loadSiteInfoData();
+    this.setupAuthSubscription();
   }
 
   /**
@@ -83,7 +88,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
       this.goBack();
     }
 
-    this.isLoading =  true;
+    this.isLoading = true;
     this.submitted = false;
 
     this.siteInfoTab = this.route.params.subscribe(() => {
@@ -115,6 +120,14 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
           this.dialogService.showErrorMessage('No site log info found for ' + this.siteId);
         }
       );
+    });
+  }
+
+  private setupAuthSubscription() {
+    this.loadedUserSub = this.userAuthService.userLoadededEvent
+      .subscribe((subuser: User) => {
+        console.log('SiteInfoComponent - subscribe to get user');
+        this.user = subuser;
     });
   }
 
@@ -186,7 +199,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
    * Close the site-info page and go back to the default home page (select-site tab)
    */
   public goBack() {
-    this.isLoading =  false;
+    this.isLoading = false;
     this.siteId = null;
     let link = ['/'];
     this.router.navigate(link);
@@ -196,4 +209,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteLogOrigin = MiscUtils.cloneJsonObj(this.siteLogModel);
   }
 
+  isUserLoggedIn(): boolean {
+    console.log('SiteInfoComponent - isUserLoggedIn');
+    return this.user != null;
+  }
 }
