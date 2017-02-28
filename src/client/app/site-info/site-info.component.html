@@ -27,7 +27,8 @@
                          class="form-control" required
                          [(ngModel)]="siteIdentification.fourCharacterID"
                          name="fourCharacterID"
-                         #fourCharacterID="ngModel"/>
+                         #fourCharacterID="ngModel"
+                        disabled="{{! isUserLoggedIn()}}"/>
                   <small [hidden]="fourCharacterID.valid || fourCharacterID.pristine"
                          class="alert alert-danger">
                     "Four Character Id" is required (minimum 4 characters)
@@ -38,7 +39,8 @@
                 <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">Site Name</label>
                 <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                   <input type="text" maxlength="100" class="form-control" required
-                         [(ngModel)]="siteIdentification.siteName" name="siteName" #siteName="ngModel"/>
+                         [(ngModel)]="siteIdentification.siteName" name="siteName" #siteName="ngModel"
+                         disabled="{{! isUserLoggedIn()}}"/>
                   <small [hidden]="siteName.valid || siteName.pristine" class="alert alert-danger">
                     "Site Name" is required
                   </small>
@@ -48,7 +50,8 @@
                 <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">IERS DOMES Number</label>
                 <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                   <input type="text" maxlength="100" class="form-control" required
-                         [(ngModel)]="siteIdentification.iersDOMESNumber" name="iersDomesNumber" #iersDomesNumber="ngModel"/>
+                         [(ngModel)]="siteIdentification.iersDOMESNumber" name="iersDomesNumber" #iersDomesNumber="ngModel"
+                         disabled="{{! isUserLoggedIn()}}"/>
                   <small [hidden]="iersDomesNumber.valid || iersDomesNumber.pristine" class="alert alert-danger">
                     "IERS DOMES Number" is required
                   </small>
@@ -59,7 +62,8 @@
                   <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">City / Town</label>
                   <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                     <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="siteLocation.city" name="siteCity" #siteCity="ngModel"/>
+                           [(ngModel)]="siteLocation.city" name="siteCity" #siteCity="ngModel"
+                           disabled="{{! isUserLoggedIn()}}"/>
                   </div>
                 </div>
               </div>
@@ -68,7 +72,8 @@
                   <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">State</label>
                   <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                     <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="siteLocation.state" name="siteState" #siteState="ngModel"/>
+                           [(ngModel)]="siteLocation.state" name="siteState" #siteState="ngModel"
+                           disabled="{{! isUserLoggedIn()}}"/>
                   </div>
                 </div>
               </div>
@@ -77,7 +82,8 @@
                   <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Country</label>
                   <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                     <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="siteLocation.countryCodeISO" name="siteCountry" #siteCountry="ngModel"/>
+                           [(ngModel)]="siteLocation.countryCodeISO" name="siteCountry" #siteCountry="ngModel"
+                           disabled="{{! isUserLoggedIn()}}"/>
                   </div>
                 </div>
               </div>
