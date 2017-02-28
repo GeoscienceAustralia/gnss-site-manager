@@ -54,12 +54,12 @@ export class ProjectConfig extends SeedConfig {
     // Add packages (e.g. ng2-translate)
     let additionalPackages: ExtendPackages[] = [
       {
-        name:'ng2-bootstrap',
-        path:'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
+        name: 'ng2-bootstrap',
+        path: 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
       },
       {
-        name:'ng2-bootstrap/*',
-        path:'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
+        name: 'ng2-bootstrap/*',
+        path: 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
       },
       {
         name: 'lodash',
@@ -100,6 +100,10 @@ export class ProjectConfig extends SeedConfig {
       {
         name: 'moment',
         path: 'node_modules/moment/moment.js'
+      },
+      {
+        name: 'oidc-client',
+        path: 'node_modules/oidc-client/lib/oidc-client.min.js'
       }
     ];
 

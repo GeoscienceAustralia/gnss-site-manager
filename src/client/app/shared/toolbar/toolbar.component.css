@@ -58,7 +58,15 @@
   font-weight: normal;
   margin-right: 0;
 }
-
+.menu-label {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.dropdown-icon {
+  font-size: 10px;
+}
 .dropdown-menu > li > a:focus,
 .dropdown-menu > li > a:hover {
   background-color: #e5f5e0;
@@ -69,7 +77,6 @@
   min-width: 140px;
   border-color: #00441b;
 }
-
 #clear {
   background-color: transparent;
 }

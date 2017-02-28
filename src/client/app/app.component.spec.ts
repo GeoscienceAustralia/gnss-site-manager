@@ -23,6 +23,7 @@ import { WFSService } from './shared/wfs/wfs.service';
 import { JsonixService } from './shared/jsonix/jsonix.service';
 import { ConstantsService } from './shared/global/constants.service';
 import { HttpUtilsService } from './shared/global/http-utils.service';
+import { UserAuthService } from './shared/global/user-auth.service';
 
 export function main() {
 
@@ -45,6 +46,7 @@ export function main() {
           JsonixService,
           ConstantsService,
           HttpUtilsService,
+          UserAuthService,
           BaseRequestOptions,
           {
             provide: Http, useFactory: function (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) {

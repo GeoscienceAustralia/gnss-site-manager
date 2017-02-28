@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ServiceWorkerService } from '../index';
 import { NavigationEnd, Router, ActivatedRoute, Params } from '@angular/router';
+import { UserAuthService } from '../global/user-auth.service';
+import { User } from 'oidc-client';
 
 /**
  * This class represents the toolbar component which is the header of all UI pages.
@@ -18,12 +20,15 @@ export class ToolbarComponent implements OnInit {
   @Output() onClose: EventEmitter<boolean> = new EventEmitter<boolean>();
   private serviceWorkerSubscription: Subscription;
   private cacheItems: Array<string> = [];
-  private siteId: string
+  private siteId: string;
+  private user: User | null = null;
 
-  constructor(
-    private serviceWorkerService: ServiceWorkerService,
-    private route: ActivatedRoute,
-    private router: Router) {
+  private loadedUserSub: any;
+
+  constructor(private serviceWorkerService: ServiceWorkerService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private userAuthService: UserAuthService) {
   }
 
   ngOnInit() {
@@ -50,6 +55,7 @@ export class ToolbarComponent implements OnInit {
   private setupSubscriptions() {
     this.setupServiceWorkerSubscription();
     this.setupRouterSubscription();
+    this.setupAuthSubscription();
   }
 
   private setupServiceWorkerSubscription() {
@@ -72,7 +78,13 @@ export class ToolbarComponent implements OnInit {
             let obj: {id: string} = <any> param.valueOf();
             this.siteId = obj.id;
           });
-        });
+    });
+  }
+
+  private setupAuthSubscription() {
+    this.loadedUserSub = this.userAuthService.userLoadededEvent.subscribe((u: User) => {
+        this.user = u;
+    });
   }
 
   /**
@@ -96,4 +108,12 @@ export class ToolbarComponent implements OnInit {
       console.error('Caught error in updateCacheList:', error);
     });
   };
+
+  login() {
+    this.userAuthService.login();
+  }
+
+  logout() {
+    this.userAuthService.logout();
+  }
 }
