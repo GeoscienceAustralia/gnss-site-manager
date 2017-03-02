@@ -1,8 +1,12 @@
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
-import { EventEmitter, DoCheck, OnInit } from '@angular/core';
+import { EventEmitter, DoCheck, OnInit, OnDestroy } from '@angular/core';
 import { DialogService } from '../index';
+import { SiteLogService } from '../site-log/site-log.service';
+import { Subscription } from 'rxjs';
 
-export abstract class AbstractItem implements DoCheck, OnInit {
+export abstract class AbstractItem implements DoCheck, OnInit, OnDestroy {
+    private isSavedSubscription: Subscription;
+
     protected isNew: boolean = false;
 
     protected isOpen: boolean = false;
@@ -35,17 +39,29 @@ export abstract class AbstractItem implements DoCheck, OnInit {
      */
     abstract getItemName(): string;
 
-  /**
-   * Creates an instance of the AbstractItem with the injected Services.
-   *
-   * @param {DialogService} dialogService - The injected DialogService.
-   */
-  constructor(
-    protected dialogService: DialogService
-  ) {}
+    /**
+     * Creates an instance of the AbstractItem with the injected Services.
+     *
+     * @param {DialogService} dialogService - The injected DialogService.
+     */
+    constructor(protected dialogService: DialogService, protected siteLogService: SiteLogService) {
+        this.setupSubscriptions();
+    }
+
+    private setupSubscriptions() {
+        this.isSavedSubscription = this.siteLogService.getIsSavedSubscription().subscribe(() => {
+            console.log('Abstract item for ' + this.getItemName() + ' - isNew: ' + this.isNew + ', changed to false');
+            this.isNew = false;
+        });
+    }
 
     ngOnInit() {
         this.isOpen = this.getIndex() === 0 ? true : false;
+    }
+
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.isSavedSubscription.unsubscribe();
     }
 
     /**
@@ -99,29 +115,29 @@ export abstract class AbstractItem implements DoCheck, OnInit {
      */
     removeItem(index: number) {
 
-      let deleteReason: string = 'New item not needed';
+        let deleteReason: string = 'New item not needed';
 
-      if (this.isNew) {
-        this.cancelNew(index, deleteReason);
-      } else {
-          this.dialogService.confirmDeleteDialog(
-            this.getItemName(),
-            (deleteReason : string) => {
-               // ok callback
-               this.deleteItem(index, deleteReason);
-            },
-            () => {
-              // cancel callback
-              console.log('delete cancelled by user');
-            }
-          );
-      }
+        if (this.isNew) {
+            this.cancelNew(index, deleteReason);
+        } else {
+            this.dialogService.confirmDeleteDialog(
+                this.getItemName(),
+                (deleteReason: string) => {
+                    // ok callback
+                    this.deleteItem(index, deleteReason);
+                },
+                () => {
+                    // cancel callback
+                    console.log('delete cancelled by user');
+                }
+            );
+        }
     }
 
     /**
      *  Mark an item for deletion using the specified reason.
      */
-    private deleteItem(index: number, deleteReason : string) {
+    private deleteItem(index: number, deleteReason: string) {
         console.log('child call removeItem(' + index + ')');
         let geodesyEvent: GeodesyEvent = {name: EventNames.removeItem, valueNumber: index, valueString: deleteReason};
         this.getReturnEvents().emit(geodesyEvent);
@@ -130,7 +146,7 @@ export abstract class AbstractItem implements DoCheck, OnInit {
     /**
      *  Mark an item for deletion using the specified reason.
      */
-    private cancelNew(index: number, deleteReason : string) {
+    private cancelNew(index: number, deleteReason: string) {
         console.log('child call cancelNew(' + index + ')');
         let geodesyEvent: GeodesyEvent = {name: EventNames.cancelNew, valueNumber: index, valueString: deleteReason};
         this.getReturnEvents().emit(geodesyEvent);

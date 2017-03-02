@@ -1,21 +1,23 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable, Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {JsonixService} from '../jsonix/jsonix.service';
-import {WFSService, SelectSiteSearchType} from '../wfs/wfs.service';
-import {HttpUtilsService} from '../global/http-utils.service';
-import {ConstantsService} from '../global/constants.service';
-import {JsonViewModelService} from '../json-data-view-model/json-view-model.service';
-import {SiteLogViewModel} from '../json-data-view-model/view-model/site-log-view-model';
-import {SiteLogDataModel} from '../json-data-view-model/data-model/site-log-data-model';
+import { JsonixService } from '../jsonix/jsonix.service';
+import { WFSService, SelectSiteSearchType } from '../wfs/wfs.service';
+import { HttpUtilsService } from '../global/http-utils.service';
+import { ConstantsService } from '../global/constants.service';
+import { JsonViewModelService } from '../json-data-view-model/json-view-model.service';
+import { SiteLogViewModel } from '../json-data-view-model/view-model/site-log-view-model';
+import { SiteLogDataModel } from '../json-data-view-model/data-model/site-log-data-model';
 
 /**
  * This class provides the service with methods to retrieve CORS Setup info from DB.
  */
 @Injectable()
 export class SiteLogService {
+    private isSavedSubject: Subject<null> = new Subject();
+
     private handleXMLData(response: Response): string {
         if (response.status === 200) {
             var geodesyMl: any = response.text();
@@ -156,6 +158,21 @@ export class SiteLogService {
     }
 
     /**
+     * Inform subscribers when the save action completed successfully.
+     */
+    private sendSavedMessage() {
+        this.isSavedSubject.next();
+    }
+
+    /**
+     * Method to allow clients to subscribe to know when the siteLog has been saved (successfully)
+     * @return {Observable<boolean>}
+     */
+    getIsSavedSubscription(): Observable<null> {
+        return this.isSavedSubject.asObservable();
+    }
+
+    /**
      * Take JSON input as handled by the client-side, convert to GeodesyML and post to backend service.
      *
      * @param siteLogJson in Json (that will be translated to GeodesyML before posting to the backend service)
@@ -166,8 +183,8 @@ export class SiteLogService {
         console.log('saveSiteLog - siteLogDataModel: ', siteLogDataModel);
 
         // wrap the JSON object in a "geo:siteLog" element before converting to GeodesyML
-        let siteLogJsonObj : any = {
-            'geo:siteLog' : siteLogDataModel
+        let siteLogJsonObj: any = {
+            'geo:siteLog': siteLogDataModel
         };
 
         let siteLogML: string = this.jsonixService.jsonToGeodesyML(siteLogJsonObj);
@@ -181,8 +198,19 @@ export class SiteLogService {
         geodesyMl += siteLogML + '</geo:GeodesyML>';
         // console.log('saveSiteLog - geodesyMl: ', geodesyMl);
         console.log('saveSiteLog - geodesyMl (length): ', geodesyMl.length);
-        return this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl)
-            .map(HttpUtilsService.handleJsonData)
-            .catch(HttpUtilsService.handleError);
+        return new Observable((observer: any) => {
+            try {
+                this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload', geodesyMl).subscribe(
+                    (responseJson: Response) => {
+                        // send saved message to subscribers
+                        this.sendSavedMessage();
+                        observer.next(responseJson);
+                    },
+                    (error: Error) => HttpUtilsService.handleError
+                );
+            } catch (error) {
+                observer.error(new Error(error));
+            }
+        });
     }
 }
