@@ -186,10 +186,21 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
    * Close the site-info page and go back to the default home page (select-site tab)
    */
   public goBack() {
-    this.isLoading = false;
-    this.siteId = null;
-    let link = ['/'];
-    this.router.navigate(link);
+    let hasFormChanged: boolean = true;
+    if (!hasFormChanged) {
+      this.close();
+    } else {
+      let msg = 'You may have made changes to the Site Info form and not saved them yet.';
+      let that: any = this;
+      this.dialogService.confirmCloseDialog(msg,
+        function() {
+          that.close();
+        },
+        function() {
+          that.dialogService.showLogMessage('Cancelled in closing Site Info page');
+        }
+      );
+    }
   }
 
   public backupSiteLogJson() {
@@ -198,5 +209,12 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
 
   isUserLoggedIn(): boolean {
     return this.userAuthService.getUser() !== null;
+  }
+
+  private close() {
+    this.isLoading =  false;
+    this.siteId = null;
+    let link = ['/'];
+    this.router.navigate(link);
   }
 }
