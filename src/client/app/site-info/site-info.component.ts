@@ -80,7 +80,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   public loadSiteInfoData() {
     // Do not allow direct access to site-info page
     if (!this.siteId) {
-      this.goBack();
+      this.close();
     }
 
     this.isLoading = true;
@@ -185,19 +185,22 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   /**
    * Close the site-info page and go back to the default home page (select-site tab)
    */
-  public goBack() {
-    let hasFormChanged: boolean = true;
-    if (!hasFormChanged) {
-      this.close();
+  public close() {
+    let hasChanges: boolean = this.jsonDiffService.isDiff(this.siteLogOrigin, this.siteLogModel);
+
+    if (!hasChanges) {
+      this.goToHomePage();
     } else {
-      let msg = 'You may have made changes to the Site Info form and not saved them yet.';
+      let msg = 'You have made changes to the "' + this.siteId + '" Site Log. '
+              + 'Exit or close the page will discard any changes made.';
       let that: any = this;
       this.dialogService.confirmCloseDialog(msg,
         function() {
-          that.close();
+          that.goToHomePage();
+          that.dialogService.showLogMessage('Site Info page closed and changes discarded');
         },
         function() {
-          that.dialogService.showLogMessage('Cancelled in closing Site Info page');
+          that.dialogService.showLogMessage('Cancelled in closing Site Log Info page');
         }
       );
     }
@@ -211,7 +214,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     return this.userAuthService.getUser() !== null;
   }
 
-  private close() {
+  private goToHomePage() {
     this.isLoading =  false;
     this.siteId = null;
     let link = ['/'];

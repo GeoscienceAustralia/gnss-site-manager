@@ -58,6 +58,11 @@ export class JsonDiffService {
         );
     }
 
+    public isDiff(oldJson: any, newJson: any): boolean {
+        let jsonDiffs: IDiff[] = this.getJsonDiff(oldJson, newJson);
+        return (!jsonDiffs) ? false: true;
+    }
+
     public getJsonDiffHtml(oldJson: any, newJson: any): string {
         let jsonDiffs: IDiff[] = this.getJsonDiff(oldJson, newJson);
         if (!jsonDiffs) {
