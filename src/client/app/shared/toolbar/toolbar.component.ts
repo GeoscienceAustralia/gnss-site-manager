@@ -20,6 +20,8 @@ export class ToolbarComponent implements OnInit {
   @Output() onSave: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onRevert: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onGoToSelectSitePage: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onGoToAboutPage: EventEmitter<boolean> = new EventEmitter<boolean>();
   private serviceWorkerSubscription: Subscription;
   private cacheItems: Array<string> = [];
 
@@ -37,15 +39,23 @@ export class ToolbarComponent implements OnInit {
   }
 
   save() {
-    this.onSave.emit( this.siteId !== null );
+    this.onSave.emit( this.siteId !== null && this.siteId !== undefined );
   }
 
   revert() {
-    this.onRevert.emit( this.siteId !== null );
+    this.onRevert.emit( this.siteId !== null && this.siteId !== undefined );
   }
 
   close() {
-    this.onClose.emit( this.siteId !== null );
+    this.onClose.emit( this.siteId !== null && this.siteId !== undefined );
+  }
+
+  goToSelectSitePage() {
+    this.onGoToSelectSitePage.emit( this.siteId !== null && this.siteId !== undefined );
+  }
+
+  goToAboutPage() {
+    this.onGoToAboutPage.emit( this.siteId !== null && this.siteId !== undefined );
   }
 
   hasFormChanged() {

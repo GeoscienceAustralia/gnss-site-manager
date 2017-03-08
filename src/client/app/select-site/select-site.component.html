@@ -13,12 +13,12 @@
         <div class="panel-body margin-bottom15">
           <div class="form-group">
             <div class="col-md-9 col-md-offset-1 col-sm-9 col-sm-offset-1
-                      col-xs-8 col-xs-offset-1 col-xxs-12 col-xxs-offset-0">
+                      col-xs-8 col-xs-offset-1 col-xxs-12 col-xxs-offset-0 extra-v-margin">
               <input type="text" name="searchText" maxlength="200" class="form-control"
                      (input)="searchTextSubject.next($event.target.value)"
                      placeholder="Search by Site Id or Site Name"/>
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-1 col-xxs-12">
+            <div class="col-md-2 col-sm-2 col-xs-1 col-xxs-12 extra-v-margin">
               <button class="btn btn-primary col-xxs-center" (click)="searchSites()" title="Search desired CORS sites">
                 Search
               </button>

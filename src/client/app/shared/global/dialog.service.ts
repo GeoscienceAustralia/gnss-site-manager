@@ -8,9 +8,20 @@ export class DialogService {
    * Opens a customised dialog showing the changes made and prompts the user to confirm before saving
    */
   public confirmSaveDialog(msg: string, okCallback: () => any, cancelCallback: () => any) {
-    let header: string = '<div class="title">Review Changes</div>';
+    let header: string = '<div class="title">Review & Save Changes</div>';
     let body: string = '<div class="body">' + msg + '</div>';
     let footer: string = '<p class="footer">Do you want to save all changes made?</p>';
+    let msgHtml: string = '<div>' + header + body + footer + '</div>';
+    this.showConfirmDialog(msgHtml, okCallback, cancelCallback);
+  }
+
+  /*
+   * Opens a customised dialog asking user whether to close/exit a page without saving changes made
+   */
+  public confirmCloseDialog(msg: string, okCallback: () => any, cancelCallback: () => any) {
+    let header: string = '<div class="title">Confirm Closing Page</div>';
+    let body: string = '<div class="body"><p/><p>' + msg + '</p><p/></div>';
+    let footer: string = '<p class="footer">Are you sure you want to close the page?</p>';
     let msgHtml: string = '<div>' + header + body + footer + '</div>';
     this.showConfirmDialog(msgHtml, okCallback, cancelCallback);
   }

@@ -80,7 +80,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   public loadSiteInfoData() {
     // Do not allow direct access to site-info page
     if (!this.siteId) {
-      this.goBack();
+      this.close();
     }
 
     this.isLoading = true;
@@ -183,13 +183,25 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Close the site-info page and go back to the default home page (select-site tab)
+   * Close the SiteLog Info page and navigate to a tab with the specified tab name, the default is home tab (Select-Site tab)
    */
-  public goBack() {
-    this.isLoading = false;
-    this.siteId = null;
-    let link = ['/'];
-    this.router.navigate(link);
+  public close(tabName: string = '/') {
+    if (this.siteId === null || this.siteId === undefined) {
+      this.goToPage(tabName);
+    } else if (!this.jsonDiffService.isDiff(this.siteLogOrigin, this.siteLogModel)) {
+      this.goToPage(tabName);
+    } else {
+      let msg: string = 'You have made changes to the "' + this.siteId + '" Site Log. '
+                      + 'Close the page will discard any changes made.';
+      let that: any = this;
+      this.dialogService.confirmCloseDialog(msg,
+        function() {
+          that.goToPage(tabName);
+          that.dialogService.showLogMessage('Site Info page closed and changes discarded');
+        },
+        function() {}
+      );
+    }
   }
 
   public backupSiteLogJson() {
@@ -198,5 +210,11 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
 
   isUserLoggedIn(): boolean {
     return this.userAuthService.getUser() !== null;
+  }
+
+  private goToPage(tabName: string) {
+    this.isLoading =  false;
+    this.siteId = null;
+    this.router.navigate( [tabName] );
   }
 }
