@@ -1,4 +1,5 @@
 import { Component, ViewContainerRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { Config, CorsSiteService, CorsSetupService, SiteLogService, DialogService, MiscUtils,
          JsonDiffService, JsonCheckService, JsonPointerService, NameListService, ServiceWorkerService,
          JsonixService } from './shared/index';
@@ -30,7 +31,9 @@ import { JsonViewModelService } from './shared/json-data-view-model/json-view-mo
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
-  constructor(private siteInfo: SiteInfoComponent, private viewContainerRef: ViewContainerRef) {
+  constructor(private router: Router,
+              private siteInfo: SiteInfoComponent,
+              private viewContainerRef: ViewContainerRef) {
     console.log('Environment config', Config);
   }
 
@@ -64,6 +67,34 @@ export class AppComponent {
   onClose(event: any) {
     if (event) {
       this.siteInfo.close();
+    }
+  }
+
+  /**
+   * Navigate to the "Search/select Sites" page triggered by the "Select Site" button on Toolbar component.
+   * Prompt users whether to abort the action if changes have been made on the Site Log Info page.
+   *
+   * @event: boolean - true if the selected siteId is not null
+   */
+  onGoToSelectSitePage(event: any) {
+    if (!event) {
+      this.router.navigate( ['/'] );
+     } else {
+      this.siteInfo.close('/');
+    }
+  }
+
+  /**
+   * Navigate to the "About" page triggered by the "About" button on Toolbar component.
+   * Prompt users whether to abort the action if changes have been made on the Site Log Info page.
+   *
+   * @event: boolean - true if the selected siteId is not null
+   */
+  onGoToAboutPage(event: any) {
+    if (!event) {
+      this.router.navigate( ['/about'] );
+    } else {
+      this.siteInfo.close('/about');
     }
   }
 

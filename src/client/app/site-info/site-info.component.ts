@@ -183,25 +183,23 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Close the site-info page and go back to the default home page (select-site tab)
+   * Close the SiteLog Info page and navigate to a tab with the specified tab name, the default is home tab (Select-Site tab)
    */
-  public close() {
-    let hasChanges: boolean = this.jsonDiffService.isDiff(this.siteLogOrigin, this.siteLogModel);
-
-    if (!hasChanges) {
-      this.goToHomePage();
+  public close(tabName: string = '/') {
+    if (this.siteId === null || this.siteId === undefined) {
+      this.goToPage(tabName);
+    } else if (!this.jsonDiffService.isDiff(this.siteLogOrigin, this.siteLogModel)) {
+      this.goToPage(tabName);
     } else {
-      let msg = 'You have made changes to the "' + this.siteId + '" Site Log. '
-              + 'Exit or close the page will discard any changes made.';
+      let msg: string = 'You have made changes to the "' + this.siteId + '" Site Log. '
+                      + 'Close the page will discard any changes made.';
       let that: any = this;
       this.dialogService.confirmCloseDialog(msg,
         function() {
-          that.goToHomePage();
+          that.goToPage(tabName);
           that.dialogService.showLogMessage('Site Info page closed and changes discarded');
         },
-        function() {
-          that.dialogService.showLogMessage('Cancelled in closing Site Log Info page');
-        }
+        function() {}
       );
     }
   }
@@ -214,10 +212,9 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     return this.userAuthService.getUser() !== null;
   }
 
-  private goToHomePage() {
+  private goToPage(tabName: string) {
     this.isLoading =  false;
     this.siteId = null;
-    let link = ['/'];
-    this.router.navigate(link);
+    this.router.navigate( [tabName] );
   }
 }

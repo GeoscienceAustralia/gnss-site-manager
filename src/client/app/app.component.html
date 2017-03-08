@@ -1,4 +1,8 @@
-<sd-toolbar (onSave)="onSave($event)" (onRevert)="onRevert($event)" (onClose)="onClose($event)"></sd-toolbar>
+<sd-toolbar (onSave)="onSave($event)"
+            (onRevert)="onRevert($event)"
+            (onClose)="onClose($event)"
+            (onGoToSelectSitePage)="onGoToSelectSitePage($event)"
+            (onGoToAboutPage)="onGoToAboutPage($event)"></sd-toolbar>
 <div autoHeight>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
