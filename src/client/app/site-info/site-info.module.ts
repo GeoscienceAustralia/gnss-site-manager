@@ -8,7 +8,6 @@ import { GnssAntennaModule } from '../gnss-antenna/gnss-antenna.module';
 import { SurveyedLocalTieModule } from '../surveyed-local-tie/surveyed-local-tie.module';
 import { FrequencyStandardModule } from '../frequency-standard/frequency-standard.module';
 import { LocalEpisodicEffectModule } from '../local-episodic-effect/local-episodic-effect.module';
-import { DatetimePickerModule } from '../datetime-picker/datetime-picker.module';
 import { HumiditySensorModule } from '../humidity-sensor/humidity-sensor.module';
 import { PressureSensorModule } from '../pressure-sensor/pressure-sensor.module';
 import { TemperatureSensorModule } from '../temperature-sensor/temperature-sensor.module';
@@ -24,7 +23,6 @@ import { WaterVaporSensorModule } from '../water-vapor-sensor/water-vapor-sensor
     SurveyedLocalTieModule,
     FrequencyStandardModule,
     LocalEpisodicEffectModule,
-    DatetimePickerModule,
     HumiditySensorModule,
     PressureSensorModule,
     TemperatureSensorModule,
