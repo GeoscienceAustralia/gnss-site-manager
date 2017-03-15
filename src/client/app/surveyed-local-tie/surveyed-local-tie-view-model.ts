@@ -38,30 +38,30 @@ export class SurveyedLocalTieViewModel extends AbstractViewModel {
 
     createFieldMappings(): void {
 
-        this.addFieldMapping('/surveyedLocalTie/tiedMarkerName', 'string',
+        this.addFieldMapping('/surveyedLocalTies/tiedMarkerName', 'string',
             '/tiedMarkerName', 'string');
-        this.addFieldMapping('/surveyedLocalTie/tiedMarkerUsage', 'string',
+        this.addFieldMapping('/surveyedLocalTies/tiedMarkerUsage', 'string',
             '/tiedMarkerUsage', 'string');
-        this.addFieldMapping('/surveyedLocalTie/tiedMarkerCDPNumber', 'string',
+        this.addFieldMapping('/surveyedLocalTies/tiedMarkerCDPNumber', 'string',
             '/tiedMarkerCDPNumber', 'string');
-        this.addFieldMapping('/surveyedLocalTie/tiedMarkerDOMESNumber', 'string',
+        this.addFieldMapping('/surveyedLocalTies/tiedMarkerDOMESNumber', 'string',
             '/tiedMarkerDOMESNumber', 'string');
-        this.addFieldMapping('/surveyedLocalTie/localSiteTiesAccuracy', 'string',
+        this.addFieldMapping('/surveyedLocalTies/localSiteTiesAccuracy', 'string',
             '/localSiteTiesAccuracy', 'string');
-        this.addFieldMapping('/surveyedLocalTie/surveyMethod', 'string',
+        this.addFieldMapping('/surveyedLocalTies/surveyMethod', 'string',
             '/surveyMethod', 'string');
 
-        this.addFieldMapping('/surveyedLocalTie/differentialComponentsGNSSMarkerToTiedMonumentITRS/dx', 'string',
+        this.addFieldMapping('/surveyedLocalTies/differentialComponentsGNSSMarkerToTiedMonumentITRS/dx', 'string',
             '/dx', 'number');
-        this.addFieldMapping('/surveyedLocalTie/differentialComponentsGNSSMarkerToTiedMonumentITRS/dy', 'string',
+        this.addFieldMapping('/surveyedLocalTies/differentialComponentsGNSSMarkerToTiedMonumentITRS/dy', 'string',
             '/dy', 'number');
-        this.addFieldMapping('/surveyedLocalTie/differentialComponentsGNSSMarkerToTiedMonumentITRS/dz', 'string',
+        this.addFieldMapping('/surveyedLocalTies/differentialComponentsGNSSMarkerToTiedMonumentITRS/dz', 'string',
             '/dz', 'number');
 
-        this.addFieldMapping('/surveyedLocalTie/dateMeasured/value/0', 'string',
+        this.addFieldMapping('/surveyedLocalTies/dateMeasured/value/0', 'string',
             '/dateMeasured', 'string');
 
-        this.addFieldMapping('/surveyedLocalTie/notes', 'string',
+        this.addFieldMapping('/surveyedLocalTies/notes', 'string',
             '/notes', 'string');
     };
 
