@@ -40,8 +40,8 @@ export class GnssAntennaViewModel extends AbstractViewModel {
   createFieldMappings(): void {
       this.addFieldMapping('/gnssAntenna/dateInstalled/value/0', 'string', '/dateInstalled', 'string');
       this.addFieldMapping('/gnssAntenna/dateRemoved/value/0', 'string', '/dateRemoved', 'string');
-      this.addFieldMapping('/gnssAntenna/antennaType/value', 'string', '/antennaType', 'string');
-      this.addFieldMapping('/gnssAntenna/serialNumber', 'string', '/serialNumber', 'string');
+      this.addFieldMapping('/gnssAntenna/igsModelCode/value', 'string', '/antennaType', 'string');
+      this.addFieldMapping('/gnssAntenna/manufacturerSerialNumber', 'string', '/serialNumber', 'string');
       this.addFieldMapping('/gnssAntenna/antennaReferencePoint/value', 'string', '/antennaReferencePoint', 'string');
       this.addFieldMapping('/gnssAntenna/markerArpEastEcc', 'string', '/markerArpEastEcc', 'number');
       this.addFieldMapping('/gnssAntenna/markerArpUpEcc', 'string', '/markerArpUpEcc', 'number');
