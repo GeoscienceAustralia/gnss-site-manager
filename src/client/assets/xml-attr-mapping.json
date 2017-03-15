@@ -121,6 +121,7 @@
   "postalCode":"Postal Code",
   "country":"Country",
   "surveyedLocalTies": "Surveyed Local Ties",
+  "surveyedLocalTie": "Surveyed Local Tie",
   "tiedMarkerName":"Tied Marker Name",
   "tiedMarkerUsage":"Tied Marker Usage",
   "tiedMarkerCDPNumber":"Tied Marker CDP Number",
