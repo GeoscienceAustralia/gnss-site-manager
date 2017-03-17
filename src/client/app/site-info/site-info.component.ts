@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 import { User } from 'oidc-client';
 import { ConstantsService, DialogService, MiscUtils,
          SiteLogService, JsonDiffService, JsonCheckService } from '../shared/index';
@@ -44,6 +45,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
 
   private errorMessage: string;
   private siteInfoTab: any = null;
+  private authSubscription: Subscription;
   private submitted: boolean = false;
 
   /**
@@ -73,7 +75,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
       this.siteId = id;
     });
 
-    this.setupAuthSubscription();
+    this.authSubscription = this.setupAuthSubscription();
     this.hasEditRole = this.userAuthService.hasAuthorityToEditSite(this.siteId);
     this.loadSiteInfoData();
   }
@@ -138,7 +140,10 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteDataSource = null;
     this.status = null;
     this.errorMessage = '';
-    this.userAuthService.userLoadededEvent.unsubscribe();
+
+    if (this.authSubscription) {
+        this.authSubscription.unsubscribe();
+    }
 
     // It seems that ngOnDestroy is called when the object is destroyed, but ngOnInit isn't called every time an
     // object is created.  Hence this field might not have been created.
