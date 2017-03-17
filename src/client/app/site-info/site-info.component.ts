@@ -140,10 +140,7 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteDataSource = null;
     this.status = null;
     this.errorMessage = '';
-
-    if (this.authSubscription) {
-        this.authSubscription.unsubscribe();
-    }
+    this.authSubscription.unsubscribe();
 
     // It seems that ngOnDestroy is called when the object is destroyed, but ngOnInit isn't called every time an
     // object is created.  Hence this field might not have been created.
@@ -237,8 +234,8 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
     this.siteLogOrigin = MiscUtils.cloneJsonObj(this.siteLogModel);
   }
 
-  private setupAuthSubscription() {
-    this.userAuthService.userLoadededEvent.subscribe((user: User) => {
+  private setupAuthSubscription(): Subscription {
+    return this.userAuthService.userLoadededEvent.subscribe((user: User) => {
         this.hasEditRole = this.userAuthService.hasAuthorityToEditSite(this.siteId);
     });
   }
