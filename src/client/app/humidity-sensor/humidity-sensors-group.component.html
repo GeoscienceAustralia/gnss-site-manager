@@ -1,4 +1,4 @@
-<div class="panel panel-level-1">
+<div [formGroup]="siteInfoForm" class="panel panel-level-1">
     <div class="panel-heading">
       <span class="panel-title cursor-ptr"
             (click)="isGroupOpen = miscUtils.scrollIntoView($event, isGroupOpen)">
@@ -9,7 +9,7 @@
         </span>
         <span class="pull-right">
             <button class="btn btn-similar btn-xs" title="Add a new {{getItemName()}}"
-                    [disabled]="hasGroupANewItem" (click)="addNew()">
+                    [disabled]="hasGroupANewItem" (click)="addNew($event); miscUtils.showFullView($event);">
             <i class="glyphicon glyphicon-plus-sign"></i>
             New <span class="hidden-xxs">{{getItemName()}}</span>
             </button>
@@ -23,7 +23,8 @@
             <!-- [geodesyEvent] - send event to child components -->
             <!-- (open/close Above/Below Event) - receive events from child components -->
             <!-- (returnEvents) - single point to call events on parent -->
-            <humidity-sensor-item [humiditySensor]="humiditySensor"
+            <humidity-sensor-item [groupArray]="groupArrayForm"
+                                  [humiditySensor]="humiditySensor"
                                   [total]="itemProperties.length"
                                   [index]="i"
                                   [geodesyEvent]="geodesyEvent"

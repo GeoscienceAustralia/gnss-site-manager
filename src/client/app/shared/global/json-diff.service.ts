@@ -45,6 +45,9 @@ export class JsonDiffService {
      * private
      */
     static getTheObject(rawObject: any): any {
+        if (!rawObject) {
+            return null;
+        }
         let keys: string[] = Object.keys(rawObject);
         let object: any = rawObject[keys[0]];
         return object;
@@ -68,18 +71,20 @@ export class JsonDiffService {
         if (!jsonDiffs) {
             return '';
         }
-        console.log('deep-diff: ', jsonDiffs);
+        console.log('Diff - deep-diff: ', jsonDiffs);
         let siteManagerDiffs: DiffItem[] = this.getJsonDiffsList(jsonDiffs, oldJson, newJson);
+        console.log('Diff - diff list: ', siteManagerDiffs);
         let normalisedDiffsList: NormalisedDiffs = this.getNormalisedDiffsList(siteManagerDiffs);//, oldJson, newJson);
+        console.log('Diff - normalisedDiffs: ', normalisedDiffsList);
         let jsonDiffsTable: string = this.getJsonDiffsTable(normalisedDiffsList);
-        console.log('jsonDiffsTable: ', jsonDiffsTable);
+        // console.log('jsonDiffsTable: ', jsonDiffsTable);
 
         return jsonDiffsTable;
     }
 
     getJsonDiff(oldJson: any, newJson: any): IDiff[] {
         let jsonDiff2: any = diff.diff(oldJson, newJson);
-        console.log('deep-diff: ', jsonDiff2);
+        // console.log('deep-diff: ', jsonDiff2);
         return jsonDiff2;
     }
 
@@ -95,7 +100,7 @@ export class JsonDiffService {
             let diffItems: DiffItem[] = this.parseDiffs(diff, newJson);
             Array.prototype.push.apply(diffStruct, diffItems);
         }
-        console.log('getJsonDiffsList: ', diffStruct);
+        // console.log('getJsonDiffsList: ', diffStruct);
         return diffStruct;
     }
 
@@ -163,7 +168,8 @@ export class JsonDiffService {
     getObject(jsonNew: any, pathToItem: string): any {
         let object: any = JsonPointerService.get(jsonNew, pathToItem);
         if (!object) {
-            throw new Error('Unexpected error - path not in object - path: ' + pathToItem + ', object: ' + JSON.stringify(jsonNew));
+            console.warn('Unexpected situation - path not in object - path: ' + pathToItem + ', object: ' +
+                JSON.stringify(jsonNew) + '.  Continueing and hope all is ok.');
         }
         return object;
     }
@@ -176,7 +182,7 @@ export class JsonDiffService {
      */
     getIdentifier(object: any): string {
         // The identifiers, if they exist, will be on the object or the first child
-        return this.getIdentifierAttempt(object) || this.getIdentifierAttempt(JsonDiffService.getTheObject(object));
+        return this.getIdentifierAttempt(object) || this.getIdentifierAttempt(JsonDiffService.getTheObject(object)) || 'NO ID';
     }
 
     /* ****** Now methods for the normalised data structure (between intermediate and final output) ****** */
@@ -294,6 +300,12 @@ export class JsonDiffService {
 
         let container: string = this.getContainer(diff);                        // eg. HumiditySensors
         let parent: any = this.getObject(newJson, this.getPathToItem(diff)); // eg. HumiditySensors/1 (a HumiditySensor)
+        // If parent is null then it means the left, right objects have different structure.  Possibly just a single branch different.
+        // As long as the diff kind isn't an "E" then this should not be a problem
+        if (parent === null && diff['kind'] === 'E') {
+            throw new Error('Left and Right object structures differ.  Should be ok except the DIFF is saying there is an Edit difference'
+            + ', which is obviously false.');
+        }
         let item: any = this.getItem(diff);                                  // eg. notes (the notes field contains a difference)
         let identifier: string = this.getIdentifier(parent);                    // eg. <startDate> - <endDate>
         switch (diff['kind']) {
@@ -358,6 +370,9 @@ export class JsonDiffService {
 
     private getIdentifierAttempt(object: any): string {
         let ident: string = '';
+        if (!object) {
+            return '';
+        }
         if (object.startDate && this.isString(object.startDate)) {
             ident += MiscUtils.getDate(object.startDate);
             if (object.endDate && this.isString(object.endDate)) {

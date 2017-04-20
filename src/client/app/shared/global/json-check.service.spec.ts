@@ -6,7 +6,8 @@ import { JsonCheckService } from './json-check.service';
 import { MiscUtils } from './misc-utils';
 
 export function main() {
-  describe('Test Json-Check Service ...', () => {
+    // No longer used (waiting to confirm)
+  xdescribe('Test Json-Check Service ...', () => {
     let jsonCheckService: JsonCheckService;
 
     let receiverMissing: any = {

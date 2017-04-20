@@ -15,14 +15,17 @@ export class SurveyedLocalTieViewModel extends AbstractViewModel {
     public dz: number;
 
     public localSiteTiesAccuracy: string;
-    public tiedMarkerSurveyMethod: string;
+    public surveyMethod: string;
     public dateMeasured: string;
 
     public notes: string;
 
-    constructor() {
+    /**
+     * @param blank - if blank then don't add any default values - leave completely blank (empty) with '' | 0
+     */
+    constructor(blank: boolean = false) {
         super();
-        let presentDT: string = MiscUtils.getPresentDateTime();
+        let presentDT: string = blank ? '' : MiscUtils.getPresentDateTime();
         this.dateMeasured = presentDT;
 
         this.tiedMarkerName = '';
@@ -30,6 +33,7 @@ export class SurveyedLocalTieViewModel extends AbstractViewModel {
         this.tiedMarkerCDPNumber = '';
         this.tiedMarkerDOMESNumber = '';
         this.localSiteTiesAccuracy = '';
+        this.surveyMethod = '';
         this.notes = '';
         this.dx = 0;
         this.dy = 0;

@@ -1,21 +1,17 @@
-<div class="panel panel-level-2" id="antenna_{{index}}">
+<div [formGroup]="itemGroup" class="panel panel-level-2" id="antenna_{{index}}">
   <div class="panel-heading">
-    <span class="panel-title cursor-ptr"
-          (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+        <span class="panel-title cursor-ptr" (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
       <i class="glyphicon"
          [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
       </i>
       <span *ngIf="index == 0">
         <span class="hidden-xsm">Current </span>
-        <span class="hidden-xxs">Antenna (</span>
-        Since {{ miscUtils.getDate(antenna.dateInstalled) }}
+        <span class="hidden-xxs">Antenna (</span> Since {{ miscUtils.getDate(antenna.dateInstalled) }}
         <span class="hidden-xxs">)</span>
-      </span>
-      <span *ngIf="index != 0">
+        </span>
+        <span *ngIf="index != 0">
         <span class="hidden-xsm">Previous </span>
-        <span class="hidden-xxs">Antenna (</span>
-        {{ miscUtils.getDate(antenna.dateInstalled) }}
-        &ndash; {{ miscUtils.getDate(antenna.dateRemoved) }}
+        <span class="hidden-xxs">Antenna (</span> {{ miscUtils.getDate(antenna.dateInstalled) }} &ndash; {{ miscUtils.getDate(antenna.dateRemoved) }}
         <span class="hidden-xxs">)</span>
       </span>
     </span>
@@ -30,139 +26,29 @@
               (click)="removeItem(index)">
         <i class="glyphicon glyphicon-remove"></i>
         <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
-      </button>
-    </span>
-  </div>
-  <div class="panel-body" *ngIf="isOpen">
-    <div class="margin-bottom15" *ngIf=" antenna == null ">
-      No information available for current GNSS Antenna
+        </button>
+        </span>
     </div>
-    <div *ngIf="antenna != null" [ngClass]="{'container-dirty': antenna.dateDeleted}">
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Antenna Type</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="antenna.antennaType"
-                 name="antennaType_{{index}}"/>
+    <div class="panel-body" *ngIf="isOpen">
+        <div class="margin-bottom15" *ngIf=" antenna == null ">
+            No information available for current GNSS Antenna
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Serial Number</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="antenna.serialNumber"
-                 name="antennaSerialNumber_{{index}}"/>
+        <div *ngIf="antenna != null" [ngClass]="{'container-dirty': antenna.dateDeleted}">
+            <div class="form-group">
+                <text-input formControlName="antennaType" controlName="antennaType" [form]="itemGroup">Antenna Type</text-input>
+                <text-input formControlName="serialNumber" controlName="serialNumber" [form]="itemGroup">Serial Number</text-input>
+                <text-input formControlName="antennaReferencePoint" controlName="antennaReferencePoint" [form]="itemGroup">Antenna Reference Point</text-input>
+                <number-input step="0.0001" min="0.0000" formControlName="markerArpUpEcc" controlName="markerArpUpEcc" [form]="itemGroup">Marker ARP Up Eccentricity (m)</number-input>
+                <number-input step="0.0001" min="0.0000" formControlName="markerArpNorthEcc" controlName="markerArpUpEcc" [form]="itemGroup">Marker ARP North Eccentricity (m)</number-input>
+                <number-input step="0.0001" min="0.0000" formControlName="markerArpEastEcc" controlName="markerArpUpEcc" [form]="itemGroup">Marker ARP East Eccentricity (m)</number-input>
+                <number-input step="1" min="-359" max="359" formControlName="alignmentFromTrueNorth" controlName="markerArpUpEcc" [form]="itemGroup">Alignment From True North (degrees)</number-input>
+                <text-input formControlName="antennaRadomeType" controlName="antennaRadomeType" [form]="itemGroup">Radome Type</text-input>
+                <text-input formControlName="radomeSerialNumber" controlName="radomeSerialNumber" [form]="itemGroup">Radome Serial Number</text-input>
+                <text-input formControlName="antennaCableType" controlName="antennaCableType" [form]="itemGroup">Antenna Cable Type</text-input>
+                <number-input step="0.01" min="0" formControlName="antennaCableLength" controlName="antennaCableLength" [form]="itemGroup">Antenna Cable Length (m)</number-input>
+                <datetime-input formControlName="dateInstalled" controlName="dateInstalled" [form]="itemGroup">Date Installed (UTC)</datetime-input>
+                <datetime-input formControlName="dateRemoved" controlName="dateRemoved" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
+                <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">notes</textarea-input>
+            </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Antenna Reference Point</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="antenna.antennaReferencePoint"
-                 name="antennaReferencePoint_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Marker ARP Up Eccentricity (m)</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="number" step="0.0001" min="0.0000"
-                 class="form-control"
-                 [(ngModel)]="antenna.markerArpUpEcc"
-                 name="antennaMarkerArpUpEcc_{{index}}"
-          />
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Marker ARP North Eccentricity (m)</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="number" step="0.0001" min="0.0000"
-                 class="form-control"
-                 [(ngModel)]="antenna.markerArpNorthEcc"
-                 name="antennaMarkerArpNorthEcc_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Marker ARP East Eccentricity (m)</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="number" step="0.0001" min="0.0000"
-                 class="form-control"
-                 [(ngModel)]="antenna.markerArpEastEcc"
-                 name="antennaMarkerArpEastEcc_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Alignment From True North (degrees)</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="number" step="1" min="-359" max="359"
-                 class="form-control"
-                 [(ngModel)]="antenna.alignmentFromTrueNorth"
-                 name="antennaAlignmentFromTrueNorth_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Radome Type</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="antenna.antennaRadomeType"
-                 name="antennaRadomeType_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Radome Serial Number</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="antenna.radomeSerialNumber"
-                 name="antennaRadomeSerialNumber_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Antenna Cable Type</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="antenna.antennaCableType"
-                 name="antennaCableType_{{index}}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Antenna Cable Length (m)</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="number" step="0.01" min="0"
-                 class="form-control"
-                 [(ngModel)]="antenna.antennaCableLength"
-                 name="antennaCableLength_{{index}}"/>
-        </div>
-      </div>
-
-        <datetime-input
-            [(datetime)]="antenna.dateInstalled"
-            [name]=" 'dateInstalled' "
-            [index]="[index]"
-            [required]="true"
-            [label]="'Date Installed (UTC)'">
-        </datetime-input>
-
-        <datetime-input
-            [(datetime)]="antenna.dateRemoved"
-            [name]=" 'dateRemoved' "
-            [index]="[index]"
-            [requiredIfNotCurrent]="true"
-            [label]="'Date Removed (UTC)'">
-        </datetime-input>
-
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Notes</label>
-        <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
-          <textarea maxlength="2000" rows="2" class="form-textarea"
-                    [(ngModel)]="antenna.notes"
-                    name="antennaNotes_{{index}}"></textarea>
-        </div>
-      </div>
     </div>
-  </div>
-</div>

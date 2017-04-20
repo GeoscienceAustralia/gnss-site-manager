@@ -1,4 +1,4 @@
-<div class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading">
         <span class="panel-title cursor-ptr"
               (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
@@ -38,87 +38,17 @@
             No information available for current GNSS pressure sensor
         </div>
         <div *ngIf="pressureSensor != null" [ngClass]="{'container-dirty': pressureSensor.dateDeleted}">
-
-            <text-input
-              [name]="'pressureSensorManufacturer'"
-              [(model)]="pressureSensor.manufacturer"
-              [index]="[index]"
-              [label]="'Manufacturer'"
-              [maxlength]="100"
-              [required]="true">
-            </text-input>
-
-            <text-input
-              [name]="'pressureSensorSerialNumber'"
-              [(model)]="pressureSensor.serialNumber"
-              [index]="[index]"
-              [label]="'Serial Number'"
-              [maxlength]="100"
-              [required]="true">
-            </text-input>
-
-            <number-input
-              [name]="'pressureSensorDataSamplingInterval'"
-              [(model)]="pressureSensor.dataSamplingInterval"
-              [index]="[index]"
-              [label]="'Data Sampling Interval (seconds)'"
-              [step]="0.01"
-              [maxlength]="100">
-            </number-input>
-
-            <number-input
-              [name]="'pressureSensorAccuracyHPa'"
-              [(model)]="pressureSensor.accuracyHPa"
-              [index]="[index]"
-              [label]="'Accuracy (hPa)'"
-              [step]="0.01"
-              [min]="0"
-              [maxlength]="100">
-            </number-input>
-
-            <number-input
-              [name]="'pressureSensorHeightDiffToAntenna'"
-              [(model)]="pressureSensor.heightDiffToAntenna"
-              [index]="[index]"
-              [label]="'Height Diff to Antenna (m)'"
-              [step]="0.001"
-              [min]="0"
-              [maxlength]="100">
-            </number-input>
-
-            <datetime-input
-              [(datetime)]="pressureSensor.calibrationDate"
-              [name]=" 'calibrationDate' "
-              [index]="[index]"
-              [required]="false"
-              [label]="'Calibration Date'">
-            </datetime-input>
-
-            <datetime-input
-              [(datetime)]="pressureSensor.startDate"
-              [name]=" 'effectiveDateStart' "
-              [index]="[index]"
-              [required]="true"
-              [label]="'Date Installed (UTC)'">
-            </datetime-input>
-
-            <datetime-input
-              [(datetime)]="pressureSensor.endDate"
-              [name]=" 'effectiveDateEnd' "
-              [index]="[index]"
-              [requiredIfNotCurrent]="true"
-              [label]="'Date Removed (UTC)'">
-            </datetime-input>
-
-            <textarea-input
-              [name]="'pressureSensorNotes'"
-              [(model)]="pressureSensor.notes"
-              [index]="[index]"
-              [label]="'Notes'"
-              [rows]="2"
-              [maxlength]="2000">
-            </textarea-input>
-
+            <div class="form-group">
+                <text-input formControlName="manufacturer" controlName="manufacturer" [form]="itemGroup">Manufacturer</text-input>
+                <text-input formControlName="serialNumber" controlName="serialNumber" [form]="itemGroup">Serial Number</text-input>
+                <number-input formControlName="dataSamplingInterval" controlName="dataSamplingInterval" [form]="itemGroup" step="0.01">Data Sampling Interval (seconds)</number-input>
+                <number-input formControlName="accuracyHPa" controlName="accuracyHPa" [form]="itemGroup"  [min]="0" step="0.01">Accuracy (hPa)</number-input>
+                <number-input formControlName="heightDiffToAntenna" controlName="heightDiffToAntenna" [form]="itemGroup" [min]="0" step="0.01">Height Diff to Antenna (m)</number-input>
+                <datetime-input formControlName="calibrationDate" controlName="calibrationDate" [index]="index" [form]="itemGroup">Calibration Date</datetime-input>
+                <datetime-input formControlName="startDate" controlName="startDate" [index]="index" [form]="itemGroup">Date Installed (UTC)</datetime-input>
+                <datetime-input formControlName="endDate" controlName="endDate" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
+                <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">notes</textarea-input>
+            </div>
        </div>
     </div>
 </div>

@@ -1,0 +1,42 @@
+<div [formGroup]="siteIdentificationForm" class="panel panel-level-2">
+    <div class="panel-heading">
+        <span class="panel-title cursor-ptr" (click)="status.isSiteIdentificationGroupOpen = miscUtils.scrollIntoView($event, status.isSiteIdentificationGroupOpen)">
+              <i class="glyphicon"
+                 [ngClass]="{'glyphicon-minus-sign': status.isSiteIdentificationGroupOpen, 'glyphicon-plus-sign': !status.isSiteIdentificationGroupOpen}">
+              </i>
+              Site Identification
+        </span>
+        <span *ngIf="isLoading" class="pull-right">
+              <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
+        </span>
+    </div>
+    <div class="panel-body" *ngIf="status.isSiteIdentificationGroupOpen">
+        <div class="margin-bottom15" *ngIf=" siteIdentification == null ">
+            No information available for the GNSS site: {{siteId}}
+        </div>
+        <div class="margin-bottom15" *ngIf=" siteIdentification != null ">
+            <div class="form-group">
+                <text-input formControlName="fourCharacterID" controlName="fourCharacterID" [form]="siteIdentificationForm">Four Character Id</text-input>
+                <text-input formControlName="siteName" controlName="siteName" [form]="siteIdentificationForm">Site Name</text-input>
+                <!-- These fields exist in the XML but not in the Java bindings.
+                <text-input formControlName="monumentNumber" controlName="monumentNumber" [form]="siteIdentificationForm">Monument Number</text-input>
+                <text-input formControlName="receiverNumber" controlName="receiverNumber" [form]="siteIdentificationForm">Receiver Number</text-input> -->
+                <text-input formControlName="monumentInscription" controlName="monumentInscription" [form]="siteIdentificationForm">Monument Inscription</text-input>
+                <text-input formControlName="iersDOMESNumber" controlName="iersDOMESNumber" [form]="siteIdentificationForm">iers DOMES Number</text-input>
+                <text-input formControlName="cdpNumber" controlName="cdpNumber" [form]="siteIdentificationForm">cdp Number</text-input>
+                <text-input formControlName="monumentDescription" controlName="monumentDescription" [form]="siteIdentificationForm">Monument Description</text-input>
+                <text-input formControlName="heightOfTheMonument" controlName="heightOfTheMonument" [form]="siteIdentificationForm">Height Of The Monument</text-input>
+                <text-input formControlName="monumentFoundation" controlName="monumentFoundation" [form]="siteIdentificationForm">Monument Foundation</text-input>
+                <text-input formControlName="foundationDepth" controlName="foundationDepth" [form]="siteIdentificationForm">Foundation Depth</text-input>
+                <text-input formControlName="markerDescription" controlName="markerDescription" [form]="siteIdentificationForm">Marker Description</text-input>
+                <datetime-input formControlName="dateInstalled" controlName="dateInstalled" [form]="siteIdentificationForm">Date Installed</datetime-input>
+                <text-input formControlName="geologicCharacteristic" controlName="geologicCharacteristic" [form]="siteIdentificationForm">Geologic Characteristic</text-input>
+                <text-input formControlName="bedrockType" controlName="bedrockType" [form]="siteIdentificationForm">Bedrock Type</text-input>
+                <text-input formControlName="bedrockCondition" controlName="bedrockCondition" [form]="siteIdentificationForm">Bedrock Condition</text-input>
+                <text-input formControlName="fractureSpacing" controlName="fractureSpacing" [form]="siteIdentificationForm">Fracture Spacing</text-input>
+                <text-input formControlName="faultZonesNearby" controlName="faultZonesNearby" [form]="siteIdentificationForm">fault Zones Nearby</text-input>
+                <text-input formControlName="distanceActivity" controlName="distanceActivity" [form]="siteIdentificationForm">Distance Activity</text-input>
+                <textarea-input formControlName="notes" controlName="notes" [form]="siteIdentificationForm">Notes</textarea-input>
+        </div>
+    </div>
+</div>

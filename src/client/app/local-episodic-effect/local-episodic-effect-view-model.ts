@@ -10,11 +10,14 @@ export class LocalEpisodicEffectViewModel extends AbstractViewModel {
 
     public event: string;
 
-    constructor() {
+    /**
+     * @param blank - if blank then don't add any default values - leave completely blank (empty) with '' | 0
+     */
+    constructor(blank: boolean = false) {
         super();
         let presentDT: string = MiscUtils.getPresentDateTime();
 
-        this.startDate = presentDT;
+        this.startDate = blank ? '' : presentDT;
         this.endDate = '';
         this.event = '';
     }

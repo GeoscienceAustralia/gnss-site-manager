@@ -1,162 +1,98 @@
 <div class="container centered clear-pad">
-  <div class="col-md-12 col-sm-12 col-xs-12 col-xxs-12 pad-sm">
-    <form #siteInfoForm="ngForm" novalidate class="form-horizontal">
-      <div class="panel-group">
-        <div class="panel panel-level-1">
-          <div class="panel-heading">
-            <span class="panel-title cursor-ptr"
-                  (click)="status.isSiteInfoGroupOpen = miscUtils.scrollIntoView($event, status.isSiteInfoGroupOpen)">
-              <i class="glyphicon"
-                 [ngClass]="{'glyphicon-minus-sign': status.isSiteInfoGroupOpen, 'glyphicon-plus-sign': !status.isSiteInfoGroupOpen}">
-              </i>
-              Site Information
-            </span>
-            <span *ngIf="isLoading" class="pull-right">
-              <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
-            </span>
-          </div>
-          <div class="panel-body" *ngIf="status.isSiteInfoGroupOpen">
-            <div class="margin-bottom15" *ngIf=" siteIdentification == null ">
-              No information available for the GNSS site: {{siteId}}
+    <div class="col-md-12 col-sm-12 col-xs-12 col-xxs-12 pad-sm">
+        <form [formGroup]="siteInfoForm" novalidate class="form-horizontal">
+            <div class="panel-group">
+                <div [formGroup]="siteInfoForm" class="panel panel-level-1">
+                    <div class="panel-heading">
+                        <span class="panel-title cursor-ptr"
+                              (click)="isGroupOpen = miscUtils.scrollIntoView($event, isGroupOpen)">
+                            <i class="glyphicon"
+                               [ngClass]="{'glyphicon-minus-sign': isGroupOpen, 'glyphicon-plus-sign': !isGroupOpen}"></i>
+                            Site Information
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <site-identification [siteInfoForm]="siteInfoForm"
+                                             [siteLogModel]="siteLogModel"
+                                             [originalSiteLogModel]="siteLogOrigin">
+                        </site-identification>
+
+                        <site-location [siteInfoForm]="siteInfoForm"
+                                       [siteLogModel]="siteLogModel"
+                                       [originalSiteLogModel]="siteLogOrigin">
+                        </site-location>
+
+                        <gnss-responsible-party-group [siteInfoForm]="siteInfoForm"
+                                                      [partyName]="responsiblePartyType.siteContact"
+                                                      [siteLogModel]="siteLogModel"
+                                                      [originalSiteLogModel]="siteLogOrigin">
+                        </gnss-responsible-party-group>
+
+                        <gnss-responsible-party-group [siteInfoForm]="siteInfoForm"
+                                                      [partyName]="responsiblePartyType.siteMetadataCustodian"
+                                                      [siteLogModel]="siteLogModel"
+                                                      [originalSiteLogModel]="siteLogOrigin">
+                        </gnss-responsible-party-group>
+
+                        <!--TODO - WOrk out if SiteDataCentre is a responsibleParty or under MoreInformation-->
+                        <!--<gnss-responsible-party-group [siteInfoForm]="siteInfoForm" [partyName]="responsiblePartyType.siteDataCenter"-->
+                        <!--[siteLogModel]="siteLogModel"-->
+                        <!--[originalSiteLogModel]="siteLogOrigin"></gnss-responsible-party-group>-->
+
+                        <gnss-responsible-party-group [siteInfoForm]="siteInfoForm"
+                                                      [partyName]="responsiblePartyType.siteDataSource"
+                                                      [siteLogModel]="siteLogModel"
+                                                      [originalSiteLogModel]="siteLogOrigin">
+                        </gnss-responsible-party-group>
+                    </div>
+                </div>
+
+                <gnss-receivers-group [siteInfoForm]="siteInfoForm"
+                                      [siteLogModel]="siteLogModel"
+                                      [originalSiteLogModel]="siteLogOrigin">
+                </gnss-receivers-group>
+
+                <gnss-antenna-group [siteInfoForm]="siteInfoForm"
+                                    [siteLogModel]="siteLogModel"
+                                    [originalSiteLogModel]="siteLogOrigin">
+                </gnss-antenna-group>
+
+                <surveyed-local-ties-group [siteInfoForm]="siteInfoForm"
+                                           [siteLogModel]="siteLogModel"
+                                           [originalSiteLogModel]="siteLogOrigin">
+                </surveyed-local-ties-group>
+
+                <frequency-standard-group [siteInfoForm]="siteInfoForm"
+                                          [siteLogModel]="siteLogModel"
+                                          [originalSiteLogModel]="siteLogOrigin">
+                </frequency-standard-group>
+
+                <local-episodic-effects-group [siteInfoForm]="siteInfoForm"
+                                              [siteLogModel]="siteLogModel"
+                                              [originalSiteLogModel]="siteLogOrigin">
+                </local-episodic-effects-group>
+
+                <humidity-sensors-group [siteInfoForm]="siteInfoForm"
+                                        [siteLogModel]="siteLogModel"
+                                        [originalSiteLogModel]="siteLogOrigin">
+                </humidity-sensors-group>
+
+                <pressure-sensors-group [siteInfoForm]="siteInfoForm"
+                                        [siteLogModel]="siteLogModel"
+                                        [originalSiteLogModel]="siteLogOrigin">
+                </pressure-sensors-group>
+
+                <temperature-sensors-group [siteInfoForm]="siteInfoForm"
+                                           [siteLogModel]="siteLogModel"
+                                           [originalSiteLogModel]="siteLogOrigin">
+                </temperature-sensors-group>
+
+                <water-vapor-sensors-group [siteInfoForm]="siteInfoForm"
+                                           [siteLogModel]="siteLogModel"
+                                           [originalSiteLogModel]="siteLogOrigin">
+                </water-vapor-sensors-group>
+
             </div>
-            <div class="margin-bottom15" *ngIf=" siteIdentification != null ">
-              <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">Four Character Id</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                  <input type="text" minlength="4" maxlength="9"
-                         class="form-control" required
-                         [(ngModel)]="siteIdentification.fourCharacterID"
-                         name="fourCharacterID"
-                         #fourCharacterID="ngModel"
-                         disabled="{{!hasEditRole}}"/>
-                  <small [hidden]="fourCharacterID.valid || fourCharacterID.pristine"
-                         class="alert alert-danger">
-                    "Four Character Id" is required (minimum 4 characters)
-                  </small>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">Site Name</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                  <input type="text" maxlength="100" class="form-control" required
-                         [(ngModel)]="siteIdentification.siteName" name="siteName" #siteName="ngModel"
-                         disabled="{{!hasEditRole}}"/>
-                  <small [hidden]="siteName.valid || siteName.pristine" class="alert alert-danger">
-                    "Site Name" is required
-                  </small>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">IERS DOMES Number</label>
-                <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                  <input type="text" maxlength="100" class="form-control" required
-                         [(ngModel)]="siteIdentification.iersDOMESNumber" name="iersDomesNumber" #iersDomesNumber="ngModel"
-                         disabled="{{!hasEditRole}}"/>
-                  <small [hidden]="iersDomesNumber.valid || iersDomesNumber.pristine" class="alert alert-danger">
-                    "IERS DOMES Number" is required
-                  </small>
-                </div>
-              </div>
-              <div *ngIf="siteLocation !=null">
-                <div class="form-group">
-                  <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">City / Town</label>
-                  <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="siteLocation.city" name="siteCity" #siteCity="ngModel"
-                           disabled="{{!hasEditRole}}"/>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="siteLocation !=null">
-                <div class="form-group">
-                  <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">State</label>
-                  <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="text" maxlength="100" class="form-control"
-                           [(ngModel)]="siteLocation.state" name="siteState" #siteState="ngModel"
-                           disabled="{{!hasEditRole}}"/>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="siteLocation !=null">
-                <div class="form-group">
-                  <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Country</label>
-                  <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                    <input type="text" maxlength="100" class="form-control"
-                       [(ngModel)]="siteLocation.countryCodeISO.value" name="siteCountry" #siteCountry="ngModel"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--<div class="panel panel-level-2">
-              <div class="panel-heading">
-                <span class="panel-title cursor-ptr"
-                      (click)="status.isSiteMediaOpen = miscUtils.scrollIntoView($event, status.isSiteMediaOpen)">
-                  <i class="glyphicon"
-                     [ngClass]="{'glyphicon-minus-sign': status.isSiteMediaOpen, 'glyphicon-plus-sign': !status.isSiteMediaOpen}">
-                  </i>
-                  Site Media (Photos, PDFs, etc)
-                </span>
-              </div>
-              <div class="panel-body" *ngIf="status.isSiteMediaOpen">
-                <div class="form-group">
-                  <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">View PDFs </label>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-5 col-sm-6 col-xs-6 col-xxs-12 control-label">View Photos</label>
-                </div>
-              </div>
-            </div>-->
-            <gnss-responsible-party [partyName]="siteContactName"
-                                    [status]="status"
-                                    [responsibleParties]="siteContacts"
-                                    [dataModel]="siteLogModel.siteContact"
-                                    [dataModelCopy]="siteLogOrigin.siteContact"></gnss-responsible-party>
-            <gnss-responsible-party [partyName]="siteMetadataCustodianName"
-                                    [status]="status"
-                                    [responsibleParties]="[siteMetadataCustodian]"
-                                    [dataModel]="siteLogModel.siteMetadataCustodian"
-                                    [dataModelCopy]="siteLogOrigin.siteMetadataCustodian"></gnss-responsible-party>
-            <gnss-responsible-party [partyName]="siteDataCenterName"
-                                    [status]="status"
-                                    [responsibleParties]="siteDataCenters"
-                                    [dataModel]="siteLogModel.siteDataCenter"
-                                    [dataModelCopy]="siteLogOrigin.siteDataCenter"></gnss-responsible-party>
-            <gnss-responsible-party [partyName]="siteDataSourceName"
-                                    [status]="status"
-                                    [responsibleParties]="siteDataSource ? [siteDataSource] : []"
-                                    [dataModel]="siteLogModel.siteDataSource"
-                                    [dataModelCopy]="siteLogOrigin.siteDataSource"></gnss-responsible-party>
-          </div>
-        </div>
-
-        <gnss-receivers-group [siteLogModel]="siteLogModel"
-                              [originalSiteLogModel]="siteLogOrigin"></gnss-receivers-group>
-
-        <gnss-antenna-group [siteLogModel]="siteLogModel"
-                            [originalSiteLogModel]="siteLogOrigin"></gnss-antenna-group>
-
-        <surveyed-local-ties-group [siteLogModel]="siteLogModel"
-                                  [originalSiteLogModel]="siteLogOrigin"></surveyed-local-ties-group>
-
-        <frequency-standard-group [siteLogModel]="siteLogModel"
-                                  [originalSiteLogModel]="siteLogOrigin"></frequency-standard-group>
-
-        <local-episodic-effects-group [siteLogModel]="siteLogModel"
-                                  [originalSiteLogModel]="siteLogOrigin"></local-episodic-effects-group>
-
-        <humidity-sensors-group [siteLogModel]="siteLogModel"
-                                     [originalSiteLogModel]="siteLogOrigin"></humidity-sensors-group>
-
-        <pressure-sensors-group [siteLogModel]="siteLogModel"
-                                     [originalSiteLogModel]="siteLogOrigin"></pressure-sensors-group>
-
-        <temperature-sensors-group [siteLogModel]="siteLogModel"
-                                [originalSiteLogModel]="siteLogOrigin"></temperature-sensors-group>
-
-        <water-vapor-sensors-group [siteLogModel]="siteLogModel"
-                                   [originalSiteLogModel]="siteLogOrigin"></water-vapor-sensors-group>
-
-      </div>
-    </form>
-  </div>
+        </form>
+    </div>
 </div>

@@ -1,23 +1,19 @@
-<div class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading">
-        <span class="panel-title cursor-ptr"
-              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+        <span class="panel-title cursor-ptr" (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
             <i class="glyphicon"
                [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
             </i>
             <span *ngIf="index == 0">
                 <span class="hidden-xsm">Current </span>
-                <span class="hidden-xxs">Receiver (</span>
-                Since {{ miscUtils.getDate(gnssReceiver.dateInstalled) }}
-                <span class="hidden-xxs">)</span>
-            </span>
-            <span *ngIf="index != 0">
+        <span class="hidden-xxs">Receiver (</span> Since {{ miscUtils.getDate(gnssReceiver.dateInstalled) }}
+        <span class="hidden-xxs">)</span>
+        </span>
+        <span *ngIf="index != 0">
                 <span class="hidden-xsm">Previous </span>
-                <span class="hidden-xxs">Receiver (</span>
-                {{ miscUtils.getDate(gnssReceiver.dateInstalled) }} &ndash;
-                {{ miscUtils.getDate(gnssReceiver.dateRemoved) }}
-                <span class="hidden-xxs">)</span>
-            </span>
+        <span class="hidden-xxs">Receiver (</span> {{ miscUtils.getDate(gnssReceiver.dateInstalled) }} &ndash; {{ miscUtils.getDate(gnssReceiver.dateRemoved) }}
+        <span class="hidden-xxs">)</span>
+        </span>
         </span>
         <span *ngIf="gnssReceiver.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
@@ -30,7 +26,7 @@
                   (click)="removeItem(index)">
             <i class="glyphicon glyphicon-remove"></i>
             <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
-          </button>
+        </button>
         </span>
     </div>
     <div class="panel-body" *ngIf="isOpen">
@@ -38,83 +34,17 @@
             No information available for GNSS Receivers
         </div>
         <div *ngIf="gnssReceiver != null" [ngClass]="{'container-dirty': gnssReceiver.dateDeleted}">
-
-            <text-input
-                [name]="'gnssReceiverReceiverType'"
-                [(model)]="gnssReceiver.receiverType"
-                [index]="[index]"
-                [label]="'Receiver Type'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'gnssReceiverManufacturerSerialNumber'"
-                [(model)]="gnssReceiver.manufacturerSerialNumber"
-                [index]="[index]"
-                [label]="'Serial Number'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'gnssReceiverFirmwareVersion'"
-                [(model)]="gnssReceiver.firmwareVersion"
-                [index]="[index]"
-                [label]="'Firmware Version'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'gnssReceiverSatelliteSystem'"
-                [(model)]="gnssReceiver.satelliteSystem"
-                [index]="[index]"
-                [label]="'Satellite System'"
-                [maxlength]="100">
-            </text-input>
-
-
-
-            <number-input
-                [name]="'gnssReceiverElevationCutoffSetting'"
-                [(model)]="gnssReceiver.elevationCutoffSetting"
-                [index]="[index]"
-                [label]="'Elevation Cutoff Setting (degrees)'"
-                [step]="1"
-                [maxlength]="100">
-            </number-input>
-
-            <number-input
-                [name]="'gnssReceiverTemperatureStabilization'"
-                [(model)]="gnssReceiver.temperatureStabilization"
-                [index]="[index]"
-                [label]="'Temperature Stabilization (&deg;C)'"
-                [step]="1"
-                [maxlength]="100">
-            </number-input>
-
-            <datetime-input
-                [(datetime)]="gnssReceiver.dateInstalled"
-                [name]=" 'dateInstalled' "
-                [index]="[index]"
-                [required]="true"
-                [label]="'Date Installed (UTC)'">
-            </datetime-input>
-
-            <datetime-input
-                [(datetime)]="gnssReceiver.dateRemoved"
-                [name]=" 'dateRemoved' "
-                [index]="[index]"
-                [requiredIfNotCurrent]="true"
-                [label]="'Date Removed (UTC)'">
-            </datetime-input>
-
-            <textarea-input
-                [name]="'gnssReceiverNotes'"
-                [(model)]="gnssReceiver.notes"
-                [index]="[index]"
-                [label]="'Notes'"
-                [rows]="2"
-                [maxlength]="2000">
-            </textarea-input>
+            <text-input formControlName="receiverType" controlName="receiverType" [form]="itemGroup">Receiver Type</text-input>
+            <text-input formControlName="manufacturerSerialNumber" controlName="manufacturerSerialNumber" [form]="itemGroup">Serial Number</text-input>
+            <text-input formControlName="firmwareVersion" controlName="firmwareVersion" [form]="itemGroup">Firmware Version</text-input>
+            <text-input formControlName="satelliteSystem" controlName="satelliteSystem" [form]="itemGroup">Satellite System</text-input>
+            <number-input formControlName="elevationCutoffSetting" controlName="elevationCutoffSetting" [form]="itemGroup"
+                [step]="1">Elevation Cutoff Setting (degrees)</number-input>
+            <number-input formControlName="temperatureStabilization" controlName="temperatureStabilization" [form]="itemGroup"
+                [step]="1">Temperature Stabilization (&deg;C)</number-input>
+            <datetime-input formControlName="dateInstalled" controlName="dateInstalled" [form]="itemGroup">Date Installed (UTC)</datetime-input>
+            <datetime-input formControlName="dateRemoved" controlName="dateRemoved" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
+            <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">Notes</textarea-input>
         </div>
     </div>
 </div>

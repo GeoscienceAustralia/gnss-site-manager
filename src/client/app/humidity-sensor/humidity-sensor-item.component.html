@@ -1,21 +1,18 @@
-<div class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading">
-        <span class="panel-title cursor-ptr"
-              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+        <span class="panel-title cursor-ptr" (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
             <i class="glyphicon"
                [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
             </i>
             <span *ngIf="index == 0">
                 <span class="hidden-xsm">Current </span>
-                <span class="hidden-xxs">Humidity Sensor (</span>
-                Since {{ miscUtils.getDate(humiditySensor.startDate) }}
+                <span class="hidden-xxs">Humidity Sensor (</span> Since {{ miscUtils.getDate(humiditySensor.startDate) }}
                 <span class="hidden-xxs">)</span>
             </span>
             <span *ngIf="index != 0">
                 <span class="hidden-xsm">Previous </span>
                 <span class="hidden-xxs">Humidity Sensor (</span>
-                {{ miscUtils.getDate(humiditySensor.startDate) }} &ndash;
-                {{ miscUtils.getDate(humiditySensor.endDate) }}
+                {{ miscUtils.getDate(humiditySensor.startDate) }} &ndash; {{ miscUtils.getDate(humiditySensor.endDate) }}
                 <span class="hidden-xxs">)</span>
             </span>
         </span>
@@ -28,9 +25,8 @@
                   class="btn btn-danger btn-xs"
                   title="{{getRemoveOrDeletedText()}} the humidity sensor"
                   (click)="removeItem(index)">
-            <i class="glyphicon glyphicon-remove"></i>
-            <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
-          </button>
+                <i class="glyphicon glyphicon-remove"></i> <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
+            </button>
         </span>
     </div>
     <div class="panel-body" *ngIf="isOpen">
@@ -38,92 +34,18 @@
             No information available for current GNSS humidity sensor
         </div>
         <div *ngIf="humiditySensor != null" [ngClass]="{'container-dirty': humiditySensor.dateDeleted}">
-
-            <text-input
-                [name]="'humiditySensorManufacturer'"
-                [(model)]="humiditySensor.manufacturer"
-                [index]="[index]"
-                [label]="'Manufacturer'"
-                [maxlength]="100"
-                [required]="true">
-            </text-input>
-
-            <text-input
-                [name]="'humiditySensorSerialNumber'"
-                [(model)]="humiditySensor.serialNumber"
-                [index]="[index]"
-                [label]="'Serial Number'"
-                [maxlength]="100"
-                [required]="true">
-            </text-input>
-
-            <number-input
-                [name]="'humiditySensorDataSamplingInterval'"
-                [(model)]="humiditySensor.dataSamplingInterval"
-                [index]="[index]"
-                [label]="'Data Sampling Interval (seconds)'"
-                [step]="0.01"
-                [maxlength]="100">
-            </number-input>
-
-            <number-input
-                [name]="'humiditySensorAccuracyPercentRelativeHumidity'"
-                [(model)]="humiditySensor.accuracyPercentRelativeHumidity"
-                [index]="[index]"
-                [label]="'Accuracy (% rel h)'"
-                [step]="0.01"
-                [maxlength]="100">
-            </number-input>
-
-            <text-input
-                [name]="'humiditySensorAspiration'"
-                [(model)]="humiditySensor.aspiration"
-                [index]="[i]"
-                [label]="'Aspiration (unaspirated/natural/fan/etc)'"
-                [maxlength]="100">
-            </text-input>
-
-            <number-input
-                [name]="'humiditySensorHeightDiffToAntenna'"
-                [(model)]="humiditySensor.heightDiffToAntenna"
-                [index]="[index]"
-                [label]="'Height Diff to Antenna (m)'"
-                [step]="0.01"
-                [maxlength]="100">
-            </number-input>
-
-            <datetime-input
-                [(datetime)]="humiditySensor.calibrationDate"
-                [name]=" 'calibrationDate' "
-                [index]="[index]"
-                [required]="false"
-                [label]="'Calibration Date'">
-            </datetime-input>
-
-            <datetime-input
-                [(datetime)]="humiditySensor.startDate"
-                [name]=" 'effectiveDateStart' "
-                [index]="[index]"
-                [required]="true"
-                [label]="'Date Installed (UTC)'">
-            </datetime-input>
-
-            <datetime-input
-                [(datetime)]="humiditySensor.endDate"
-                [name]=" 'effectiveDateEnd' "
-                [index]="[index]"
-                [requiredIfNotCurrent]="true"
-                [label]="'Date Removed (UTC)'">
-            </datetime-input>
-
-            <textarea-input
-                [name]="'humiditySensorNotes'"
-                [(model)]="humiditySensor.notes"
-                [index]="[index]"
-                [label]="'Notes'"
-                [rows]="2"
-                [maxlength]="2000">
-            </textarea-input>
+            <div class="form-group">
+                <text-input formControlName="manufacturer" controlName="manufacturer" [form]="itemGroup">Manufacturer</text-input>
+                <text-input formControlName="serialNumber" controlName="serialNumber" [form]="itemGroup">Serial Number</text-input>
+                <number-input formControlName="dataSamplingInterval" controlName="dataSamplingInterval" [form]="itemGroup">Data Sampling Interval (seconds)</number-input>
+                <number-input formControlName="accuracyPercentRelativeHumidity" controlName="accuracyPercentRelativeHumidity" [form]="itemGroup">Accuracy (% rel h)</number-input>
+                <text-input formControlName="aspiration" controlName="aspiration" [form]="itemGroup">Aspiration (unaspirated/natural/fan/etc)</text-input>
+                <number-input formControlName="heightDiffToAntenna" controlName="heightDiffToAntenna" [form]="itemGroup">Height Diff to Antenna (m)</number-input>
+                <datetime-input formControlName="calibrationDate" controlName="calibrationDate" [index]="index" [form]="itemGroup">Calibration Date</datetime-input>
+                <datetime-input formControlName="startDate" controlName="startDate" [index]="index" [form]="itemGroup">Date Installed (UTC)</datetime-input>
+                <datetime-input formControlName="endDate" controlName="endDate" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
+                <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">notes</textarea-input>
+            </div>
         </div>
     </div>
 </div>

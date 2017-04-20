@@ -1,27 +1,18 @@
 <div class="form-group">
 
-    <label *ngIf="required" class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">{{label}}</label>
-    <label *ngIf="!required" class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">{{label}}</label>
+    <label *ngIf="required" class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required"><ng-content></ng-content></label>
+    <label *ngIf="!required" class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label"><ng-content></ng-content></label>
 
-    <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
+    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
 
+             <!--class="form-control"-->
          <textarea
-             class="form-textarea"
+             class="form-control"
+             [(ngModel)]="model"
              required="{{required}}"
-             rows="{{rows}}"
-             maxlength="{{maxlength}}"
-             [ngModel]="model"
-             (ngModelChange)="change($event)"
-             name="{{name}}_{{index}}"
-             #name="ngModel">
+             rows="{{rows}}">
          </textarea>
 
-         <small
-             *ngIf="required == true"
-             [hidden]="name.valid || name.pristine"
-             class="alert alert-danger">
-             "{{label}}" is required <span *ngIf="minlength && minlength  != ''"> (minimum {{minlength}} characters)</span>
-         </small>
-
+        <small>{{getErrorReport(controlName)}}</small>
     </div>
 </div>

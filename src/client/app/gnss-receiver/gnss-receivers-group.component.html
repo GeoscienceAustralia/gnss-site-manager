@@ -1,4 +1,4 @@
-<div class="panel panel-level-1">
+<div [formGroup]="siteInfoForm" class="panel panel-level-1">
     <div class="panel-heading">
       <span class="panel-title cursor-ptr"
             (click)="isGroupOpen = miscUtils.scrollIntoView($event, isGroupOpen)">
@@ -9,7 +9,7 @@
         </span>
         <span class="pull-right">
             <button class="btn btn-similar btn-xs" title="Add a new {{getItemName()}}"
-                    [disabled]="hasGroupANewItem" (click)="addNew()">
+                    [disabled]="hasGroupANewItem" (click)="addNew($event); miscUtils.showFullView($event);">
             <i class="glyphicon glyphicon-plus-sign"></i>
             New <span class="hidden-xxs">Receiver</span>
             </button>
@@ -20,10 +20,11 @@
             No information available for GNSS Receivers
         </div>
         <div *ngFor="let gnssReceiver of getItemsCollection(); let i = index">
-            <!-- [geodesyEvent] - send event to child components -->
-            <!-- (open/close Above/Below Event) - receive events from child components -->
-            <!-- (returnEvents) - single point to call events on parent -->
-            <gnss-receiver-item [gnssReceiver]="gnssReceiver"
+                <!-- [geodesyEvent] - send event to child components -->
+                <!-- (open/close Above/Below Event) - receive events from child components -->
+                <!-- (returnEvents) - single point to call events on parent -->
+            <gnss-receiver-item [groupArray]="groupArrayForm"
+                                  [gnssReceiver]="gnssReceiver"
                                   [total]="itemProperties.length"
                                   [index]="i"
                                   [geodesyEvent]="geodesyEvent"

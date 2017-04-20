@@ -8,9 +8,12 @@ export class FrequencyStandardViewModel extends AbstractViewModel {
   public inputFrequency: number;
   public notes: string;
 
-  constructor() {
+    /**
+     * @param blank - if blank then don't add any default values - leave completely blank (empty) with '' | 0
+     */
+   constructor(blank: boolean = false) {
     super();
-    this.startDate = MiscUtils.getPresentDateTime();
+    this.startDate = blank ? '' : MiscUtils.getPresentDateTime();
     this.endDate = '';
     this.standardType =  '';
     this.inputFrequency =  0;

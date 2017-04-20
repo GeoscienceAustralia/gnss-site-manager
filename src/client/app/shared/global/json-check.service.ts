@@ -43,6 +43,29 @@ export class JsonCheckService {
     tectonicPlate: { value: '' }
   };
 
+    private siteIdentification: any = {
+        fourCharacterID: '',
+        siteName: '',
+        monumentNumber: 0,
+        receiverNumber: 0,
+        monumentInscription: '',
+        iersDOMESNumber: '',
+        cdpNumber: '',
+        monumentDescription: '',
+        heightOfTheMonument: 0.0,
+        monumentFoundation: '',
+        foundationDepth: 0.0,
+        markerDescription: '',
+        dateInstalled: '',
+        geologicCharacteristic: '',
+        bedrockType: '',
+        bedrockCondition: '',
+        fractureSpacing: '',
+        faultZonesNearby: '',
+        distanceActivity: '',
+        notes: ''
+    };
+
   private responsibleParty: any = {
     individualName: {
       characterString: {'gco:CharacterString': ''}
@@ -265,6 +288,11 @@ export class JsonCheckService {
     return this.siteLocation;
   }
 
+    public getValidSiteIdentification(json: any): any {
+        this.merge(json, this.siteIdentification);
+        return json;
+    }
+
   /**
    * For Site Owner, Site Contact, Site Metadata Custodian,Site Data Center and Site Data Source
    */
@@ -278,7 +306,7 @@ export class JsonCheckService {
   }
 
   public getValidReceiver(json: any): any {
-    this.merge(json, this.receiver);
+    // this.merge(json, this.receiver);
     return json;
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
@@ -37,7 +37,7 @@ export function main() {
     ];
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [FormsModule, HttpModule, CollapseModule.forRoot(), RouterTestingModule.withRoutes(config)],
+        imports: [FormsModule, ReactiveFormsModule, HttpModule, CollapseModule.forRoot(), RouterTestingModule.withRoutes(config)],
         declarations: [TestComponent, ToolbarComponent, FooterComponent,
           NavbarComponent, AppComponent,
           HomeComponent, AboutComponent],

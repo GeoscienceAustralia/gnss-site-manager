@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { MiscUtils } from '../shared/index';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { AbstractGroup } from '../shared/abstract-groups-items/abstract-group';
 import { LocalEpisodicEffectViewModel } from './local-episodic-effect-view-model';
 
@@ -11,23 +11,29 @@ import { LocalEpisodicEffectViewModel } from './local-episodic-effect-view-model
     selector: 'local-episodic-effects-group',
     templateUrl: 'local-episodic-effects-group.component.html',
 })
-export class LocalEpisodicEffectsGroupComponent extends AbstractGroup<LocalEpisodicEffectViewModel> {
-    public miscUtils: any = MiscUtils;
+export class LocalEpisodicEffectsGroupComponent extends AbstractGroup<LocalEpisodicEffectViewModel> implements OnInit {
+    static compare(obj1: LocalEpisodicEffectViewModel, obj2: LocalEpisodicEffectViewModel): number {
+        let date1: string = obj1.startDate;
+        let date2: string = obj2.startDate;
+        return AbstractGroup.compareDates(date1, date2);
+    }
 
     @Input()
     set siteLogModel(siteLogModel: any) {
-        this.setItemsCollection(siteLogModel.localEpisodicEffects);
-        console.log('LocalEpisodicEffects: ', this.getItemsCollection());
+        siteLogModel && this.setItemsCollection(siteLogModel.localEpisodicEffects);
     }
 
     @Input()
     set originalSiteLogModel(originalSiteLogModel: any) {
-        this.setItemsOriginalCollection(originalSiteLogModel.localEpisodicEffects);
-        console.log('LocalEpisodicEffects (Original): ', this.getItemsOriginalCollection());
+        originalSiteLogModel && this.setItemsOriginalCollection(originalSiteLogModel.localEpisodicEffects);
     }
 
     constructor() {
         super();
+    }
+
+    ngOnInit() {
+        this.setupForm();
     }
 
     getItemName(): string {
@@ -35,15 +41,18 @@ export class LocalEpisodicEffectsGroupComponent extends AbstractGroup<LocalEpiso
     }
 
     compare(obj1: LocalEpisodicEffectViewModel, obj2: LocalEpisodicEffectViewModel): number {
-        let date1: string = obj1.startDate;
-        let date2: string = obj2.startDate;
-        return AbstractGroup.compareDates(date1, date2);
+        return LocalEpisodicEffectsGroupComponent.compare(obj1, obj2);
     }
 
-    /* **************************************************
-     * Other methods
-     */
-    newViewModelItem(): LocalEpisodicEffectViewModel {
-        return new LocalEpisodicEffectViewModel();
+        /* **************************************************
+         * Other methods
+         */
+    newViewModelItem(blank?: boolean): LocalEpisodicEffectViewModel {
+        return new LocalEpisodicEffectViewModel(blank);
+    }
+
+    private setupForm() {
+        this.groupArrayForm =  new FormArray([]);
+        this.siteInfoForm.addControl('localEpisodicEffects', this.groupArrayForm);
     }
 }

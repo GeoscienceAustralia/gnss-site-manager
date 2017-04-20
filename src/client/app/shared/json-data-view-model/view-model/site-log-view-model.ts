@@ -5,19 +5,20 @@ import { LocalEpisodicEffectViewModel } from '../../../local-episodic-effect/loc
 import { HumiditySensorViewModel } from '../../../humidity-sensor/humidity-sensor-view-model';
 import { PressureSensorViewModel } from '../../../pressure-sensor/pressure-sensor-view-model';
 import { TemperatureSensorViewModel } from '../../../temperature-sensor/temperature-sensor-view-model';
-
+import { ResponsiblePartyViewModel } from '../../../responsible-party/responsible-party-view-model';
+import { GnssReceiverViewModel } from '../../../gnss-receiver/gnss-receiver-view-model';
 /**
  * View Model equivalent of ../data-model/SiteLogDataModel
  */
 // TODO: Remove this extra level of nesting, if not needed.
 export class SiteLogViewModel {
-    siteLog: ViewSiteLog;
+    siteLog: ViewSiteLog = new ViewSiteLog();
 }
 
 export class ViewSiteLog {
-    siteIdentification: any;
-    siteLocation: any;
-    gnssReceivers: any[];
+    siteIdentification: any = {};
+    siteLocation: any = {};
+    gnssReceivers: GnssReceiverViewModel[];
     gnssAntennas: GnssAntennaViewModel[];
     surveyedLocalTies: SurveyedLocalTieViewModel[];
     frequencyStandards: FrequencyStandardViewModel[];
@@ -26,10 +27,11 @@ export class ViewSiteLog {
     pressureSensors: PressureSensorViewModel[];
     temperatureSensors: TemperatureSensorViewModel[];
     waterVaporSensors: any[];
-    siteOwner: any;
-    siteContact: any[];
-    siteMetadataCustodian: any;
-    siteDataSource: any;
-    moreInformation: any;
-    dataStreams: any;
+    siteOwner: ResponsiblePartyViewModel[];             // Array of 0..1 item
+    siteContact: ResponsiblePartyViewModel[];
+    siteMetadataCustodian: ResponsiblePartyViewModel[]; // Array of 0..1 item
+    // siteDataCenter: ResponsiblePartyViewModel[];
+    siteDataSource: ResponsiblePartyViewModel[];
+    moreInformation: any = {};
+    dataStreams: any = {};
 }

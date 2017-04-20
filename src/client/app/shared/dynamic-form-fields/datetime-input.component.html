@@ -1,15 +1,12 @@
 <div class="form-group">
-  <label *ngIf="isRequired()" class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">{{label}}</label>
-  <label *ngIf="!isRequired()" class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">{{label}}</label>
-
-  <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+  <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label" [ngClass]="{required: isRequired()}"><ng-content></ng-content></label>
+    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
 
     <div>
       <div class="input-group">
         <input type="text" maxlength="24"
                class="form-control z-lowest"
-               [(ngModel)]="datetimeDisplay"
-               [ngClass]="{ 'ng-invalid': invalidDatetime }"
+               [(ngModel)]="datetimeDisplay"[ngClass]="{'ng-dirty': hasChanges, 'ng-invalid': invalidDatetime }"
                (change)="updateCalendar()"
                (focus)="miscUtils.scrollIntoView($event, showDatetimePicker); showDatetimePicker = true;"/>
         <span class="input-group-btn z-lowest">
@@ -20,9 +17,7 @@
           </button>
         </span>
       </div>
-      <small [hidden]="!invalidDatetime" class="alert alert-danger">
-        {{getValidationMessage()}}
-      </small>
+      <small>{{getErrorReport(controlName)}}</small>
 
       <div class="calendar-popup" *ngIf="showDatetimePicker">
         <datepicker [(ngModel)]="datetimeModel"

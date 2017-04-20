@@ -18,9 +18,12 @@ export class HumiditySensorViewModel extends AbstractViewModel {
     public serialNumber: string;
     public heightDiffToAntenna: number;
 
-    constructor() {
+    /**
+     * @param blank - if blank then don't add any default values - leave completely blank (empty) with '' | 0
+     */
+    constructor(blank: boolean = false) {
         super();
-        let presentDT: string = MiscUtils.getPresentDateTime();
+        let presentDT: string = blank ? '' : MiscUtils.getPresentDateTime();
 
         this.startDate = presentDT;
         this.calibrationDate = presentDT;

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { MiscUtils } from '../shared/index';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { AbstractGroup } from '../shared/abstract-groups-items/abstract-group';
 import { HumiditySensorViewModel } from './humidity-sensor-view-model';
 
@@ -11,23 +11,29 @@ import { HumiditySensorViewModel } from './humidity-sensor-view-model';
     selector: 'humidity-sensors-group',
     templateUrl: 'humidity-sensors-group.component.html',
 })
-export class HumiditySensorsGroupComponent extends AbstractGroup<HumiditySensorViewModel> {
-    public miscUtils: any = MiscUtils;
+export class HumiditySensorsGroupComponent extends AbstractGroup<HumiditySensorViewModel> implements OnInit {
+    static compare(obj1: HumiditySensorViewModel, obj2: HumiditySensorViewModel): number {
+        let date1: string = obj1.startDate;
+        let date2: string = obj2.startDate;
+        return AbstractGroup.compareDates(date1, date2);
+    }
 
     @Input()
     set siteLogModel(siteLogModel: any) {
-        this.setItemsCollection(siteLogModel.humiditySensors);
-        console.log('HumiditySensors: ', this.getItemsCollection());
+        siteLogModel && this.setItemsCollection(siteLogModel.humiditySensors);
     }
 
     @Input()
     set originalSiteLogModel(originalSiteLogModel: any) {
-        this.setItemsOriginalCollection(originalSiteLogModel.humiditySensors);
-        console.log('HumiditySensors (Original): ', this.getItemsOriginalCollection());
+        originalSiteLogModel && this.setItemsOriginalCollection(originalSiteLogModel.humiditySensors);
     }
 
     constructor() {
         super();
+    }
+
+    ngOnInit() {
+        this.setupForm();
     }
 
     getItemName(): string {
@@ -35,15 +41,18 @@ export class HumiditySensorsGroupComponent extends AbstractGroup<HumiditySensorV
     }
 
     compare(obj1: HumiditySensorViewModel, obj2: HumiditySensorViewModel): number {
-        let date1: string = obj1.startDate;
-        let date2: string = obj2.startDate;
-        return AbstractGroup.compareDates(date1, date2);
+        return HumiditySensorsGroupComponent.compare(obj1, obj2);
     }
 
     /* **************************************************
      * Other methods
      */
-    newViewModelItem(): HumiditySensorViewModel {
-        return new HumiditySensorViewModel();
+    newViewModelItem(blank?: boolean): HumiditySensorViewModel {
+        return new HumiditySensorViewModel(blank);
+    }
+
+    private setupForm() {
+        this.groupArrayForm =  new FormArray([]);
+        this.siteInfoForm.addControl('humiditySensors', this.groupArrayForm);
     }
 }

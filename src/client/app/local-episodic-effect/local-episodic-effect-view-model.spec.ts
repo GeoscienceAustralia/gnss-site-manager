@@ -1,5 +1,5 @@
-import {LocalEpisodicEffectViewModel} from './local-episodic-effect-view-model';
-import {MiscUtils} from '../shared/global/misc-utils';
+import { LocalEpisodicEffectViewModel } from './local-episodic-effect-view-model';
+import { MiscUtils } from '../shared/global/misc-utils';
 export function main() {
   let localEpisodicEffectViewModel: LocalEpisodicEffectViewModel;
 

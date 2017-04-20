@@ -1,0 +1,39 @@
+<!-- Input: temperatureSensor (single) -->
+<div [formGroup]="itemGroup" class="panel panel-level-2">
+    <div class="panel-heading">
+        <span class="panel-title cursor-ptr" (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+            <i class="glyphicon" [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}"> </i>
+            <span class="hidden-xsm">{{getItemName()}} {{getItemNumber()}}</span>
+        </span>
+        <span class="pull-right"> <!-- *ngIf="index == 0 && isNew" -->
+            <button class="btn btn-danger btn-xs" title="{{getRemoveOrDeletedText()}} the temperature sensor" (click)="removeItem(index)">
+                <i class="glyphicon glyphicon-remove"></i>
+                <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
+            </button>
+        </span>
+    </div>
+    <div class="panel-body" *ngIf="isOpen">
+        <div *ngIf=" responsibleParty == null ">
+            No information available for {{getItemName()}}
+        </div>
+        <div *ngIf=" responsibleParty != null ">
+            <div class="form-group">
+                <text-input formControlName="individualName" controlName="individualName" [form]="itemGroup">Individual Name</text-input>
+                <text-input formControlName="organisationName" controlName="organisationName" [form]="itemGroup">Organisation Name</text-input>
+                <text-input formControlName="positionName" controlName="positionName" [form]="itemGroup">Position Name</text-input>
+                <text-input formControlName="deliveryPoint1" controlName="deliveryPoint1" [form]="itemGroup">Delivery Point 1</text-input>
+                <text-input formControlName="deliveryPoint2" controlName="deliveryPoint2" [form]="itemGroup">Delivery Point 2</text-input>
+                <text-input formControlName="city" controlName="city" [form]="itemGroup">City</text-input>
+                <text-input formControlName="administrativeArea" controlName="administrativeArea" [form]="itemGroup">Administrative Area</text-input>
+                <text-input formControlName="postalCode" controlName="postalCode" [form]="itemGroup">Postal Code</text-input>
+                <text-input formControlName="country" controlName="country" [form]="itemGroup">Country</text-input>
+                <text-input formControlName="email1" controlName="email1" [form]="itemGroup">Email 1</text-input>
+                <text-input formControlName="email2" controlName="email2" [form]="itemGroup">Email 2</text-input>
+                <text-input formControlName="phone1" controlName="phone1" [form]="itemGroup">Phone Number 1</text-input>
+                <text-input formControlName="phone2" controlName="phone2" [form]="itemGroup">Phone Number 2</text-input>
+                <text-input formControlName="fax1" controlName="fax1" [form]="itemGroup">Fax Number 1</text-input>
+                <text-input formControlName="fax2" controlName="fax2" [form]="itemGroup">Fax Number 2</text-input>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading">
         <span class="panel-title cursor-ptr"
               (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
@@ -38,32 +38,9 @@
             No information available for current Local Episodic Effect
         </div>
         <div *ngIf=" localEpisodicEffect != null" [ngClass]="{'container-dirty': localEpisodicEffect.dateDeleted}">
-
-            <text-input
-                [name]="'localEpisodicEffectEvent'"
-                [(model)]="localEpisodicEffect.event"
-                [index]="[index]"
-                [label]="'Event'"
-                [maxlength]="100"
-                [required]="true">
-            </text-input>
-
-            <datetime-input
-                [(datetime)]="localEpisodicEffect.startDate"
-                [name]=" 'effectiveDateStart' "
-                [index]="[index]"
-                [required]="true"
-                [label]="'Date Installed (UTC)'">
-            </datetime-input>
-
-            <datetime-input
-                [(datetime)]="localEpisodicEffect.endDate"
-                [name]=" 'effectiveDateEnd' "
-                [index]="[index]"
-                [requiredIfNotCurrent]="true"
-                [label]="'Date Removed (UTC)'">
-            </datetime-input>
-
+            <text-input formControlName="event" controlName="event" [form]="itemGroup">Event</text-input>
+            <datetime-input formControlName="startDate" controlName="startDate" required="true" [form]="itemGroup">Date Installed (UTC)</datetime-input>
+            <datetime-input formControlName="endDate" controlName="endDate" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
         </div>
     </div>
 </div>

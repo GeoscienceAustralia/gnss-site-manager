@@ -1,22 +1,19 @@
-<div class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading">
-        <span class="panel-title cursor-ptr"
-              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+        <span class="panel-title cursor-ptr" (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
             <i class="glyphicon"
                [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
             </i>
             <span *ngIf="index == 0">
                 <span class="hidden-xsm">Current </span>
-                <span class="hidden-xxs">Surveyed Local Tie (</span>
-                {{ miscUtils.getDate(surveyedLocalTie.dateMeasured) }}
-                <span class="hidden-xxs">)</span>
-            </span>
-            <span *ngIf="index != 0">
+        <span class="hidden-xxs">Surveyed Local Tie (</span> {{ miscUtils.getDate(surveyedLocalTie.dateMeasured) }}
+        <span class="hidden-xxs">)</span>
+        </span>
+        <span *ngIf="index != 0">
                 <span class="hidden-xsm">Previous </span>
-                <span class="hidden-xxs">Surveyed Local Tie (</span>
-                {{ miscUtils.getDate(surveyedLocalTie.dateMeasured) }}
-                <span class="hidden-xxs">)</span>
-            </span>
+        <span class="hidden-xxs">Surveyed Local Tie (</span> {{ miscUtils.getDate(surveyedLocalTie.dateMeasured) }}
+        <span class="hidden-xxs">)</span>
+        </span>
         </span>
         <span *ngIf="surveyedLocalTie.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
@@ -29,7 +26,7 @@
                   (click)="removeItem(index)">
             <i class="glyphicon glyphicon-remove"></i>
             <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
-          </button>
+        </button>
         </span>
     </div>
     <div class="panel-body" *ngIf="isOpen">
@@ -37,96 +34,19 @@
             No information available for Surveyed Local Ties
         </div>
         <div *ngIf="surveyedLocalTie != null" [ngClass]="{'container-dirty': surveyedLocalTie.dateDeleted}">
-
-            <text-input
-                [name]="'surveyedLocalTieTiedMarkerName'"
-                [(model)]="surveyedLocalTie.tiedMarkerName"
-                [index]="[index]"
-                [label]="'Tied Marker Name'"
-                [maxlength]="100"
-                [required]="true">
-            </text-input>
-
-            <text-input
-                [name]="'surveyedLocalTieTiedMarkerUsage'"
-                [(model)]="surveyedLocalTie.tiedMarkerUsage"
-                [index]="[index]"
-                [label]="'Tied Marker Usage'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'surveyedLocalTieTiedMarkerCDPNumber'"
-                [(model)]="surveyedLocalTie.tiedMarkerCDPNumber"
-                [index]="[index]"
-                [label]="'Tied Marker CDP Number'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'surveyedLocalTieTiedMarkerDOMESNumber'"
-                [(model)]="surveyedLocalTie.tiedMarkerDOMESNumber"
-                [index]="[index]"
-                [label]="'Tied Marker DOMES Number'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'dx'"
-                [(model)]="surveyedLocalTie.dx"
-                [index]="[index]"
-                [label]="'dx (m)'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'dy'"
-                [(model)]="surveyedLocalTie.dy"
-                [index]="[index]"
-                [label]="'dy (m)'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'dz'"
-                [(model)]="surveyedLocalTie.dz"
-                [index]="[index]"
-                [label]="'dz (m)'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'surveyedLocalTieLocalSiteTiesAccuracy'"
-                [(model)]="surveyedLocalTie.localSiteTiesAccuracy"
-                [index]="[index]"
-                [label]="'Local Site Ties Accuracy (mm)'"
-                [maxlength]="100">
-            </text-input>
-
-            <text-input
-                [name]="'surveyedLocalTieSurveyMethod'"
-                [(model)]="surveyedLocalTie.surveyMethod"
-                [index]="[index]"
-                [label]="'Survey Method'"
-                [maxlength]="100">
-            </text-input>
-
-            <datetime-input
-                [(datetime)]="surveyedLocalTie.dateMeasured"
-                [name]=" 'dateMeasured' "
-                [index]="[index]"
-                [required]="false"
-                [label]="'Date Measured'">
-            </datetime-input>
-
-            <textarea-input
-                [name]="'surveyedLocalTieNotes'"
-                [(model)]="surveyedLocalTie.notes"
-                [index]="[index]"
-                [label]="'Notes'"
-                [rows]="2"
-                [maxlength]="2000">
-            </textarea-input>
+            <div class="form-group">
+                <text-input formControlName="tiedMarkerName" controlName="tiedMarkerName" [form]="itemGroup">Tied Marker Name</text-input>
+                <text-input formControlName="tiedMarkerUsage" controlName="tiedMarkerUsage" [form]="itemGroup">Tied Marker Usage</text-input>
+                <text-input formControlName="tiedMarkerCDPNumber" controlName="tiedMarkerCDPNumber" [form]="itemGroup">Tied Marker CDP Number</text-input>
+                <text-input formControlName="tiedMarkerDOMESNumber" controlName="tiedMarkerDOMESNumber" [form]="itemGroup">Tied Marker DOMES Number</text-input>
+                <text-input formControlName="dx" controlName="dx" [form]="itemGroup">dx (m)</text-input>
+                <text-input formControlName="dy" controlName="dy" [form]="itemGroup">dy (m)</text-input>
+                <text-input formControlName="dz" controlName="dz" [form]="itemGroup">dz (m)</text-input>
+                <text-input formControlName="localSiteTiesAccuracy" controlName="localSiteTiesAccuracy" [form]="itemGroup">Local Site Ties Accuracy (mm)</text-input>
+                <text-input formControlName="surveyMethod" controlName="surveyMethod" [form]="itemGroup">Survey Method</text-input>
+                <datetime-input formControlName="dateMeasured" controlName="dateMeasured" [form]="itemGroup">Date Measured (UTC)</datetime-input>
+                <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">notes</textarea-input>
+            </div>
         </div>
     </div>
 </div>

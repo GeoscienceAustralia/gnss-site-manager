@@ -1,0 +1,35 @@
+<div [formGroup]="siteLocationForm" class="panel panel-level-2">
+    <div class="panel-heading">
+        <span class="panel-title cursor-ptr" (click)="status.isSiteLocationGroupOpen = miscUtils.scrollIntoView($event, status.isSiteLocationGroupOpen)">
+              <i class="glyphicon"
+                 [ngClass]="{'glyphicon-minus-sign': status.isSiteLocationGroupOpen, 'glyphicon-plus-sign': !status.isSiteLocationGroupOpen}">
+              </i>
+              Site Location
+        </span>
+        <span *ngIf="isLoading" class="pull-right">
+              <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
+        </span>
+    </div>
+    <div class="panel-body" *ngIf="status.isSiteLocationGroupOpen">
+        <div class="margin-bottom15" *ngIf=" siteLocation == null ">
+            No information available for the GNSS site: {{siteId}}
+        </div>
+        <div class="margin-bottom15" *ngIf=" siteLocation != null ">
+            <div class="form-group">
+                <text-input formControlName="city" controlName="city" [form]="siteLocationForm">City / Town</text-input>
+                <text-input formControlName="state" controlName="state" [form]="siteLocationForm">State</text-input>
+                <text-input formControlName="countryCodeISO" controlName="countryCodeISO" [form]="siteLocationForm">Country Code ISO</text-input>
+                <text-input formControlName="approximatePositionITRF_x" controlName="approximatePositionITRF_x" [form]="siteLocationForm"
+                   >Approximate position ITRF X</text-input>
+                <text-input formControlName="approximatePositionITRF_y" controlName="approximatePositionITRF_y" [form]="siteLocationForm"
+                   >Approximate position ITRF Y</text-input>
+                <text-input formControlName="approximatePositionITRF_z" controlName="approximatePositionITRF_z" [form]="siteLocationForm"
+                   >Approximate position ITRF Z</text-input>
+                <text-input formControlName="approximatePositionITRF_elevationMEllips" controlName="approximatePositionITRF_elevationMEllips"
+                    [form]="siteLocationForm">Approximate position ITRF elevationMEllips</text-input>
+                <text-input formControlName="tectonicPlate" controlName="tectonicPlate" [form]="siteLocationForm">Tectonic Plate</text-input>
+                <textarea-input formControlName="notes" controlName="notes" [form]="siteLocationForm">Notes</textarea-input>
+            </div>
+        </div>
+    </div>
+</div>

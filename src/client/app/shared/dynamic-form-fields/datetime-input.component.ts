@@ -1,59 +1,200 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, DoCheck } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, DoCheck, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, FormControl, FormGroup } from '@angular/forms';
+import { AbstractGnssControls } from './abstract-gnss-controls';
 import { MiscUtils } from '../index';
+
+const defaultTZms: string = '.000Z';
+const validDisplayFormat: RegExp = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1]) ([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/g;
+
+/**
+ * Validator to apply in the model based form in the .ts file.  This validates that the form is correct.
+ */
+export function dateTimeFormatValidator(control: FormControl): { [s: string]: any } {
+    let value: string = control.value;
+
+    // Unfortunately the value displayed and the value on the FormControl are different
+    // So need to validate what the user seees by reformatting here
+    let displayFormattedValue: string = DatetimeInputComponent.formatTimeToDisplay(value, true);
+    let formatStringMsg: string = 'Format: YYYY-MM-DD hh:mm:ss';
+
+    // console.log('dateTimeValidator - model is: '+ value + ', reformatted as: ', displayFormattedValue );
+    if (displayFormattedValue && (displayFormattedValue.length === 0 || displayFormattedValue.match(validDisplayFormat))) {
+        // Use a Validator.required if needed
+        return null;
+    } else {
+        return { 'incorrect format': formatStringMsg };
+    }
+}
+
+/**
+ * Validator to apply in the model based form in the .ts file.  This validates that if the item isn't index=0 (ie. an older one)
+ * then it is required.
+ */
+export function createDateTimeRequiredIfNotCurrentValidator(index: number) {
+    return function dateTimeRequiredIfNotCurrentValidator(control: FormControl): { [s: string]: any } {
+        let value: string = control.value;
+
+        // console.log('dateTimeRequiredIfNotCurrentValidator - value: '+value+', index: '+index);
+        if ((! value || value.length === 0) && index > 0) {
+            //return { 'required as not latest': true };
+            // Temp turn off validation until can work out why validation errors on loading cause problem
+            return null;
+        } else {
+            return null;
+        }
+    };
+}
 
 /**
  * This class represents the DatetimeInputComponent for choosing dates.
+ * TODO - Remove display logic by moving to directive - see
+ * https://blog.ngconsultant.io/custom-input-formatting-with-simple-directives-for-angular-2-ec792082976#.g3wkqhvrk
+ *
+ * TODO - Alternatively change view model to be our current DateTime Display format and then map in View -> Data models translate
  */
 @Component({
   moduleId: module.id,
   selector: 'datetime-input',
   templateUrl: 'datetime-input.component.html',
-  styleUrls: ['datetime-input.component.css']
+  styleUrls: ['datetime-input.component.css'],
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DatetimeInputComponent), multi: true },
+        { provide: NG_VALIDATORS, useExisting: forwardRef(() => DatetimeInputComponent), multi: true }
+    ]
+        // { provide: NG_VALIDATORS, useValue: dateTimeValidator, multi: true }
 })
-export class DatetimeInputComponent implements OnInit, DoCheck {
-  public miscUtils: any = MiscUtils;
+export class DatetimeInputComponent extends AbstractGnssControls implements OnInit, DoCheck, ControlValueAccessor {
+  @Input() name: string = 'Date';
+  @Input() required: boolean = false;
+  @Input() requiredIfNotCurrent: boolean = false;
+  @Input() label: string = '';
+  @Input() public index: any = 0;
+    // controlName & form needed for validation
+    @Input() form: FormGroup;
+    @Input() controlName: string;
+
+  public _datetime: string = '';
+  public _datetimeLast: string = '';
+
   public datetimeModel: Date;
-  public datetimeDisplay: string = '';
+
   public hoursString: string = '00';
   public minutesString: string = '00';
   public secondsString: string = '00';
+
   public invalidHours: boolean = false;
   public invalidMinutes: boolean = false;
   public invalidSeconds: boolean = false;
-  public invalidDatetime: boolean = false;
   public showDatetimePicker: boolean = false;
-  @Input() public index: any = 0;
-  @Input() public datetime: string = '';
-  @Input() public name: string = 'Date';
-  @Input() public required: boolean = false;
-  @Input() public requiredIfNotCurrent: boolean = false;
-  @Input() public label: string = '';
-  @Output() public datetimeChange: EventEmitter<string> = new EventEmitter<string>();
+  public hasChanges: boolean = false;
+  public invalidDatetime: boolean = false;
 
-  private hours: number = 0;
-  private minutes: number = 0;
-  private seconds: number = 0;
+    private _datetimeDisplay: string = '';
+    private _datetimeDisplayLast: string = '';
+    private hours: number = 0;
+    private minutes: number = 0;
+    private seconds: number = 0;
+
   private datetimeSuffix: string = '.000Z';
   private datetimeLast: string = '';
 
-  constructor(private elemRef: ElementRef) { }
+  private miscUtils: any = MiscUtils;
 
-  /**
-   * Initialize relevant variables when the directive is instantiated
-   */
+    static formatTimeToDisplay(dateStr: string, returnAsIsUponFailure: boolean = false): string {
+        let datetimeDisplay: string = '';
+        if (dateStr !== null) {
+            datetimeDisplay = dateStr.replace('T', ' ');    // .substring(0, 19)
+            datetimeDisplay = datetimeDisplay.replace(/\.\d\d\dZ/, ''); // Milliseconds <TimeZone = Z>
+        } else {
+            if (returnAsIsUponFailure) {    // TODO THIS NO LONGER NEEDED
+                return dateStr;
+            }
+        }
+        return datetimeDisplay;
+    }
+
+    public propagateChange: Function = (_: any) => { };
+    public propagateTouch: Function = () => { };
+    public validateFn: Function = () => { };
+
+  constructor(private elemRef: ElementRef) {
+      super();
+  }
+
   ngOnInit() {
-    this.datetimeLast = this.datetime;
-    this.formatInputDatetime(this.datetime);
-    this.updateCalendar();
+      this.checkPreConditions();
+      this.createValidators();
+      super.setForm(this.form);
+  }
+
+  validate(c: FormControl): any {
+    return this.validateFn(c);
   }
 
   ngDoCheck(): void {
     // If the @Input is changed externally, want to update the displayed date
+    //console.log('datetime doCheck');
     if (this.datetimeLast !== this.datetime) {
-      this.datetimeLast = this.datetime;
-      this.formatInputDatetime(this.datetime);
+       this.datetimeLast = this.datetime;
+    //    this.formatInputDatetime(this.datetime);
     }
   }
+
+    set datetimeDisplay(dt: string) {
+        if (dt !== this._datetimeDisplayLast) {
+            this._datetimeDisplayLast = this._datetimeDisplay;
+            this._datetimeDisplay = dt;
+            this._datetime = this.formatDisplayToTime(dt);
+            // console.log('set datetimeDisplay: '+ dt + ', _datetime: '+this._datetime);
+            this.propagateChange(this._datetime);
+        }
+    }
+
+    get datetimeDisplay() {
+        return this._datetimeDisplay;
+    }
+
+  set datetime(dt: string) {
+         if (dt !== this._datetimeLast) {
+            // console.log('set datetime: ', dt);
+            this._datetimeLast = this._datetime;
+            this._datetime = dt;
+            this._datetimeDisplay = DatetimeInputComponent.formatTimeToDisplay(dt);
+            this.propagateChange(this._datetime);
+        }
+  }
+
+  get datetime(): string {
+    return this._datetime;
+  }
+
+  /**
+   * Initialize relevant variables when the directive is instantiated
+   */
+
+
+  /* Methods for Model-based forms - implement ControlValueAccessor */
+
+    writeValue(value: string) {
+        if (value) {
+            // console.log('datetime writeValue: ', value);
+            this.datetime = value;
+            // this.init();
+        }
+    }
+
+    registerOnChange(fn: (_: any) => void): void {
+        this.propagateChange = fn;
+    }
+
+    registerOnTouched(fn: () => void): void {
+        this.propagateTouch = fn;
+    }
+
+    setDisabledState(isDisabled: boolean) : void {
+        console.log('DatetimeInputComponent - setDisabledState - ',isDisabled);
+        // implement this?
+    }
 
   /**
    * Close the calendar if mouse clicks outside of it
@@ -92,11 +233,11 @@ export class DatetimeInputComponent implements OnInit, DoCheck {
     }
 
     this.showDatetimePicker = false;
-    this.invalidDatetime = false;
     this.datetimeModel.setHours(this.hours);
     this.datetimeModel.setMinutes(this.minutes);
     this.datetimeModel.setSeconds(this.seconds);
     this.emitOutputDatetime();
+    this.hasChanges = true;
   }
 
   /**
@@ -112,7 +253,6 @@ export class DatetimeInputComponent implements OnInit, DoCheck {
    */
   public updateDate(event: any): void {
     this.datetimeModel = event;
-    this.invalidDatetime = false;
   }
 
   /**
@@ -238,39 +378,8 @@ export class DatetimeInputComponent implements OnInit, DoCheck {
     this.updateTimeStrings();
   }
 
-  public validateDatetime(): void {
-    if (this.datetimeDisplay === null || this.datetimeDisplay.trim().length === 0) {
-      this.invalidDatetime = this.isRequired() ? true : false;
-    } else if (this.datetimeDisplay.length < 19) {
-      this.invalidDatetime = true;
-    } else {
-      if (this.datetimeDisplay
-              .match(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1]) ([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/g)) {
-        this.invalidDatetime = false;
-      } else {
-        this.invalidDatetime = true;
-      }
-    }
-  }
-
   public isRequired() : boolean {
     return this.required || (this.requiredIfNotCurrent && this.index[0] !== 0);
-  }
-
-  /**
-   * Get a validation message to apply if the input string is:
-   *   1. required but not supplied, or
-   *   2. supplied but not a valid date
-   */
-  public getValidationMessage() {
-    let message = this.label + ' is ';
-    if (this.isRequired() && !this.datetimeDisplay) {
-      message += ' required ';
-    } else if (this.invalidDatetime) {
-      message += ' not valid ';
-    }
-    message += '(Valid Date Format: YYYY-MM-DD hh:mm:ss)';
-    return message;
   }
 
   /**
@@ -287,38 +396,33 @@ export class DatetimeInputComponent implements OnInit, DoCheck {
    */
   private convertStringToDate(dtStr: string): Date {
     if (dtStr === null || dtStr.trim().length === 0) {
-      this.invalidDatetime = this.isRequired() ? true : false;
       return null;
     } else if (dtStr.trim().length < 19) {
-      this.invalidDatetime = true;
       return null;
     }
 
     try {
       let date: Date = new Date(dtStr.substring(0, 19).replace(' ', 'T'));
       if (date !== null && date.toString() !== 'Invalid Date') {
-        this.invalidDatetime = false;
         return date;
       }
     } catch(error) {
       console.log('Error:'+error);
     }
 
-    this.invalidDatetime = true;
     return null;
   }
 
-  /**
-   * Format the input datetime string to format of 'YYYY-MM-DD hh:mm:ss' and display it on calendar
-   */
-  private formatInputDatetime(dtStr: string): void {
-    if (dtStr !== null && dtStr.trim().length >= 19) {
-      this.datetimeDisplay = dtStr.substring(0, 19).replace('T', ' ');
-      if (dtStr.length >= 24) {
-        this.datetimeSuffix = dtStr.substring(19, 24);
-      }
+      private formatDisplayToTime(displayStr: string): string {
+        let datetime = '';
+        if (displayStr !== null) {//} && displayStr.trim().length >= 19) {
+            datetime = displayStr.replace(' ', 'T');
+            if (displayStr.match(validDisplayFormat)) {
+                datetime += defaultTZms;
+            }
+        }
+        return datetime;
     }
-  }
 
   /**
    * Emit a string in format of 'YYYY-MM-DDThh:mm:ss.sssZ' back to the input JSON object.
@@ -337,8 +441,8 @@ export class DatetimeInputComponent implements OnInit, DoCheck {
 
     this.datetimeDisplay = dateStr + ' ' + timeStr;
     this.datetimeLast = this.datetime;
-    this.datetime = dateStr + 'T' + timeStr + this.datetimeSuffix;
-    this.datetimeChange.emit(this.datetime);
+    this.datetime = dateStr + 'T' + timeStr + defaultTZms;//this.datetimeSuffix;
+    // this.datetimeChange.emit(this.datetime);
   }
 
   /**
@@ -369,4 +473,23 @@ export class DatetimeInputComponent implements OnInit, DoCheck {
     }
     return index.toString();
   }
+
+    private checkPreConditions() {
+        if (!this.controlName || this.controlName.length === 0) {
+            console.error('DatetimeInputComponent - controlName Input is required');
+        }
+        if (!this.form) {
+            console.error('DatetimeInputComponent - form Input is required');
+        }
+    }
+
+    /**
+     * Validators with closures need to be created based on @Input attributes.  Others can be set in the Model form in the .ts.
+     */
+    private createValidators() {
+        if (this.requiredIfNotCurrent === true && this.index > 0 ) {
+            throw new Error('DatetimeInputComponent - requiredIfNotCurrent Input requires an index input');
+        }
+        this.validateFn = createDateTimeRequiredIfNotCurrentValidator(this.index);
+    }
 }

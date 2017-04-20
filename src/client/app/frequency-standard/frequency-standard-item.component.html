@@ -1,21 +1,16 @@
-<div class="panel panel-level-2" id="frequencyStandard_{{index}}">
+<div [formGroup]="itemGroup" class="panel panel-level-2" id="frequencyStandard_{{index}}">
   <div class="panel-heading">
-    <span class="panel-title cursor-ptr"
-          (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+    <span class="panel-title cursor-ptr" (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
       <i class="glyphicon"
          [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
       </i>
       <span *ngIf="index == 0">
-        <span class="hidden-xsm">Current </span>
-        <span class="hidden-xxs">Frequency Standard (</span>
-        Since {{ miscUtils.getDate(frequencyStandard.startDate) }}
-        <span class="hidden-xxs">)</span>
+        <span class="hidden-xsm">Current </span><span class="hidden-xxs">Frequency Standard (</span>
+         Since {{ miscUtils.getDate(frequencyStandard.startDate) }}<span class="hidden-xxs">)</span>
       </span>
       <span *ngIf="index != 0">
-        <span class="hidden-xsm">Previous </span>
-        <span class="hidden-xxs">Frequency Standard (</span>
-        {{ miscUtils.getDate(frequencyStandard.startDate) }} &ndash;
-        {{ miscUtils.getDate(frequencyStandard.endDate) }}
+        <span class="hidden-xsm">Previous </span><span class="hidden-xxs">Frequency Standard (</span>
+        {{ miscUtils.getDate(frequencyStandard.startDate) }} &ndash; {{ miscUtils.getDate(frequencyStandard.endDate) }}
         <span class="hidden-xxs">)</span>
       </span>
     </span>
@@ -30,57 +25,20 @@
               (click)="removeItem(index)">
         <i class="glyphicon glyphicon-remove"></i>
         <span class="hidden-xs">{{getRemoveOrDeletedText()}}</span>
-      </button>
-    </span>
-  </div>
-  <div class="panel-body" *ngIf="isOpen">
-    <div *ngIf=" frequencyStandard == null " class="margin-bottom15">
-      No information available for current frequency standard
+        </button>
+        </span>
     </div>
-    <div *ngIf="frequencyStandard != null" [ngClass]="{'container-dirty': frequencyStandard.dateDeleted}">
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Standard Type</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="text" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="frequencyStandard.standardType"
-                 name="standardType_{{index}}"/>
+    <div class="panel-body" *ngIf="isOpen">
+        <div *ngIf=" frequencyStandard == null " class="margin-bottom15">
+            No information available for current frequency standard
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Input Frequency</label>
-        <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-          <input type="number" maxlength="100"
-                 class="form-control"
-                 [(ngModel)]="frequencyStandard.inputFrequency"
-                 name="inputFrequency_{{index}}"/>
+        <div *ngIf="frequencyStandard != null" [ngClass]="{'container-dirty': frequencyStandard.dateDeleted}">
+            <div class="form-group">
+                <text-input formControlName="standardType" controlName="standardType" [form]="itemGroup">Standard Type</text-input>
+                <number-input formControlName="inputFrequency" controlName="inputFrequency" [form]="itemGroup">Input Frequency</number-input>
+                <datetime-input formControlName="startDate" controlName="startDate" [form]="itemGroup">Date Installed (UTC)</datetime-input>
+                <datetime-input formControlName="endDate" controlName="endDate" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
+                <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">notes</textarea-input>
+            </div>
         </div>
-      </div>
-
-        <datetime-input
-            [(datetime)]="frequencyStandard.startDate"
-            [name]=" 'effectiveDateStart' "
-            [index]="[index]"
-            [required]="true"
-            [label]="'Date Installed (UTC)'">
-        </datetime-input>
-
-        <datetime-input
-            [(datetime)]="frequencyStandard.endDate"
-            [name]=" 'effectiveDateEnd' "
-            [index]="[index]"
-            [requiredIfNotCurrent]="true"
-            [label]="'Date Removed (UTC)'">
-        </datetime-input>
-
-      <div class="form-group">
-        <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">Notes</label>
-        <div class="col-md-8 col-sm-8 col-xs-7 col-xxs-12">
-          <textarea maxlength="2000" rows="2" class="form-textarea"
-                    [(ngModel)]="frequencyStandard.notes"
-                    name="frequencyStandardNotes_{{index}}"></textarea>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
