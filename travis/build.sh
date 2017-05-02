@@ -1,12 +1,8 @@
-#!/usr/bin/env nix-shell
-#!nix-shell ../shell.nix -i bash
+#!/usr/bin/env bash
 
 set -e
 
-npm install
-export CHROME_BIN=chromium
-./node_modules/.bin/gulp build.bundle.rxjs
-xvfb-run npm run test
+npm run tests.all
 npm run build.prod -- --config-env dev
 
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
