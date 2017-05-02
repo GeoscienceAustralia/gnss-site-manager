@@ -20,8 +20,6 @@ let
       chromium
       nodejs-6_x
       xvfb_run
-      pythonPackages.docker_compose
-      xorg.xhost
     ];
   };
 in
@@ -30,6 +28,7 @@ in
       devEnv
     ];
     shellHook = ''
+      cp -r ./build $out
       export PATH=./node_modules/.bin:$PATH
       export CHROME_BIN=chromium
     '';

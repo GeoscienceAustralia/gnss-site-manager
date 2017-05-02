@@ -1,12 +1,19 @@
 #!/usr/bin/env nix-shell
-#!nix-shell ../shell.nix -i bash
+#!nix-shell ../default.nix -i bash
 
 set -e
 
 npm install
 export CHROME_BIN=chromium
 ./node_modules/.bin/gulp build.bundle.rxjs
-xvfb-run npm run test
+npm run webdriver-update
+
+echo $1
+
+docker build -t e2e-test -f e2e-tests.dockerfile .
+
+docker run -eDISPLAY -v/tmp/.X11-unix:/tmp/.X11-unix -v$.:/home/tester/gnss-site-manager/ e2e-test
+
 npm run build.prod -- --config-env dev
 
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then

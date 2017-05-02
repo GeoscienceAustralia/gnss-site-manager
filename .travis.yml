@@ -9,7 +9,7 @@ cache:
   timeout: 86400
   directories:
   - "/tmp/src/node_modules"
-script: docker run -it -v $(pwd):/tmp/src -w /tmp/src -e TRAVIS_PULL_REQUEST -e TRAVIS_AWS_ACCESS_KEY_ID -e TRAVIS_AWS_SECRET_KEY_ID nixos/nix:1.11 ./travis/build.sh
+  script: docker run -it -v $(pwd):/tmp/src -w /tmp/src -e TRAVIS_PULL_REQUEST -e TRAVIS_AWS_ACCESS_KEY_ID -e TRAVIS_AWS_SECRET_KEY_ID nixos/nix:1.11 ./travis/build.sh 
 env:
   global:
   - secure: t5gEZ54qOaXI1a2ONCXm30f5LfQaS6InVnwQ0PnNNgU9HmxpYSyNW9K8wu/M9WHfu7T5RPhgvJ5NmtiABEw3oMVcYlhyP71s7/IYXKUXvRfpyoiZvrRhBS79SI98tpWlKtFIb+KeiCRYkNVIoc4VCj0BtI+Hb714ZNO1lBcrgvlLRwqQl/O1g55ls8lsN8F4KsQGi9S6lVwwJ7+VBqxaOozOGTIjpy24k8KVrdb4ZK/o7Mcaqd55GwDkUn1lC5ZQLVeu+x4iWw7/CZw6rlGh/4158HICvrDeXfAfs3oNlEo6ImE5GB0rafkiue/hOu+jYpXHJrZlzP7w/QMBQBpjLnWvXDQvWphM7IZNQerv+pmRgG3z60JND8WDp86GUmKcf+HU6lPSn9nl4eXTLCzRSwWZTZZ1060Vy9aegd8ktVNobYZW/CRxBzg2tTEoqzYP7KzkMnCH5+++8cdnfB/qm19KTlr9hLkt99fSIHDVdlUv+Pw1BcC0/hSmKywCQU2GZLWFcj2yyARGeydQDsJpUloxlSKqBi5sxQPM1eHIRtCsKa/c2U+zEZ5ZBW6wl+M9jKcshHK1ory8UeiN2NuABHiI1jRjZl0sOlSV9PwGBucHU2FH+IZud3/u505ud3iIzYwEaPhZML5/8y7zaSdjwhvT9P8Ij8mMczOcaxUOybg=

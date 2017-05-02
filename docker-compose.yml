@@ -14,6 +14,19 @@ services:
     ports:
       - '5555:5555'
 
+  e2e-tests:
+    build:
+      context: .
+      dockerfile: ./.docker/e2e-tests.dockerfile
+      args:
+        - http_proxy
+    image: e2e-tests
+    volumes:
+        - .:/home/tester/gnss-site-manager
+        - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+        - DISPLAY
+
 networks:
   dev-network:
     driver: bridge
