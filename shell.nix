@@ -3,8 +3,8 @@ let
   pinnedPkgs = import (defaultPkgs.fetchFromGitHub {
     owner = "NixOS";
     repo = "nixpkgs-channels";
-    rev = "354fd3728952c229fee4f2924737c601d7ab4725";
-    sha256 = "052hfh3w2086zaaskx0y0dz4y6y2bpvj0xqlcarpbwn2ccnpph0j";
+    rev = "f0fac3b578086066b47360de17618448d066b30e"; # 17 April 2017
+    sha256 = "1mpwdminwk1wzycwmgi2c2kwpbcfjwmxiakn7bmvvsaxb30gwyyb";
   }) {};
 
 in
