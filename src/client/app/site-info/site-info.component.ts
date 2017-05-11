@@ -167,7 +167,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
         }
         console.log('---------> SiteInfoComponent - Save ------------------------');
         let formValueClone: any = _.cloneDeep(formValue);
-        this.moveSiteInformationUp(formValueClone);
 
         /* Get the arrays in the form in the same order as the SiteLogModel */
         this.sortArrays(formValueClone);
@@ -375,28 +374,6 @@ export class SiteInfoComponent implements OnInit, OnDestroy {
                     formValue[item].sort(comparator);//this.compare);
                 }
             }
-        }
-    }
-
-    /**
-     * Due to how we artifically nest SiteLocation and SiteIdentification under a SiteIdentificationForm, this data is not in the
-     * same location as the SiteLogModel.  This method moves it up a level.
-     *
-     * @param formValue
-     */
-    private moveSiteInformationUp(formValue: any) {
-        this.moveSiteInformationUpSpecifically(formValue, 'siteIdentification');
-        this.moveSiteInformationUpSpecifically(formValue, 'siteLocation');
-        this.moveSiteInformationUpSpecifically(formValue, 'siteContact');
-        this.moveSiteInformationUpSpecifically(formValue, 'siteMetadataCustodian');
-        this.moveSiteInformationUpSpecifically(formValue, 'siteDataSource');
-        delete formValue.siteInformation;
-    }
-
-    private moveSiteInformationUpSpecifically(formValue: any, subObject: string) {
-        if (formValue.siteInformation[subObject]) {
-            formValue[subObject] = formValue.siteInformation[subObject];
-            delete formValue.siteInformation[subObject];
         }
     }
 
