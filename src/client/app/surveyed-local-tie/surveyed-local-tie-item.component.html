@@ -35,7 +35,7 @@
                 <text-input formControlName="dz" controlName="dz" [form]="itemGroup">dz (m)</text-input>
                 <text-input formControlName="localSiteTiesAccuracy" controlName="localSiteTiesAccuracy" [form]="itemGroup">Local Site Ties Accuracy (mm)</text-input>
                 <text-input formControlName="surveyMethod" controlName="surveyMethod" [form]="itemGroup">Survey Method</text-input>
-                <datetime-input formControlName="startDate" controlName="startDate" [form]="itemGroup">Date Measured (UTC)</datetime-input>
+                <datetime-input [form]="itemGroup" controlName="startDate" [required]="false">Date Measured (UTC)</datetime-input>
                 <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">Notes</textarea-input>
             </div>
         </div>

@@ -31,9 +31,9 @@
                 <number-input formControlName="dataSamplingInterval" controlName="dataSamplingInterval" [form]="itemGroup">Data Sampling Interval (seconds)</number-input>
                 <number-input formControlName="accuracyDegreesCelcius" controlName="accuracyDegreesCelcius" [form]="itemGroup">Accuracy (&deg;C)</number-input>
                 <number-input formControlName="heightDiffToAntenna" controlName="heightDiffToAntenna" [form]="itemGroup">Height Diff to Antenna (m)</number-input>
-                <datetime-input formControlName="calibrationDate" controlName="calibrationDate" [index]="index" [form]="itemGroup">Calibration Date</datetime-input>
-                <datetime-input formControlName="startDate" controlName="startDate" [index]="index" [form]="itemGroup">Date Installed (UTC)</datetime-input>
-                <datetime-input formControlName="endDate" controlName="endDate" [index]="index" [form]="itemGroup">Date Removed (UTC)</datetime-input>
+                <datetime-input [form]="itemGroup" controlName="calibrationDate" [required]="false">Calibration Date</datetime-input>
+                <datetime-input [form]="itemGroup" controlName="startDate">Date Installed (UTC)</datetime-input>
+                <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">Date Removed (UTC)</datetime-input>
                 <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">Notes</textarea-input>
             </div>
         </div>

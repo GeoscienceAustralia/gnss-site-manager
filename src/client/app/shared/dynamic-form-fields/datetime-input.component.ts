@@ -1,166 +1,77 @@
-import { Component, ElementRef, HostListener, Input, OnInit, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, FormControl, FormGroup } from '@angular/forms';
+import { Component, ElementRef, HostListener, Input, OnInit, Output, DoCheck } from '@angular/core';
+import { NG_VALUE_ACCESSOR, NG_VALIDATORS, AbstractControl, ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
 import { AbstractGnssControls } from './abstract-gnss-controls';
 import { MiscUtils } from '../index';
-import * as moment from 'moment-timezone';
 
-const defaultTZms: string = '.000Z';
-const validDisplayFormat: RegExp = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1]) ([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/g;
+const validDatetimeFormat: RegExp = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1]) ([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/g;
 
 /**
- * Validator to apply in the model based form in the .ts file.  This validates that the form is correct.
- */
-export function dateTimeFormatValidator(control: FormControl): { [s: string]: any } {
-    let value: string = control.value;
-
-    // Unfortunately the value displayed and the value on the FormControl are different
-    // So need to validate what the user seees by reformatting here
-    let displayFormattedValue: string = DatetimeInputComponent.formatTimeToDisplay(value, true);
-    let formatStringMsg: string = 'Format: YYYY-MM-DD hh:mm:ss';
-
-    console.debug('dateTimeFormatValidator - in:  ', displayFormattedValue);
-    if (displayFormattedValue && (displayFormattedValue.length === 0 || displayFormattedValue.match(validDisplayFormat))) {
-        // Use a Validator.required if needed
-        return null;
-    } else {
-        return { 'incorrect format': formatStringMsg };
-    }
-}
-
-/**
- * Validator to apply in the model based form in the .ts file.  This validates that if the item isn't index=0 (ie. an older one)
- * then it is required.
- */
-export function createDateTimeRequiredIfNotCurrentValidator(index: number) {
-    return function dateTimeRequiredIfNotCurrentValidator(control: FormControl): { [s: string]: any } {
-        let value: string = control.value;
-
-        if ((! value || value.length === 0) && index > 0) {
-            //return { 'required as not latest': true };
-            // Temp turn off validation until can work out why validation errors on loading cause problem
-            return null;
-        } else {
-            return null;
-        }
-    };
-}
-
-/**
- * This class represents the DatetimeInputComponent for choosing dates.
- * TODO - Remove display logic by moving to directive - see
- * https://blog.ngconsultant.io/custom-input-formatting-with-simple-directives-for-angular-2-ec792082976#.g3wkqhvrk
- *
- * TODO - Alternatively change view model to be our current DateTime Display format and then map in View -> Data models translate
+ * This class represents the Datetime Input Component for choosing dates.
  */
 @Component({
     moduleId: module.id,
     selector: 'datetime-input',
     templateUrl: 'datetime-input.component.html',
-    styleUrls: ['datetime-input.component.css'],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DatetimeInputComponent), multi: true },
-        { provide: NG_VALIDATORS, useExisting: forwardRef(() => DatetimeInputComponent), multi: true }
-        // { provide: NG_VALIDATORS, useValue: dateTimeValidator, multi: true }
-    ]
+    styleUrls: ['datetime-input.component.css']
 })
-export class DatetimeInputComponent extends AbstractGnssControls implements OnInit, ControlValueAccessor {
-    @Input() name: string = 'Date';
-    @Input() required: boolean = false;
-    @Input() requiredIfNotCurrent: boolean = false;
-    @Input() label: string = '';
-    @Input() public index: any = 0;
-    // controlName & form needed for validation
-    @Input() form: FormGroup;
-    @Input() controlName: string;
-
-    public _datetime: string = '';
+export class DatetimeInputComponent extends AbstractGnssControls implements OnInit, DoCheck {
+    public miscUtils: any = MiscUtils;
+    public datetimeModel: Date;
+    public hoursString: string = '00';
+    public minutesString: string = '00';
+    public secondsString: string = '00';
+    public invalidHours: boolean = false;
+    public invalidMinutes: boolean = false;
+    public invalidSeconds: boolean = false;
+    public invalidDatetime: boolean = false;
     public showDatetimePicker: boolean = false;
 
-    public miscUtils: any = MiscUtils;
+    public formControl: AbstractControl;
+    public datetime: string = '';
+    @Input() public form: FormGroup;
+    @Input() public controlName: string;
+    @Input() public required: boolean = true;
+    @Input() public label: string = '';
 
-    static formatTimeToDisplay(dateStr: string, returnAsIsUponFailure: boolean = false): string {
-        let datetimeDisplay: string = '';
-        if (dateStr !== null) {
-            datetimeDisplay = dateStr.replace('T', ' ');    // .substring(0, 19)
-            datetimeDisplay = datetimeDisplay.replace(/\.\d\d\dZ/, ''); // Milliseconds <TimeZone = Z>
-        } else {
-            if (returnAsIsUponFailure) {    // TODO THIS NO LONGER NEEDED
-                return dateStr;
-            }
-        }
-        return datetimeDisplay;
-    }
-
-    public propagateChange: Function = (_: any) => { };
-    public propagateTouch: Function = () => { };
-    public validateFn: Function = () => { };
+    private hours: number = 0;
+    private minutes: number = 0;
+    private seconds: number = 0;
+    private datetimeSuffix: string = '.000Z';
+    private datetimeLast: string = '';
 
     constructor(private elemRef: ElementRef) {
         super();
     }
 
+   /**
+    * Initialize relevant variables when the directive is instantiated
+    */
     ngOnInit() {
-        this.checkPreConditions();
-        this.createValidators();
         super.setForm(this.form);
+        this.formControl = this.form.controls[this.controlName];
+        this.datetime = this.formatDatetimeToDisplay(this.formControl.value);
+        this.formControl.setValue(this.datetime);
+        this.datetimeLast = this.datetime;
+        this.formatInputDatetime(this.datetime);
+        this.updateCalendar();
     }
 
-    validate(c: FormControl): any {
-        return this.validateFn(c);
-    }
-
-    // TODO - needs fixing to handle TimeZones
-    set datetime(dt: string) {
-        if (dt !== this._datetime) {
-            // The DatePicker ALWAYS displays the date in the local timezone, converting as necessary.
-            // However we've stated we are displaying it in UTC and the data is stored in UTC.
-            // So trick everyone and everything by subtracting the TZ offset from the chosen date
-            let date: Date = new Date(dt);
-            console.debug(`${this.controlName} - set datetime - dt: ${dt}, date: ${date}`);
-            let m1: any = moment(date);
-            let tzOffsetHours: any = m1.utcOffset() / 60;
-            console.log('m1: ', m1.format());
-            m1.subtract(tzOffsetHours, 'hours');
-            console.debug(' offset: ', tzOffsetHours);
-            // console.log('m1 now: ', m1.format());
-            this._datetime = m1.format();   // .utc()
-            console.debug(`${this.controlName} - set datetime - set to ${this._datetime} from ${dt}`);
-            this.propagateChange(this._datetime);
-            // this.updateCalendar();
-        } else {
-            console.debug(`${this.controlName} - set datetime - not setting as same`);
-        }
-
-    }
-
-    get datetime(): string {
-        return this._datetime;
-    }
-
-    /* ControlValueAccessor Methods */
-
-    writeValue(value: string) {
-        if (value) {
-            this.datetime = value;
+    ngDoCheck(): void {
+        // If the @Input is changed externally, want to update the displayed date
+        if (this.datetimeLast !== this.datetime) {
+            this.datetimeLast = this.datetime;
+            this.formatInputDatetime(this.datetime);
+            this.setOutputDatetime();
         }
     }
 
-    registerOnChange(fn: (_: any) => void): void {
-        this.propagateChange = fn;
+    public isFormDisabled(): boolean {
+        return this.form.disabled;
     }
 
-    registerOnTouched(fn: () => void): void {
-        this.propagateTouch = fn;
-    }
-
-    setDisabledState(isDisabled: boolean) : void {
-        console.log('DatetimeInputComponent - setDisabledState - ',isDisabled);
-        // implement this?
-    }
-
-    /**
-     * Close the calendar if mouse clicks outside of it
-     */
+   /**
+    * Close the calendar if mouse clicks outside of it
+    */
     @HostListener('document:click', ['$event'])
     public handleClickOutside(event: any) {
         if (this.showDatetimePicker) {
@@ -175,7 +86,7 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
                     isInside = true;
                     break;
                 } else if (clickedComponent.type && clickedComponent.type === 'button'
-                    && clickedComponent.tabIndex && clickedComponent.tabIndex === -1) {
+                && clickedComponent.tabIndex && clickedComponent.tabIndex === -1) {
                     isInside = true;
                     break;
                 }
@@ -186,139 +97,288 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
         }
     }
 
-    public isFormDisabled(): boolean {
-        return this.form.disabled;
+   /**
+    * Set the selected datetime value to the datetime model when users click on the OK button
+    */
+    public setSelectedDatetime(): void {
+        if (this.invalidHours || this.invalidMinutes || this.invalidSeconds) {
+            return;
+        }
+
+        this.showDatetimePicker = false;
+        this.invalidDatetime = false;
+        this.datetimeModel.setHours(this.hours);
+        this.datetimeModel.setMinutes(this.minutes);
+        this.datetimeModel.setSeconds(this.seconds);
+        this.setOutputDatetime();
     }
 
-    public closeDatetime() {
+   /**
+    * Cancel the selected datetime value and close the popup
+    */
+    public cancelSelectedDatetime(event: any): void {
+        this.updateCalendar();
         this.showDatetimePicker = false;
     }
 
-    /**
-     * Update the datetime model when users select a date on calendar
-     */
+   /**
+    * Update the datetime model when users select a date on calendar
+    */
     public updateDate(event: any): void {
-        // The date that is sent to the `datetime setter` needs to be in UTC / GMT+0 format.  However ONLY change the TZ and not the time
-        // For example 11pm (23:00) GMT+10 should be changed to 11pm (23:00) UTC.  This is due to the fact that the dateTime Picker
-        // works exclusively with the local timezone but we must display the data and persist in UTC.  So we trick the user and the picker.
-        console.debug('updateDate - input date: ', event);
-        let d: string = String(event);
-        this.datetime = d.replace(/ *(([\w:]+ +){1,6})(.*)/, '$1GMT+0000 (UTC)');
-        console.debug('updateDate - date after setting: ', this.datetime);
+        this.datetimeModel = event;
+        this.invalidDatetime = false;
     }
 
-    // TODO - can't get time working properly until sort out TimeZones
-    public getHours(): number {
-        let d: Date = new Date(this.datetime);
-        return d.getHours();
-    }
-
-    public getMinutes(): number {
-        let d: Date = new Date(this.datetime);
-        return d.getMinutes();
-    }
-
-    public getSeconds(): number {
-        let d: Date = new Date(this.datetime);
-        return d.getSeconds();
-    }
-
-    /**
-     * Add or Subtract the number of hours
-     */
-    public shiftHours(shiftBy: number): void {
-        let d: Date = new Date(this.datetime);
-        let hours: number = d.getHours();
-        hours+=shiftBy;
-        if (hours > 23) {
-            hours = 0;
-        } else if (hours < 0) {
-            hours = 23;
+   /**
+    * Update the calendar and datetime model in response to direct changes made in the input box
+    */
+    public updateCalendar(): void {
+        this.datetime = this.formatDatetimeToDisplay(this.formControl.value);
+        //this.formControl.setValue(this.datetime);
+        let newDate: Date = this.convertStringToDate(this.datetime);
+        if (newDate === null) {
+            this.datetimeModel = new Date();
+        } else {
+            this.datetimeModel = newDate;
         }
-        d.setHours(hours);
-        this.datetime = MiscUtils.formatDateToDatetimeString(d);
-        console.debug(`shifttHours by ${shiftBy} to ${d} - dateTime is now: ${this.datetime}`);
+        this.hours = this.datetimeModel.getHours();
+        this.minutes = this.datetimeModel.getMinutes();
+        this.seconds = this.datetimeModel.getSeconds();
+        this.updateTimeStrings();
+    }
+
+    public updateHours(): void {
+        this.hours = this.toInteger(this.hoursString, 0, 23);
+        if (this.hours === null) {
+            this.invalidHours = true;
+            this.hours = 0;
+        } else {
+            this.invalidHours = false;
+            this.updateTimeStrings();
+        }
+    }
+
+    public updateMinutes(): void {
+        this.minutes = this.toInteger(this.minutesString, 0, 59);
+        if (this.minutes === null) {
+            this.invalidMinutes = true;
+            this.minutes = 0;
+        } else {
+            this.invalidMinutes = false;
+            this.updateTimeStrings();
+        }
+    }
+
+    public updateSeconds(): void {
+        this.seconds = this.toInteger(this.secondsString, 0, 59);
+        if (this.seconds === null) {
+            this.invalidSeconds = true;
+            this.seconds = 0;
+        } else {
+            this.invalidSeconds = false;
+            this.updateTimeStrings();
+        }
     }
 
     public incrementHours(): void {
-        this.shiftHours(1);
+        this.hours += 1;
+        if (this.hours > 23) {
+            this.hours = 0;
+        } else if (this.hours < 0) {
+            this.hours = 23;
+        }
+        this.invalidHours = false;
+        this.updateTimeStrings();
     }
 
     public decrementHours(): void {
-        this.shiftHours(-1);
-    }
-
-    /**
-     * Add or Subtract the number of hinutes
-     */
-    public shiftMinutes(shiftBy: number): void {
-        let d: Date = new Date(this.datetime);
-        let minutes: number = d.getMinutes();
-        minutes+=shiftBy;
-        if (minutes > 23) {
-            minutes = 0;
-        } else if (minutes < 0) {
-            minutes = 23;
+        this.hours -= 1;
+        if (this.hours > 23) {
+            this.hours = 0;
+        } else if (this.hours < 0) {
+            this.hours = 23;
         }
-        d.setMinutes(minutes);
-        this.datetime = MiscUtils.formatDateToDatetimeString(d);
-        console.debug(`shiftMinutes by ${shiftBy} to ${d} - dateTime is now: ${this.datetime}`);
+        this.invalidHours = false;
+        this.updateTimeStrings();
     }
 
     public incrementMinutes(): void {
-        this.shiftMinutes(1);
+        this.minutes += 1;
+        if (this.minutes > 59) {
+            this.minutes = 0;
+            this.incrementHours();
+        } else if (this.minutes < 0) {
+            this.minutes = 59;
+            this.decrementHours();
+        }
+        this.invalidMinutes = false;
+        this.updateTimeStrings();
     }
 
     public decrementMinutes(): void {
-        this.shiftMinutes(-1);
-    }
-
-    /**
-     * Add or Subtract the number of seconds
-     */
-    public shiftSeconds(shiftBy: number): void {
-        let d: Date = new Date(this.datetime);
-        let seconds: number = d.getSeconds();
-        seconds+=shiftBy;
-        if (seconds > 23) {
-            seconds = 0;
-        } else if (seconds < 0) {
-            seconds = 23;
+        this.minutes -= 1;
+        if (this.minutes > 59) {
+            this.minutes = 0;
+            this.incrementHours();
+        } else if (this.minutes < 0) {
+            this.minutes = 59;
+            this.decrementHours();
         }
-        d.setSeconds(seconds);
-        this.datetime = MiscUtils.formatDateToDatetimeString(d);
-        console.debug(`shiftSeconds by ${shiftBy} to ${d} - dateTime is now: ${this.datetime}`);
+        this.invalidMinutes = false;
+        this.updateTimeStrings();
     }
 
     public incrementSeconds(): void {
-        this.shiftSeconds(1);
+        this.seconds += 1;
+        if (this.seconds > 59) {
+            this.seconds = 0;
+            this.incrementMinutes();
+        } else if (this.seconds < 0) {
+            this.seconds = 59;
+            this.decrementMinutes();
+        }
+        this.invalidSeconds = false;
+        this.updateTimeStrings();
     }
 
     public decrementSeconds(): void {
-        this.shiftSeconds(-1);
+        this.seconds -= 1;
+        if (this.seconds > 59) {
+            this.seconds = 0;
+            this.incrementMinutes();
+        } else if (this.seconds < 0) {
+            this.seconds = 59;
+            this.decrementMinutes();
+        }
+        this.invalidSeconds = false;
+        this.updateTimeStrings();
     }
 
-    public isRequired() : boolean {
-        return this.required || (this.requiredIfNotCurrent && this.index[0] !== 0);
+    public validateDatetime(): void {
+        if (this.datetime === null || this.datetime.trim().length === 0) {
+            this.invalidDatetime = this.required ? true : false;
+        } else if (this.datetime.length < 19) {
+            this.invalidDatetime = true;
+        } else {
+            if (this.datetime
+                .match(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[0-1]) ([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/g)) {
+                this.invalidDatetime = false;
+            } else {
+                this.invalidDatetime = true;
+            }
+        }
     }
 
-    private checkPreConditions() {
-        if (!this.controlName || this.controlName.length === 0) {
-            console.error('DatetimeInputComponent - controlName Input is required');
+   /**
+    * Get a validation message to apply if the input string is:
+    *   1. required but not supplied, or
+    *   2. supplied but not a valid date
+    */
+    public getValidationMessage() {
+        let message = this.label + ' is ';
+        if (this.required && !this.datetime) {
+            message += ' required ';
+        } else if (this.invalidDatetime) {
+            message += ' not valid ';
         }
-        if (!this.form) {
-            console.error('DatetimeInputComponent - form Input is required');
+        message += '(Valid Date Format: YYYY-MM-DD hh:mm:ss)';
+        return message;
+    }
+
+   /**
+    * Update hour/minute/second time strings in response to any changes in hours, minutes, and seconds.
+    */
+    private updateTimeStrings() {
+        this.hoursString = MiscUtils.padTwo(this.hours);
+        this.minutesString = MiscUtils.padTwo(this.minutes);
+        this.secondsString = MiscUtils.padTwo(this.seconds);
+    }
+
+   /**
+    * Convert a string in format of 'YYYY-MM-DDThh:mm:ss.sssZ' to a Date object.
+    */
+    private convertStringToDate(dtStr: string): Date {
+        if (dtStr === null || dtStr.trim().length === 0) {
+            this.invalidDatetime = this.required ? true : false;
+            return null;
+        } else if (dtStr.trim().length < 19) {
+            this.invalidDatetime = true;
+            return null;
+        }
+
+        try {
+            let date: Date = new Date(dtStr.substring(0, 19).replace(' ', 'T'));
+            if (date !== null && date.toString() !== 'Invalid Date') {
+                this.invalidDatetime = false;
+                return date;
+            }
+        } catch(error) {
+            console.log('Error:'+error);
+        }
+
+        this.invalidDatetime = true;
+        return null;
+    }
+
+    private formatDatetimeToDisplay(datetimeStr: string): string {
+        if (datetimeStr) {
+            let datetimeDisplay: string = datetimeStr.replace('T', ' ');    // .substring(0, 19)
+            return datetimeDisplay.replace(/\.\d\d\dZ/, ''); // .000Z
+        }
+        return datetimeStr;
+    }
+
+   /**
+    * Format the input datetime string to format of 'YYYY-MM-DD hh:mm:ss' and display it on calendar
+    */
+    private formatInputDatetime(dtStr: string): void {
+        if (dtStr !== null && dtStr.trim().length >= 19) {
+            this.datetime = dtStr.substring(0, 19).replace('T', ' ');
+            if (dtStr.length >= 24) {
+                this.datetimeSuffix = dtStr.substring(19, 24);
+            }
         }
     }
 
-    /**
-     * Validators with closures need to be created based on @Input attributes.  Others can be set in the Model form in the .ts.
-     */
-    private createValidators() {
-        if (this.requiredIfNotCurrent === true && this.index > 0 ) {
-            throw new Error('DatetimeInputComponent - requiredIfNotCurrent Input requires an index input');
+   /**
+    * Set a string in format of 'YYYY-MM-DDThh:mm:ss.sssZ' back to the input JSON object.
+    */
+    private setOutputDatetime(): void {
+        if (this.datetimeModel === null) {
+            return;
         }
-        this.validateFn = createDateTimeRequiredIfNotCurrentValidator(this.index);
+
+        let dateStr: string = this.datetimeModel.getFullYear() + '-'
+            + MiscUtils.padTwo(this.datetimeModel.getMonth() + 1) + '-'
+            + MiscUtils.padTwo(this.datetimeModel.getDate());
+        let timeStr: string = MiscUtils.padTwo(this.datetimeModel.getHours()) + ':'
+            + MiscUtils.padTwo(this.datetimeModel.getMinutes()) + ':'
+            + MiscUtils.padTwo(this.datetimeModel.getSeconds());
+
+        this.datetimeLast = this.datetime;
+        this.datetime = dateStr + ' ' + timeStr;// + this.datetimeSuffix;
+        this.formControl.setValue(this.datetime);
+        if (this.datetime !== this.datetimeLast) {
+            this.formControl.markAsDirty();
+        }
+    }
+
+   /**
+    * Returns an integer between min and max values by parsing from input str,
+    * return null if it is not a number or out of range.
+    */
+    private toInteger(str: string, min: number, max: number): number {
+        try {
+            let num: number = parseInt(str, 10);
+            if (isNaN(num)) {
+                return null;
+            } else if (num < min || num > max) {
+                return null;
+            } else {
+                return num;
+            }
+        } catch(error) {
+            return null;
+        }
     }
 }
-

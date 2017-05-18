@@ -53,8 +53,8 @@
                 <text-input formControlName="markerDescription" controlName="markerDescription"
                             [form]="siteIdentificationForm">Marker Description
                 </text-input>
-                <datetime-input formControlName="dateInstalled" controlName="dateInstalled"
-                                [form]="siteIdentificationForm">Date Installed
+                <datetime-input [form]="siteIdentificationForm" controlName="dateInstalled"
+                                [required]="false">Date Installed
                 </datetime-input>
                 <text-input formControlName="geologicCharacteristic" controlName="geologicCharacteristic"
                             [form]="siteIdentificationForm">Geologic Characteristic
