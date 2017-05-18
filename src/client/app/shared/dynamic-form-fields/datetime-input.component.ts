@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostListener, Input, OnInit, Output, DoCheck } from '@angular/core';
-import { NG_VALUE_ACCESSOR, NG_VALIDATORS, AbstractControl, ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
+import { Component, ElementRef, HostListener, Input, OnInit, DoCheck } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { AbstractGnssControls } from './abstract-gnss-controls';
 import { MiscUtils } from '../index';
 
@@ -26,8 +26,8 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
     public invalidDatetime: boolean = false;
     public showDatetimePicker: boolean = false;
 
-    public formControl: AbstractControl;
     public datetime: string = '';
+    public formControl: AbstractControl;
     @Input() public form: FormGroup;
     @Input() public controlName: string;
     @Input() public required: boolean = true;
@@ -49,19 +49,20 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
     ngOnInit() {
         super.setForm(this.form);
         this.formControl = this.form.controls[this.controlName];
-        this.datetime = this.formatDatetimeToDisplay(this.formControl.value);
-        this.formControl.setValue(this.datetime);
-        this.datetimeLast = this.datetime;
-        this.formatInputDatetime(this.datetime);
         this.updateCalendar();
+        this.formControl.setValue(this.datetime);
+        this.datetimeLast = '';
     }
 
+   /**
+    * Validate datetime value changed externally by manual typing.
+    #
+    * Note: it won't be invalid if it is selected by the calendar dialog
+    */
     ngDoCheck(): void {
-        // If the @Input is changed externally, want to update the displayed date
         if (this.datetimeLast !== this.datetime) {
             this.datetimeLast = this.datetime;
-            this.formatInputDatetime(this.datetime);
-            this.setOutputDatetime();
+            this.validateDatetime();
         }
     }
 
@@ -134,7 +135,6 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
     */
     public updateCalendar(): void {
         this.datetime = this.formatDatetimeToDisplay(this.formControl.value);
-        //this.formControl.setValue(this.datetime);
         let newDate: Date = this.convertStringToDate(this.datetime);
         if (newDate === null) {
             this.datetimeModel = new Date();
@@ -322,22 +322,10 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
 
     private formatDatetimeToDisplay(datetimeStr: string): string {
         if (datetimeStr) {
-            let datetimeDisplay: string = datetimeStr.replace('T', ' ');    // .substring(0, 19)
-            return datetimeDisplay.replace(/\.\d\d\dZ/, ''); // .000Z
+            let datetimeDisplay: string = datetimeStr.replace('T', ' ');
+            return datetimeDisplay.replace(/\.\d\d\dZ/, ''); // remove '.000Z'
         }
         return datetimeStr;
-    }
-
-   /**
-    * Format the input datetime string to format of 'YYYY-MM-DD hh:mm:ss' and display it on calendar
-    */
-    private formatInputDatetime(dtStr: string): void {
-        if (dtStr !== null && dtStr.trim().length >= 19) {
-            this.datetime = dtStr.substring(0, 19).replace('T', ' ');
-            if (dtStr.length >= 24) {
-                this.datetimeSuffix = dtStr.substring(19, 24);
-            }
-        }
     }
 
    /**
@@ -355,11 +343,11 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
             + MiscUtils.padTwo(this.datetimeModel.getMinutes()) + ':'
             + MiscUtils.padTwo(this.datetimeModel.getSeconds());
 
-        this.datetimeLast = this.datetime;
         this.datetime = dateStr + ' ' + timeStr;// + this.datetimeSuffix;
         this.formControl.setValue(this.datetime);
         if (this.datetime !== this.datetimeLast) {
             this.formControl.markAsDirty();
+            this.datetimeLast = this.datetime;
         }
     }
 

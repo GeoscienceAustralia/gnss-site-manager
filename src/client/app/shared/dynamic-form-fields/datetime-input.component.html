@@ -53,23 +53,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="form-group" [ngClass]="{'has-error': invalidHours}">
+                            <td class="form-group">
                                 <input type="text" [(ngModel)]="hoursString"
                                        [ngModelOptions]="{standalone: true}"
+                                       [ngClass]="{'ng-invalid': invalidHours}"
                                        (change)="updateHours()"
                                        class="form-control text-center input-time" maxlength="2">
                             </td>
                             <td>:</td>
-                            <td class="form-group" [ngClass]="{'has-error': invalidMinutes}">
+                            <td class="form-group">
                                 <input type="text" [(ngModel)]="minutesString"
                                        [ngModelOptions]="{standalone: true}"
+                                       [ngClass]="{'ng-invalid': invalidMinutes}"
                                        (change)="updateMinutes()"
                                        class="form-control text-center input-time" maxlength="2">
                             </td>
                             <td>:</td>
-                            <td class="form-group" [ngClass]="{'has-error': invalidSeconds}">
+                            <td class="form-group">
                                 <input type="text" [(ngModel)]="secondsString"
                                        [ngModelOptions]="{standalone: true}"
+                                       [ngClass]="{'ng-invalid': invalidSeconds}"
                                        (change)="updateSeconds()"
                                        class="form-control text-center input-time" maxlength="2">
                             </td>

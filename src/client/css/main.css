@@ -79,19 +79,6 @@ body {
   padding-left: 1px;
   padding-right: 1px;
 }
-/* TODO: find what this is being applied to so can qualify.  Then change 'label.labeldisabled' to 'label.disabled' below */
-.disabled {
-    display: none;
-    color: #888 !important;
-    pointer-events: none;
-    cursor: default;
-}
-
-label.labeldisabled {
-    color: #888 !important;
-    pointer-events: none;
-    cursor: default;
-}
 
 ul {
   margin: 10px 0 0;

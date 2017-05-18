@@ -42,9 +42,16 @@
   height: 34px;
   padding: 5px 10px 4px;
 }
+.btn-calendar.disabled,
+.btn-calendar[disabled],
+.btn-calendar[disabled]:focus,
+.btn-calendar[disabled]:hover {
+  background-color: #eee;
+  opacity: 1;
+}
 .calendar-popup .center-btns {
   margin: 0 auto;
-  width: 70px;
+  width: 160px;
 }
 @media (max-width: 767px) {
   .calendar-popup .center-btns {
