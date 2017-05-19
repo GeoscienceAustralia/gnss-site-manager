@@ -62,7 +62,7 @@ export abstract class AbstractViewModel {
      * @return the date so can use in FormModel
      */
     setDateInserted(): string {
-        let date: string = MiscUtils.getPresentDateTime();
+        let date: string = MiscUtils.getUTCDateTime();
         this.dateInserted = date;
         return date;
     }
@@ -72,7 +72,7 @@ export abstract class AbstractViewModel {
      * @return the date so can use in FormModel
      */
     setDateDeleted(): string {
-        let date: string = MiscUtils.getPresentDateTime();
+        let date: string = MiscUtils.getUTCDateTime();
         this.dateDeleted = date;
         return date;
     }
@@ -93,7 +93,7 @@ export abstract class AbstractViewModel {
      */
     setEndDateToCurrentDate(): Object {
         if (this.hasOwnProperty('endDate')) {
-            let presentDT: string = MiscUtils.getPresentDateTime();
+            let presentDT: string = MiscUtils.getUTCDateTime();
             this.endDate = presentDT;
             return {endDate: presentDT};
         } else {
@@ -126,7 +126,7 @@ export abstract class AbstractViewModel {
         this.dateDeleted = '';
         this.dateInserted = '';
         this.deletedReason = '';
-        this.startDate = MiscUtils.getPresentDateTime();
+        this.startDate = MiscUtils.getUTCDateTime();
         this.endDate = '';
     }
 

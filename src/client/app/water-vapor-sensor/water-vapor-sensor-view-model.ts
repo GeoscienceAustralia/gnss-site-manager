@@ -14,7 +14,7 @@ export class WaterVaporSensorViewModel extends AbstractViewModel {
      */
     constructor(blank: boolean = false) {
         super();
-        this.calibrationDate = blank ? '' : MiscUtils.getPresentDateTime();
+        this.calibrationDate = blank ? '' : MiscUtils.getUTCDateTime();
         this.notes = '';
         this.manufacturer = '';
         this.serialNumber = '';

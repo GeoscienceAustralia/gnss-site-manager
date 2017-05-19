@@ -1,13 +1,14 @@
 import * as lodash from 'lodash';
+import * as moment from 'moment-timezone';
 
 export class MiscUtils {
     private static scrollToView: any = require('scroll-into-view');
 
     /**
-     * Get present date and time string in format of "yyyy-mm-ddThh:mm:ss.sssZ"
+     * Get UTC date and time string in format of "yyyy-mm-dd hh:mm:ss"
      */
-    public static getPresentDateTime() {
-        return new Date().toISOString();
+    public static getUTCDateTime(): string {
+        return moment().utc().format("YYYY-MM-DD hh:mm:ss");
     }
 
     public static prettyFormatDateTime(date: string) {

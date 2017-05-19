@@ -16,7 +16,7 @@ export function main() {
       expect(waterVaporSensorsViewModel.notes).toEqual('');
       expect(waterVaporSensorsViewModel.serialNumber).toEqual('');
       // The defaults for calibration and start date is now() - drop time when test for this
-      let nowPart: string = MiscUtils.getPresentDateTime().replace(/T.*/,'');
+      let nowPart: string = MiscUtils.getUTCDateTime().replace(/T.*/,'');
       expect(waterVaporSensorsViewModel.calibrationDate).toBeDefined();
       expect(waterVaporSensorsViewModel.calibrationDate).not.toEqual('');
       expect(waterVaporSensorsViewModel.calibrationDate).toContain(nowPart);

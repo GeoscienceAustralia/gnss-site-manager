@@ -306,16 +306,11 @@ export class DatetimeInputComponent extends AbstractGnssControls implements OnIn
             return null;
         }
 
-        try {
-            let date: Date = new Date(dtStr.substring(0, 19).replace(' ', 'T'));
-            if (date !== null && date.toString() !== 'Invalid Date') {
-                this.invalidDatetime = false;
-                return date;
-            }
-        } catch(error) {
-            console.log('Error:'+error);
+        let date: Date = new Date(dtStr);
+        if (MiscUtils.isDate(date)) {
+            this.invalidDatetime = false;
+            return date;
         }
-
         this.invalidDatetime = true;
         return null;
     }

@@ -16,7 +16,7 @@ export class HumiditySensorViewModel extends AbstractViewModel {
      */
     constructor(blank: boolean = false) {
         super();
-        this.calibrationDate = blank ? '' : MiscUtils.getPresentDateTime();
+        this.calibrationDate = blank ? '' : MiscUtils.getUTCDateTime();
         this.dataSamplingInterval = 0;
         this.accuracyPercentRelativeHumidity = 0;
         this.aspiration = '';

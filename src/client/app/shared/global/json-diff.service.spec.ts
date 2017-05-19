@@ -462,7 +462,7 @@ export function main() {
       // should be only one object entry in item.  Regardless descend into the first
       let theObject: any = getFirstObject(items, index);
 
-      let date: string = MiscUtils.getPresentDateTime();
+      let date: string = MiscUtils.getUTCDateTime();
 
       theObject.dateInserted = date;
 
@@ -481,7 +481,7 @@ export function main() {
       // should be only one object entry in item.  Regardless descend into the first
       let theObject: any = getFirstObject(items, index);
 
-      let date: string = MiscUtils.getPresentDateTime();
+      let date: string = MiscUtils.getUTCDateTime();
 
       theObject.dateDeleted = date;
 

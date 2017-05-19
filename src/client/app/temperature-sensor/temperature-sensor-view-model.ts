@@ -15,7 +15,7 @@ export class TemperatureSensorViewModel extends AbstractViewModel {
      */
     constructor(blank: boolean = false) {
         super();
-        this.calibrationDate = blank ? '' : MiscUtils.getPresentDateTime();
+        this.calibrationDate = blank ? '' : MiscUtils.getUTCDateTime();
         this.dataSamplingInterval = 0;
         this.accuracyDegreesCelcius = 0;
         this.notes = '';

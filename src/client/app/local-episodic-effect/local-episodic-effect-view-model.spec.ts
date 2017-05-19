@@ -14,7 +14,7 @@ export function main() {
 
       expect(localEpisodicEffectViewModel.event).toEqual('');
 
-      let nowPart: string = MiscUtils.getPresentDateTime().replace(/T.*/,'');
+      let nowPart: string = MiscUtils.getUTCDateTime().replace(/T.*/,'');
       expect(localEpisodicEffectViewModel.startDate).toBeDefined();
       expect(localEpisodicEffectViewModel.startDate).toContain(nowPart);
       expect(localEpisodicEffectViewModel.endDate).toEqual('');
