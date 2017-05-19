@@ -20,8 +20,8 @@ export class TypedPointer {
  * mapping to translate one of view or data model to the other.
  */
 export class FieldMap {
-    constructor(public readonly dataTypedPointer: TypedPointer,
-                public readonly viewTypedPointer: TypedPointer) {}
+    constructor(public readonly sourceField: TypedPointer,
+                public readonly targetField: TypedPointer) {}
 }
 
 export class DataViewTranslatorService {
@@ -63,11 +63,11 @@ export class DataViewTranslatorService {
             let sourceTypedPointer: TypedPointer;
             let targetTypedPointer: TypedPointer;
             if (! writeViewToData) {
-                sourceTypedPointer = fieldMap.dataTypedPointer;
-                targetTypedPointer = fieldMap.viewTypedPointer;
+                sourceTypedPointer = fieldMap.sourceField;
+                targetTypedPointer = fieldMap.targetField;
             } else {
-                sourceTypedPointer = fieldMap.viewTypedPointer;
-                targetTypedPointer = fieldMap.dataTypedPointer;
+                sourceTypedPointer = fieldMap.targetField;
+                targetTypedPointer = fieldMap.sourceField;
             }
             let sourceValue: any = JsonPointerService.get(source, sourceTypedPointer.pointer);
             JsonPointerService.set(target, targetTypedPointer.pointer, sourceValue);
