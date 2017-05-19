@@ -22,6 +22,10 @@ export class TypedPointer {
 export class FieldMap {
     constructor(public readonly sourceField: TypedPointer,
                 public readonly targetField: TypedPointer) {}
+
+    public inverse(): FieldMap {
+        return new FieldMap(this.targetField, this.sourceField);
+    }
 }
 
 export class DataViewTranslatorService {
