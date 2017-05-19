@@ -19,7 +19,7 @@ export function main() {
       expect(temperatureSensorsViewModel.notes).toEqual('');
       expect(temperatureSensorsViewModel.serialNumber).toEqual('');
       // The defaults for calibration and start date is now() - drop time when test for this
-      let nowPart: string = MiscUtils.getUTCDateTime().replace(/T.*/,'');
+      let nowPart: string = MiscUtils.getUTCDateTime();
       expect(temperatureSensorsViewModel.calibrationDate).toBeDefined();
       expect(temperatureSensorsViewModel.calibrationDate).not.toEqual('');
       expect(temperatureSensorsViewModel.calibrationDate).toContain(nowPart);

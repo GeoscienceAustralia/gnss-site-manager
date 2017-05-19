@@ -19,7 +19,7 @@ export function main() {
       expect(pressureSensorsViewModel.notes).toEqual('');
       expect(pressureSensorsViewModel.serialNumber).toEqual('');
       // The defaults for calibration and start date is now() - drop time when test for this
-      let nowPart: string = MiscUtils.getUTCDateTime().replace(/T.*/,'');
+      let nowPart: string = MiscUtils.getUTCDateTime();
       expect(pressureSensorsViewModel.calibrationDate).toBeDefined();
       expect(pressureSensorsViewModel.calibrationDate).not.toEqual('');
       expect(pressureSensorsViewModel.calibrationDate).toContain(nowPart);

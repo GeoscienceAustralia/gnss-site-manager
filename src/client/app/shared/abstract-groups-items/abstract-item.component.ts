@@ -120,15 +120,9 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
     ngOnInit() {
         this.itemGroup = <FormGroup> this.groupArray.at(this.index);
         this.addFields(this.itemGroup, this.getFormControls());
-        // For some reason, when - Open Group, Open Item, Close Group, Reopen Group, it is being marked as dirty
-        // NOTE that without the setTimeout() on the setValue(), a "was false now true" error occurs.  It seems that
-        // it is talking about the dirty status.  So something is happening deep in the angular lifecycle.  Hopefully
-        // they fix this.
         // Check its dirty status before doing the setValue() and restore to that state afterwards
         let wasDirty: boolean = this.itemGroup ? this.itemGroup.dirty : true;   // True because it is new
-        setTimeout(() => {
-            this.itemGroup.setValue(this.getItem());
-        });
+        this.itemGroup.setValue(this.getItem());
         if (!wasDirty) {
             setTimeout(() => {
                 this.itemGroup.markAsPristine();

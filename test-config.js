@@ -13,6 +13,8 @@ System.config({
       'performance-now': 'performance-now/lib/performance-now',
       'deep-diff': 'deep-diff/index',
       'oidc-client': 'oidc-client/lib/oidc-client',
+      'moment-timezone': 'moment-timezone/moment-timezone.js',
   }
 });
+
 
