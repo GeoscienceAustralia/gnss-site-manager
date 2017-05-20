@@ -1,5 +1,5 @@
 import { SiteLogDataModel } from './data-model/site-log-data-model';
-import { DataViewTranslatorService, doWriteViewToData, ObjectMap } from './data-view-translator';
+import { DataViewTranslatorService, ObjectMap } from './data-view-translator';
 import { JsonViewModelServiceSpecData } from './json-view-model.service.spec.data';
 import { HumiditySensorViewModel } from '../../humidity-sensor/humidity-sensor-view-model';
 import { GnssReceiverViewModel } from '../../gnss-receiver/gnss-receiver-view-model';
@@ -23,7 +23,7 @@ export function main() {
 
       let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-      DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getObjectMap());
+      DataViewTranslatorService.translate(firstHSD, firstHSV, firstHSV.getObjectMap());
 
       expect(firstHSV).toBeDefined();
 
@@ -49,10 +49,10 @@ export function main() {
 
       let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-      DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getObjectMap());
+      DataViewTranslatorService.translate(firstHSD, firstHSV, firstHSV.getObjectMap());
 
       let newHSD: any = {};
-      DataViewTranslatorService.translateV2D(firstHSV, newHSD, firstHSV.getObjectMap());
+      DataViewTranslatorService.translate(firstHSV, newHSD, firstHSV.getObjectMap().inverse());
 
       expect(newHSD).toBeDefined();
 
@@ -105,10 +105,10 @@ export function main() {
 
           let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-          DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getObjectMap());
+          DataViewTranslatorService.translate(firstHSD, firstHSV, firstHSV.getObjectMap());
 
           let newHSD: any = {};
-          DataViewTranslatorService.translate(firstHSV, newHSD, firstHSV.getObjectMap(), doWriteViewToData);
+          DataViewTranslatorService.translate(firstHSV, newHSD, firstHSV.getObjectMap().inverse());
 
           expect(newHSD).toBeDefined();
 
@@ -138,13 +138,13 @@ export function main() {
 
           let firstRV: GnssReceiverViewModel = new GnssReceiverViewModel();
 
-          DataViewTranslatorService.translateD2V(firstRD, firstRV, firstRV.getObjectMap());
+          DataViewTranslatorService.translate(firstRD, firstRV, firstRV.getObjectMap());
 
           // Now change the dateInstalled, removed to dates
           firstRV.startDate = new Date(firstRV.startDate);
 
           let newRD: any = {};
-          DataViewTranslatorService.translate(firstRV, newRD, firstRV.getObjectMap(), doWriteViewToData);
+          DataViewTranslatorService.translate(firstRV, newRD, firstRV.getObjectMap().inverse());
 
           expect(newRD).toBeDefined();
 
