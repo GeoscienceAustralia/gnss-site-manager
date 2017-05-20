@@ -1,5 +1,5 @@
 import { SiteLogDataModel } from './data-model/site-log-data-model';
-import { DataViewTranslatorService, doWriteViewToData, FieldMap } from './data-view-translator';
+import { DataViewTranslatorService, doWriteViewToData, ObjectMap } from './data-view-translator';
 import { JsonViewModelServiceSpecData } from './json-view-model.service.spec.data';
 import { HumiditySensorViewModel } from '../../humidity-sensor/humidity-sensor-view-model';
 import { GnssReceiverViewModel } from '../../gnss-receiver/gnss-receiver-view-model';
@@ -7,14 +7,13 @@ import { MiscUtils } from '../global/misc-utils';
 
 export function main() {
   let completeValidSitelog: any = JsonViewModelServiceSpecData.data();
-  let fieldMappings: FieldMap[] = new HumiditySensorViewModel().getFieldMaps();
+  let objectMap: ObjectMap = new HumiditySensorViewModel().getObjectMap();
 
   describe('Json view translator service', () => {
 
     it('should be defined', () => {
       expect(completeValidSitelog).toBeDefined();
-      expect(fieldMappings).toBeDefined();
-      expect(fieldMappings.length).toBeGreaterThan(0);
+      expect(objectMap).toBeDefined();
     });
 
     it('should translate d2v for humiditySensors', () => {
@@ -24,7 +23,7 @@ export function main() {
 
       let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-      DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getFieldMaps());
+      DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getObjectMap());
 
       expect(firstHSV).toBeDefined();
 
@@ -50,10 +49,10 @@ export function main() {
 
       let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-      DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getFieldMaps());
+      DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getObjectMap());
 
       let newHSD: any = {};
-      DataViewTranslatorService.translateV2D(firstHSV, newHSD, firstHSV.getFieldMaps());
+      DataViewTranslatorService.translateV2D(firstHSV, newHSD, firstHSV.getObjectMap());
 
       expect(newHSD).toBeDefined();
 
@@ -79,7 +78,7 @@ export function main() {
 
           let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-          DataViewTranslatorService.translate(firstHSD, firstHSV, firstHSV.getFieldMaps()); // comment
+          DataViewTranslatorService.translate(firstHSD, firstHSV, firstHSV.getObjectMap()); // comment
 
           expect(firstHSV).toBeDefined();
 
@@ -106,10 +105,10 @@ export function main() {
 
           let firstHSV: HumiditySensorViewModel = new HumiditySensorViewModel();
 
-          DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getFieldMaps());
+          DataViewTranslatorService.translateD2V(firstHSD, firstHSV, firstHSV.getObjectMap());
 
           let newHSD: any = {};
-          DataViewTranslatorService.translate(firstHSV, newHSD, firstHSV.getFieldMaps(), doWriteViewToData);
+          DataViewTranslatorService.translate(firstHSV, newHSD, firstHSV.getObjectMap(), doWriteViewToData);
 
           expect(newHSD).toBeDefined();
 
@@ -139,14 +138,14 @@ export function main() {
 
           let firstRV: GnssReceiverViewModel = new GnssReceiverViewModel();
 
-          DataViewTranslatorService.translateD2V(firstRD, firstRV, firstRV.getFieldMaps());
+          DataViewTranslatorService.translateD2V(firstRD, firstRV, firstRV.getObjectMap());
 
           // Now change the dateInstalled, removed to dates
           firstRV.startDate = new Date(firstRV.startDate);
 
           let newRD: any = {};
-          // DataViewTranslatorService.translateV2D(firstHSV, newHSD, firstHSV.getFieldMaps());
-          DataViewTranslatorService.translate(firstRV, newRD, firstRV.getFieldMaps(), doWriteViewToData);
+          // DataViewTranslatorService.translateV2D(firstHSV, newHSD, firstHSV.getObjectMap());
+          DataViewTranslatorService.translate(firstRV, newRD, firstRV.getObjectMap(), doWriteViewToData);
 
           expect(newRD).toBeDefined();
 

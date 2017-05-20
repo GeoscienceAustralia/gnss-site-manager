@@ -42,7 +42,7 @@ export class GnssReceiverItemComponent extends AbstractItemComponent {
             {elevationCutoffSetting: new FormControl('')},//, [Validators.maxLength(100)]],
             {temperatureStabilization: new FormControl('')}, //, [Validators.required]],//, [Validators.maxLength(100)]],
             {notes: new FormControl('', [Validators.maxLength(20)])},
-            {fieldMaps: new FormControl('')},
+            {objectMap: new FormControl('')},
             {dateDeleted: new FormControl('')},
             {dateInserted: new FormControl('')},
             {deletedReason: new FormControl('')}

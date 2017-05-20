@@ -1,6 +1,7 @@
 import { JsonPointerService } from '../json-pointer/json-pointer.service';
 import { AbstractViewModel } from './view-model/abstract-view-model';
 import { MiscUtils } from '../global/misc-utils';
+import * as _ from 'lodash';
 
 export const doWriteViewToData: boolean = true;
 
@@ -28,32 +29,52 @@ export class FieldMap {
     }
 }
 
+export class ObjectMap {
+
+    private fieldMaps = new Array<FieldMap>();
+
+    public inverse(): ObjectMap {
+        let inverse = new ObjectMap();
+        _.forEach(this.fieldMaps, f => {
+            inverse.add(f.inverse());
+        });
+        return inverse;
+    }
+
+    public add(fieldMap: FieldMap) {
+        this.fieldMaps.push(fieldMap);
+    }
+
+    // TODO: remove this getter once object translate is implemented in ObjectMap
+    public getFieldMaps(): FieldMap[] {
+        return this.fieldMaps;
+    }
+}
+
 export class DataViewTranslatorService {
 
     /**
      * Translate from data and view models.
-     * @param dataModel is input.  Its paths should match the fieldMappings.dataModel
-     * @param viewModel is populated.  It should exist as on object upon entry.  Its paths should match the
-     * fieldMappings.viewModel
+     * @param dataModel is input.
+     * @param viewModel is populated. It should exist as on object upon entry.
      * @param fieldMappings to/from data and view
      */
-    static translateD2V<T extends AbstractViewModel>(dataModel: any, viewModel: T, fieldMappings: FieldMap[]): void {
-        DataViewTranslatorService.translate(dataModel, viewModel, fieldMappings, false);
+    static translateD2V<T extends AbstractViewModel>(dataModel: any, viewModel: T, objectMap: ObjectMap): void {
+        DataViewTranslatorService.translate(dataModel, viewModel, objectMap, false);
     }
 
     /**
      * Translate from view and data models.
-     * @param viewModel is input.  Its paths should match the fieldMappings.viewModel
-     * @param dataModel is populated.  It should exist as on object upon entry.  Its paths should match the
-     * fieldMappings.dataModel
+     * @param viewModel is input.
+     * @param dataModel is populated. It should exist as on object upon entry.
      * @param fieldMappings to/from data and view
      */
-    static translateV2D<T extends AbstractViewModel>(viewModel: T, dataModel: any, fieldMappings: FieldMap[]): any {
-        DataViewTranslatorService.translate(viewModel, dataModel, fieldMappings, true);
+    static translateV2D<T extends AbstractViewModel>(viewModel: T, dataModel: any, objectMap: ObjectMap): any {
+        DataViewTranslatorService.translate(viewModel, dataModel, objectMap, true);
     }
 
     /**
-     * Generic translate independant of view and data models.  As long as the mappings are in the source, the data will be
+     * Generic translate independant of view and data models. As long as the mappings are in the source, the data will be
      * written into the mapped location in the target.
      *
      * @param source - source to read from - if writeViewToData is false then this is the data model else the view model
@@ -61,8 +82,9 @@ export class DataViewTranslatorService {
      * @param writeViewToData - if false then write source data model to target view model (pass source, target appropriately);
      *                        if true then write source view model to target data model (pass source, target appropriately);
      */
-    static translate(source: any, target: any, fieldMappings: FieldMap[], writeViewToData: boolean = false) {
-        for (let fieldMap of fieldMappings) {
+    static translate(source: any, target: any, objectMap: ObjectMap, writeViewToData: boolean = false) {
+        for (let fieldMap of objectMap.getFieldMaps()) {
+            console.log(fieldMap.sourceField.pointer);
             // View and Data references currently retained from original translate context
             let sourceTypedPointer: TypedPointer;
             let targetTypedPointer: TypedPointer;

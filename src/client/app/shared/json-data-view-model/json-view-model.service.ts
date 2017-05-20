@@ -45,10 +45,10 @@ export class JsonViewModelService {
 
         // Form (View) Model approach
         DataViewTranslatorService.translate(siteLogDataModel.siteIdentification, siteLogViewModel.siteIdentification,
-            new SiteIdentificationMappings().getFieldMaps());
+            new SiteIdentificationMappings().getObjectMap());
 
         DataViewTranslatorService.translate(siteLogDataModel.siteLocation, siteLogViewModel.siteLocation,
-            new SiteLocationMappings().getFieldMaps());
+            new SiteLocationMappings().getObjectMap());
 
         siteLogViewModel.siteOwner = this.dataToViewModel([siteLogDataModel.siteOwner], ResponsiblePartyViewModel);
         siteLogViewModel.siteContacts = this.dataToViewModel(siteLogDataModel.siteContacts, ResponsiblePartyViewModel);
@@ -80,24 +80,24 @@ export class JsonViewModelService {
         siteLogDataModel.waterVaporSensors = this.viewToDataModel(viewModel.waterVaporSensors);
 
         DataViewTranslatorService.translate(viewModel.siteIdentification, siteLogDataModel.siteIdentification,
-            new SiteIdentificationMappings().getFieldMaps(), doWriteViewToData);
+            new SiteIdentificationMappings().getObjectMap(), doWriteViewToData);
 
         DataViewTranslatorService.translate(viewModel.siteLocation, siteLogDataModel.siteLocation,
-            new SiteLocationMappings().getFieldMaps(), doWriteViewToData);
+            new SiteLocationMappings().getObjectMap(), doWriteViewToData);
 
         siteLogDataModel.siteContacts = this.viewToDataModel(viewModel.siteContacts);
 
         DataViewTranslatorService.translate(viewModel.siteDataSource[0], siteLogDataModel.siteDataSource,
-            new ResponsiblePartyViewModel().getFieldMaps(), doWriteViewToData);
+            new ResponsiblePartyViewModel().getObjectMap(), doWriteViewToData);
 
         siteLogDataModel.siteDataCenters = this.viewToDataModel(viewModel.siteDataCenters);
 
         // Only one siteOwner, siteMetadataCustodian (at most) in an array
         DataViewTranslatorService.translate(viewModel.siteOwner[0], siteLogDataModel.siteOwner,
-            new ResponsiblePartyViewModel().getFieldMaps(), doWriteViewToData);
+            new ResponsiblePartyViewModel().getObjectMap(), doWriteViewToData);
 
         DataViewTranslatorService.translate(viewModel.siteMetadataCustodian[0], siteLogDataModel.siteMetadataCustodian,
-            new ResponsiblePartyViewModel().getFieldMaps(), doWriteViewToData);
+            new ResponsiblePartyViewModel().getObjectMap(), doWriteViewToData);
 
         siteLogDataModel.moreInformation = viewModel.moreInformation;
         siteLogDataModel.dataStreams = viewModel.dataStreams;
@@ -117,7 +117,7 @@ export class JsonViewModelService {
         let viewModels: T[] = [];
         for (let dataModel of dataModels) {
             let newViewModel: T = new type();
-            DataViewTranslatorService.translateD2V(dataModel, newViewModel, newViewModel.getFieldMaps());
+            DataViewTranslatorService.translateD2V(dataModel, newViewModel, newViewModel.getObjectMap());
             viewModels.push(newViewModel);
         }
         return viewModels;
@@ -132,9 +132,9 @@ export class JsonViewModelService {
     private viewToDataModel<T extends AbstractViewModel>(viewModels: T[]): any[] {
         let dataModels: any[] = [];
         for (let viewModel of viewModels) {
-            let fieldMappings: FieldMap[] = (<T> viewModel).getFieldMaps();
+            let objectMap = (<T> viewModel).getObjectMap();
             let dataModel: any = {};
-            DataViewTranslatorService.translateV2D(viewModel, dataModel, fieldMappings);
+            DataViewTranslatorService.translateV2D(viewModel, dataModel, objectMap);
             dataModels.push(dataModel);
         }
         return dataModels;

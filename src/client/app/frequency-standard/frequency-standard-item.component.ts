@@ -46,7 +46,7 @@ export class FrequencyStandardItemComponent extends AbstractItemComponent {
             {startDate: new FormControl('')},//, [Validators.required]],
             {endDate: new FormControl('')},  //  requiredIfNotCurrent="true"
             {notes: new FormControl(['', [Validators.maxLength(2000)]])},
-            {fieldMaps: new FormControl('')},
+            {objectMap: new FormControl('')},
             {dateDeleted: new FormControl('')},
             {dateInserted: new FormControl('')},
             {deletedReason: new FormControl('')}
