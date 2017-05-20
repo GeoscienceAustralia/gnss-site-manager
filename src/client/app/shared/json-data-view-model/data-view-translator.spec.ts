@@ -144,7 +144,6 @@ export function main() {
           firstRV.startDate = new Date(firstRV.startDate);
 
           let newRD: any = {};
-          // DataViewTranslatorService.translateV2D(firstHSV, newHSD, firstHSV.getObjectMap());
           DataViewTranslatorService.translate(firstRV, newRD, firstRV.getObjectMap(), doWriteViewToData);
 
           expect(newRD).toBeDefined();
@@ -162,10 +161,6 @@ export function main() {
           expect(newRD.gnssReceiver.dateInstalled.value[0]).toEqual(MiscUtils.formatDateToDatetimeString(firstRV.startDate));
           // But dateRemoved wasn't
           expect(newRD.gnssReceiver.dateRemoved.value[0]).toEqual(firstRV.endDate);
-          // expect(firstRV.startDate).toEqual(newRD.gnssReceiver.validTime.abstractTimePrimitive['gml:TimePeriod']
-          //     .beginPosition.value[0]);
-          // expect(firstRV.endDate).toBeNull();
-          // expect(newRD.gnssReceiver.validTime.abstractTimePrimitive['gml:TimePeriod'].endPosition.value[0]).toBeNull();
       });
   });
 }
