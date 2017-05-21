@@ -54,7 +54,7 @@ export class SurveyedLocalTieItemComponent extends AbstractItemComponent {
             // TODO see GEOD-454 endDate not needed by this component but the value exists in the model
             {endDate: new FormControl('')},//, [Validators.maxLength(100)]],
             {notes: new FormControl(['', [Validators.maxLength(2000)]])},
-            {fieldMaps: new FormControl('')},
+            {objectMap: new FormControl('')},
             {dateDeleted: new FormControl('')},
             {dateInserted: new FormControl('')},
             {deletedReason: new FormControl('')}

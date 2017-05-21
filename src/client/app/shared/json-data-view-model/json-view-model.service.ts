@@ -12,7 +12,7 @@ import { WaterVaporSensorViewModel } from '../../water-vapor-sensor/water-vapor-
 import { ResponsiblePartyViewModel } from '../../responsible-party/responsible-party-view-model';
 import { SiteLogViewModel } from './view-model/site-log-view-model';
 import { AbstractViewModel } from './view-model/abstract-view-model';
-import { DataViewTranslatorService, doWriteViewToData, FieldMap } from './data-view-translator';
+import { DataViewTranslatorService } from './data-view-translator';
 import { SiteIdentificationMappings } from '../../site-log/site-identification.mapping';
 import { SiteLocationMappings } from '../../site-log/site-location.mapping';
 
@@ -45,18 +45,15 @@ export class JsonViewModelService {
 
         // Form (View) Model approach
         DataViewTranslatorService.translate(siteLogDataModel.siteIdentification, siteLogViewModel.siteIdentification,
-            new SiteIdentificationMappings().getFieldMaps());
+            new SiteIdentificationMappings().getObjectMap());
 
         DataViewTranslatorService.translate(siteLogDataModel.siteLocation, siteLogViewModel.siteLocation,
-            new SiteLocationMappings().getFieldMaps());
+            new SiteLocationMappings().getObjectMap());
 
-        siteLogViewModel.siteOwner = [this.dataToViewModelItem(siteLogDataModel.siteOwner, ResponsiblePartyViewModel)];
+        siteLogViewModel.siteOwner = this.dataToViewModel([siteLogDataModel.siteOwner], ResponsiblePartyViewModel);
         siteLogViewModel.siteContacts = this.dataToViewModel(siteLogDataModel.siteContacts, ResponsiblePartyViewModel);
-
-        siteLogViewModel.siteMetadataCustodian =
-            [this.dataToViewModelItem(siteLogDataModel.siteMetadataCustodian, ResponsiblePartyViewModel)];
-
-        siteLogViewModel.siteDataSource = [this.dataToViewModelItem(siteLogDataModel.siteDataSource, ResponsiblePartyViewModel)];
+        siteLogViewModel.siteMetadataCustodian = this.dataToViewModel([siteLogDataModel.siteMetadataCustodian], ResponsiblePartyViewModel);
+        siteLogViewModel.siteDataSource = this.dataToViewModel([siteLogDataModel.siteDataSource], ResponsiblePartyViewModel);
         siteLogViewModel.siteDataCenters = this.dataToViewModel(siteLogDataModel.siteDataCenters, ResponsiblePartyViewModel);
 
         // For now just copy the DataModel parts over that haven't had translate to view written yet
@@ -83,24 +80,24 @@ export class JsonViewModelService {
         siteLogDataModel.waterVaporSensors = this.viewToDataModel(viewModel.waterVaporSensors);
 
         DataViewTranslatorService.translate(viewModel.siteIdentification, siteLogDataModel.siteIdentification,
-            new SiteIdentificationMappings().getFieldMaps(), doWriteViewToData);
+            new SiteIdentificationMappings().getObjectMap().inverse());
 
         DataViewTranslatorService.translate(viewModel.siteLocation, siteLogDataModel.siteLocation,
-            new SiteLocationMappings().getFieldMaps(), doWriteViewToData);
+            new SiteLocationMappings().getObjectMap().inverse());
 
         siteLogDataModel.siteContacts = this.viewToDataModel(viewModel.siteContacts);
 
         DataViewTranslatorService.translate(viewModel.siteDataSource[0], siteLogDataModel.siteDataSource,
-            new ResponsiblePartyViewModel().getFieldMaps(), doWriteViewToData);
+            new ResponsiblePartyViewModel().getObjectMap().inverse());
 
         siteLogDataModel.siteDataCenters = this.viewToDataModel(viewModel.siteDataCenters);
 
         // Only one siteOwner, siteMetadataCustodian (at most) in an array
         DataViewTranslatorService.translate(viewModel.siteOwner[0], siteLogDataModel.siteOwner,
-            new ResponsiblePartyViewModel().getFieldMaps(), doWriteViewToData);
+            new ResponsiblePartyViewModel().getObjectMap().inverse());
 
         DataViewTranslatorService.translate(viewModel.siteMetadataCustodian[0], siteLogDataModel.siteMetadataCustodian,
-            new ResponsiblePartyViewModel().getFieldMaps(), doWriteViewToData);
+            new ResponsiblePartyViewModel().getObjectMap().inverse());
 
         siteLogDataModel.moreInformation = viewModel.moreInformation;
         siteLogDataModel.dataStreams = viewModel.dataStreams;
@@ -119,22 +116,11 @@ export class JsonViewModelService {
     private dataToViewModel<T extends AbstractViewModel>(dataModels: any[], type: {new(): T ;}): T[] {
         let viewModels: T[] = [];
         for (let dataModel of dataModels) {
-            let newViewModel: T = this.dataToViewModelItem(dataModel, type);
+            let newViewModel: T = new type();
+            DataViewTranslatorService.translate(dataModel, newViewModel, newViewModel.getObjectMap());
             viewModels.push(newViewModel);
         }
         return viewModels;
-    }
-
-    /**
-     * Translate a single data model Item to view model.
-     * @param dataModel
-     * @param type of the ViewModel
-     * @return {T} translated view model
-     */
-    private dataToViewModelItem<T extends AbstractViewModel>(dataModel: any, type: {new(): T ;}): T {
-        let newViewModel: T = new type();
-        DataViewTranslatorService.translateD2V(dataModel, newViewModel, newViewModel.getFieldMaps());
-        return newViewModel;
     }
 
     /**
@@ -146,9 +132,9 @@ export class JsonViewModelService {
     private viewToDataModel<T extends AbstractViewModel>(viewModels: T[]): any[] {
         let dataModels: any[] = [];
         for (let viewModel of viewModels) {
-            let fieldMappings: FieldMap[] = (<T> viewModel).getFieldMaps();
+            let objectMap = (<T> viewModel).getObjectMap();
             let dataModel: any = {};
-            DataViewTranslatorService.translateV2D(viewModel, dataModel, fieldMappings);
+            DataViewTranslatorService.translate(viewModel, dataModel, objectMap.inverse());
             dataModels.push(dataModel);
         }
         return dataModels;

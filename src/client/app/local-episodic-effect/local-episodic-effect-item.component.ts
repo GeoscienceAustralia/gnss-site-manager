@@ -44,7 +44,7 @@ export class LocalEpisodicEffectItemComponent extends AbstractItemComponent {
             {event: new FormControl('')},//, [Validators.required, Validators.minLength(100)]],
             {startDate: new FormControl('')},//, [Validators.required]],
             {endDate: new FormControl('')},  // requiredIfNotCurrent="true"
-            {fieldMaps: new FormControl('')},
+            {objectMap: new FormControl('')},
             {dateDeleted: new FormControl('')},
             {dateInserted: new FormControl('')},
             {deletedReason: new FormControl('')}
