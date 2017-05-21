@@ -50,13 +50,10 @@ export class JsonViewModelService {
         DataViewTranslatorService.translate(siteLogDataModel.siteLocation, siteLogViewModel.siteLocation,
             new SiteLocationMappings().getFieldMaps());
 
-        siteLogViewModel.siteOwner = [this.dataToViewModelItem(siteLogDataModel.siteOwner, ResponsiblePartyViewModel)];
+        siteLogViewModel.siteOwner = this.dataToViewModel([siteLogDataModel.siteOwner], ResponsiblePartyViewModel);
         siteLogViewModel.siteContacts = this.dataToViewModel(siteLogDataModel.siteContacts, ResponsiblePartyViewModel);
-
-        siteLogViewModel.siteMetadataCustodian =
-            [this.dataToViewModelItem(siteLogDataModel.siteMetadataCustodian, ResponsiblePartyViewModel)];
-
-        siteLogViewModel.siteDataSource = [this.dataToViewModelItem(siteLogDataModel.siteDataSource, ResponsiblePartyViewModel)];
+        siteLogViewModel.siteMetadataCustodian = this.dataToViewModel([siteLogDataModel.siteMetadataCustodian], ResponsiblePartyViewModel);
+        siteLogViewModel.siteDataSource = this.dataToViewModel([siteLogDataModel.siteDataSource], ResponsiblePartyViewModel);
         siteLogViewModel.siteDataCenters = this.dataToViewModel(siteLogDataModel.siteDataCenters, ResponsiblePartyViewModel);
 
         // For now just copy the DataModel parts over that haven't had translate to view written yet
@@ -119,22 +116,11 @@ export class JsonViewModelService {
     private dataToViewModel<T extends AbstractViewModel>(dataModels: any[], type: {new(): T ;}): T[] {
         let viewModels: T[] = [];
         for (let dataModel of dataModels) {
-            let newViewModel: T = this.dataToViewModelItem(dataModel, type);
+            let newViewModel: T = new type();
+            DataViewTranslatorService.translateD2V(dataModel, newViewModel, newViewModel.getFieldMaps());
             viewModels.push(newViewModel);
         }
         return viewModels;
-    }
-
-    /**
-     * Translate a single data model Item to view model.
-     * @param dataModel
-     * @param type of the ViewModel
-     * @return {T} translated view model
-     */
-    private dataToViewModelItem<T extends AbstractViewModel>(dataModel: any, type: {new(): T ;}): T {
-        let newViewModel: T = new type();
-        DataViewTranslatorService.translateD2V(dataModel, newViewModel, newViewModel.getFieldMaps());
-        return newViewModel;
     }
 
     /**

@@ -131,7 +131,8 @@ export function main() {
 
     // now test the new 'date' format type - that is only applied v2d
 
-      it('should translate v2d for gnssReceivers using translate method and Date() dates', () => {
+      // TODO: remove obsolete test
+      xit('should translate v2d for gnssReceivers using translate method and Date() dates', () => {
           let receiverData: any = new SiteLogDataModel(completeValidSitelog).gnssReceivers;
           expect(receiverData).toBeDefined();
           let firstRD: any = receiverData[1];
