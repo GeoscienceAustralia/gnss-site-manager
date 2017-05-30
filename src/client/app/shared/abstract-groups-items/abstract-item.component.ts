@@ -65,13 +65,11 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
     }
 
     ngAfterViewInit(): void {
-        setTimeout(() => {
-            if (this.isEditable()) {
-                this.itemGroup.enable();
-            } else {
-                this.itemGroup.disable();
-            }
-        });
+        if (this.isEditable()) {
+            this.itemGroup.enable();
+        } else {
+            this.itemGroup.disable();
+        }
     }
 
     isDeleteDisabled(): boolean {
