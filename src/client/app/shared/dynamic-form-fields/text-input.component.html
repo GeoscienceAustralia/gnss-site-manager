@@ -6,6 +6,7 @@
     <div class="text-input" class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
          <input (keyup.enter)="ignoreEvent($event);"
              type="text"
+             readonly="{{readonly}}"
              [formControlName]="controlName"
              class="form-control"
              />

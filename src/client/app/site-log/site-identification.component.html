@@ -20,7 +20,7 @@
         </div>
         <div class="margin-bottom15" *ngIf=" siteIdentification != null ">
             <div class="form-group">
-                <text-input formControlName="fourCharacterID" controlName="fourCharacterID"
+                <text-input readonly="readonly" formControlName="fourCharacterID" controlName="fourCharacterID"
                             [form]="siteIdentificationForm">Four Character Id
                 </text-input>
                 <text-input formControlName="siteName" controlName="siteName"
