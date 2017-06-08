@@ -17,6 +17,7 @@ export class TextInputComponent extends AbstractGnssControls implements ControlV
     @Input() index: string = '0';
     @Input() name: string = '';
     @Input() label: string = '';
+    @Input() public readonly: string = '';
 
     propagateChange: Function = (_: any) => { };
     propagateTouch: Function = () => { };
@@ -44,4 +45,5 @@ export class TextInputComponent extends AbstractGnssControls implements ControlV
             console.error('TextInputComponent - form Input is required');
         }
     }
+
 }
