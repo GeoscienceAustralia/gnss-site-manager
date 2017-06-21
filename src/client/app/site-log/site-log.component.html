@@ -28,35 +28,35 @@
                         </site-location>
 
                         <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteOwner"
+                                                      partyType="siteOwner"
                                                       [isMandatory]="false"
                                                       [isMultiple]="false"
                                                       [siteLogModel]="siteLogModel">
                         </gnss-responsible-party-group>
 
                         <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteContact"
+                                                      partyType="siteContacts"
                                                       [isMandatory]="false"
                                                       [isMultiple]="true"
                                                       [siteLogModel]="siteLogModel">
                         </gnss-responsible-party-group>
 
                         <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteMetadataCustodian"
+                                                      partyType="siteMetadataCustodian"
                                                       [isMandatory]="true"
                                                       [isMultiple]="false"
                                                       [siteLogModel]="siteLogModel">
                         </gnss-responsible-party-group>
 
                         <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteDataCenter"
+                                                      partyType="siteDataCenters"
                                                       [isMandatory]="false"
                                                       [isMultiple]="true"
                                                       [siteLogModel]="siteLogModel">
                         </gnss-responsible-party-group>
 
                         <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteDataSource"
+                                                      partyType="siteDataSource"
                                                       [isMandatory]="false"
                                                       [isMultiple]="false"
                                                       [siteLogModel]="siteLogModel">

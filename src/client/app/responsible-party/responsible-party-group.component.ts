@@ -4,25 +4,13 @@ import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 
-// Enum version wouldn't work in templates.  Can't have strings in enums.
-export class ResponsiblePartyType {
-    static siteOwner = new ResponsiblePartyType('siteOwner', 'Site Owner');
-    static siteContact = new ResponsiblePartyType('siteContacts', 'Site Contact');
-    static siteMetadataCustodian = new ResponsiblePartyType('siteMetadataCustodian', 'Site Metadata Custodian');
-    static siteDataCenter = new ResponsiblePartyType('siteDataCenters', 'Site Data Center');
-    static siteDataSource = new ResponsiblePartyType('siteDataSource', 'Site Data Source');
-
-    constructor(private value: string, private title: string) {
-    }
-
-    getObjectName(): string {
-        return this.value;
-    }
-
-    getTitle(): string {
-        return this.title;
-    }
-}
+export const PARTY_TYPES: any = {
+    siteOwner: 'Site Owner',
+    siteContacts: 'Site Contact',
+    siteMetadataCustodian: 'Site Metadata Custodian',
+    siteDataCenters: 'Site Data Center',
+    siteDataSource: 'Site Data Source'
+};
 
 /**
  * This class represents the responsible parties, which have 5 different types.
@@ -41,9 +29,9 @@ export class ResponsiblePartyType {
 })
 export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<ResponsiblePartyViewModel> {
 
+    @Input() partyType: string;
     @Input() isMandatory: boolean;
     @Input() isMultiple: boolean;
-    private _partyType: ResponsiblePartyType;
 
     public static compare(obj1: ResponsiblePartyViewModel, obj2: ResponsiblePartyViewModel): number {
         // TODO implement sorting (alphabetically by individual name perhaps)
@@ -51,29 +39,20 @@ export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<Respo
         return 0;
     }
 
-    protected hasEndDateField(): boolean {
-        return false;
-    }
-
-    @Input()
-    set partyType(partyType: ResponsiblePartyType) {
-        this._partyType = partyType;
-    }
-
-    get partyType(): ResponsiblePartyType {
-        return this._partyType;
-    }
-
     constructor(protected userAuthService: UserAuthService, protected formBuilder: FormBuilder) {
         super(userAuthService, formBuilder);
     }
 
+    protected hasEndDateField(): boolean {
+        return false;
+    }
+
     getItemName(): string {
-        return this.partyType.getTitle();
+        return PARTY_TYPES[this.partyType];
     }
 
     getControlName(): string {
-        return this.partyType.getObjectName();
+        return this.partyType;
     }
 
     getNewItemViewModel(): ResponsiblePartyViewModel {

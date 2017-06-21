@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
 import { SiteLogViewModel }  from '../shared/json-data-view-model/view-model/site-log-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
-import { ResponsiblePartyType, ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
+import { ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GnssReceiversGroupComponent } from '../gnss-receiver/gnss-receivers-group.component';
 import { FrequencyStandardGroupComponent } from '../frequency-standard/frequency-standard-group.component';
@@ -38,7 +38,6 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     public siteLogForm: FormGroup;
 
     public siteInformationForm: FormGroup;
-    public responsiblePartyType: any = ResponsiblePartyType;    // Used in template
     public siteLogModel: SiteLogViewModel;
 
     private siteId: string;

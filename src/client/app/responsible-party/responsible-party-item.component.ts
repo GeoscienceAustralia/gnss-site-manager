@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AbstractItemComponent, ItemControls } from '../shared/abstract-groups-items/abstract-item.component';
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
-import { ResponsiblePartyType } from './responsible-party-group.component';
+import { PARTY_TYPES } from './responsible-party-group.component';
 import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { DialogService } from '../shared/global/dialog.service';
 import { UserAuthService } from '../shared/global/user-auth.service';
@@ -29,7 +29,7 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 export class ResponsiblePartyItemComponent extends AbstractItemComponent implements OnInit {
 
     @Input() responsibleParty: ResponsiblePartyViewModel;
-    @Input() partyType: ResponsiblePartyType;
+    @Input() partyType: string;
     @Input() isMandatory: boolean;
     protected isDataType: boolean;
     protected isMetadataCustodian: boolean;
@@ -42,9 +42,9 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
     ngOnInit() {
         super.ngOnInit();
         this.isOpen = (this.index === 0);
-        this.isDataType = this.partyType.getObjectName() === 'siteDataCenters'
-                       || this.partyType.getObjectName() === 'siteDataSource';
-        this.isMetadataCustodian = this.partyType.getObjectName() === 'siteMetadataCustodian';
+        this.isDataType = this.partyType === 'siteDataCenters'
+                       || this.partyType === 'siteDataSource';
+        this.isMetadataCustodian = this.partyType === 'siteMetadataCustodian';
     }
 
     getItem(): AbstractViewModel {
@@ -52,7 +52,7 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
     }
 
     getItemName(): string {
-        return this.partyType.getTitle();
+        return PARTY_TYPES[this.partyType];
     }
 
     /**
@@ -76,7 +76,7 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
             }
         }
 
-        return (headerHtml ? headerHtml : 'New ' + this.partyType.getTitle());
+        return (headerHtml ? headerHtml : 'New ' + this.getItemName());
     }
 
     /**
