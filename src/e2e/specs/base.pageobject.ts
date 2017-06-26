@@ -1,4 +1,5 @@
 import { ElementArrayFinder, ElementFinder } from 'protractor';
+import { promise } from 'selenium-webdriver';
 
 export class BasePage {
 
@@ -11,9 +12,9 @@ export class BasePage {
      * @return {ElementArrayFinder} of the elements in the array with the searchText
      */
     public elementArrayContaining(elementArray: ElementArrayFinder, searchText: string): ElementArrayFinder {
-        return elementArray.filter(function (elem) {
-            return elem.getText().then((text) => {
-                return text === searchText;
+        return elementArray.filter(function (element: ElementFinder) {
+            return element.getText().then((text) => {
+                return text.toLowerCase() === searchText.toLowerCase();
             });
         });
     }
@@ -31,5 +32,29 @@ export class BasePage {
 
     public debugArray(elements: ElementArrayFinder) {
         elements.each(this.debug);
+    }
+
+    /**
+     * The given array is of promises.  Resolve those and return as an array of strings of the element.getText()
+     * @param array
+     * @return
+     */
+    public getElementArrayAsList(array: ElementArrayFinder): promise.Promise<string[]> {
+        var deferred = promise.defer();
+        let out: string[] = new Array<string>();
+        array.then((elements: ElementFinder[]) => {
+            elements.map((element: ElementFinder) => {
+                element.getText().then(
+                    (text: string) => {
+                        out.push(text);
+                    }
+                );
+            });
+            deferred.fulfill(out);
+        }), (error: any) => {
+            console.log('getElementArrayAsList error: ', error);
+            deferred.reject(error);
+        };
+        return deferred.promise;
     }
 }

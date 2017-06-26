@@ -1,24 +1,13 @@
-import { browser, element, by } from 'protractor';
-
-/**
- * Call this function when going from an angular page to a non-angular page
- * to instruct protractor to stop waiting for anuglar zone tasks to complete.
- */
-function disableWaitingForAngular(): void {
-    browser.ignoreSynchronization = true;
-    browser.driver.manage().timeouts().implicitlyWait(12000);
-}
-
-/**
- * Call this function when re-entering an angular page to instruct protractor to
- * wait for angular zone tasks to complete, which is protractor's default behaviour.
- */
-function enableWaitingForAngular(): void {
-    browser.ignoreSynchronization = false;
-    browser.driver.manage().timeouts().implicitlyWait(0);
-}
+import { browser } from 'protractor';
+import { AuthPage } from './auth.pageobject';
+import { SelectSitePage } from './select-site.pageobject';
+import { SiteLogPage } from './site-log.pageobject';
 
 describe('Authorization/Authentication', () => {
+
+    let authPage: AuthPage = new AuthPage();
+    let selectSitePage: SelectSitePage = new SelectSitePage();
+    let siteLogPage: SiteLogPage = new SiteLogPage();
 
     let loadRoot = () => {
         browser.get('/');
@@ -26,61 +15,29 @@ describe('Authorization/Authentication', () => {
 
     beforeEach(loadRoot);
 
+    it('login menu and link should exist', () => {
+        expect(authPage.loginMenu.isPresent()).toBe(true);
+        expect(authPage.loginLink.isPresent()).toBe(true);
+    });
+
     it('should not allow edits when a user is not logged in', () => {
-        let searchText = element(by.name('searchText'));
-        searchText.sendKeys('ADE1');
+        authPage.logOut();
+        selectSitePage.searchForClickOnSiteName('ADE1');
 
-        browser.waitForAngular();
+        siteLogPage.siteInformaationHeader.click();
+        siteLogPage.siteIdentificationHeader.click();
 
-        element(by.cssContainingText('table tr td', 'ADE1')).click();
-        element(by.cssContainingText('span', 'Site Information')).click();
-        element(by.cssContainingText('span', 'Site Identification')).click();
-
-        let siteNameElement = element(by.xpath('//text-input[@controlname="siteName"]//input'));
-        expect(siteNameElement.isEnabled()).toBe(false);
+        expect(siteLogPage.siteNameInput.isEnabled()).toBe(false, 'siteNameInput should not be enabled');
     });
 
     it('should allow edits when a user is logged in', () => {
+        authPage.logIn();
 
-        // click the login button
-        element(by.xpath('//nav[contains(@class, "profile-menu")]')).click();
-        element(by.xpath('//a[text() = "Login"]')).click();
+        selectSitePage.searchForClickOnSiteName('ADE1');
 
-        disableWaitingForAngular();
+        siteLogPage.siteInformaationHeader.click();
+        siteLogPage.siteIdentificationHeader.click();
 
-        browser.driver.wait(() => {
-            return browser.driver.findElement(by.id('loginButton_0'))
-                .then((loginButton) => {
-                    let userNameField = browser.driver.findElement(by.id('idToken1'));
-                    userNameField.clear();
-                    userNameField.sendKeys('user.a');
-                    let passwordField = browser.driver.findElement(by.id('idToken2'));
-                    passwordField.clear();
-                    passwordField.sendKeys('gumby123A');
-                    loginButton.click();
-                    return true;
-                });
-        }, 20000);
-
-        browser.driver.wait(() => {
-            return browser.driver.findElement(by.name('searchText'))
-                .then(function(element) {
-                    return true;
-                });
-
-        });
-        enableWaitingForAngular();
-
-        let searchText = element(by.name('searchText'));
-        searchText.sendKeys('ADE1');
-
-        browser.waitForAngular();
-
-        element(by.cssContainingText('table tr td', 'ADE1')).click();
-        element(by.cssContainingText('span', 'Site Information')).click();
-        element(by.cssContainingText('span', 'Site Identification')).click();
-
-        let siteNameElement = element(by.xpath('//text-input[@controlname="siteName"]//input'));
-        expect(siteNameElement.isEnabled()).toBe(true);
+        expect(siteLogPage.siteNameInput.isEnabled()).toBe(true, 'siteNameInput should be enabled');
     });
 });
