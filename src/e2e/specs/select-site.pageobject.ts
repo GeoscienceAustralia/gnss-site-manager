@@ -17,4 +17,8 @@ export class SelectSitePage extends BasePage {
         this.enterSearchText(text);
         this.searchButton.click();
     }
+
+    public identifyingElement(): ElementFinder {
+        return this.searchBox;
+    }
 }
