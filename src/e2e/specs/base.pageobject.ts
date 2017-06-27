@@ -1,35 +1,12 @@
-import { ElementArrayFinder, ElementFinder } from 'protractor';
+import { ElementFinder, element, by } from 'protractor';
 
-export class BasePage {
+export abstract class BasePage {
+    readonly loginMenu: ElementFinder = element(by.css('nav.profile-menu'));
+    readonly loginLink: ElementFinder = element(by.cssContainingText('a', 'Login'));
+    readonly logoutLink: ElementFinder = element(by.cssContainingText('a', 'Logout'));
 
     /**
-     * Search for the given searchText in any element's text (content) in the array of elements.  An array is
-     * returned from Protractors `element.all(selector)`
-     *
-     * @param elementArray
-     * @param searchText
-     * @return {ElementArrayFinder} of the elements in the array with the searchText
+     * Subclasses should return an element on the page that is always present regardless of state.  It is used to know if are on that page.
      */
-    public elementArrayContaining(elementArray: ElementArrayFinder, searchText: string): ElementArrayFinder {
-        return elementArray.filter(function (elem) {
-            return elem.getText().then((text) => {
-                return text === searchText;
-            });
-        });
-    }
-
-    public debug(element: ElementFinder) {
-        element.getInnerHtml().then(
-            (successVal) => {
-                console.log('BasePage.debug success: ', successVal);
-            },
-            (failureVal) => {
-                console.log('BasePage.debug failure: ', failureVal);
-            }
-        );
-    }
-
-    public debugArray(elements: ElementArrayFinder) {
-        elements.each(this.debug);
-    }
+    public abstract identifyingElement(): ElementFinder;
 }
