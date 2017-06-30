@@ -3,7 +3,7 @@ import { SelectSitePage } from '../page-objects/select-site.pageobject';
 import { SiteLogPage } from '../page-objects/site-log.pageobject';
 import { LoginActions } from '../utils/login.actions';
 
-describe('Authorization/Authentication', () => {
+xdescribe('Authorization/Authentication', () => {
     let selectSitePage: SelectSitePage = new SelectSitePage();
     let siteLogPage: SiteLogPage = new SiteLogPage();
     let loginActions: LoginActions  = new LoginActions(selectSitePage);
