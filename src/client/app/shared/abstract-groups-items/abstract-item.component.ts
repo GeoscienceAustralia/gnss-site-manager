@@ -1,9 +1,5 @@
 import { EventEmitter, Input, Output, OnInit, OnChanges, AfterViewInit, SimpleChange } from '@angular/core';
-<<<<<<< HEAD
 import { FormArray, FormGroup } from '@angular/forms';
-=======
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
->>>>>>> Remove ItemControls class
 import { AbstractBaseComponent } from './abstract-base.component';
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
 import { DialogService } from '../index';
@@ -53,12 +49,7 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
      */
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
-<<<<<<< HEAD
                 protected siteLogService: SiteLogService) {
-=======
-                protected siteLogService: SiteLogService,
-                protected formBuilder: FormBuilder) {
->>>>>>> Remove ItemControls class
         super(userAuthService);
     }
 
