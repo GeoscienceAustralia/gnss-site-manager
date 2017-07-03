@@ -1,0 +1,57 @@
+<div [formGroup]="siteInformationForm" class="panel panel-level-1"
+     [ngClass]="{'gnss-dirty': isFormDirty(), 'gnss-invalid': isFormInvalid()}">
+    <div class="panel-heading group-header">
+        <span class="panel-title cursor-ptr" tabindex="0"
+              (keyup.space)="isFormOpen = miscUtils.scrollIntoView($event, isFormOpen)"
+              (keyup.enter)="isFormOpen = miscUtils.scrollIntoView($event, isFormOpen)"
+              (click)="isFormOpen = miscUtils.scrollIntoView($event, isFormOpen)">
+            <i class="glyphicon"
+               [ngClass]="{'glyphicon-minus-sign': isFormOpen, 'glyphicon-plus-sign': !isFormOpen}"></i>
+            Site Information
+        </span>
+    </div>
+    <div class="panel-body group-body" [hidden]="!isFormOpen">
+        <site-identification [parentForm]="siteInformationForm"
+                             [siteLogModel]="siteLogModel">
+        </site-identification>
+
+        <site-location [parentForm]="siteInformationForm"
+                       [siteLogModel]="siteLogModel">
+        </site-location>
+
+        <gnss-responsible-party-group [parentForm]="siteInformationForm"
+                                      [partyType]="responsiblePartyType.siteOwner"
+                                      [isMandatory]="false"
+                                      [isMultiple]="false"
+                                      [siteLogModel]="siteLogModel">
+        </gnss-responsible-party-group>
+
+        <gnss-responsible-party-group [parentForm]="siteInformationForm"
+                                      [partyType]="responsiblePartyType.siteContact"
+                                      [isMandatory]="false"
+                                      [isMultiple]="true"
+                                      [siteLogModel]="siteLogModel">
+        </gnss-responsible-party-group>
+
+        <gnss-responsible-party-group [parentForm]="siteInformationForm"
+                                      [partyType]="responsiblePartyType.siteMetadataCustodian"
+                                      [isMandatory]="true"
+                                      [isMultiple]="false"
+                                      [siteLogModel]="siteLogModel">
+        </gnss-responsible-party-group>
+
+        <gnss-responsible-party-group [parentForm]="siteInformationForm"
+                                      [partyType]="responsiblePartyType.siteDataCenter"
+                                      [isMandatory]="false"
+                                      [isMultiple]="true"
+                                      [siteLogModel]="siteLogModel">
+        </gnss-responsible-party-group>
+
+        <gnss-responsible-party-group [parentForm]="siteInformationForm"
+                                      [partyType]="responsiblePartyType.siteDataSource"
+                                      [isMandatory]="false"
+                                      [isMultiple]="false"
+                                      [siteLogModel]="siteLogModel">
+        </gnss-responsible-party-group>
+    </div>
+</div>

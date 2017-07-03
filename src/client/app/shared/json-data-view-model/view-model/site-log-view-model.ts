@@ -10,8 +10,8 @@ import { GnssReceiverViewModel } from '../../../gnss-receiver/gnss-receiver-view
 import { RadioInterferenceViewModel } from '../../../radio-interference/radio-interference-view-model';
 import { SignalObstructionViewModel } from '../../../signal-obstruction/signal-obstruction-view-model';
 import { MultipathSourceViewModel } from '../../../multipath-source/multipath-source-view-model';
-import { SiteLocationViewModel } from '../../../site-log/site-location-view-model';
-import { SiteIdentificationViewModel } from '../../../site-log/site-identification-view-model';
+import { SiteLocationViewModel } from '../../../site-information/site-location-view-model';
+import { SiteIdentificationViewModel } from '../../../site-information/site-identification-view-model';
 
 export class SiteInformationViewModel {
     siteIdentification = new SiteIdentificationViewModel();

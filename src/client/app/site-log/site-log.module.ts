@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { SiteLogComponent } from './site-log.component';
-import { SiteIdentificationComponent } from './site-identification.component';
 import { SiteLogRoutingModule } from './site-log-routing.module';
 import { PrefetchSiteLogResolver } from '../shared/site-log/prefetch-site-log.service';
 import { ConfirmDeactivateSiteLogGuard } from './site-log-deactivate.module';
+import { SiteInformationModule } from '../site-information/site-information.module';
+//import { SiteIdentificationComponent } from '../site-information/site-identification.component';
+//import { SiteLocationModule } from '../site-information/site-location.module';
 import { ResponsiblePartyModule } from '../responsible-party/responsible-party.module';
 import { GnssReceiverModule } from '../gnss-receiver/gnss-receiver.module';
 import { GnssAntennaModule } from '../gnss-antenna/gnss-antenna.module';
@@ -20,35 +22,35 @@ import { FormInputModule } from '../shared/form-input/form-input.module';
 import { RadioInterferenceModule } from '../radio-interference/radio-interference.module';
 import { SignalObstructionModule } from '../signal-obstruction/signal-obstruction.module';
 import { MultipathSourceModule } from '../multipath-source/multipath-source.module';
-import { SiteLocationModule } from './site-location.module';
 
 @NgModule({
-  imports: [
-    SiteLogRoutingModule,
-    CommonModule,
-    SharedModule,
-    ResponsiblePartyModule,
-    GnssReceiverModule,
-    GnssAntennaModule,
-    SurveyedLocalTieModule,
-    FrequencyStandardModule,
-    LocalEpisodicEffectModule,
-    HumiditySensorModule,
-    PressureSensorModule,
-    TemperatureSensorModule,
-    WaterVaporSensorModule,
-    FormInputModule,
-      RadioInterferenceModule,
-      SignalObstructionModule,
-      MultipathSourceModule,
-      SiteLocationModule,
-  ],
-  declarations: [SiteLogComponent, SiteIdentificationComponent],
-  exports: [SiteLogComponent, SiteIdentificationComponent],
-  providers: [
-    PrefetchSiteLogResolver,
-    ConfirmDeactivateSiteLogGuard,
-  ],
+    imports: [
+        SiteLogRoutingModule,
+        CommonModule,
+        SharedModule,
+        FormInputModule,
+        SiteInformationModule,
+        //SiteLocationModule,
+        ResponsiblePartyModule,
+        GnssReceiverModule,
+        GnssAntennaModule,
+        SurveyedLocalTieModule,
+        FrequencyStandardModule,
+        LocalEpisodicEffectModule,
+        HumiditySensorModule,
+        PressureSensorModule,
+        TemperatureSensorModule,
+        WaterVaporSensorModule,
+        RadioInterferenceModule,
+        SignalObstructionModule,
+        MultipathSourceModule,
+    ],
+    declarations: [SiteLogComponent],
+    exports: [SiteLogComponent],
+    providers: [
+        PrefetchSiteLogResolver,
+        ConfirmDeactivateSiteLogGuard,
+    ],
 })
 
 export class SiteLogModule { }

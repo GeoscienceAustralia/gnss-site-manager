@@ -4,7 +4,7 @@ import { SiteLogViewModel } from './view-model/site-log-view-model';
 import { ObjectMap } from './object-map';
 import * as _ from 'lodash';
 import { MiscUtils } from '../global/misc-utils';
-import { CartesianPosition, GeodeticPosition } from '../../site-log/site-location-view-model';
+import { CartesianPosition, GeodeticPosition } from '../../site-information/site-location-view-model';
 
 /* tslint:disable:max-line-length */
 

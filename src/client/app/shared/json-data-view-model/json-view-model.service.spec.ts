@@ -5,7 +5,7 @@ import { JsonViewModelService, cartesianPositionMap, geodeticPositionMap } from 
 import { JsonViewModelServiceSpecData } from './json-view-model.service.spec.data';
 import { SiteLogViewModel } from './view-model/site-log-view-model';
 import { SiteLogDataModel } from './data-model/site-log-data-model';
-import { CartesianPosition, GeodeticPosition } from '../../site-log/site-location-view-model';
+import { CartesianPosition, GeodeticPosition } from '../../site-information/site-location-view-model';
 
 export function main() {
     let backend: MockBackend = null;
