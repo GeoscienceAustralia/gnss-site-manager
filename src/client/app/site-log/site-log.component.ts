@@ -6,7 +6,7 @@ import { User } from 'oidc-client';
 import * as _ from 'lodash';
 
 import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
-import { SiteLogViewModel }  from '../shared/json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { ApplicationSaveState } from '../shared/site-log/site-log.service';
 import { ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';

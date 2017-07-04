@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { MiscUtils } from '../shared/index';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserAuthService } from '../shared/global/user-auth.service';
-import { SiteLogViewModel }  from '../shared/json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { SiteIdentificationViewModel } from './site-identification-view-model';
 
 /**

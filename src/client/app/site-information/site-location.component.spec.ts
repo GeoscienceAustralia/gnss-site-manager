@@ -8,7 +8,7 @@ import { SiteLocationModule } from './site-location.module';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { ApplicationSaveState, ApplicationState, SiteLogService } from '../shared/site-log/site-log.service';
 import { DialogService } from '../shared/global/dialog.service';
-import { SiteLogViewModel } from '../shared/json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel } from '../site-log/site-log-view-model';
 
 export function main() {
     describe('SiteLocation Positions', () => {

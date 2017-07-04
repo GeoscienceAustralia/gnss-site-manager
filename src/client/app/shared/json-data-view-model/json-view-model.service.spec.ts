@@ -3,7 +3,7 @@ import { BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { JsonViewModelService, cartesianPositionMap, geodeticPositionMap } from './json-view-model.service';
 import { JsonViewModelServiceSpecData } from './json-view-model.service.spec.data';
-import { SiteLogViewModel } from './view-model/site-log-view-model';
+import { SiteLogViewModel } from '../../site-log/site-log-view-model';
 import { SiteLogDataModel } from './data-model/site-log-data-model';
 import { CartesianPosition, GeodeticPosition } from '../../site-information/site-location-view-model';
 
