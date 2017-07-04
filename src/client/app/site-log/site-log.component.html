@@ -6,64 +6,9 @@
         <gnss-status-info [siteId]="siteId"></gnss-status-info>
         <form [formGroup]="siteLogForm" novalidate class="form-horizontal">
             <div class="panel-group">
-                <div [formGroup]="siteInformationForm" class="panel panel-level-1"
-                     [ngClass]="{'gnss-dirty': isSiteInformationFormDirty(), 'gnss-invalid': isSiteInformationFormInvalid()}">
-                    <div class="panel-heading group-header">
-                        <span class="panel-title cursor-ptr" tabindex="0"
-                            (keyup.space)="isSiteInfoFormOpen = miscUtils.scrollIntoView($event, isSiteInfoFormOpen)"
-                            (keyup.enter)="isSiteInfoFormOpen = miscUtils.scrollIntoView($event, isSiteInfoFormOpen)"
-                            (click)="isSiteInfoFormOpen = miscUtils.scrollIntoView($event, isSiteInfoFormOpen)">
-                            <i class="glyphicon"
-                               [ngClass]="{'glyphicon-minus-sign': isSiteInfoFormOpen, 'glyphicon-plus-sign': !isSiteInfoFormOpen}"></i>
-                            Site Information
-                        </span>
-                    </div>
-                    <div class="panel-body group-body" [hidden]="!isSiteInfoFormOpen">
-                        <site-identification [parentForm]="siteInformationForm"
-                                             [siteLogModel]="siteLogModel">
-                        </site-identification>
-
-                        <site-location [parentForm]="siteInformationForm"
+                <gnss-site-information [parentForm]="siteLogForm"
                                        [siteLogModel]="siteLogModel">
-                        </site-location>
-
-                        <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteOwner"
-                                                      [isMandatory]="false"
-                                                      [isMultiple]="false"
-                                                      [siteLogModel]="siteLogModel">
-                        </gnss-responsible-party-group>
-
-                        <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteContact"
-                                                      [isMandatory]="false"
-                                                      [isMultiple]="true"
-                                                      [siteLogModel]="siteLogModel">
-                        </gnss-responsible-party-group>
-
-                        <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteMetadataCustodian"
-                                                      [isMandatory]="true"
-                                                      [isMultiple]="false"
-                                                      [siteLogModel]="siteLogModel">
-                        </gnss-responsible-party-group>
-
-                        <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteDataCenter"
-                                                      [isMandatory]="false"
-                                                      [isMultiple]="true"
-                                                      [siteLogModel]="siteLogModel">
-                        </gnss-responsible-party-group>
-
-                        <gnss-responsible-party-group [parentForm]="siteInformationForm"
-                                                      [partyType]="responsiblePartyType.siteDataSource"
-                                                      [isMandatory]="false"
-                                                      [isMultiple]="false"
-                                                      [siteLogModel]="siteLogModel">
-                        </gnss-responsible-party-group>
-
-                    </div>
-                </div>
+                </gnss-site-information>
 
                 <gnss-receivers-group [parentForm]="siteLogForm"
                                       [siteLogModel]="siteLogModel">
@@ -116,4 +61,4 @@
             </div>
         </form>
     </div>
-    </div>
+</div>

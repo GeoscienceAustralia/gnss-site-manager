@@ -3,7 +3,7 @@ import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AbstractBaseComponent } from './abstract-base.component';
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
 import { AbstractViewModel } from '../json-data-view-model/view-model/abstract-view-model';
-import { SiteLogViewModel }  from '../json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel }  from '../../site-log/site-log-view-model';
 import { MiscUtils } from '../global/misc-utils';
 import { UserAuthService } from '../global/user-auth.service';
 import * as _ from 'lodash';

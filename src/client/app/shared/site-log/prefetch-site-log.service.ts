@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { DialogService, SiteLogService } from '../index';
-import { SiteLogViewModel } from '../json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel } from '../../site-log/site-log-view-model';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()

@@ -5,7 +5,7 @@ import { DialogService } from '../shared/index';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService, ApplicationState, ApplicationSaveState } from '../shared/site-log/site-log.service';
 import { AbstractBaseComponent } from '../shared/abstract-groups-items/abstract-base.component';
-import { SiteLogViewModel }  from '../shared/json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { SiteLocationViewModel } from './site-location-view-model';
 import * as _ from 'lodash';
 
@@ -39,8 +39,8 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
     public isNew: boolean = false;
     public isDeleted: boolean = false;
 
-    @Input('parentForm') parentForm: FormGroup;
-    @Input('siteLogModel') siteLogModel: SiteLogViewModel;
+    @Input() parentForm: FormGroup;
+    @Input() siteLogModel: SiteLogViewModel;
 
     cartesianPositionForm: FormGroup;
     geodeticPositionForm: FormGroup;

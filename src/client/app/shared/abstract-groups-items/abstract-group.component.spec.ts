@@ -2,7 +2,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from './abstract-group.component';
 import { AbstractViewModel } from '../json-data-view-model/view-model/abstract-view-model';
 import { MiscUtils } from '../global/misc-utils';
-import { SiteLogViewModel } from '../json-data-view-model/view-model/site-log-view-model';
+import { SiteLogViewModel } from '../../site-log/site-log-view-model';
 import * as _ from 'lodash';
 
 class AbstractViewModelImpl extends AbstractViewModel {
