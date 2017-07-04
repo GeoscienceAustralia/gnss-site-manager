@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormInputModule } from '../shared/form-input/form-input.module';
-import { SiteLocationComponent } from './site-location.component';
+import { SiteIdentificationComponent } from './site-identification.component';
 
 @NgModule({
     imports: [
@@ -11,8 +11,8 @@ import { SiteLocationComponent } from './site-location.component';
         ReactiveFormsModule,
         FormInputModule
     ],
-    declarations: [SiteLocationComponent],
-    exports: [SiteLocationComponent],
+    declarations: [SiteIdentificationComponent],
+    exports: [SiteIdentificationComponent]
 })
-export class SiteLocationModule {
+export class SiteIdentificationModule {
 }

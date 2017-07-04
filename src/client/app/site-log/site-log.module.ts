@@ -6,9 +6,6 @@ import { SiteLogRoutingModule } from './site-log-routing.module';
 import { PrefetchSiteLogResolver } from '../shared/site-log/prefetch-site-log.service';
 import { ConfirmDeactivateSiteLogGuard } from './site-log-deactivate.module';
 import { SiteInformationModule } from '../site-information/site-information.module';
-//import { SiteIdentificationComponent } from '../site-information/site-identification.component';
-//import { SiteLocationModule } from '../site-information/site-location.module';
-import { ResponsiblePartyModule } from '../responsible-party/responsible-party.module';
 import { GnssReceiverModule } from '../gnss-receiver/gnss-receiver.module';
 import { GnssAntennaModule } from '../gnss-antenna/gnss-antenna.module';
 import { SurveyedLocalTieModule } from '../surveyed-local-tie/surveyed-local-tie.module';
@@ -30,8 +27,6 @@ import { MultipathSourceModule } from '../multipath-source/multipath-source.modu
         SharedModule,
         FormInputModule,
         SiteInformationModule,
-        //SiteLocationModule,
-        ResponsiblePartyModule,
         GnssReceiverModule,
         GnssAntennaModule,
         SurveyedLocalTieModule,
@@ -52,5 +47,4 @@ import { MultipathSourceModule } from '../multipath-source/multipath-source.modu
         ConfirmDeactivateSiteLogGuard,
     ],
 })
-
 export class SiteLogModule { }

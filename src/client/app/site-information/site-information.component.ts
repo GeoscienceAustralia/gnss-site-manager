@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MiscUtils } from '../shared/index';
 import { SiteLogViewModel }  from '../shared/json-data-view-model/view-model/site-log-view-model';
-import { ResponsiblePartyType, ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
+import { ResponsiblePartyType } from '../responsible-party/responsible-party-group.component';
 
 /**
- * This class represents the SiteLogComponent for viewing and editing the details of site/receiver/antenna.
+ * This class represents the SiteInformationComponent for viewing and editing the details of
+ * siteIdentification, siteLocation and responsibleParties (site owner/contacts/dataCustodian/dataCenters/dataSource).
  */
 @Component({
     moduleId: module.id,
@@ -20,9 +21,7 @@ export class SiteInformationComponent implements OnInit {
     public siteInformationForm: FormGroup;
     public miscUtils: any = MiscUtils;
     public responsiblePartyType: any = ResponsiblePartyType;    // Used in template
-    private siteIdentification: any = null;
-    private siteLocation: any = {};
-    protected isFormOpen: boolean = false;
+    public isFormOpen: boolean = false;
 
     /**
      * Creates an instance of the SiteInformationComponent.

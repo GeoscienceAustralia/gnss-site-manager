@@ -42,8 +42,8 @@ export class SiteIdentificationComponent implements OnInit {
     public siteIdentificationForm: FormGroup;
     public siteIdentification: SiteIdentificationViewModel;
 
-    @Input('parentForm') parentForm: FormGroup;
-    @Input('siteLogModel') siteLogModel: SiteLogViewModel;
+    @Input() parentForm: FormGroup;
+    @Input() siteLogModel: SiteLogViewModel;
 
     constructor(private userAuthService: UserAuthService,
                 private formBuilder: FormBuilder,

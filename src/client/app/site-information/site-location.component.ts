@@ -39,8 +39,8 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
     public isNew: boolean = false;
     public isDeleted: boolean = false;
 
-    @Input('parentForm') parentForm: FormGroup;
-    @Input('siteLogModel') siteLogModel: SiteLogViewModel;
+    @Input() parentForm: FormGroup;
+    @Input() siteLogModel: SiteLogViewModel;
 
     cartesianPositionForm: FormGroup;
     geodeticPositionForm: FormGroup;

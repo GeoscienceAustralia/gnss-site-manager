@@ -9,8 +9,6 @@ import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
 import { SiteLogViewModel }  from '../shared/json-data-view-model/view-model/site-log-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { ApplicationSaveState } from '../shared/site-log/site-log.service';
-import { SiteIdentificationComponent } from '../site-information/site-identification.component';
-import { SiteLocationComponent } from '../site-information/site-location.component';
 import { ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
 import { GnssReceiversGroupComponent } from '../gnss-receiver/gnss-receivers-group.component';
 import { FrequencyStandardGroupComponent } from '../frequency-standard/frequency-standard-group.component';
