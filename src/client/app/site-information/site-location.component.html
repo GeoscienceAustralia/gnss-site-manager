@@ -43,44 +43,33 @@
         </div>
         <div class="margin-bottom15" [hidden]="siteLocation == null">
             <div class="form-group">
-                <text-input formControlName="city" controlName="city"
-                            [form]="siteLocationForm">City / Town
+                <text-input [form]="siteLocationForm" formControlName="city">City / Town
                 </text-input>
-                <text-input formControlName="state" controlName="state"
-                            [form]="siteLocationForm">State / Province
+                <text-input [form]="siteLocationForm" formControlName="state">State / Province
                 </text-input>
-                <text-input formControlName="countryCodeISO" controlName="countryCodeISO"
-                            [form]="siteLocationForm">Country Code ISO
+                <text-input [form]="siteLocationForm" formControlName="countryCodeISO">Country Code ISO
                 </text-input>
-                <text-input formControlName="tectonicPlate" controlName="tectonicPlate"
-                            [form]="siteLocationForm">Tectonic Plate
+                <text-input [form]="siteLocationForm" formControlName="tectonicPlate">Tectonic Plate
                 </text-input>
 
                 <div formGroupName="cartesianPosition">
-                    <number-input formControlName="x" controlName="x"
-                                  [form]="cartesianPositionForm">X Coordinate (m)
+                    <number-input [form]="cartesianPositionForm" formControlName="x">X Coordinate (m)
                     </number-input>
-                    <number-input formControlName="y" controlName="y"
-                                  [form]="cartesianPositionForm">Y Coordinate (m)
+                    <number-input [form]="cartesianPositionForm" formControlName="y">Y Coordinate (m)
                     </number-input>
-                    <number-input formControlName="z" controlName="z"
-                                  [form]="cartesianPositionForm">Z Coordinate (m)
+                    <number-input [form]="cartesianPositionForm" formControlName="z">Z Coordinate (m)
                     </number-input>
                 </div>
                 <div formGroupName="geodeticPosition">
-                    <number-input formControlName="lat" controlName="lat"
-                                  [form]="geodeticPositionForm">Latitude (dd)
+                    <number-input [form]="geodeticPositionForm" formControlName="lat">Latitude (dd)
                     </number-input>
-                    <number-input formControlName="lon" controlName="lon"
-                                  [form]="geodeticPositionForm">Longitude (dd)
+                    <number-input [form]="geodeticPositionForm" formControlName="lon">Longitude (dd)
                     </number-input>
-                    <number-input formControlName="height" controlName="height"
-                                  [form]="geodeticPositionForm">Ellipsoidal Height (m)
+                    <number-input [form]="geodeticPositionForm" formControlName="height">Ellipsoidal Height (m)
                     </number-input>
                 </div>
 
-                <textarea-input formControlName="notes" controlName="notes"
-                                [form]="siteLocationForm">Notes
+                <textarea-input [form]="siteLocationForm" formControlName="notes">Notes
                 </textarea-input>
             </div>
         </div>

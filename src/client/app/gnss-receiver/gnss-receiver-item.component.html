@@ -28,17 +28,17 @@
             No information available for GNSS Receivers
         </div>
         <div *ngIf="gnssReceiver != null" [ngClass]="{'container-dirty': gnssReceiver.dateDeleted}">
-            <text-input formControlName="receiverType" controlName="receiverType" [form]="itemGroup">Receiver Type</text-input>
-            <text-input formControlName="manufacturerSerialNumber" controlName="manufacturerSerialNumber" [form]="itemGroup">Serial Number</text-input>
-            <text-input formControlName="firmwareVersion" controlName="firmwareVersion" [form]="itemGroup">Firmware Version</text-input>
-            <checkboxes-input controlName="satelliteSystems" [form]="itemGroup" [options]="satelliteSystemList">Satellite Systems</checkboxes-input>
-            <number-input formControlName="elevationCutoffSetting" controlName="elevationCutoffSetting" [form]="itemGroup"
+            <text-input [form]="itemGroup" formControlName="receiverType">Receiver Type</text-input>
+            <text-input [form]="itemGroup" formControlName="manufacturerSerialNumber">Serial Number</text-input>
+            <text-input [form]="itemGroup" formControlName="firmwareVersion">Firmware Version</text-input>
+            <checkboxes-input [form]="itemGroup" formControlName="satelliteSystems" [options]="satelliteSystemList">Satellite Systems</checkboxes-input>
+            <number-input [form]="itemGroup" formControlName="elevationCutoffSetting"
                 [step]="1" min="-359" max="359">Elevation Cutoff Setting (degrees)</number-input>
-            <number-input formControlName="temperatureStabilization" controlName="temperatureStabilization" [form]="itemGroup"
+            <number-input [form]="itemGroup" formControlName="temperatureStabilization"
                 [step]="1">Temperature Stabilization (&deg;C)</number-input>
-            <datetime-input [form]="itemGroup" controlName="startDate">Date Installed (UTC)</datetime-input>
-            <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">Date Removed (UTC)</datetime-input>
-            <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">Notes</textarea-input>
+            <datetime-input [form]="itemGroup" formControlName="startDate">Date Installed (UTC)</datetime-input>
+            <datetime-input [form]="itemGroup" formControlName="endDate" [required]="index != 0">Date Removed (UTC)</datetime-input>
+            <textarea-input [form]="itemGroup" formControlName="notes" rows="2">Notes</textarea-input>
         </div>
     </div>
 </div>

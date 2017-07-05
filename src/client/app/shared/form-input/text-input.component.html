@@ -7,7 +7,7 @@
         <input (keyup.enter)="ignoreEvent($event);"
             type="text"
             [readonly]="getReadonlyAttribute()"
-            [formControlName]="controlName"
+            [formControlName]="formControlName"
             class="form-control"
             maxlength="{{maxlength}}"/>
         <small [hidden]="!formControl.errors" class="alert alert-danger">{{getErrorReport()}}</small>

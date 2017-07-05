@@ -2,27 +2,24 @@
     <div class="col-md-12 col-sm-12 col-xs-12 col-xxs-12 pad-sm">
         <div class="panel-group">
             <div class="panel panel-level-1" [ngClass]="{'gnss-invalid': isFormInvalid()}">
-
                 <div class="panel-heading">
                     <div class="panel-title">User Registration</div>
-                </div> <!-- panel-heading -->
-
+                </div>
                 <div class="panel-body margin-bottom15">
-
                     <form [formGroup]="userRegistrationForm" class="form-horizontal">
                         <div class="centered">
                             <p>Please fill in the form below. You will be contacted by a member from the GNSS Operations Team at Geoscience Australia regarding your access.</p>
-                        </div> 
+                        </div>
 
                         <div class="form-group">
-                                <text-input formControlName="firstName" controlName="firstName" [form]="userRegistrationForm">First Name</text-input>
-                                <text-input formControlName="lastName" controlName="lastName" [form]="userRegistrationForm">Last Name</text-input>
-                                <text-input formControlName="organisation" controlName="organisation" [form]="userRegistrationForm">Organisation</text-input>
-                                <text-input formControlName="position" controlName="position" [form]="userRegistrationForm">Position</text-input>
-                                <text-input formControlName="phone" controlName="phone" [form]="userRegistrationForm">Phone</text-input>
-                                <text-input formControlName="email" controlName="email" [form]="userRegistrationForm">Email</text-input>
-                                <textarea-input rows="3" formControlName="remarks" controlName="remarks" [form]="userRegistrationForm">Remarks</textarea-input>
-                        </div> <!-- form-group -->
+                                <text-input [form]="userRegistrationForm" formControlName="firstName">First Name</text-input>
+                                <text-input [form]="userRegistrationForm" formControlName="lastName">Last Name</text-input>
+                                <text-input [form]="userRegistrationForm" formControlName="organisation">Organisation</text-input>
+                                <text-input [form]="userRegistrationForm" formControlName="position">Position</text-input>
+                                <text-input [form]="userRegistrationForm" formControlName="phone">Phone</text-input>
+                                <text-input [form]="userRegistrationForm" formControlName="email">Email</text-input>
+                                <textarea-input [form]="userRegistrationForm" formControlName="remarks" rows="3">Remarks</textarea-input>
+                        </div>
 
                         <div class="col-md-9 col-md-offset-1 col-sm-9 col-sm-offset-1 col-xs-8 col-xs-offset-1 col-xxs-12 col-xxs-offset-0 extra-v-margin">
                             <div class="centered" style="width: 150px;">
@@ -34,10 +31,9 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
-
-                </div> <!-- panel-body -->
-            </div> <!-- panel-level-1 -->
-        </div> <!-- panel-group -->
-</div> <!-- container -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

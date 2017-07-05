@@ -28,9 +28,9 @@
             No information available for current Local Episodic Effect
         </div>
         <div *ngIf=" localEpisodicEffect != null" [ngClass]="{'container-dirty': localEpisodicEffect.dateDeleted}">
-            <text-input formControlName="event" controlName="event" [form]="itemGroup">Event</text-input>
-            <datetime-input [form]="itemGroup" controlName="startDate">Start Date (UTC)</datetime-input>
-            <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">End Date (UTC)</datetime-input>
+            <text-input [form]="itemGroup" formControlName="event">Event</text-input>
+            <datetime-input [form]="itemGroup" formControlName="startDate">Start Date (UTC)</datetime-input>
+            <datetime-input [form]="itemGroup" formControlName="endDate" [required]="index != 0">End Date (UTC)</datetime-input>
         </div>
     </div>
 </div>

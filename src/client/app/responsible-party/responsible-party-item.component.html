@@ -29,37 +29,33 @@
         <div *ngIf="responsibleParty != null" [ngClass]="{'container-dirty': responsibleParty.dateDeleted}">
             <div class="form-group">
                 <text-input *ngIf="!isDataType"
-                            [required]="true"
+                            [form]="itemGroup"
                             formControlName="individualName"
-                            controlName="individualName"
-                            [form]="itemGroup">Individual Name</text-input>
-                <text-input [required]="isDataType || isMetadataCustodian"
+                            [required]="true">Individual Name</text-input>
+                <text-input [form]="itemGroup"
                             formControlName="organisationName"
-                            controlName="organisationName"
-                            [form]="itemGroup">Organisation Name</text-input>
+                            [required]="isDataType || isMetadataCustodian"
+                >Organisation Name</text-input>
                 <text-input *ngIf="!isDataType"
-                            formControlName="positionName"
-                            controlName="positionName"
-                            [form]="itemGroup">Position Name</text-input>
-                <text-input formControlName="deliveryPoint" controlName="deliveryPoint" [form]="itemGroup">Address</text-input>
-                <text-input formControlName="city" controlName="city" [form]="itemGroup">City</text-input>
-                <text-input formControlName="administrativeArea" controlName="administrativeArea" [form]="itemGroup">State / Province</text-input>
-                <text-input formControlName="postalCode" controlName="postalCode" [form]="itemGroup">Postal Code</text-input>
-                <text-input formControlName="country" controlName="country" [form]="itemGroup">Country</text-input>
+                            [form]="itemGroup"
+                            formControlName="positionName">Position Name</text-input>
+                <text-input [form]="itemGroup" formControlName="deliveryPoint">Address</text-input>
+                <text-input [form]="itemGroup" formControlName="city">City</text-input>
+                <text-input [form]="itemGroup" formControlName="administrativeArea">State / Province</text-input>
+                <text-input [form]="itemGroup" formControlName="postalCode">Postal Code</text-input>
+                <text-input [form]="itemGroup" formControlName="country">Country</text-input>
                 <text-input *ngIf="isDataType"
-                            [required]="false"
+                            [form]="itemGroup"
                             formControlName="individualName"
-                            controlName="individualName"
-                            [form]="itemGroup">Individual Name</text-input>
+                            [required]="false">Individual Name</text-input>
                 <text-input *ngIf="isDataType"
-                            formControlName="positionName"
-                            controlName="positionName"
-                            [form]="itemGroup">Position Name</text-input>
-                <email-input formControlName="email" controlName="email" [form]="itemGroup">Email</email-input>
-                <text-input formControlName="primaryPhone" controlName="primaryPhone" [form]="itemGroup">Primary Phone Number</text-input>
-                <text-input formControlName="secondaryPhone" controlName="secondaryPhone" [form]="itemGroup">Secondary Phone Number</text-input>
-                <text-input formControlName="fax" controlName="fax" [form]="itemGroup">Fax Number</text-input>
-                <url-input *ngIf="isDataCenter" formControlName="url" controlName="url" [form]="itemGroup">URL</url-input>
+                            [form]="itemGroup"
+                            formControlName="positionName">Position Name</text-input>
+                <email-input [form]="itemGroup" formControlName="email">Email</email-input>
+                <text-input [form]="itemGroup" formControlName="primaryPhone">Primary Phone Number</text-input>
+                <text-input [form]="itemGroup" formControlName="secondaryPhone">Secondary Phone Number</text-input>
+                <text-input [form]="itemGroup" formControlName="fax">Fax Number</text-input>
+                <url-input *ngIf="isDataCenter" [form]="itemGroup" formControlName="url">URL</url-input>
             </div>
         </div>
     </div>
