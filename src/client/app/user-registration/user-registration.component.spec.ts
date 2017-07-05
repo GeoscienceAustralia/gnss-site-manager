@@ -74,9 +74,14 @@ export function main() {
                                 dom.querySelector('text-input[formcontrolname=' + formControlName + '] input') as HTMLInputElement;
 
                             if (!input) {
+                                input = dom.querySelector('email-input[formcontrolname='
+                                    + formControlName + '] input') as HTMLInputElement;
+                            }
+                            if (!input) {
                                 input = dom.querySelector('textarea-input[formcontrolname='
                                     + formControlName + '] textarea') as HTMLInputElement;
                             }
+
                             expect(input).toBeTruthy();
 
                             input.value = value;
