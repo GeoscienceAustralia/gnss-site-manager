@@ -8,7 +8,7 @@
             <div class="input-group">
                 <input type="text" maxlength="24" (keyup.enter)="ignoreEvent($event);"
                        class="form-control z-lowest"
-                       [formControlName]="controlName"
+                       [formControlName]="formControlName"
                        [ngClass]="{ 'ng-invalid': invalidDatetime }"
                        (change)="updateCalendar()"
                        (focus)="miscUtils.scrollIntoView($event, showDatetimePicker); showDatetimePicker = true;"

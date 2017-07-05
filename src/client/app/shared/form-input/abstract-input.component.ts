@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 export abstract class AbstractInput implements OnInit {
     @Input() form: FormGroup;
-    @Input() controlName: string;
+    @Input() formControlName: string;
     @Input() required: boolean = false;
     @Input() label: string = '';
 
@@ -14,13 +14,13 @@ export abstract class AbstractInput implements OnInit {
     */
     ngOnInit() {
         this.checkPreConditions();
-        this.formControl = <FormControl>this.form.controls[this.controlName];
+        this.formControl = <FormControl>this.form.controls[this.formControlName];
     }
 
     protected getErrorReport() {
         let errString: string = '';
         if (!this.formControl) {
-            console.warn('Control "' + this.controlName + '" doesnt exist on form.');
+            console.warn('Control "' + this.formControlName + '" doesnt exist on form.');
             return errString;
         }
         if (this.formControl.errors) {
@@ -71,8 +71,8 @@ export abstract class AbstractInput implements OnInit {
     }
 
     private checkPreConditions() {
-        if (!this.controlName || this.controlName.length === 0) {
-            console.error('FormInputComponent - controlName input is required');
+        if (!this.formControlName || this.formControlName.length === 0) {
+            console.error('FormInputComponent - formControlName input is required');
         }
         if (!this.form) {
             console.error('FormInputComponent - form input is required');

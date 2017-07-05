@@ -28,20 +28,20 @@
         </div>
         <div *ngIf="antenna != null" [ngClass]="{'container-dirty': antenna.dateDeleted}">
             <div class="form-group">
-                <text-input formControlName="antennaType" controlName="antennaType" [form]="itemGroup">Antenna Type</text-input>
-                <text-input formControlName="serialNumber" controlName="serialNumber" [form]="itemGroup">Serial Number</text-input>
-                <text-input formControlName="antennaReferencePoint" controlName="antennaReferencePoint" [form]="itemGroup">Antenna Reference Point</text-input>
-                <number-input step="0.0001" min="0.0000" formControlName="markerArpUpEcc" controlName="markerArpUpEcc" [form]="itemGroup">Marker ARP Up Eccentricity (m)</number-input>
-                <number-input step="0.0001" min="0.0000" formControlName="markerArpNorthEcc" controlName="markerArpNorthEcc" [form]="itemGroup">Marker ARP North Eccentricity (m)</number-input>
-                <number-input step="0.0001" min="0.0000" formControlName="markerArpEastEcc" controlName="markerArpEastEcc" [form]="itemGroup">Marker ARP East Eccentricity (m)</number-input>
-                <number-input step="1" min="-359" max="359" formControlName="alignmentFromTrueNorth" controlName="alignmentFromTrueNorth" [form]="itemGroup">Alignment From True North (degrees)</number-input>
-                <text-input formControlName="antennaRadomeType" controlName="antennaRadomeType" [form]="itemGroup">Radome Type</text-input>
-                <text-input formControlName="radomeSerialNumber" controlName="radomeSerialNumber" [form]="itemGroup">Radome Serial Number</text-input>
-                <text-input formControlName="antennaCableType" controlName="antennaCableType" [form]="itemGroup">Antenna Cable Type</text-input>
-                <number-input step="0.01" min="0" formControlName="antennaCableLength" controlName="antennaCableLength" [form]="itemGroup">Antenna Cable Length (m)</number-input>
-                <datetime-input [form]="itemGroup" controlName="startDate">Date Installed (UTC)</datetime-input>
-                <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">Date Removed (UTC)</datetime-input>
-                <textarea-input rows="2" formControlName="notes" controlName="notes" [form]="itemGroup">Notes</textarea-input>
+                <text-input [form]="itemGroup" formControlName="antennaType">Antenna Type</text-input>
+                <text-input [form]="itemGroup" formControlName="serialNumber">Serial Number</text-input>
+                <text-input [form]="itemGroup" formControlName="antennaReferencePoint">Antenna Reference Point</text-input>
+                <number-input [form]="itemGroup" formControlName="markerArpUpEcc" step="0.0001" min="0.0000">Marker ARP Up Eccentricity (m)</number-input>
+                <number-input [form]="itemGroup" formControlName="markerArpNorthEcc" step="0.0001" min="0.0000">Marker ARP North Eccentricity (m)</number-input>
+                <number-input [form]="itemGroup" formControlName="markerArpEastEcc" step="0.0001" min="0.0000">Marker ARP East Eccentricity (m)</number-input>
+                <number-input [form]="itemGroup" formControlName="alignmentFromTrueNorth" step="1" min="-359" max="359">Alignment From True North (degrees)</number-input>
+                <text-input [form]="itemGroup" formControlName="antennaRadomeType">Radome Type</text-input>
+                <text-input [form]="itemGroup" formControlName="radomeSerialNumber">Radome Serial Number</text-input>
+                <text-input [form]="itemGroup" formControlName="antennaCableType">Antenna Cable Type</text-input>
+                <number-input [form]="itemGroup" formControlName="antennaCableLength" step="0.01" min="0">Antenna Cable Length (m)</number-input>
+                <datetime-input [form]="itemGroup" formControlName="startDate">Date Installed (UTC)</datetime-input>
+                <datetime-input [form]="itemGroup" formControlName="endDate" [required]="index != 0">Date Removed (UTC)</datetime-input>
+                <textarea-input [form]="itemGroup" formControlName="notes" rows="2">Notes</textarea-input>
             </div>
         </div>
     </div>
