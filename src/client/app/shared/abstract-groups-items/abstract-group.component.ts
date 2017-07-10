@@ -17,9 +17,12 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
     currentItemAlreadyHasEndDate: boolean = false;
 
     miscUtils: any = MiscUtils;
+    protected groupArrayForm: FormArray;
+    protected panelLevel: number = 1;
 
     @Input() parentForm: FormArray;
     @Input('siteLogModel') siteLogModel: SiteLogViewModel;
+    @Input() isMultiple: boolean = true;
 
     /**
      * Event mechanism to communicate with children.  Simply change the value of this and the children detect the change.

@@ -37,13 +37,13 @@ export class ResponsiblePartyType {
 @Component({
     moduleId: module.id,
     selector: 'gnss-responsible-party-group',
-    templateUrl: 'responsible-party-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<ResponsiblePartyViewModel> {
 
     @Input() isMandatory: boolean;
-    @Input() isMultiple: boolean;
     private _partyType: ResponsiblePartyType;
+    protected panelLevel: number = 2;
 
     public static compare(obj1: ResponsiblePartyViewModel, obj2: ResponsiblePartyViewModel): number {
         // TODO implement sorting (alphabetically by individual name perhaps)

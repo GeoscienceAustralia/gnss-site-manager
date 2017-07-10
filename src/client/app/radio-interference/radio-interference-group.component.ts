@@ -10,7 +10,7 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'radio-interferences-group',
-    templateUrl: 'radio-interference-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class RadioInterferenceGroupComponent extends AbstractGroupComponent<RadioInterferenceViewModel> {
 

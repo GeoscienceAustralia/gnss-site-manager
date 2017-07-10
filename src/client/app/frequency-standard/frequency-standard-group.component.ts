@@ -10,7 +10,7 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'frequency-standard-group',
-    templateUrl: 'frequency-standard-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class FrequencyStandardGroupComponent extends AbstractGroupComponent<FrequencyStandardViewModel> {
 

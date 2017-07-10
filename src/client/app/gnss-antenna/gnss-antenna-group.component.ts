@@ -10,7 +10,7 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'gnss-antenna-group',
-    templateUrl: 'gnss-antenna-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class GnssAntennaGroupComponent extends AbstractGroupComponent<GnssAntennaViewModel> {
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {

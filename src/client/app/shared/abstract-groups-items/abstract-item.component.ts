@@ -21,11 +21,6 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
     @Input() index: number;
 
     /**
-     * Total number of Frequency Standards
-     */
-    @Input() total: number;
-
-    /**
      * This is to receive geodesyEvent from parent.
      */
     @Input() geodesyEvent: GeodesyEvent;
