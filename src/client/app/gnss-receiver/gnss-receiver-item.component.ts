@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'gnss-receiver-item.component.html',
 })
 export class GnssReceiverItemComponent extends AbstractItemComponent {
-    /**
-     * The GnssReceiver in question.
-     */
-    @Input() gnssReceiver: GnssReceiverViewModel;
 
     public satelliteSystemList: string[] = ['GPS', 'GLO', 'GAL', 'BDS', 'QZSS', 'SBAS', 'IRNSS'];
 
@@ -47,10 +43,6 @@ export class GnssReceiverItemComponent extends AbstractItemComponent {
             notes: ['', [Validators.maxLength(2000)]],
             objectMap: [''],
         });
-    }
-
-    getItem(): AbstractViewModel {
-        return this.gnssReceiver;
     }
 
     getItemName(): string {

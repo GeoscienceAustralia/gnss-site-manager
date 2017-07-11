@@ -13,7 +13,8 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
 
     protected itemGroup: FormGroup;
 
-    @Input('groupArray') groupArray: FormArray;
+    @Input() groupArray: FormArray;
+    @Input() item: AbstractViewModel;
 
     /**
      * The index of this item in `groupArray`
@@ -97,11 +98,6 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
     abstract getItemName(): string;
 
     /**
-     * Get the ViewModel used in the Item components
-     */
-    abstract getItem(): AbstractViewModel;
-
-    /**
      * Return the item form with default values and form controls.
      *
      */
@@ -132,7 +128,7 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
      */
     setupForm() {
         this.itemGroup = this.getItemForm();
-        this.itemGroup.patchValue(this.getItem());
+        this.itemGroup.patchValue(this.item);
         this.groupArray.setControl(this.index, this.itemGroup);
     }
 

@@ -8,11 +8,11 @@
         </i>
         <span [innerHTML]="getItemHeaderHtml()"></span>
     </span>
-    <span *ngIf="frequencyStandard.dateDeleted" class="delete-marker"
+    <span *ngIf="item.dateDeleted" class="delete-marker"
         title="It will be deleted when saving all changes for the site">
         (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
     </span>
-    <span class="pull-right" [ngClass]="{'hidden-xs': frequencyStandard.dateDeleted}">
+    <span class="pull-right" [ngClass]="{'hidden-xs': item.dateDeleted}">
         <button type="button"  [disabled]="isDeleteDisabled()"
               class="btn btn-danger btn-rm"
               title="{{getRemoveOrDeletedText()}} the frequency standard"
@@ -23,10 +23,10 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
-        <div *ngIf=" frequencyStandard == null " class="margin-bottom15">
+        <div *ngIf=" item == null " class="margin-bottom15">
             No information available for current frequency standard
         </div>
-        <div *ngIf="frequencyStandard != null" [ngClass]="{'container-dirty': frequencyStandard.dateDeleted}">
+        <div *ngIf="item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <div class="form-group">
                 <text-input [form]="itemGroup" controlName="standardType">Standard Type</text-input>
                 <number-input [form]="itemGroup" controlName="inputFrequency">Input Frequency</number-input>

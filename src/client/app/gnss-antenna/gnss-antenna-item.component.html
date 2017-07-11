@@ -8,11 +8,11 @@
             </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
       </span>
-    <span *ngIf="antenna.dateDeleted" class="delete-marker"
+    <span *ngIf="item.dateDeleted" class="delete-marker"
         title="It will be deleted when saving all changes for the site">
         (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
     </span>
-    <span class="pull-right" [ngClass]="{'hidden-xs': antenna.dateDeleted}">
+    <span class="pull-right" [ngClass]="{'hidden-xs': item.dateDeleted}">
         <button type="button" [disabled]="isDeleteDisabled()"
               class="btn btn-danger btn-rm"
               title="{{getRemoveOrDeletedText()}} the GNSS antenna"
@@ -23,10 +23,10 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
-        <div class="margin-bottom15" *ngIf=" antenna == null ">
+        <div class="margin-bottom15" *ngIf=" item == null ">
             No information available for current GNSS Antenna
         </div>
-        <div *ngIf="antenna != null" [ngClass]="{'container-dirty': antenna.dateDeleted}">
+        <div *ngIf="item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <div class="form-group">
                 <text-input [form]="itemGroup" controlName="antennaType">Antenna Type</text-input>
                 <text-input [form]="itemGroup" controlName="serialNumber">Serial Number</text-input>

@@ -11,17 +11,17 @@ import { SiteLogService } from '../site-log/site-log.service';
 export const newItemShouldBeBlank: boolean = true;
 
 export abstract class AbstractGroupComponent<T extends AbstractViewModel> extends AbstractBaseComponent implements OnChanges {
-    isGroupOpen: boolean = false;
 
-    // flag to indicate that the current or latest item in a group has an end date set
-    currentItemAlreadyHasEndDate: boolean = false;
-
-    miscUtils: any = MiscUtils;
+    protected miscUtils: any = MiscUtils;
     protected groupArrayForm: FormArray;
     protected panelLevel: number = 1;
+    protected isGroupOpen: boolean = false;
 
-    @Input() parentForm: FormArray;
-    @Input('siteLogModel') siteLogModel: SiteLogViewModel;
+    // flag to indicate that the current or latest item in a group has an end date set
+    protected currentItemAlreadyHasEndDate: boolean = false;
+
+    @Input() parentForm: FormGroup;
+    @Input() siteLogModel: SiteLogViewModel;
     @Input() isMultiple: boolean = true;
 
     /**
@@ -95,14 +95,6 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
         return this.geodesyEvent;
     }
 
-    /**
-     * Return collection.
-     * @return {T[]}
-     */
-    getItems(): T[] {
-        return this.items;
-    }
-
     hasItems(): boolean {
         return !_.isEmpty(this.items);
     }
@@ -174,7 +166,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
      */
     public removeItem(index: number, reason: string) {
         let date: string = MiscUtils.getUTCDateTime();
-        let item: T = this.getItems()[index];
+        let item: T = this.items[index];
         item.dateDeleted = date;
         item.deletedReason = reason;
         item.isDeleted = true;

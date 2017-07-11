@@ -25,10 +25,6 @@ export class GnssAntennaGroupComponent extends AbstractGroupComponent<GnssAntenn
         return 'gnssAntennas';
     }
 
-    getFormData(siteLog: any): any {
-        return siteLog.gnssAntennas;
-    }
-
     getNewItemViewModel(): GnssAntennaViewModel {
         return new GnssAntennaViewModel();
     }

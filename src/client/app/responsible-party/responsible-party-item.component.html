@@ -7,7 +7,7 @@
             <i class="glyphicon" [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}"> </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
         </span>
-        <span *ngIf="responsibleParty.dateDeleted" class="delete-marker"
+        <span *ngIf="item.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
             (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
         </span>
@@ -22,10 +22,10 @@
         </span>
     </div>
     <div class="panel-body responsibleparty-body" [hidden]="!isOpen">
-        <div *ngIf=" responsibleParty == null ">
+        <div *ngIf=" item == null ">
             No information available for {{getItemName()}}
         </div>
-        <div *ngIf="responsibleParty != null" [ngClass]="{'container-dirty': responsibleParty.dateDeleted}">
+        <div *ngIf="item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <div class="form-group">
                 <text-input *ngIf="!isDataType"
                             [form]="itemGroup"

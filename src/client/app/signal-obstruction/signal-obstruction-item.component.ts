@@ -16,10 +16,6 @@ import { SignalObstructionViewModel } from './signal-obstruction-view-model';
     templateUrl: 'signal-obstruction-item.component.html',
 })
 export class SignalObstructionItemComponent extends AbstractItemComponent {
-    /**
-     * The RadioInterference in question.
-     */
-    @Input() signalObstruction: SignalObstructionViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class SignalObstructionItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Signal Obstruction';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.signalObstruction;
     }
 
     /**

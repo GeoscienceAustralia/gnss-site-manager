@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'gnss-antenna-item.component.html',
 })
 export class GnssAntennaItemComponent extends AbstractItemComponent {
-    /**
-     * The GNSS Antenna in question.
-     */
-    @Input() antenna: GnssAntennaViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class GnssAntennaItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'GNSS Antenna';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.antenna;
     }
 
     /**

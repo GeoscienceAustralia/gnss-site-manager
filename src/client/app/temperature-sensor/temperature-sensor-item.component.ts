@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'temperature-sensor-item.component.html',
 })
 export class TemperatureSensorItemComponent extends AbstractItemComponent {
-    /**
-     * The TemperatureSensor in question.
-     */
-    @Input() temperatureSensor: TemperatureSensorViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class TemperatureSensorItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Temperature Sensor';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.temperatureSensor;
     }
 
     /**

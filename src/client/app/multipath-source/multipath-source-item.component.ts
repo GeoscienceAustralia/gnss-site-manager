@@ -16,10 +16,6 @@ import { MultipathSourceViewModel } from './multipath-source-view-model';
     templateUrl: 'multipath-source-item.component.html',
 })
 export class MultipathSourceItemComponent extends AbstractItemComponent {
-    /**
-     * The RadioInterference in question.
-     */
-    @Input() multipathSource: MultipathSourceViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class MultipathSourceItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Multipath Source';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.multipathSource;
     }
 
     /**

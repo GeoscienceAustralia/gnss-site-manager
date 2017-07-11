@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'pressure-sensor-item.component.html',
 })
 export class PressureSensorItemComponent extends AbstractItemComponent {
-    /**
-     * The PressureSensor in question.
-     */
-    @Input() pressureSensor: PressureSensorViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class PressureSensorItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Pressure Sensor';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.pressureSensor;
     }
 
     /**

@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'water-vapor-sensor-item.component.html',
 })
 export class WaterVaporSensorItemComponent extends AbstractItemComponent {
-    /**
-     * The WaterVaporSensor in question.
-     */
-    @Input() waterVaporSensor: WaterVaporSensorViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class WaterVaporSensorItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Water Vapor Sensor';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.waterVaporSensor;
     }
 
     /**

@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'humidity-sensor-item.component.html',
 })
 export class HumiditySensorItemComponent extends AbstractItemComponent {
-    /**
-     * The HumiditySensor in question.
-     */
-    @Input() humiditySensor: HumiditySensorViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class HumiditySensorItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Humidity Sensor';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.humiditySensor;
     }
 
     /**

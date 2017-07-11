@@ -28,7 +28,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 })
 export class ResponsiblePartyItemComponent extends AbstractItemComponent implements OnInit {
 
-    @Input() responsibleParty: ResponsiblePartyViewModel;
     @Input() partyType: ResponsiblePartyType;
     @Input() isMandatory: boolean;
     @Input() total: number;
@@ -51,10 +50,6 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
                        || this.partyType.getObjectName() === 'siteDataSource';
         this.isMetadataCustodian = this.partyType.getObjectName() === 'siteMetadataCustodian';
         this.isDataCenter = this.partyType.getObjectName() === 'siteDataCenters';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.responsibleParty;
     }
 
     getItemName(): string {

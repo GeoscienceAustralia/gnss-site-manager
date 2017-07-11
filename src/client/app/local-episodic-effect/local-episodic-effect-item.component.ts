@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'local-episodic-effect-item.component.html',
 })
 export class LocalEpisodicEffectItemComponent extends AbstractItemComponent {
-    /**
-     * The LocalEpisodicEffect in question.
-     */
-    @Input() localEpisodicEffect: LocalEpisodicEffectViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class LocalEpisodicEffectItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Local Episodic Effect';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.localEpisodicEffect;
     }
 
     /**

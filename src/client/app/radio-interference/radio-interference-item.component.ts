@@ -16,10 +16,6 @@ import { RadioInterferenceViewModel } from './radio-interference-view-model';
     templateUrl: 'radio-interference-item.component.html',
 })
 export class RadioInterferenceItemComponent extends AbstractItemComponent {
-    /**
-     * The RadioInterference in question.
-     */
-    @Input() radioInterference: RadioInterferenceViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class RadioInterferenceItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Radio Interference';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.radioInterference;
     }
 
     /**

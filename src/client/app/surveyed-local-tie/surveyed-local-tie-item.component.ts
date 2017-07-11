@@ -16,10 +16,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'surveyed-local-tie-item.component.html',
 })
 export class SurveyedLocalTieItemComponent extends AbstractItemComponent {
-    /**
-     * The SurveyedLocalTie in question.
-     */
-    @Input() surveyedLocalTie: SurveyedLocalTieViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +26,6 @@ export class SurveyedLocalTieItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Surveyed Local Tie';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.surveyedLocalTie;
     }
 
     /**
