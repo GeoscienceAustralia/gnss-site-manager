@@ -42,7 +42,7 @@ export class ResponsiblePartyType {
 export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<ResponsiblePartyViewModel> {
 
     @Input() isMandatory: boolean;
-    private _partyType: ResponsiblePartyType;
+    protected _partyType: ResponsiblePartyType;
     protected panelLevel: number = 2;
 
     public static compare(obj1: ResponsiblePartyViewModel, obj2: ResponsiblePartyViewModel): number {
