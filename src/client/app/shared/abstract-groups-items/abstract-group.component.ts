@@ -12,33 +12,18 @@ export const newItemShouldBeBlank: boolean = true;
 
 export abstract class AbstractGroupComponent<T extends AbstractViewModel> extends AbstractBaseComponent implements OnChanges {
 
-    protected miscUtils: any = MiscUtils;
-    protected groupArrayForm: FormArray;
-    protected panelLevel: number = 1;
-    protected isGroupOpen: boolean = false;
+    public miscUtils: any = MiscUtils;
+    public panelLevel: number = 1;
+    public isGroupOpen: boolean = false;
+    public items: T[] = [];
+    public geodesyEvent: GeodesyEvent = new GeodesyEvent(EventNames.none);
 
-    // flag to indicate that the current or latest item in a group has an end date set
-    protected currentItemAlreadyHasEndDate: boolean = false;
-
-    @Input() parentForm: FormGroup;
+    @Input() parentForm: FormArray;
     @Input() siteLogModel: SiteLogViewModel;
     @Input() isMultiple: boolean = true;
 
-    /**
-     * Event mechanism to communicate with children.  Simply change the value of this and the children detect the change.
-     * @type {{name: EventNames}}
-     */
-    private geodesyEvent: GeodesyEvent = new GeodesyEvent(EventNames.none);
-
-    /**
-     * All the items.  They are stored in ascending order so that the oldest items are 'left-most' in the array.
-     * The sorting field is determined through the abstract method compare(left, right)).
-     *
-     * The display order on the form is in reverse with the oldest items at the bottom.  This is achieved with the method
-     * getItems().
-     *
-     */
-    private items: T[] = [];
+    // flag to indicate that the current or latest item in a group has an end date set
+    private currentItemAlreadyHasEndDate: boolean = false;
 
     public static compare(obj1: AbstractViewModel, obj2: AbstractViewModel): number {
         return AbstractGroupComponent.compareDates(obj1.startDate, obj2.startDate);

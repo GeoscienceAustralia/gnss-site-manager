@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
-import { ResponsiblePartyViewModel } from './responsible-party-view-model';
 import { ResponsiblePartyType } from './responsible-party-group.component';
-import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { DialogService } from '../shared/global/dialog.service';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';

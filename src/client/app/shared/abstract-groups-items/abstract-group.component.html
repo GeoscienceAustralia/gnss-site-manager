@@ -22,104 +22,102 @@
         <div *ngIf="!hasItems()">
             No information available for {{getItemName() + (isMultiple ? 's' : '')}}
         </div>
-        <div [formArrayName]="getControlName()">
-            <div *ngFor="let item of items; let i = index">
-                <div [ngSwitch]="getItemName()">
-                    <frequency-standard-item *ngSwitchCase="'Frequency Standard'"
-                                             [groupArray]="groupArrayForm"
-                                             [item]="item"
-                                             [index]="i"
-                                             [geodesyEvent]="geodesyEvent"
-                                             (returnEvents)="returnEvents($event)">
-                    </frequency-standard-item>
-                    <gnss-antenna-item *ngSwitchCase="'GNSS Antenna'"
-                                       [groupArray]="groupArrayForm"
+        <div *ngFor="let item of items; let i = index">
+            <div [ngSwitch]="getItemName()">
+                <frequency-standard-item *ngSwitchCase="'Frequency Standard'"
+                                         [groupArray]="parentForm"
+                                         [item]="item"
+                                         [index]="i"
+                                         [geodesyEvent]="geodesyEvent"
+                                         (returnEvents)="returnEvents($event)">
+                </frequency-standard-item>
+                <gnss-antenna-item *ngSwitchCase="'GNSS Antenna'"
+                                   [groupArray]="parentForm"
+                                   [item]="item"
+                                   [index]="i"
+                                   [geodesyEvent]="geodesyEvent"
+                                   (returnEvents)="returnEvents($event)">
+                </gnss-antenna-item>
+                <gnss-receiver-item *ngSwitchCase="'GNSS Receiver'"
+                                    [groupArray]="parentForm"
+                                    [item]="item"
+                                    [index]="i"
+                                    [geodesyEvent]="geodesyEvent"
+                                    (returnEvents)="returnEvents($event)">
+                </gnss-receiver-item>
+                <humidity-sensor-item *ngSwitchCase="'Humidity Sensor'"
+                                      [groupArray]="parentForm"
+                                      [item]="item"
+                                      [index]="i"
+                                      [geodesyEvent]="geodesyEvent"
+                                      (returnEvents)="returnEvents($event)">
+                </humidity-sensor-item>
+                <local-episodic-effect-item *ngSwitchCase="'Local Episodic Effect'"
+                                            [groupArray]="parentForm"
+                                            [item]="item"
+                                            [index]="i"
+                                            [geodesyEvent]="geodesyEvent"
+                                            (returnEvents)="returnEvents($event)">
+                </local-episodic-effect-item>
+                <multipath-source-item *ngSwitchCase="'Multipath Source'"
+                                       [groupArray]="parentForm"
                                        [item]="item"
                                        [index]="i"
                                        [geodesyEvent]="geodesyEvent"
                                        (returnEvents)="returnEvents($event)">
-                    </gnss-antenna-item>
-                    <gnss-receiver-item *ngSwitchCase="'GNSS Receiver'"
-                                        [groupArray]="groupArrayForm"
-                                        [item]="item"
-                                        [index]="i"
-                                        [geodesyEvent]="geodesyEvent"
-                                        (returnEvents)="returnEvents($event)">
-                    </gnss-receiver-item>
-                    <humidity-sensor-item *ngSwitchCase="'Humidity Sensor'"
-                                          [groupArray]="groupArrayForm"
-                                          [item]="item"
-                                          [index]="i"
-                                          [geodesyEvent]="geodesyEvent"
-                                          (returnEvents)="returnEvents($event)">
-                    </humidity-sensor-item>
-                    <local-episodic-effect-item *ngSwitchCase="'Local Episodic Effect'"
-                                                [groupArray]="groupArrayForm"
-                                                [item]="item"
-                                                [index]="i"
-                                                [geodesyEvent]="geodesyEvent"
-                                                (returnEvents)="returnEvents($event)">
-                    </local-episodic-effect-item>
-                    <multipath-source-item *ngSwitchCase="'Multipath Source'"
-                                           [groupArray]="groupArrayForm"
-                                           [item]="item"
-                                           [index]="i"
-                                           [geodesyEvent]="geodesyEvent"
-                                           (returnEvents)="returnEvents($event)">
-                    </multipath-source-item>
-                    <pressure-sensor-item *ngSwitchCase="''"
-                                          [groupArray]="groupArrayForm"
-                                          [item]="item"
-                                          [index]="i"
-                                          [geodesyEvent]="geodesyEvent"
-                                          (returnEvents)="returnEvents($event)">
-                    </pressure-sensor-item>
-                    <radio-interference-item *ngSwitchCase="'Radio Interference'"
-                                             [groupArray]="groupArrayForm"
+                </multipath-source-item>
+                <pressure-sensor-item *ngSwitchCase="''"
+                                      [groupArray]="parentForm"
+                                      [item]="item"
+                                      [index]="i"
+                                      [geodesyEvent]="geodesyEvent"
+                                      (returnEvents)="returnEvents($event)">
+                </pressure-sensor-item>
+                <radio-interference-item *ngSwitchCase="'Radio Interference'"
+                                         [groupArray]="parentForm"
+                                         [item]="item"
+                                         [index]="i"
+                                         [geodesyEvent]="geodesyEvent"
+                                         (returnEvents)="returnEvents($event)">
+                </radio-interference-item>
+                <signal-obstruction-item *ngSwitchCase="'Signal Obstruction'"
+                                         [groupArray]="parentForm"
+                                         [item]="item"
+                                         [index]="i"
+                                         [geodesyEvent]="geodesyEvent"
+                                         (returnEvents)="returnEvents($event)">
+                </signal-obstruction-item>
+                <surveyed-local-tie-item *ngSwitchCase="'Surveyed Local Tie'"
+                                         [groupArray]="parentForm"
+                                         [item]="item"
+                                         [index]="i"
+                                         [geodesyEvent]="geodesyEvent"
+                                         (returnEvents)="returnEvents($event)">
+                </surveyed-local-tie-item>
+                <temperature-sensor-item *ngSwitchCase="'Temperature Sensor'"
+                                         [groupArray]="parentForm"
+                                         [item]="item"
+                                         [index]="i"
+                                         [geodesyEvent]="geodesyEvent"
+                                         (returnEvents)="returnEvents($event)">
+                </temperature-sensor-item>
+                <water-vapor-sensor-item *ngSwitchCase="'Water Vapor Sensor'"
+                                         [groupArray]="parentForm"
+                                         [item]="item"
+                                         [index]="i"
+                                         [geodesyEvent]="geodesyEvent"
+                                         (returnEvents)="returnEvents($event)">
+                </water-vapor-sensor-item>
+                <gnss-responsible-party-item *ngSwitchDefault
+                                             [groupArray]="parentForm"
+                                             [partyType]="partyType"
                                              [item]="item"
                                              [index]="i"
+                                             [total]="items.length"
+                                             [isMandatory]="isMandatory"
                                              [geodesyEvent]="geodesyEvent"
                                              (returnEvents)="returnEvents($event)">
-                    </radio-interference-item>
-                    <signal-obstruction-item *ngSwitchCase="'Signal Obstruction'"
-                                             [groupArray]="groupArrayForm"
-                                             [item]="item"
-                                             [index]="i"
-                                             [geodesyEvent]="geodesyEvent"
-                                             (returnEvents)="returnEvents($event)">
-                    </signal-obstruction-item>
-                    <surveyed-local-tie-item *ngSwitchCase="'Surveyed Local Tie'"
-                                             [groupArray]="groupArrayForm"
-                                             [item]="item"
-                                             [index]="i"
-                                             [geodesyEvent]="geodesyEvent"
-                                             (returnEvents)="returnEvents($event)">
-                    </surveyed-local-tie-item>
-                    <temperature-sensor-item *ngSwitchCase="'Temperature Sensor'"
-                                             [groupArray]="groupArrayForm"
-                                             [item]="item"
-                                             [index]="i"
-                                             [geodesyEvent]="geodesyEvent"
-                                             (returnEvents)="returnEvents($event)">
-                    </temperature-sensor-item>
-                    <water-vapor-sensor-item *ngSwitchCase="'Water Vapor Sensor'"
-                                             [groupArray]="groupArrayForm"
-                                             [item]="item"
-                                             [index]="i"
-                                             [geodesyEvent]="geodesyEvent"
-                                             (returnEvents)="returnEvents($event)">
-                    </water-vapor-sensor-item>
-                    <gnss-responsible-party-item *ngSwitchDefault
-                                                 [groupArray]="groupArrayForm"
-                                                 [partyType]="partyType"
-                                                 [item]="item"
-                                                 [index]="i"
-                                                 [total]="items.length"
-                                                 [isMandatory]="isMandatory"
-                                                 [geodesyEvent]="geodesyEvent"
-                                                 (returnEvents)="returnEvents($event)">
-                    </gnss-responsible-party-item>
-                </div>
+                </gnss-responsible-party-item>
             </div>
         </div>
     </div>

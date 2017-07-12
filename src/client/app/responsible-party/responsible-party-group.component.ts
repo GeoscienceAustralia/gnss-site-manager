@@ -42,8 +42,8 @@ export class ResponsiblePartyType {
 export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<ResponsiblePartyViewModel> {
 
     @Input() isMandatory: boolean;
-    protected _partyType: ResponsiblePartyType;
-    protected panelLevel: number = 2;
+    public _partyType: ResponsiblePartyType;
+    public panelLevel: number = 2;
 
     public static compare(obj1: ResponsiblePartyViewModel, obj2: ResponsiblePartyViewModel): number {
         // TODO implement sorting (alphabetically by individual name perhaps)
