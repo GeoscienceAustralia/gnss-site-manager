@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
@@ -41,6 +41,8 @@ export class ResponsiblePartyType {
 })
 export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<ResponsiblePartyViewModel> {
 
+    @ViewChild('responsiblePartyTmpl') responsiblePartyTmpl: TemplateRef<any>;
+
     @Input() isMandatory: boolean;
     public _partyType: ResponsiblePartyType;
     public panelLevel: number = 2;
@@ -78,5 +80,9 @@ export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<Respo
 
     getNewItemViewModel(): ResponsiblePartyViewModel {
         return new ResponsiblePartyViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.responsiblePartyTmpl;
     }
 }

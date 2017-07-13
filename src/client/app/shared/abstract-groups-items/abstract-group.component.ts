@@ -1,4 +1,4 @@
-import { Input, OnChanges, SimpleChange } from '@angular/core';
+import { Input, OnChanges, SimpleChange, TemplateRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AbstractBaseComponent } from './abstract-base.component';
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
@@ -67,6 +67,8 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
 
     abstract getNewItemViewModel(): T;
 
+    abstract getTemplate(): TemplateRef<any>;
+
     getFormData(siteLog: any): any {
         return siteLog[this.getControlName()];
     }
@@ -118,7 +120,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
                 this.removeItem(geodesyEvent.valueNumber, geodesyEvent.valueString);
                 break;
             case EventNames.cancelNew:
-                this.cancelNew(geodesyEvent.valueNumber);
+                this.cancelNewItem(geodesyEvent.valueNumber);
                 break;
             default:
                 console.log('returnEvents - unknown event: ', EventNames[geodesyEvent.name]);
@@ -162,7 +164,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
      *
      * @param {string} itemIndex - the index of the new item to be cancelled.
      */
-    public cancelNew(itemIndex: number) {
+    public cancelNewItem(itemIndex: number) {
         if (this.items.length > (itemIndex + 1) && !this.currentItemAlreadyHasEndDate) {
             this.items[itemIndex+1].endDate = '';
             let formGroup: FormGroup = <FormGroup>this.parentForm.at(itemIndex+1);

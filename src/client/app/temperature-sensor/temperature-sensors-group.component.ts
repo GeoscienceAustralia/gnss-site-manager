@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { TemperatureSensorViewModel } from './temperature-sensor-view-model';
@@ -14,6 +14,8 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 })
 export class TemperatureSensorsGroupComponent extends AbstractGroupComponent<TemperatureSensorViewModel> {
 
+    @ViewChild('temperatureSensorTmpl') temperatureSensorTmpl : TemplateRef<any>;
+
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
     }
@@ -28,5 +30,9 @@ export class TemperatureSensorsGroupComponent extends AbstractGroupComponent<Tem
 
     getNewItemViewModel(): TemperatureSensorViewModel {
         return new TemperatureSensorViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.temperatureSensorTmpl;
     }
 }

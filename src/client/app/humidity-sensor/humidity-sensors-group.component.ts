@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { HumiditySensorViewModel } from './humidity-sensor-view-model';
@@ -14,6 +14,8 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 })
 export class HumiditySensorsGroupComponent extends AbstractGroupComponent<HumiditySensorViewModel> {
 
+    @ViewChild('humiditySensorTmpl') humiditySensorTmpl: TemplateRef<any>;
+
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
     }
@@ -26,10 +28,11 @@ export class HumiditySensorsGroupComponent extends AbstractGroupComponent<Humidi
         return 'humiditySensors';
     }
 
-    /* **************************************************
-     * Other methods
-     */
     getNewItemViewModel(): HumiditySensorViewModel {
         return new HumiditySensorViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.humiditySensorTmpl;
     }
 }

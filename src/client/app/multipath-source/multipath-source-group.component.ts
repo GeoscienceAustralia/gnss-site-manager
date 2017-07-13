@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { MultipathSourceViewModel } from './multipath-source-view-model';
@@ -14,6 +14,8 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 })
 export class MultipathSourceGroupComponent extends AbstractGroupComponent<MultipathSourceViewModel> {
 
+    @ViewChild('multipathSourceTmpl') multipathSourceTmpl: TemplateRef<any>;
+
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
     }
@@ -28,5 +30,9 @@ export class MultipathSourceGroupComponent extends AbstractGroupComponent<Multip
 
     getNewItemViewModel(): MultipathSourceViewModel {
         return new MultipathSourceViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.multipathSourceTmpl;
     }
 }

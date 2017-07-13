@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { FrequencyStandardViewModel } from './frequency-standard-view-model';
 import { FormBuilder } from '@angular/forms';
@@ -14,6 +14,8 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 })
 export class FrequencyStandardGroupComponent extends AbstractGroupComponent<FrequencyStandardViewModel> {
 
+    @ViewChild('frequencyStandardTmpl') frequencyStandardTmpl: TemplateRef<any>;
+
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
     }
@@ -28,5 +30,9 @@ export class FrequencyStandardGroupComponent extends AbstractGroupComponent<Freq
 
     getNewItemViewModel(): FrequencyStandardViewModel {
         return new FrequencyStandardViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.frequencyStandardTmpl;
     }
 }
