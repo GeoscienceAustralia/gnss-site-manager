@@ -9,11 +9,11 @@
             </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
         </span>
-        <span *ngIf="gnssReceiver.dateDeleted" class="delete-marker"
+        <span *ngIf="item.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
             (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
         </span>
-        <span class="pull-right" [ngClass]="{'hidden-xs': gnssReceiver.dateDeleted}">
+        <span class="pull-right" [ngClass]="{'hidden-xs': item.dateDeleted}">
             <button type="button" [disabled]="isDeleteDisabled()"
                   class="btn btn-danger btn-xs"
                   title="{{getRemoveOrDeletedText()}} the GNSS receiver"
@@ -24,10 +24,10 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
-        <div *ngIf=" gnssReceiver == null ">
+        <div *ngIf=" item == null ">
             No information available for GNSS Receivers
         </div>
-        <div *ngIf="gnssReceiver != null" [ngClass]="{'container-dirty': gnssReceiver.dateDeleted}">
+        <div *ngIf="item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <text-input [form]="itemGroup" controlName="receiverType">Receiver Type</text-input>
             <text-input [form]="itemGroup" controlName="manufacturerSerialNumber">Serial Number</text-input>
             <text-input [form]="itemGroup" controlName="firmwareVersion">Firmware Version</text-input>

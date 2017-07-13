@@ -9,11 +9,11 @@
             </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
         </span>
-        <span *ngIf="getItem().dateDeleted" class="delete-marker"
+        <span *ngIf="item.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
             (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
         </span>
-        <span class="pull-right" [ngClass]="{'hidden-xs': getItem().dateDeleted}">
+        <span class="pull-right" [ngClass]="{'hidden-xs': item.dateDeleted}">
             <button [disabled]="isDeleteDisabled()"
                   class="btn btn-danger btn-xs"
                   title="{{getRemoveOrDeletedText()}} the {{getItemName()}}"
@@ -24,10 +24,10 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
-        <div *ngIf=" getItem() == null ">
+        <div *ngIf=" item == null ">
             No information available for current {{getItemName()}}
         </div>
-        <div *ngIf="getItem() != null" [ngClass]="{'container-dirty': getItem().dateDeleted}">
+        <div *ngIf="item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <div class="form-group">
                 <text-input [form]="itemGroup" controlName="possibleProblemSource">Possible Problem Source</text-input>
                 <datetime-input [form]="itemGroup" controlName="startDate">Start Date (UTC)</datetime-input>

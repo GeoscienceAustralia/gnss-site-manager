@@ -171,4 +171,22 @@ export class MiscUtils {
             return null;
         }
     }
+
+    /**
+     * Convert the input camel-case string str into title case (start case or initial caps).
+     *
+     * E.g., siteOwner -> Site Owner, _site_owner -> Site Owner, site-owner -> Site Owner.
+     */
+    public static toTitleCase(str: string): string {
+        return lodash.startCase(str);
+    }
+
+    /**
+     * Convert the input string str containing spaces, underscores, or hyphens into camel case.
+     *
+     * Eg., Site Owner -> siteOwner, _Site_Owner -> siteOwner, Site-Owner -> siteOwner.
+     */
+    public static toCamelCase(str: string): string {
+        return lodash.camelCase(str);
+    }
 }

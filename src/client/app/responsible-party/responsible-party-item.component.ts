@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
-import { ResponsiblePartyViewModel } from './responsible-party-view-model';
 import { ResponsiblePartyType } from './responsible-party-group.component';
-import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { DialogService } from '../shared/global/dialog.service';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';
@@ -28,9 +26,10 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 })
 export class ResponsiblePartyItemComponent extends AbstractItemComponent implements OnInit {
 
-    @Input() responsibleParty: ResponsiblePartyViewModel;
     @Input() partyType: ResponsiblePartyType;
     @Input() isMandatory: boolean;
+    @Input() total: number;
+
     protected isDataType: boolean;
     protected isMetadataCustodian: boolean;
     protected isDataCenter: boolean;
@@ -49,10 +48,6 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
                        || this.partyType.getObjectName() === 'siteDataSource';
         this.isMetadataCustodian = this.partyType.getObjectName() === 'siteMetadataCustodian';
         this.isDataCenter = this.partyType.getObjectName() === 'siteDataCenters';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.responsibleParty;
     }
 
     getItemName(): string {

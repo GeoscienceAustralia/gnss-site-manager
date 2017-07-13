@@ -9,11 +9,11 @@
             </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
         </span>
-        <span *ngIf="localEpisodicEffect.dateDeleted" class="delete-marker"
+        <span *ngIf="item.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
             (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
         </span>
-        <span class="pull-right" [ngClass]="{'hidden-xs': localEpisodicEffect.dateDeleted}">
+        <span class="pull-right" [ngClass]="{'hidden-xs': item.dateDeleted}">
             <button type="button" [disabled]="isDeleteDisabled()"
                   class="btn btn-danger btn-xs"
                   title="{{getRemoveOrDeletedText()}} the local episodic effect"
@@ -24,10 +24,10 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
-        <div *ngIf=" localEpisodicEffect == null ">
+        <div *ngIf=" item == null ">
             No information available for current Local Episodic Effect
         </div>
-        <div *ngIf=" localEpisodicEffect != null" [ngClass]="{'container-dirty': localEpisodicEffect.dateDeleted}">
+        <div *ngIf=" item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <text-input [form]="itemGroup" controlName="event">Event</text-input>
             <datetime-input [form]="itemGroup" controlName="startDate">Start Date (UTC)</datetime-input>
             <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">End Date (UTC)</datetime-input>

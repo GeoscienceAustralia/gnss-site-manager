@@ -1,11 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
 import { DialogService } from '../shared/index';
-import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';
-import { RadioInterferenceViewModel } from './radio-interference-view-model';
 
 /**
  * This component represents a single Pressure Sensor.
@@ -16,10 +14,6 @@ import { RadioInterferenceViewModel } from './radio-interference-view-model';
     templateUrl: 'radio-interference-item.component.html',
 })
 export class RadioInterferenceItemComponent extends AbstractItemComponent {
-    /**
-     * The RadioInterference in question.
-     */
-    @Input() radioInterference: RadioInterferenceViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +24,6 @@ export class RadioInterferenceItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Radio Interference';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.radioInterference;
     }
 
     /**

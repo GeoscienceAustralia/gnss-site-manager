@@ -9,11 +9,11 @@
             </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
         </span>
-        <span *ngIf="surveyedLocalTie.dateDeleted" class="delete-marker"
+        <span *ngIf="item.dateDeleted" class="delete-marker"
             title="It will be deleted when saving all changes for the site">
             (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
         </span>
-        <span class="pull-right" [ngClass]="{'hidden-xs': surveyedLocalTie.dateDeleted}">
+        <span class="pull-right" [ngClass]="{'hidden-xs': item.dateDeleted}">
             <button type="button" [disabled]="isDeleteDisabled()"
                   class="btn btn-danger btn-xs"
                   title="{{getRemoveOrDeletedText()}} the surveyed local tie"
@@ -24,10 +24,10 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
-        <div *ngIf=" surveyedLocalTie == null ">
+        <div *ngIf=" item == null ">
             No information available for Surveyed Local Ties
         </div>
-        <div *ngIf="surveyedLocalTie != null" [ngClass]="{'container-dirty': surveyedLocalTie.dateDeleted}">
+        <div *ngIf="item != null" [ngClass]="{'container-dirty': item.dateDeleted}">
             <div class="form-group">
                 <text-input [form]="itemGroup" controlName="tiedMarkerName">Tied Marker Name</text-input>
                 <text-input [form]="itemGroup" controlName="tiedMarkerUsage">Tied Marker Usage</text-input>

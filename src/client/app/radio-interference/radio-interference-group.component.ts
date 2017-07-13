@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { RadioInterferenceViewModel } from './radio-interference-view-model';
@@ -10,9 +10,11 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'radio-interferences-group',
-    templateUrl: 'radio-interference-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class RadioInterferenceGroupComponent extends AbstractGroupComponent<RadioInterferenceViewModel> {
+
+    @ViewChild('radioInterferenceTmpl') radioInterferenceTmpl: TemplateRef<any>;
 
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
@@ -28,5 +30,9 @@ export class RadioInterferenceGroupComponent extends AbstractGroupComponent<Radi
 
     getNewItemViewModel(): RadioInterferenceViewModel {
         return new RadioInterferenceViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.radioInterferenceTmpl;
     }
 }

@@ -1,9 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
-import { FrequencyStandardViewModel } from './frequency-standard-view-model';
 import { DialogService } from '../shared/index';
-import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';
 
@@ -16,10 +14,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'frequency-standard-item.component.html',
 })
 export class FrequencyStandardItemComponent extends AbstractItemComponent {
-    /**
-     * The Frequency Standard in question.
-     */
-    @Input() frequencyStandard: FrequencyStandardViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +24,6 @@ export class FrequencyStandardItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Frequency Standard';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.frequencyStandard;
     }
 
     /**

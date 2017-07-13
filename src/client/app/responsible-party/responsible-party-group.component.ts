@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
@@ -37,13 +37,15 @@ export class ResponsiblePartyType {
 @Component({
     moduleId: module.id,
     selector: 'gnss-responsible-party-group',
-    templateUrl: 'responsible-party-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<ResponsiblePartyViewModel> {
 
+    @ViewChild('responsiblePartyTmpl') responsiblePartyTmpl: TemplateRef<any>;
+
     @Input() isMandatory: boolean;
-    @Input() isMultiple: boolean;
-    private _partyType: ResponsiblePartyType;
+    public _partyType: ResponsiblePartyType;
+    public panelLevel: number = 2;
 
     public static compare(obj1: ResponsiblePartyViewModel, obj2: ResponsiblePartyViewModel): number {
         // TODO implement sorting (alphabetically by individual name perhaps)
@@ -78,5 +80,9 @@ export class ResponsiblePartyGroupComponent extends AbstractGroupComponent<Respo
 
     getNewItemViewModel(): ResponsiblePartyViewModel {
         return new ResponsiblePartyViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.responsiblePartyTmpl;
     }
 }

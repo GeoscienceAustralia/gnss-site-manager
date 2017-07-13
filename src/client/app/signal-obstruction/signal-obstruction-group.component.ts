@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { SignalObstructionViewModel } from './signal-obstruction-view-model';
@@ -10,9 +10,11 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'signal-obstructions-group',
-    templateUrl: 'signal-obstruction-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class SignalObstructionGroupComponent extends AbstractGroupComponent<SignalObstructionViewModel> {
+
+    @ViewChild('signalObstructionTmpl') signalObstructionTmpl: TemplateRef<any>;
 
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
@@ -28,5 +30,9 @@ export class SignalObstructionGroupComponent extends AbstractGroupComponent<Sign
 
     getNewItemViewModel(): SignalObstructionViewModel {
         return new SignalObstructionViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.signalObstructionTmpl;
     }
 }

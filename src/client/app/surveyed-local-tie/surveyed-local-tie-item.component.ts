@@ -1,9 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
-import { SurveyedLocalTieViewModel } from './surveyed-local-tie-view-model';
 import { DialogService } from '../shared/index';
-import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';
 
@@ -16,10 +14,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'surveyed-local-tie-item.component.html',
 })
 export class SurveyedLocalTieItemComponent extends AbstractItemComponent {
-    /**
-     * The SurveyedLocalTie in question.
-     */
-    @Input() surveyedLocalTie: SurveyedLocalTieViewModel;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -30,10 +24,6 @@ export class SurveyedLocalTieItemComponent extends AbstractItemComponent {
 
     getItemName(): string {
         return 'Surveyed Local Tie';
-    }
-
-    getItem(): AbstractViewModel {
-        return this.surveyedLocalTie;
     }
 
     /**

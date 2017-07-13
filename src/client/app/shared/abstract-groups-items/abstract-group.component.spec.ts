@@ -57,12 +57,12 @@ export function main() {
         });
 
         it('should remove deleted items', () => {
-            expect(group.getItems().length).toEqual(3);
-            expect(_(group.getItems()).map(item => item.startDate).includes('2003-01-01T01:02:03.000Z')).toBeFalsy();
+            expect(group.items.length).toEqual(3);
+            expect(_(group.items).map(item => item.startDate).includes('2003-01-01T01:02:03.000Z')).toBeFalsy();
         });
 
         it('should sort items by start date', () => {
-            expect(_.isEqual(group.getItems(), _.sortBy(items, item => item.startDate)));
+            expect(_.isEqual(group.items, _.sortBy(items, item => item.startDate)));
         });
     });
 }

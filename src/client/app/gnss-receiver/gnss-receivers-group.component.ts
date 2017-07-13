@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { GnssReceiverViewModel } from './gnss-receiver-view-model';
@@ -10,9 +10,12 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'gnss-receivers-group',
-    templateUrl: 'gnss-receivers-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class GnssReceiversGroupComponent extends AbstractGroupComponent<GnssReceiverViewModel> {
+
+    @ViewChild('gnssReceiverTmpl') gnssReceiverTmpl: TemplateRef<any>;
+
     constructor(protected siteLogService: SiteLogService, protected formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
     }
@@ -25,10 +28,11 @@ export class GnssReceiversGroupComponent extends AbstractGroupComponent<GnssRece
         return 'gnssReceivers';
     }
 
-    /* **************************************************
-     * Other methods
-     */
     getNewItemViewModel(): GnssReceiverViewModel {
         return new GnssReceiverViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.gnssReceiverTmpl;
     }
 }

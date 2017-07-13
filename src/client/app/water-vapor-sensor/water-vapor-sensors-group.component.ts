@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { WaterVaporSensorViewModel } from './water-vapor-sensor-view-model';
@@ -10,9 +10,11 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'water-vapor-sensors-group',
-    templateUrl: 'water-vapor-sensors-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class WaterVaporSensorsGroupComponent extends AbstractGroupComponent<WaterVaporSensorViewModel> {
+
+    @ViewChild('waterVaporSensorTmpl') waterVaporSensorTmpl: TemplateRef<any>;
 
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
@@ -28,5 +30,9 @@ export class WaterVaporSensorsGroupComponent extends AbstractGroupComponent<Wate
 
     getNewItemViewModel(): WaterVaporSensorViewModel {
         return new WaterVaporSensorViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.waterVaporSensorTmpl;
     }
 }

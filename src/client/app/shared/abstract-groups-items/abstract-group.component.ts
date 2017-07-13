@@ -1,4 +1,4 @@
-import { Input, OnChanges, SimpleChange } from '@angular/core';
+import { Input, OnChanges, SimpleChange, TemplateRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AbstractBaseComponent } from './abstract-base.component';
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
@@ -11,31 +11,19 @@ import { SiteLogService } from '../site-log/site-log.service';
 export const newItemShouldBeBlank: boolean = true;
 
 export abstract class AbstractGroupComponent<T extends AbstractViewModel> extends AbstractBaseComponent implements OnChanges {
-    isGroupOpen: boolean = false;
 
-    // flag to indicate that the current or latest item in a group has an end date set
-    currentItemAlreadyHasEndDate: boolean = false;
-
-    miscUtils: any = MiscUtils;
+    public miscUtils: any = MiscUtils;
+    public panelLevel: number = 1;
+    public isGroupOpen: boolean = false;
+    public items: T[] = [];
+    public geodesyEvent: GeodesyEvent = new GeodesyEvent(EventNames.none);
 
     @Input() parentForm: FormArray;
-    @Input('siteLogModel') siteLogModel: SiteLogViewModel;
+    @Input() siteLogModel: SiteLogViewModel;
+    @Input() isMultiple: boolean = true;
 
-    /**
-     * Event mechanism to communicate with children.  Simply change the value of this and the children detect the change.
-     * @type {{name: EventNames}}
-     */
-    private geodesyEvent: GeodesyEvent = new GeodesyEvent(EventNames.none);
-
-    /**
-     * All the items.  They are stored in ascending order so that the oldest items are 'left-most' in the array.
-     * The sorting field is determined through the abstract method compare(left, right)).
-     *
-     * The display order on the form is in reverse with the oldest items at the bottom.  This is achieved with the method
-     * getItems().
-     *
-     */
-    private items: T[] = [];
+    // flag to indicate that the current or latest item in a group has an end date set
+    private currentItemAlreadyHasEndDate: boolean = false;
 
     public static compare(obj1: AbstractViewModel, obj2: AbstractViewModel): number {
         return AbstractGroupComponent.compareDates(obj1.startDate, obj2.startDate);
@@ -79,6 +67,8 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
 
     abstract getNewItemViewModel(): T;
 
+    abstract getTemplate(): TemplateRef<any>;
+
     getFormData(siteLog: any): any {
         return siteLog[this.getControlName()];
     }
@@ -90,14 +80,6 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
      */
     getGeodesyEvent(): GeodesyEvent {
         return this.geodesyEvent;
-    }
-
-    /**
-     * Return collection.
-     * @return {T[]}
-     */
-    getItems(): T[] {
-        return this.items;
     }
 
     hasItems(): boolean {
@@ -138,7 +120,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
                 this.removeItem(geodesyEvent.valueNumber, geodesyEvent.valueString);
                 break;
             case EventNames.cancelNew:
-                this.cancelNew(geodesyEvent.valueNumber);
+                this.cancelNewItem(geodesyEvent.valueNumber);
                 break;
             default:
                 console.log('returnEvents - unknown event: ', EventNames[geodesyEvent.name]);
@@ -171,7 +153,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
      */
     public removeItem(index: number, reason: string) {
         let date: string = MiscUtils.getUTCDateTime();
-        let item: T = this.getItems()[index];
+        let item: T = this.items[index];
         item.dateDeleted = date;
         item.deletedReason = reason;
         item.isDeleted = true;
@@ -182,7 +164,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel> extend
      *
      * @param {string} itemIndex - the index of the new item to be cancelled.
      */
-    public cancelNew(itemIndex: number) {
+    public cancelNewItem(itemIndex: number) {
         if (this.items.length > (itemIndex + 1) && !this.currentItemAlreadyHasEndDate) {
             this.items[itemIndex+1].endDate = '';
             let formGroup: FormGroup = <FormGroup>this.parentForm.at(itemIndex+1);

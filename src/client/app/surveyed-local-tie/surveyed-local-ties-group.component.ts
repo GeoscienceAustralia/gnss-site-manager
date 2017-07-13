@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { SurveyedLocalTieViewModel } from './surveyed-local-tie-view-model';
@@ -10,9 +10,11 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'surveyed-local-ties-group',
-    templateUrl: 'surveyed-local-ties-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class SurveyedLocalTiesGroupComponent extends AbstractGroupComponent<SurveyedLocalTieViewModel> {
+
+    @ViewChild('surveyedLocalTieTmpl') surveyedLocalTieTmpl : TemplateRef<any>;
 
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
@@ -26,14 +28,15 @@ export class SurveyedLocalTiesGroupComponent extends AbstractGroupComponent<Surv
         return 'surveyedLocalTies';
     }
 
-    /* **************************************************
-     * Other methods
-     */
     getNewItemViewModel(): SurveyedLocalTieViewModel {
         return new SurveyedLocalTieViewModel();
     }
 
     protected hasEndDateField(): boolean {
         return false;
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.surveyedLocalTieTmpl;
     }
 }

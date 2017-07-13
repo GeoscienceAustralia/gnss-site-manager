@@ -1,9 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
-import { GnssReceiverViewModel } from './gnss-receiver-view-model';
 import { DialogService } from '../shared/index';
-import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';
 
@@ -16,10 +14,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'gnss-receiver-item.component.html',
 })
 export class GnssReceiverItemComponent extends AbstractItemComponent {
-    /**
-     * The GnssReceiver in question.
-     */
-    @Input() gnssReceiver: GnssReceiverViewModel;
 
     public satelliteSystemList: string[] = ['GPS', 'GLO', 'GAL', 'BDS', 'QZSS', 'SBAS', 'IRNSS'];
 
@@ -47,10 +41,6 @@ export class GnssReceiverItemComponent extends AbstractItemComponent {
             notes: ['', [Validators.maxLength(2000)]],
             objectMap: [''],
         });
-    }
-
-    getItem(): AbstractViewModel {
-        return this.gnssReceiver;
     }
 
     getItemName(): string {

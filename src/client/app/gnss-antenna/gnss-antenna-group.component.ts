@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { GnssAntennaViewModel } from './gnss-antenna-view-model';
@@ -10,9 +10,12 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 @Component({
     moduleId: module.id,
     selector: 'gnss-antenna-group',
-    templateUrl: 'gnss-antenna-group.component.html',
+    templateUrl: '../shared/abstract-groups-items/abstract-group.component.html',
 })
 export class GnssAntennaGroupComponent extends AbstractGroupComponent<GnssAntennaViewModel> {
+
+    @ViewChild('gnssAntennaTmpl') gnssAntennaTmpl: TemplateRef<any>;
+
     constructor(protected siteLogService: SiteLogService, formBuilder: FormBuilder) {
         super(siteLogService, formBuilder);
     }
@@ -25,11 +28,11 @@ export class GnssAntennaGroupComponent extends AbstractGroupComponent<GnssAntenn
         return 'gnssAntennas';
     }
 
-    getFormData(siteLog: any): any {
-        return siteLog.gnssAntennas;
-    }
-
     getNewItemViewModel(): GnssAntennaViewModel {
         return new GnssAntennaViewModel();
+    }
+
+    getTemplate(): TemplateRef<any> {
+        return this.gnssAntennaTmpl;
     }
 }
