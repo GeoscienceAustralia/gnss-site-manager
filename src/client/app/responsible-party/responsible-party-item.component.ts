@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as _ from 'lodash';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
 import { ResponsiblePartyType } from './responsible-party-group.component';
@@ -34,6 +35,7 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
     protected isDataType: boolean;
     protected isMetadataCustodian: boolean;
     protected isDataCenter: boolean;
+    protected itemId: string;
 
     constructor(protected userAuthService: UserAuthService,
                 protected dialogService: DialogService,
@@ -49,6 +51,7 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
                        || this.partyType.getObjectName() === 'siteDataSource';
         this.isMetadataCustodian = this.partyType.getObjectName() === 'siteMetadataCustodian';
         this.isDataCenter = this.partyType.getObjectName() === 'siteDataCenters';
+        this.itemId = _.kebabCase(this.getItemName()) + '-' + this.index;
     }
 
     getItem(): AbstractViewModel {
