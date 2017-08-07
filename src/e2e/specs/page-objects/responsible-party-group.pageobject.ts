@@ -49,7 +49,21 @@ export class ResponsiblePartyGroup extends LogItemGroup {
        return groupName;
     }
 
-    public hasUrlField(): boolean {
-        return this.itemName === 'Site Data Center';
+    public getNewItemValues(timestamp: string): any {
+        return {
+            individualName: 'Homer Simpson',
+            organisationName: 'Geoscience Australia',
+            positionName: 'Manager ' + timestamp,
+            deliveryPoint: 'Cnr Jerrabomberra Ave and Hindmarsh Drive',
+            city: 'Symonston',
+            administrativeArea: 'ACT',
+            postalCode: '2609',
+            country: 'Australia',
+            email: 'Homer.Simpson@ga.gov.au',
+            primaryPhone: '0262499997',
+            secondaryPhone: '0262499998',
+            fax: '0262499999',
+            url: 'http://www.ga.gov.au'
+        };
     }
 }

@@ -12,19 +12,7 @@ describe('Responsible Party - Site Owner Group Component', () => {
     let siteId: string = 'ADE1';
     let noOfItems: number = 0;
     let canAddNewItem: boolean = false;
-    let individualName: string = 'Homer Simpson';
-    let organisationName: string = 'Geoscience Australia';
-    let positionName: string = 'Manager ' + timestamp;
-    let deliveryPoint: string = 'Cnr Jerrabomberra Ave and Hindmarsh Drive';
-    let city: string = 'Symonston';
-    let administrativeArea: string = 'ACT';
-    let postalCode: string = '2609';
-    let country: string = 'Australia';
-    let email: string = 'Homer.Simpson@ga.gov.au';
-    let primaryPhone: string = '0262499997';
-    let secondaryPhone: string = '0262499998';
-    let fax: string = '0262499999';
-    let url: string = 'http://www.ga.gov.au';
+    let newValues: any = {};
 
     let selectSitePage: SelectSitePage = new SelectSitePage();
     let loginActions: LoginActions = new LoginActions(selectSitePage);
@@ -38,6 +26,7 @@ describe('Responsible Party - Site Owner Group Component', () => {
         browser.waitForAngular();
         siteLogPage = selectSitePage.openSite(siteId);
         itemGroup = siteLogPage.siteOwnerGroup;
+        newValues = itemGroup.getNewItemValues(timestamp);
         browser.waitForAngular();
 
         itemGroup.partyItems.count().then((value: number) => {
@@ -60,58 +49,53 @@ describe('Responsible Party - Site Owner Group Component', () => {
                 console.log('Open ' + itemGroup.itemName + ' group');
             });
             itemGroup.individualNameInput.getAttribute('value').then((value: string) => {
-                individualName = value;
+                newValues.individualName = value;
                 console.log('Cache individualName value: ' + value);
             });
             itemGroup.organisationNameInput.getAttribute('value').then((value: string) => {
-                organisationName = value;
+                newValues.organisationName = value;
                 console.log('Cache organisationName value: ' + value);
             });
             itemGroup.positionNameInput.getAttribute('value').then((value: string) => {
-                positionName = value;
+                newValues.positionName = value;
                 console.log('Cache positionName value: ' + value);
             });
             itemGroup.deliveryPointInput.getAttribute('value').then((value: string) => {
-                deliveryPoint = value;
+                newValues.deliveryPoint = value;
                 console.log('Cache deliveryPoint value: ' + value);
             });
             itemGroup.cityInput.getAttribute('value').then((value: string) => {
-                city = value;
+                newValues.city = value;
                 console.log('Cache city value: ' + value);
             });
             itemGroup.administrativeAreaInput.getAttribute('value').then((value: string) => {
-                administrativeArea = value;
+                newValues.administrativeArea = value;
                 console.log('Cache administrativeArea value: ' + value);
             });
             itemGroup.postalCodeInput.getAttribute('value').then((value: string) => {
-                postalCode = value;
+                newValues.postalCode = value;
                 console.log('Cache postalCode value: ' + value);
             });
             itemGroup.countryInput.getAttribute('value').then((value: string) => {
-                country = value;
+                newValues.country = value;
                 console.log('Cache country value: ' + value);
             });
             itemGroup.emailInput.getAttribute('value').then((value: string) => {
-                email = value;
+                newValues.email = value;
                 console.log('Cache email value: ' + value);
             });
             itemGroup.primaryPhoneInput.getAttribute('value').then((value: string) => {
-                primaryPhone = value;
+                newValues.primaryPhone = value;
                 console.log('Cache primaryPhone value: ' + value);
             });
             itemGroup.secondaryPhoneInput.getAttribute('value').then((value: string) => {
-                secondaryPhone = value;
+                newValues.secondaryPhone = value;
                 console.log('Cache secondaryPhone value: ' + value);
             });
             itemGroup.faxInput.getAttribute('value').then((value: string) => {
-                fax = value;
+                newValues.fax = value;
                 console.log('Cache fax value: ' + value);
             });
-            if (itemGroup.hasUrlField()) {
-                itemGroup.urlInput.getAttribute('value').then((value: string) => {
-                    url = value;
-                });
-            }
 
             // Note: must click to lose it as it will be opened in deleteItem() function
             itemGroup.itemGroupHeader.click().then(() => {
@@ -132,21 +116,18 @@ describe('Responsible Party - Site Owner Group Component', () => {
         siteLogPage.siteInformationHeader.click();
         itemGroup.addNewItem();
         TestUtils.checkItemCount(itemGroup.partyItems, 'adding new item', noOfItems + 1);
-        itemGroup.individualNameInput.sendKeys(individualName);
-        itemGroup.organisationNameInput.sendKeys(organisationName);
-        itemGroup.positionNameInput.sendKeys(positionName);
-        itemGroup.deliveryPointInput.sendKeys(deliveryPoint);
-        itemGroup.cityInput.sendKeys(city);
-        itemGroup.administrativeAreaInput.sendKeys(administrativeArea);
-        itemGroup.postalCodeInput.sendKeys(postalCode);
-        itemGroup.countryInput.sendKeys(country);
-        itemGroup.emailInput.sendKeys(email);
-        itemGroup.primaryPhoneInput.sendKeys(primaryPhone);
-        itemGroup.secondaryPhoneInput.sendKeys(secondaryPhone);
-        itemGroup.faxInput.sendKeys(fax);
-        if (itemGroup.hasUrlField()) {
-            itemGroup.urlInput.sendKeys(url);
-        }
+        itemGroup.individualNameInput.sendKeys(newValues.individualName);
+        itemGroup.organisationNameInput.sendKeys(newValues.organisationName);
+        itemGroup.positionNameInput.sendKeys(newValues.positionName);
+        itemGroup.deliveryPointInput.sendKeys(newValues.deliveryPoint);
+        itemGroup.cityInput.sendKeys(newValues.city);
+        itemGroup.administrativeAreaInput.sendKeys(newValues.administrativeArea);
+        itemGroup.postalCodeInput.sendKeys(newValues.postalCode);
+        itemGroup.countryInput.sendKeys(newValues.country);
+        itemGroup.emailInput.sendKeys(newValues.email);
+        itemGroup.primaryPhoneInput.sendKeys(newValues.primaryPhone);
+        itemGroup.secondaryPhoneInput.sendKeys(newValues.secondaryPhone);
+        itemGroup.faxInput.sendKeys(newValues.fax);
         browser.waitForAngular();
         siteLogPage.save();
     });
@@ -157,22 +138,19 @@ describe('Responsible Party - Site Owner Group Component', () => {
         itemGroup.itemGroupHeader.click().then(() => {
             console.log('Open ' + itemGroup.itemName + ' group');
             browser.waitForAngular();
-            TestUtils.checkInputValueEqual(itemGroup.individualNameInput, 'Individual Name', individualName);
-            TestUtils.checkInputValueEqual(itemGroup.organisationNameInput, 'Organisation Name', organisationName);
-            TestUtils.checkInputValueEqual(itemGroup.positionNameInput, 'Position Name', positionName);
-            TestUtils.checkInputValueEqual(itemGroup.deliveryPointInput, 'Address', deliveryPoint);
-            TestUtils.checkInputValueEqual(itemGroup.cityInput, 'City', city);
-            TestUtils.checkInputValueEqual(itemGroup.administrativeAreaInput, 'State / Province', administrativeArea);
-            TestUtils.checkInputValueEqual(itemGroup.postalCodeInput, 'Postal Code', postalCode);
+            TestUtils.checkInputValueEqual(itemGroup.individualNameInput, 'Individual Name', newValues.individualName);
+            TestUtils.checkInputValueEqual(itemGroup.organisationNameInput, 'Organisation Name', newValues.organisationName);
+            TestUtils.checkInputValueEqual(itemGroup.positionNameInput, 'Position Name', newValues.positionName);
+            TestUtils.checkInputValueEqual(itemGroup.deliveryPointInput, 'Address', newValues.deliveryPoint);
+            TestUtils.checkInputValueEqual(itemGroup.cityInput, 'City', newValues.city);
+            TestUtils.checkInputValueEqual(itemGroup.administrativeAreaInput, 'State / Province', newValues.administrativeArea);
+            TestUtils.checkInputValueEqual(itemGroup.postalCodeInput, 'Postal Code', newValues.postalCode);
             // TODO: country is missing from both data and view models, so its value won't be saved
-            //TestUtils.checkInputValueEqual(itemGroup.countryInput, 'Country', country);
-            TestUtils.checkInputValueEqual(itemGroup.emailInput, 'Email', email);
-            TestUtils.checkInputValueEqual(itemGroup.primaryPhoneInput, 'Primary Phone Number', primaryPhone);
-            TestUtils.checkInputValueEqual(itemGroup.secondaryPhoneInput, 'Secondary Phone Number', secondaryPhone);
-            TestUtils.checkInputValueEqual(itemGroup.faxInput, 'Fax Number', fax);
-            if (itemGroup.hasUrlField()) {
-                TestUtils.checkInputValueEqual(itemGroup.urlInput, 'URL', url);
-            }
+            //TestUtils.checkInputValueEqual(itemGroup.countryInput, 'Country', newValues.country);
+            TestUtils.checkInputValueEqual(itemGroup.emailInput, 'Email', newValues.email);
+            TestUtils.checkInputValueEqual(itemGroup.primaryPhoneInput, 'Primary Phone Number', newValues.primaryPhone);
+            TestUtils.checkInputValueEqual(itemGroup.secondaryPhoneInput, 'Secondary Phone Number', newValues.secondaryPhone);
+            TestUtils.checkInputValueEqual(itemGroup.faxInput, 'Fax Number', newValues.fax);
         });
     });
 
