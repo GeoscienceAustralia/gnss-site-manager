@@ -42,12 +42,12 @@ export class HumiditySensorItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            type: ['', [Validators.required]],
-            manufacturer: ['', [Validators.required, Validators.maxLength(50)]],
-            serialNumber: ['', [Validators.required, Validators.maxLength(50)]],
+            type: [''],
+            manufacturer: [''],
+            serialNumber: [''],
             dataSamplingInterval: ['', [Validators.maxLength(25)]],
             accuracyPercentRelativeHumidity: ['', [Validators.maxLength(25)]],
-            aspiration: ['', [Validators.maxLength(50)]],
+            aspiration: [''],
             heightDiffToAntenna: ['', [Validators.maxLength(25)]],
             calibrationDate: [''],
             startDate: [''],

@@ -33,14 +33,15 @@
                             [required]="true">Individual Name</text-input>
                 <text-input [form]="itemGroup"
                             controlName="organisationName"
-                            [required]="isDataType || isMetadataCustodian">Organisation Name</text-input>
+                            [required]="isDataType || isMetadataCustodian"
+                            [maxLength]="500">Organisation Name</text-input>
                 <text-input *ngIf="!isDataType"
                             [form]="itemGroup"
                             controlName="positionName">Position Name</text-input>
-                <text-input [form]="itemGroup" controlName="deliveryPoint">Address</text-input>
+                <text-input [form]="itemGroup" controlName="deliveryPoint" [maxLength]="500">Address</text-input>
                 <text-input [form]="itemGroup" controlName="city">City</text-input>
                 <text-input [form]="itemGroup" controlName="administrativeArea">State / Province</text-input>
-                <text-input [form]="itemGroup" controlName="postalCode">Postal Code</text-input>
+                <text-input [form]="itemGroup" controlName="postalCode" [maxLength]="25">Postal Code</text-input>
                 <text-input [form]="itemGroup" controlName="country">Country</text-input>
                 <text-input *ngIf="isDataType"
                             [form]="itemGroup"
@@ -50,9 +51,9 @@
                             [form]="itemGroup"
                             controlName="positionName">Position Name</text-input>
                 <email-input [form]="itemGroup" controlName="email">Email</email-input>
-                <text-input [form]="itemGroup" controlName="primaryPhone">Primary Phone Number</text-input>
-                <text-input [form]="itemGroup" controlName="secondaryPhone">Secondary Phone Number</text-input>
-                <text-input [form]="itemGroup" controlName="fax">Fax Number</text-input>
+                <text-input [form]="itemGroup" controlName="primaryPhone" [maxLength]="25">Primary Phone Number</text-input>
+                <text-input [form]="itemGroup" controlName="secondaryPhone" [maxLength]="25">Secondary Phone Number</text-input>
+                <text-input [form]="itemGroup" controlName="fax" [maxLength]="25">Fax Number</text-input>
                 <url-input *ngIf="isDataCenter" [form]="itemGroup" controlName="url">URL</url-input>
             </div>
         </div>

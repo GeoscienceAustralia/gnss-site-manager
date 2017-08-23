@@ -29,9 +29,9 @@
         </div>
         <div *ngIf="pressureSensor != null" [ngClass]="{'container-dirty': pressureSensor.dateDeleted}">
             <div class="form-group">
-                <text-input [form]="itemGroup" controlName="manufacturer">Manufacturer</text-input>
-                <text-input [form]="itemGroup" controlName="type">Type</text-input>
-                <text-input [form]="itemGroup" controlName="serialNumber">Serial Number</text-input>
+                <text-input [form]="itemGroup" controlName="manufacturer" [required]="true">Manufacturer</text-input>
+                <text-input [form]="itemGroup" controlName="type" [required]="true">Type</text-input>
+                <text-input [form]="itemGroup" controlName="serialNumber" [required]="true">Serial Number</text-input>
                 <number-input [form]="itemGroup" controlName="dataSamplingInterval" step="0.01">Data Sampling Interval (seconds)</number-input>
                 <number-input [form]="itemGroup" controlName="accuracyHPa" min="0" step="0.01">Accuracy (hPa)</number-input>
                 <number-input [form]="itemGroup" controlName="heightDiffToAntenna" step="0.01">Height Diff to Antenna (m)</number-input>

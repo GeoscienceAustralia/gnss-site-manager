@@ -42,9 +42,9 @@ export class WaterVaporSensorItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            type: ['', [Validators.required]],
-            manufacturer: ['', [Validators.maxLength(25)]],
-            serialNumber: ['', [Validators.maxLength(25)]],
+            type: [''],
+            manufacturer: [''],
+            serialNumber: [''],
             heightDiffToAntenna: ['', [Validators.maxLength(25)]],
             calibrationDate: [''],
             startDate: [''],

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
@@ -90,22 +90,20 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
      * Return the item form with default values and form controls.
      */
     getItemForm(): FormGroup {
-        let organisationValidators: any[] = this.isDataType ? [Validators.required, Validators.maxLength(500)]
-                                                            : [Validators.maxLength(500)];
         return this.formBuilder.group({
             id: [null],
-            individualName: ['', [Validators.maxLength(100)]],
-            organisationName: ['', organisationValidators],
-            positionName: ['', [Validators.maxLength(100)]],
-            deliveryPoint: ['', [Validators.maxLength(500)]],
-            city: ['', [Validators.maxLength(100)]],
-            administrativeArea: ['', [Validators.maxLength(100)]],
-            postalCode: ['', [Validators.maxLength(25)]],
+            individualName: [''],
+            organisationName: [''],
+            positionName: ['',],
+            deliveryPoint: [''],
+            city: [''],
+            administrativeArea: [''],
+            postalCode: [''],
             country: [''],
             email: [''],
-            primaryPhone: ['', [Validators.maxLength(25)]],
-            secondaryPhone: ['', [Validators.maxLength(25)]],
-            fax: ['', [Validators.maxLength(25)]],
+            primaryPhone: [''],
+            secondaryPhone: [''],
+            fax: [''],
             url: [''],
         });
     }

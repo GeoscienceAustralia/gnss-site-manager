@@ -42,9 +42,9 @@ export class PressureSensorItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            type: ['', [Validators.required]],
-            manufacturer: ['', [Validators.required, Validators.maxLength(100)]],
-            serialNumber: ['', [Validators.required, Validators.maxLength(100)]],
+            type: [''],
+            manufacturer: [''],
+            serialNumber: [''],
             dataSamplingInterval: ['', [Validators.maxLength(25)]],
             accuracyHPa: ['', [Validators.maxLength(25)]],
             heightDiffToAntenna: ['', [Validators.maxLength(25)]],

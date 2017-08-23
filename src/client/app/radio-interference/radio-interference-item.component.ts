@@ -42,8 +42,8 @@ export class RadioInterferenceItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            observedDegradation: ['', [Validators.maxLength(100)]],
-            possibleProblemSource: ['', [Validators.maxLength(100)]],
+            observedDegradation: [''],
+            possibleProblemSource: [''],
             startDate: [''],
             endDate: [''],
             notes: ['', [Validators.maxLength(2000)]],

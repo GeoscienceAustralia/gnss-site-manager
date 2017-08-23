@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbstractInput } from './abstract-input.component';
 
 @Component({
@@ -15,13 +15,37 @@ import { AbstractInput } from './abstract-input.component';
 })
 export class TextInputComponent extends AbstractInput implements ControlValueAccessor, OnInit {
     @Input() readonly: string = null;
-    @Input() maxlength: number = 10000;
+    @Input() minLength: number = 0;
+    @Input() maxLength: number = 200;
 
     propagateChange: Function = (_: any) => { };
     propagateTouch: Function = () => { };
 
     constructor() {
         super();
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this.addValidatorsToFormControl();
+    }
+
+    public addValidatorsToFormControl() {
+        let validators: any = [];
+        if (this.required) {
+            validators.push(Validators.required);
+        }
+
+        if (this.minLength) {
+            validators.push(Validators.minLength(this.minLength));
+        }
+        if (this.maxLength) {
+            validators.push(Validators.maxLength(this.maxLength));
+        }
+
+        setTimeout( () => {
+            this.formControl.setValidators(validators);
+        });
     }
 
     writeValue(value: string) {}

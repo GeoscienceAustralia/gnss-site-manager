@@ -21,7 +21,9 @@
             <div class="form-group">
                 <text-input [form]="siteIdentificationForm"
                             controlName="fourCharacterID"
-                            [readonly]="getFourCharacterIdReadOnlyAttribute()">Four Character Id
+                            [readonly]="getFourCharacterIdReadOnlyAttribute()"
+                            [minLength]="4"
+                            [maxLength]="25">Four Character Id
                 </text-input>
                 <text-input [form]="siteIdentificationForm" controlName="siteName">Site Name
                 </text-input>

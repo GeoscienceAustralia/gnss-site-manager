@@ -29,9 +29,9 @@
         </div>
         <div *ngIf="temperatureSensor != null" [ngClass]="{'container-dirty': temperatureSensor.dateDeleted}">
             <div class="form-group">
-                <text-input controlName="manufacturer" [form]="itemGroup">Manufacturer</text-input>
+                <text-input controlName="manufacturer" [form]="itemGroup" [required]="true">Manufacturer</text-input>
                 <text-input controlName="type" [form]="itemGroup" [required]="true">Type</text-input>
-                <text-input controlName="serialNumber" [form]="itemGroup">Serial Number</text-input>
+                <text-input controlName="serialNumber" [form]="itemGroup" [required]="true">Serial Number</text-input>
                 <number-input [form]="itemGroup" controlName="dataSamplingInterval">Data Sampling Interval (seconds)</number-input>
                 <number-input [form]="itemGroup" controlName="accuracyDegreesCelcius">Accuracy (&deg;C)</number-input>
                 <number-input [form]="itemGroup" controlName="heightDiffToAntenna">Height Diff to Antenna (m)</number-input>
