@@ -27,9 +27,9 @@
         </div>
         <div *ngIf="humiditySensor != null" [ngClass]="{'container-dirty': humiditySensor.dateDeleted}">
             <div class="form-group">
-                <text-input [form]="itemGroup" controlName="manufacturer">Manufacturer</text-input>
+                <text-input [form]="itemGroup" controlName="manufacturer" [required]="true">Manufacturer</text-input>
                 <text-input [form]="itemGroup" controlName="type" [required]="true">Type</text-input>
-                <text-input [form]="itemGroup" controlName="serialNumber">Serial Number</text-input>
+                <text-input [form]="itemGroup" controlName="serialNumber" [required]="true">Serial Number</text-input>
                 <number-input [form]="itemGroup" controlName="dataSamplingInterval">Data Sampling Interval (seconds)</number-input>
                 <number-input [form]="itemGroup" controlName="accuracyPercentRelativeHumidity">Accuracy (% rel h)</number-input>
                 <text-input [form]="itemGroup" controlName="aspiration">Aspiration</text-input>

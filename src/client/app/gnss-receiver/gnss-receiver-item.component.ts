@@ -36,11 +36,11 @@ export class GnssReceiverItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            receiverType: [' ', [Validators.maxLength(25)]],
-            manufacturerSerialNumber: ['', [Validators.maxLength(25)]],
+            receiverType: [' '],
+            manufacturerSerialNumber: [''],
             startDate: [''],
             endDate: [''],
-            firmwareVersion: ['', [Validators.maxLength(25)]],
+            firmwareVersion: [''],
             satelliteSystems: ['', [Validators.maxLength(200)]],
             elevationCutoffSetting: ['', [Validators.maxLength(25)]],
             temperatureStabilization: ['', [Validators.maxLength(25)]],

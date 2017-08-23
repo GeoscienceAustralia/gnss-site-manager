@@ -9,7 +9,8 @@
             [readonly]="getReadonlyAttribute()"
             [formControlName]="controlName"
             class="form-control"
-            maxlength="{{maxlength}}"/>
+            minlength="{{minLength}}"
+            maxlength="{{maxLength}}"/>
         <small [hidden]="!formControl.errors" class="alert alert-danger">{{getErrorReport()}}</small>
     </div>
 </div>

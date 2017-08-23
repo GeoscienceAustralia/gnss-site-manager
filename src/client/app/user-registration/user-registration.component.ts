@@ -13,12 +13,12 @@ import { UserAuthService } from '../shared/global/user-auth.service';
 export class UserRegistrationComponent implements OnDestroy {
 
     userRegistrationForm = this.formBuilder.group({
-        firstName: ['', [Validators.required, Validators.maxLength(200)]],
-        lastName: ['', [Validators.required, Validators.maxLength(200)]],
-        organisation: ['', [Validators.required, Validators.maxLength(200)]],
-        position: ['', [Validators.required, Validators.maxLength(200)]],
-        email: ['', [Validators.required, Validators.maxLength(200)]],
-        phone: ['', [Validators.required, Validators.maxLength(20)]],
+        firstName: [''],
+        lastName: [''],
+        organisation: [''],
+        position: [''],
+        email: [''],
+        phone: [''],
         remarks: ['', [Validators.required, Validators.maxLength(10000)]]
     });
 

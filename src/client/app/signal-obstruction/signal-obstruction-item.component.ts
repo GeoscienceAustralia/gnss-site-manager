@@ -40,7 +40,7 @@ export class SignalObstructionItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            possibleProblemSource: ['', [Validators.maxLength(100)]],
+            possibleProblemSource: [''],
             startDate: [''],
             endDate: [''],
             notes: ['', [Validators.maxLength(2000)]],

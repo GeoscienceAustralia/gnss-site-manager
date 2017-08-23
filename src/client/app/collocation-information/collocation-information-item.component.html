@@ -29,8 +29,8 @@
         </div>
         <div *ngIf="getItem() != null" [ngClass]="{'container-dirty': getItem().dateDeleted}">
             <div class="form-group">
-                <text-input [form]="itemGroup" controlName="instrumentationType">Instrumentation Type</text-input>
-                <text-input [form]="itemGroup" controlName="status">Status</text-input>
+                <text-input [form]="itemGroup" controlName="instrumentationType" [required]="true">Instrumentation Type</text-input>
+                <text-input [form]="itemGroup" controlName="status" [maxLength]="2000">Status</text-input>
                 <datetime-input [form]="itemGroup" controlName="startDate">Date Installed (UTC)</datetime-input>
                 <datetime-input [form]="itemGroup" controlName="endDate" [required]="false">Date Removed (UTC)</datetime-input>
                 <textarea-input [form]="itemGroup" controlName="notes" rows="2">Notes</textarea-input>

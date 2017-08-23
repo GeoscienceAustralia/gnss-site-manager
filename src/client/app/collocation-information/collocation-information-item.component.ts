@@ -40,8 +40,8 @@ export class CollocationInformationItemComponent extends AbstractItemComponent {
     getItemForm(): FormGroup {
         return this.formBuilder.group({
             id: [null],
-            instrumentationType: ['', [Validators.required]],
-            status: ['', [Validators.maxLength(2000)]],
+            instrumentationType: [''],
+            status: [''],
             startDate: [''],
             endDate: [''],
             notes: ['', [Validators.maxLength(2000)]],

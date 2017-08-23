@@ -172,12 +172,12 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
                 this.geodeticPositionFormValidators)
         );
         this.siteLocationForm = this.formBuilder.group({
-            city: ['', [Validators.maxLength(100)]],
-            state: ['', [Validators.maxLength(100)]],
-            countryCodeISO: ['', [Validators.maxLength(10)]],
+            city: [''],
+            state: [''],
+            countryCodeISO: [''],
             cartesianPosition: this.cartesianPositionForm,
             geodeticPosition: this.geodeticPositionForm,
-            tectonicPlate: ['', [Validators.maxLength(100)]],
+            tectonicPlate: [''],
             notes: ['', [Validators.maxLength(2000)]],
             objectMap: [''],
         });

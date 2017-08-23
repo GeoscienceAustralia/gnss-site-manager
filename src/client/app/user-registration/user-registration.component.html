@@ -12,12 +12,12 @@
                         </div>
 
                         <div class="form-group">
-                                <text-input [form]="userRegistrationForm" controlName="firstName">First Name</text-input>
-                                <text-input [form]="userRegistrationForm" controlName="lastName">Last Name</text-input>
-                                <text-input [form]="userRegistrationForm" controlName="organisation">Organisation</text-input>
-                                <text-input [form]="userRegistrationForm" controlName="position">Position</text-input>
-                                <text-input [form]="userRegistrationForm" controlName="phone">Phone</text-input>
-                                <email-input [form]="userRegistrationForm" controlName="email">Email</email-input>
+                                <text-input [form]="userRegistrationForm" controlName="firstName" [required]="true">First Name</text-input>
+                                <text-input [form]="userRegistrationForm" controlName="lastName" [required]="true">Last Name</text-input>
+                                <text-input [form]="userRegistrationForm" controlName="organisation" [required]="true">Organisation</text-input>
+                                <text-input [form]="userRegistrationForm" controlName="position" [required]="true">Position</text-input>
+                                <text-input [form]="userRegistrationForm" controlName="phone" [required]="true" maxLength="25">Phone</text-input>
+                                <email-input [form]="userRegistrationForm" controlName="email" [required]="true">Email</email-input>
                                 <textarea-input [form]="userRegistrationForm" controlName="remarks" rows="3">Remarks</textarea-input>
                         </div>
 

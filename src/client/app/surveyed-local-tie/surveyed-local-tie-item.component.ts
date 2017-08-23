@@ -66,12 +66,12 @@ export class SurveyedLocalTieItemComponent extends AbstractItemComponent impleme
 
         return this.formBuilder.group({
             id: [null],
-            tiedMarkerName: ['', [Validators.maxLength(50)]],
-            tiedMarkerUsage: ['', [Validators.maxLength(50)]],
-            tiedMarkerCDPNumber: ['', [Validators.maxLength(25)]],
-            tiedMarkerDOMESNumber: ['', [Validators.maxLength(25)]],
+            tiedMarkerName: [''],
+            tiedMarkerUsage: [''],
+            tiedMarkerCDPNumber: [''],
+            tiedMarkerDOMESNumber: [''],
             differentialComponent: this.differentialComponentForm,
-            surveyMethod: ['', [Validators.maxLength(50)]],
+            surveyMethod: [''],
             localSiteTiesAccuracy: ['', [Validators.maxLength(50)]],
             startDate: [''],
             // TODO see GEOD-454 endDate not needed by this component but the value exists in the model
