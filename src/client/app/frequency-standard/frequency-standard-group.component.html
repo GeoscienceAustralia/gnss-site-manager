@@ -1,9 +1,9 @@
 <div [formGroup]="parentForm" class="panel panel-level-1">
   <div class="panel-heading group-header">
     <span class="panel-title cursor-ptr" tabindex="0"
-        (keyup.space)="toggleGroup($event)"
-        (keyup.enter)="toggleGroup($event)"
-        (click)="toggleGroup($event)">
+        (keyup.space)="toggle($event)"
+        (keyup.enter)="toggle($event)"
+        (click)="toggle($event)">
         <i class="glyphicon"
            [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
         </i>

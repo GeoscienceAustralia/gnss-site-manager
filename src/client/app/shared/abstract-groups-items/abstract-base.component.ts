@@ -15,7 +15,7 @@ export abstract class AbstractBaseComponent {
     /**
      * Toggle (open or close) the group or item
      */
-    public toggleGroup(event: UIEvent) {
+    public toggle(event: UIEvent) {
         event.preventDefault();
         this.isOpen = MiscUtils.scrollIntoView(event, this.isOpen);
     }

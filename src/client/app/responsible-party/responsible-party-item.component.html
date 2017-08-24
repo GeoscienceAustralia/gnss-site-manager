@@ -1,9 +1,9 @@
 <div [formGroup]="itemGroup" class="panel panel-level-3" [ngClass]="{'no-borders': total == 1}" id="{{itemIdName}}-{{index}}">
     <div [ngClass]="{'panel-heading': total > 1, 'panel-heading-hidden': total == 1}">
         <span [hidden]="total <= 1" class="panel-title cursor-ptr" tabindex="0"
-              (keyup.enter)="toggleGroup($event)"
-              (keyup.space)="toggleGroup($event)"
-              (click)="toggleGroup($event)">
+              (keyup.enter)="toggle($event)"
+              (keyup.space)="toggle($event)"
+              (click)="toggle($event)">
             <i class="glyphicon" [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}"> </i>
             <span [innerHTML]="getItemHeaderHtml()"></span>
         </span>
