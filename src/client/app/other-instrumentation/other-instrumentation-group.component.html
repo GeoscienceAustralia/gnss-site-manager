@@ -5,7 +5,7 @@
             (keyup.enter)="toggleGroup($event)"
             (click)="toggleGroup($event)">
             <i class="glyphicon"
-               [ngClass]="{'glyphicon-minus-sign': isGroupOpen, 'glyphicon-plus-sign': !isGroupOpen}">
+               [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
             </i>
             {{getItemName()}}
         </span>
@@ -18,7 +18,7 @@
             </button>
         </span>
   </div>
-    <div class="panel-body group-body" [hidden]="! isGroupOpen">
+    <div class="panel-body group-body" [hidden]="! isOpen">
         <div *ngIf="!hasItems()">
             No information available for {{getItemName()}}
         </div>

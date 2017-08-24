@@ -15,8 +15,6 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel>
     extends AbstractBaseComponent
     implements AfterViewInit, OnChanges {
 
-    isGroupOpen: boolean = false;
-
     // flag to indicate that the current or latest item in a group has an end date set
     currentItemAlreadyHasEndDate: boolean = false;
 
@@ -238,16 +236,6 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel>
     }
 
     /**
-     * Toggle the group (open or close it)
-     * TODO move this up into abstract base component and consolidate naming of
-     * the group "isGroupOpen" and the item "isOpen" which mean the same thing
-     */
-    public toggleGroup(event: UIEvent) {
-        event.preventDefault();
-        this.isGroupOpen = this.miscUtils.scrollIntoView(event, this.isGroupOpen);
-    }
-
-    /**
      * Do items in this group have end dates?
      */
     // TODO: Ideally, there should be different subclasses of (all of, or some of) AbstractViewModel,
@@ -259,7 +247,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel>
     /* ************** Private Methods ************** */
 
     private addNewItem(): void {
-        this.isGroupOpen = true;
+        this.isOpen = true;
 
         let newItem: T = <T> this.getNewItemViewModel();
         this.addToItems(newItem);
