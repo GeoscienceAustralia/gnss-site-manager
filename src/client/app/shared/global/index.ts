@@ -5,5 +5,4 @@ export * from './auto-height.directive';
 export * from './dialog.service';
 export * from './misc-utils';
 export * from './constants.service';
-export * from './http-utils.service';
 export * from './user-auth.service';

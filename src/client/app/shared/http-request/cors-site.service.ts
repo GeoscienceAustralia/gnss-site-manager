@@ -13,7 +13,7 @@ export class CorsSiteService {
   /**
    * Creates a new CorsSiteService with the injected HttpRequest Service.
    *
-   * @param {httpRequestService} HttpRequestService - The injected HttpRequest Service.
+   * @param {HttpRequestService} httpRequestService - The injected HttpRequest Service.
    * @param globalService - Common methods
    * @param wfsService - Use Geoserver WFS for queries
    * @constructor

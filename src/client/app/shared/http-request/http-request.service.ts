@@ -16,7 +16,7 @@ export class HttpRequestService {
      * Creates a new HttpRequestService with the injected Http and ConstantsService.
      *
      * @param {Http} http - The injected Http.
-     * @param {Http} constantsService - The injected Constants Service.
+     * @param {ConstantsService} constantsService - The injected Constants Service.
      * @constructor
      */
     constructor(private http: Http, private constantsService: ConstantsService, private jsonixService: JsonixService) {

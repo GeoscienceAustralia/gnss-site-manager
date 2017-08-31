@@ -10,8 +10,7 @@ import { StatusInfoComponent } from './status-info/status-info.component';
 import { HttpRequestService, SiteLogService, CorsSiteService } from './http-request/index';
 import { JsonixService } from './jsonix/index';
 import { WFSService } from './wfs/index';
-import { DialogService, MiscUtils, UserAuthService  } from './global/index';
-import { ConstantsService, HttpUtilsService } from './global/index';
+import { ConstantsService, DialogService, MiscUtils, UserAuthService } from './global/index';
 import { JsonViewModelService } from './json-data-view-model/index';
 
 /**
@@ -46,7 +45,7 @@ export class SharedModule {
             ngModule: SharedModule,
             providers: [
                 ConstantsService, MiscUtils, JsonixService, DialogService,
-                HttpRequestService, SiteLogService, CorsSiteService, HttpUtilsService,
+                HttpRequestService, SiteLogService, CorsSiteService,
                 WFSService, JsonViewModelService, UserAuthService,
             ]
         };
