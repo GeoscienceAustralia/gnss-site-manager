@@ -5,6 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { WFSService, SelectSiteSearchType } from './wfs.service';
 import { JsonixService } from '../jsonix/jsonix.service';
+import { HttpRequestService } from '../http-request/http-request.service';
 import { ConstantsService } from '../global/constants.service';
 
 export function main() {
@@ -16,6 +17,7 @@ export function main() {
             let injector = ReflectiveInjector.resolveAndCreate([
                 WFSService,
                 JsonixService,
+                HttpRequestService,
                 ConstantsService,
                 BaseRequestOptions,
                 MockBackend,

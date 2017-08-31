@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 export class HttpRequestService {
 
     private webServiceURL: string;
+    private wfsGeoserverURL: string;
 
     /**
      * Creates a new HttpRequestService with the injected Http and ConstantsService.
@@ -20,6 +21,7 @@ export class HttpRequestService {
      */
     constructor(private http: Http, private constantsService: ConstantsService, private jsonixService: JsonixService) {
         this.webServiceURL = this.constantsService.getWebServiceURL();
+        this.wfsGeoserverURL = this.constantsService.getWFSGeoserverURL();
     }
 
     /**
@@ -43,7 +45,7 @@ export class HttpRequestService {
         }
     }
 
-    public getTemplate(path: string, params: any): Observable<string> {
+    public getXmlTemplate(path: string, params: any): Observable<string> {
         return this.http.get(path)
             .map(response => _.template(response.text())(params));
     }
@@ -55,8 +57,8 @@ export class HttpRequestService {
     }
 
     public postWfsQuery(xmlData: string): Observable<Response> {
-        return this.http.post(this.webServiceURL, xmlData)
-            .map(this.handleTextData)
+        return this.http.post(this.wfsGeoserverURL, xmlData)
+            .map(this.handleWfsData)
             .catch(this.handleError);
     }
 
@@ -90,14 +92,14 @@ export class HttpRequestService {
 
     /**
      * Called when no HTTP errors. Simply extract what we need, log as desired and return the response.
+     *
      * @param response
      * @returns {Response}
      */
-    private handleTextData(response: Response): Response {
-        let data: any = response.text();//.json();
-        let status: number = response.status;
-        let statustext: string = response.statusText;
-        console.debug('wfsQuery - status: ' + status + ' status text: ' + statustext + ' data (length): ', data.length);
+    private handleWfsData(response: Response): Response {
+        let data: any = response.text();
+        console.debug('wfsQuery - status: ' + response.status
+                        + ' status text: ' + response.statusText + ' data (length): ', data.length);
         return response;
     }
 
