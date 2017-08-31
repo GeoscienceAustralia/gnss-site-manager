@@ -7,7 +7,7 @@ import { BaseRequestOptions, ConnectionBackend, Http, HttpModule } from '@angula
 import { MockBackend } from '@angular/http/testing';
 import { SelectSiteModule } from './select-site.module';
 import { SelectSiteComponent } from './select-site.component';
-import { CorsSiteService } from '../shared/cors-site/cors-site.service';
+import { CorsSiteService } from '../shared/http-request/cors-site.service';
 import { ServiceWorkerService } from '../shared/index';
 import { WFSService } from '../shared/wfs/wfs.service';
 import { DialogService } from  '../shared/global/dialog.service';

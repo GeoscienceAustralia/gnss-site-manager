@@ -3,3 +3,4 @@
  */
 export * from './http-request.service';
 export * from './site-log.service';
+export * from './cors-site.service';

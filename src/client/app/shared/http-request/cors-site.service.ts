@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { SelectSiteSearchType, WFSService } from '../wfs/wfs.service';
-import { HttpUtilsService } from '../global/http-utils.service';
-import { ConstantsService } from '../global/constants.service';
+import { HttpRequestService } from './http-request.service';
 
 /**
  * This class provides the service with methods to retrieve CORS sites from DB and select site.
@@ -13,14 +11,14 @@ import { ConstantsService } from '../global/constants.service';
 @Injectable()
 export class CorsSiteService {
   /**
-   * Creates a new CorsSiteService with the injected Http.
-   * @param {Http} http - The injected Http.
+   * Creates a new CorsSiteService with the injected HttpRequest Service.
+   *
+   * @param {httpRequestService} HttpRequestService - The injected HttpRequest Service.
    * @param globalService - Common methods
    * @param wfsService - Use Geoserver WFS for queries
-   * @param constantsService - Constants used in the application
    * @constructor
    */
-  constructor(private http: Http, private wfsService: WFSService, private constantsService: ConstantsService) {}
+  constructor(private httpRequestService: HttpRequestService, private wfsService: WFSService) {}
 
   /**
    * Returns an Observable for the HTTP GET request for the REST Web Service resource.  Using WFS Server for queries.
@@ -48,15 +46,11 @@ export class CorsSiteService {
    * @return {object[]} The Observable for the HTTP request.
    */
   getAllCorsSites(): Observable<any[]> {
-    return this.http.get(this.constantsService.getWebServiceURL()+'/corsSites?size=1000')
-      .map(HttpUtilsService.handleJsonData)
-      .catch(HttpUtilsService.handleError);
+    return this.httpRequestService.get('corsSites?size=1000');
   }
 
   getSiteById(id: number): Observable<any> {
-    return this.http.get(this.constantsService.getWebServiceURL() + '/corsSites?id=' + id)
-      .map(HttpUtilsService.handleJsonData)
-      .catch(HttpUtilsService.handleError);
+    return this.httpRequestService.get('corsSites?id=' + id);
   }
 
   private fixWFSeData(wfsData: any): any {
