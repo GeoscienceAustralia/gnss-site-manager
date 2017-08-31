@@ -6,7 +6,7 @@ import { DialogService } from '../index';
 import { MiscUtils } from '../global/misc-utils';
 import { UserAuthService } from '../global/user-auth.service';
 import { AbstractViewModel } from '../json-data-view-model/view-model/abstract-view-model';
-import { SiteLogService, ApplicationState, ApplicationSaveState } from '../site-log/site-log.service';
+import { SiteLogService, ApplicationState, ApplicationSaveState } from '../http-request/site-log.service';
 
 export abstract class AbstractItemComponent extends AbstractBaseComponent implements OnInit, OnChanges, AfterViewInit {
     protected miscUtils: any = MiscUtils;

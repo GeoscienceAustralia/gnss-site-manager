@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SiteLogComponent } from './site-log.component';
 import { ConfirmDeactivateSiteLogGuard } from './site-log-deactivate.module';
-import { PrefetchSiteLogResolver } from '../shared/site-log/prefetch-site-log.service';
+import { PrefetchSiteLogResolver } from '../shared/http-request/prefetch-site-log.service';
 
 @NgModule({
     imports: [

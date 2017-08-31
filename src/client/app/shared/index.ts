@@ -3,7 +3,7 @@
  */
 export * from './cors-site/index';
 export * from './cors-setup/index';
-export * from './site-log/index';
+export * from './http-request/index';
 export * from './global/index';
 export * from './service-worker/index';
 export * from './config/env.config';

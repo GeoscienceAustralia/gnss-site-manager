@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { ServiceWorkerService, DialogService } from '../index';
 import { UserAuthService } from '../global/user-auth.service';
 import { User } from 'oidc-client';
-import { SiteLogService, ApplicationState } from '../site-log/site-log.service';
+import { SiteLogService, ApplicationState } from '../http-request/site-log.service';
 import { AbstractBaseComponent } from '../abstract-groups-items/abstract-base.component';
 
 /**

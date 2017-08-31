@@ -1,13 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { JsonixService } from '../jsonix/jsonix.service';
 import { WFSService } from '../wfs/wfs.service';
-import { HttpUtilsService } from '../global/http-utils.service';
-import { ConstantsService } from '../global/constants.service';
+import { HttpRequestService } from './http-request.service';
 import { JsonViewModelService } from '../json-data-view-model/json-view-model.service';
 import { SiteLogViewModel } from '../../site-log/site-log-view-model';
 import { SiteLogDataModel } from '../json-data-view-model/data-model/site-log-data-model';
@@ -39,15 +38,14 @@ export class SiteLogService implements OnDestroy {
 
      /**
      * Creates a new SiteLogService with the injected Http.
-     * @param {Http} http - The injected Http.
-     * @param jsonixService - Service for translating GeodesyML to Json
-     * @param constantsService - Constants used in the application
+     *
+     * @param httpRequestService - The injected HttpRequestService.
+     * @param jsonixService - Service for httpRequestService GeodesyML to Json
      * @param wfsService - serice to make wfs queries to backend geoserver
      * @constructor
      */
-    constructor(private http: Http, private jsonixService: JsonixService,
-                private wfsService: WFSService, private constantsService: ConstantsService,
-                private jsonViewModelService: JsonViewModelService,
+    constructor(private httpRequestService: HttpRequestService, private jsonixService: JsonixService,
+                private wfsService: WFSService, private jsonViewModelService: JsonViewModelService,
                 private authService: UserAuthService) {
     }
 
@@ -63,7 +61,7 @@ export class SiteLogService implements OnDestroy {
      * @return {object} - The Promise for the HTTP request in JSON ViewModel format
      */
     getSiteLogByFourCharacterId(fourCharacterId: string): Observable<SiteLogViewModel> {
-        return this.doGetSiteLogByFourCharacterIdUsingGeodesyML(fourCharacterId)
+        return this.httpRequestService.get('siteLogs/search/findByFourCharacterId?id=' + fourCharacterId, 'geodesyml')
             .takeUntil(this.unsubscribe)
             .map((response: any) => {
                 let siteLog: any  = response['geo:GeodesyML'].elements[0];
@@ -91,11 +89,9 @@ export class SiteLogService implements OnDestroy {
           headers.append('Authorization', 'Bearer ' + user.id_token);
         }
 
-        return this.http.post(this.constantsService.getWebServiceURL() + '/siteLogs/upload',
+        return this.httpRequestService.post('siteLogs/upload',
                               this.getGeodesyMlFromViewModel(siteLogViewModel),
-                              { headers: headers })
-            .map(HttpUtilsService.handleJsonData)
-            .catch(HttpUtilsService.handleError);
+                              { headers: headers });
     }
 
     saveNewSiteLog(siteLogViewModel: SiteLogViewModel): Observable<Response> {
@@ -121,10 +117,7 @@ export class SiteLogService implements OnDestroy {
         if (user) {
           headers.append('Authorization', 'Bearer ' + user.id_token);
         }
-        return this.http.post(this.constantsService.getWebServiceURL() + '/newCorsSiteRequests', newSiteLogData,
-                              { headers: headers })
-            .map(HttpUtilsService.handleJsonData)
-            .catch(HttpUtilsService.handleError);
+        return this.httpRequestService.post('newCorsSiteRequests', newSiteLogData, { headers: headers });
     }
 
     /**
@@ -153,34 +146,5 @@ export class SiteLogService implements OnDestroy {
                 ],
             }
         });
-    }
-
-    private handleXMLData(response: Response): string {
-        if (response.status === 200) {
-            var geodesyMl: any = response.text();
-            let json: string = this.jsonixService.geodesyMLToJson(geodesyMl);
-            console.log('handleXMLData - json: ', json);
-            return json;
-        } else {
-            let msg: string = 'Error with GET: ' + response.url;
-            throw new Error(msg);
-        }
-    }
-
-    /**
-     * Returns one site log defined by the fourCharacterId.  Alternative method that retrieves GeodeesyML format
-     * from the backend service and returns an alternative JSON equivalent that is almost, but not quite the same
-     * as the JSON returned froom getSiteLogByFourCharacterId();
-     * @param {string} fourCharacterId - The Four Character Id of the site.
-     * @return {object[]} The Observable for the HTTP request in JSON format slightly different from that from
-     * getSiteLogByFourCharacterId().
-     */
-    private doGetSiteLogByFourCharacterIdUsingGeodesyML(fourCharacterId: string): Observable<any> {
-        return this.http.get(this.constantsService.getWebServiceURL()
-            + '/siteLogs/search/findByFourCharacterId?id=' + fourCharacterId + '&format=geodesyml')
-            .map((response: Response) => {
-                return this.handleXMLData(response);
-            })
-            .catch(HttpUtilsService.handleError);
     }
 }

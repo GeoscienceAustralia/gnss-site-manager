@@ -1,4 +1,4 @@
-import { SiteLogService } from '../site-log/site-log.service';
+import { SiteLogService } from '../http-request/site-log.service';
 
 export abstract class AbstractBaseComponent {
 

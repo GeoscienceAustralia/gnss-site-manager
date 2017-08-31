@@ -7,7 +7,7 @@ import { ResponsiblePartyType } from './responsible-party-group.component';
 import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { DialogService } from '../shared/global/dialog.service';
 import { UserAuthService } from '../shared/global/user-auth.service';
-import { SiteLogService } from '../shared/site-log/site-log.service';
+import { SiteLogService } from '../shared/http-request/site-log.service';
 
 /**
  * This component represents a single responsible party.

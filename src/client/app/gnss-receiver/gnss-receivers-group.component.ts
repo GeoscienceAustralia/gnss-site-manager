@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { GnssReceiverViewModel } from './gnss-receiver-view-model';
-import { SiteLogService } from '../shared/site-log/site-log.service';
+import { SiteLogService } from '../shared/http-request/site-log.service';
 
 /**.
  * This class represents a group of GNSS Receivers.

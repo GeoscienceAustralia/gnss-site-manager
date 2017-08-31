@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { MiscUtils } from '../shared/global/misc-utils';
 import { DialogService } from '../shared/index';
-import { SiteLogService, ApplicationState, ApplicationSaveState } from '../shared/site-log/site-log.service';
+import { SiteLogService, ApplicationState, ApplicationSaveState } from '../shared/http-request/site-log.service';
 import { AbstractBaseComponent } from '../shared/abstract-groups-items/abstract-base.component';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { SiteLocationViewModel } from './site-location-view-model';

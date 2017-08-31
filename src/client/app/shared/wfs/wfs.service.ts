@@ -24,7 +24,7 @@ export class WFSService implements OnDestroy {
     private unsubscribe: Subject<void> = new Subject<void>();
 
     /**
-     * Creates a new CorsSetupService with the injected Http.
+     * Creates a new WFS Service with the injected Http.
      * @param jsonixService - Service for translating GeodesyML to Json
      * @param {Http} http - The injected Http.
      * @param constantsService - Constants used in the application
