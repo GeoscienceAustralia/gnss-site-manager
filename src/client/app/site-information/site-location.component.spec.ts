@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { SiteLocationComponent } from './site-location.component';
 import { SiteLocationModule } from './site-location.module';
-import { ApplicationSaveState, ApplicationState, SiteLogService } from '../shared/site-log/site-log.service';
+import { ApplicationSaveState, ApplicationState, SiteLogService } from '../shared/http-request/site-log.service';
 import { DialogService } from '../shared/global/dialog.service';
 import { SiteLogViewModel } from '../site-log/site-log-view-model';
 

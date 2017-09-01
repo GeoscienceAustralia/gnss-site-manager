@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { ResponsiblePartyViewModel } from './responsible-party-view-model';
-import { SiteLogService } from '../shared/site-log/site-log.service';
+import { SiteLogService } from '../shared/http-request/site-log.service';
 
 // Enum version wouldn't work in templates.  Can't have strings in enums.
 export class ResponsiblePartyType {

@@ -4,6 +4,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { WFSService, SelectSiteSearchType } from './wfs.service';
 import { JsonixService } from '../jsonix/jsonix.service';
+import { HttpRequestService } from '../http-request/http-request.service';
 import { ConstantsService } from '../global/constants.service';
 
 export function main() {
@@ -12,10 +13,10 @@ export function main() {
 
     describe('WFS Service (exception)', () => {
         // This XML is not correct - WFS Server rejects it with a 200 response containing
-        let exception: string = `<ows:ExceptionReport xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-                         xmlns:ows="http://www.opengis.net/ows/1.1" 
-                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                         version="2.0.0" 
+        let exception: string = `<ows:ExceptionReport xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                         xmlns:ows="http://www.opengis.net/ows/1.1"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                         version="2.0.0"
                          xsi:schemaLocation="http://www.opengis.net/ows/1.1 http://localhost:8080/geoserver/schemas/ows/1.1.0/owsAll.xsd">
                           <ows:Exception exceptionCode="NoApplicableCode">
                             <ows:ExceptionText>Could not parse the XML for: net.opengis.wfs20.GetFeatureType</ows:ExceptionText>
@@ -27,6 +28,7 @@ export function main() {
             let injector = ReflectiveInjector.resolveAndCreate([
                 WFSService,
                 JsonixService,
+                HttpRequestService,
                 ConstantsService,
                 BaseRequestOptions,
                 MockBackend,

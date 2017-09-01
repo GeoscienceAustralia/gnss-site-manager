@@ -4,7 +4,7 @@ import { AbstractViewModel } from '../json-data-view-model/view-model/abstract-v
 import { MiscUtils } from '../global/misc-utils';
 import { SiteLogViewModel } from '../../site-log/site-log-view-model';
 import * as _ from 'lodash';
-import { SiteLogService } from '../site-log/site-log.service';
+import { SiteLogService } from '../http-request/site-log.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 class AbstractViewModelImpl extends AbstractViewModel {

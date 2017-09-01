@@ -4,7 +4,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 
 import { WFSService, SelectSiteSearchType } from './wfs.service';
 import { JsonixService } from '../jsonix/jsonix.service';
-import { HttpUtilsService } from '../global/http-utils.service';
+import { HttpRequestService } from '../http-request/http-request.service';
 import { ConstantsService } from '../global/constants.service';
 
 export function main() {
@@ -13,18 +13,18 @@ export function main() {
 
     describe('WFS Service (valid)', () => {
         let validResponse: string = `<?xml version="1.0" encoding="UTF-8"?>
-<wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.4" 
-    xmlns:gml="http://www.opengis.net/gml/3.2" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    numberMatched="unknown" numberReturned="1" 
-    timeStamp="2016-09-28T22:25:28.703Z" 
-    xsi:schemaLocation="http://www.opengis.net/wfs/2.0 
-        http://localhost:8080/geoserver/schemas/wfs/2.0/wfs.xsd 
-        urn:xml-gov-au:icsm:egeodesy:0.4 
-        http://schemas.ga.gov.au/geodesyml/0.3/geodesyML.xsd 
-        http://www.opengis.net/gml/3.2 
+<wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.4"
+    xmlns:gml="http://www.opengis.net/gml/3.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    numberMatched="unknown" numberReturned="1"
+    timeStamp="2016-09-28T22:25:28.703Z"
+    xsi:schemaLocation="http://www.opengis.net/wfs/2.0
+        http://localhost:8080/geoserver/schemas/wfs/2.0/wfs.xsd
+        urn:xml-gov-au:icsm:egeodesy:0.4
+        http://schemas.ga.gov.au/geodesyml/0.3/geodesyML.xsd
+        http://www.opengis.net/gml/3.2
         http://localhost:8080/geoserver/schemas/gml/3.2.1/gml.xsd">
     <wfs:member>
         <geo:Site gml:id="Site.14252">
@@ -40,6 +40,7 @@ export function main() {
             let injector = ReflectiveInjector.resolveAndCreate([
                 WFSService,
                 JsonixService,
+                HttpRequestService,
                 ConstantsService,
                 BaseRequestOptions,
                 MockBackend,
@@ -69,7 +70,10 @@ export function main() {
                     expect(wfsQueryData).toBeDefined();
                     expect(wfsQueryData.length).toBe(1);
                 },
-                (error: Error) => HttpUtilsService.handleError
+                (error: Error) => {
+                    let errMsg: string = (error.message) ? error.message : 'Server error';
+                    console.error(errMsg + error.stack);
+                }
             );
         });
 

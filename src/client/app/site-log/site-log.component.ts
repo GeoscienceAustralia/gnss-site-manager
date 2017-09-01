@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
-import { ApplicationSaveState } from '../shared/site-log/site-log.service';
+import { ApplicationSaveState } from '../shared/http-request/site-log.service';
 import { ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
 import { GnssReceiversGroupComponent } from '../gnss-receiver/gnss-receivers-group.component';
 import { CollocationInformationGroupComponent } from '../collocation-information/collocation-information-group.component';

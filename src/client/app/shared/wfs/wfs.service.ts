@@ -1,13 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { JsonixService } from '../jsonix/jsonix.service';
-import { Http, Response, ResponseOptions } from '@angular/http';
+import { Response, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { HttpUtilsService } from '../global/http-utils.service';
-import { ConstantsService } from '../global/constants.service';
-import * as _ from 'lodash';
-import { Subject } from 'rxjs/Subject';
+import { JsonixService } from '../jsonix/jsonix.service';
+import { HttpRequestService } from '../http-request/http-request.service';
 
 /**
  * This class provides the service to work with WFS in Geoservers.
@@ -24,13 +22,13 @@ export class WFSService implements OnDestroy {
     private unsubscribe: Subject<void> = new Subject<void>();
 
     /**
-     * Creates a new CorsSetupService with the injected Http.
-     * @param jsonixService - Service for translating GeodesyML to Json
-     * @param {Http} http - The injected Http.
-     * @param constantsService - Constants used in the application
+     * Creates a new WFS Service with the injected Http.
+     *
+     * @param {JsonixService} jsonixService - Service for translating GeodesyML to Json
+     * @param {HttpRequestService} httpRequestService - The injected Http Request Service.
      * @constructor
      */
-    constructor(private jsonixService: JsonixService, private http: Http, private constantsService: ConstantsService) {
+    constructor(private jsonixService: JsonixService, private httpRequestService: HttpRequestService) {
     }
 
     ngOnDestroy() {
@@ -39,13 +37,14 @@ export class WFSService implements OnDestroy {
     }
 
     /**
-     * Send a WFS Query to the geoserver.  For selecting a site.
+     * Send a WFS Query to the geoserver for selecting a site.
+     *
      * @param params type with mandatory and optional fields.
      * @return Observable containing a response with a JSON body containing the ViewSiteLog from the WFS Server query.
      */
     wfsQuery(params: SelectSiteSearchType): Observable<any> {
         console.debug('wfsQuery - params: ', params);
-        return this.wfsGetFeatureRequestBody(params)
+        return this.getWfsFeatureRequestBody(params)
             .flatMap((wfsRequestBody: string) => this.doWFSQuery(wfsRequestBody));
     }
 
@@ -60,7 +59,7 @@ export class WFSService implements OnDestroy {
     private doWFSQuery(xmlQuery: string): Observable<any> {
         let content: any;
         return new Observable((observer: any) => {
-            this.doWFSPost(xmlQuery)
+            this.httpRequestService.postWfsQuery(xmlQuery)
                 .takeUntil(this.unsubscribe)
                 .subscribe(
                     (responseJson: any) => {
@@ -73,7 +72,11 @@ export class WFSService implements OnDestroy {
                         observer.next(content);
                         observer.complete();
                     },
-                    (error: Error) => HttpUtilsService.handleError
+                    (error: Error) => {
+                        let errMsg: string = (error.message) ? error.message : 'Server error';
+                        console.error(errMsg + error.stack);
+                        return Observable.throw(errMsg);
+                    }
                 );
         });
     }
@@ -105,33 +108,6 @@ export class WFSService implements OnDestroy {
         }
         console.debug('WFSQuery / getContent: ', contents);
         return contents;
-    }
-
-
-    /**
-     * Do the HTTP Post and handle responses in helper method.
-     * @param xmlQuery
-     * @returns {Observable<R>}
-     */
-    private doWFSPost(xmlQuery: string): Observable < any > {
-        console.debug('WFS Query being POSTed to "' + this.constantsService.getWFSGeoserverURL() + '": ', xmlQuery);
-        return this.http.post(this.constantsService.getWFSGeoserverURL(), xmlQuery)
-            .map(this.handleData)
-            .catch(HttpUtilsService.handleError);
-    }
-
-    /**
-     * Called when  no HTTP errors.  Simply extract what we need, log as desired and return the response.
-     * @param response
-     * @returns {Response}
-     */
-    private handleData(response: Response): Response {
-        let data: any = response.text();//.json();
-        let status: number = response.status;
-        let statustext: string = response.statusText;
-        // console.debug('wfsQuery - status: ' + status + ' status text: ' + statustext + ' data: ', data);
-        console.debug('wfsQuery - status: ' + status + ' status text: ' + statustext + ' data (length): ', data.length);
-        return response;
     }
 
     /**
@@ -174,13 +150,12 @@ export class WFSService implements OnDestroy {
      * @param params: a SelectSiteSearchType object contains site ID and name for searching of CORS sites
      * @returns {string}
      */
-    private wfsGetFeatureRequestBody(params: SelectSiteSearchType): Observable<string> {
+    private getWfsFeatureRequestBody(params: SelectSiteSearchType): Observable<string> {
         let templateArgs = {
             'siteId': params.site4CharId !== undefined ? this.escapeRegEx(params.site4CharId) : '',
             'siteName': params.siteName !== undefined ? this.escapeRegEx(params.siteName) : '',
         };
 
-        return this.http.get('/assets/wfs-search-sites.xml-template')
-            .map(response => _.template(response.text())(templateArgs));
+        return this.httpRequestService.getXmlTemplate('/assets/wfs-search-sites.xml-template', templateArgs);
     }
 }

@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Config, CorsSiteService, CorsSetupService, SiteLogService, DialogService, MiscUtils,
+import { Config, CorsSiteService, SiteLogService, DialogService, MiscUtils,
          ServiceWorkerService, JsonixService } from './shared/index';
 import { SiteLogComponent } from './site-log/site-log.component';
 import { JsonViewModelService } from './shared/json-data-view-model/json-view-model.service';
@@ -13,13 +13,12 @@ import { JsonViewModelService } from './shared/json-data-view-model/json-view-mo
   moduleId: module.id,
   selector: 'sd-app',
   viewProviders: [
-    CorsSiteService,
-    CorsSetupService,
     DialogService,
     MiscUtils,
+    SiteLogService,
+    CorsSiteService,
     JsonixService,
     ServiceWorkerService,
-    SiteLogService,
     SiteLogComponent,
     JsonViewModelService,
   ],

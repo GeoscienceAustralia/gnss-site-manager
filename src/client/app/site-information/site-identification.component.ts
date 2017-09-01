@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { SiteIdentificationViewModel } from './site-identification-view-model';
 import { AbstractBaseComponent } from '../shared/abstract-groups-items/abstract-base.component';
-import { SiteLogService } from '../shared/site-log/site-log.service';
+import { SiteLogService } from '../shared/http-request/site-log.service';
 
 /**
  * This class represents the SiteIdentification sub-component under the SiteInformation Component.

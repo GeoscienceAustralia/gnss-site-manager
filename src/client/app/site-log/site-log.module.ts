@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { SiteLogComponent } from './site-log.component';
 import { SiteLogRoutingModule } from './site-log-routing.module';
-import { PrefetchSiteLogResolver } from '../shared/site-log/prefetch-site-log.service';
+import { PrefetchSiteLogResolver } from '../shared/http-request/prefetch-site-log.service';
 import { ConfirmDeactivateSiteLogGuard } from './site-log-deactivate.module';
 import { SiteInformationModule } from '../site-information/site-information.module';
 import { GnssReceiverModule } from '../gnss-receiver/gnss-receiver.module';
