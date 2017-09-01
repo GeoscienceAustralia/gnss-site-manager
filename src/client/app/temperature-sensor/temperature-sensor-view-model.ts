@@ -4,7 +4,7 @@ export class TemperatureSensorViewModel extends AbstractViewModel {
     public type: string = null;
     public calibrationDate: string = null;
     public dataSamplingInterval: number = null;
-    public accuracyDegreesCelcius: number = null;
+    public accuracy: number = null;
     public notes: string = null;
     public manufacturer: string = null;
     public serialNumber: string = null;

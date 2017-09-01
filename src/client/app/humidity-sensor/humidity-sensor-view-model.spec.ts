@@ -12,7 +12,7 @@ export function main() {
     it('test default constructor and all fields are created', () => {
       expect(humiditySensorsViewModel).toBeDefined();
 
-      expect(humiditySensorsViewModel.accuracyPercentRelativeHumidity).toBeNull();
+      expect(humiditySensorsViewModel.accuracy).toBeNull();
       expect(humiditySensorsViewModel.aspiration).toBeNull();
       expect(humiditySensorsViewModel.dataSamplingInterval).toBeNull();
       expect(humiditySensorsViewModel.heightDiffToAntenna).toBeNull();

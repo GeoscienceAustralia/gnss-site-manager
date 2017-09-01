@@ -43,7 +43,7 @@ export class JsonServiceSpecData {
                                 ]
                             },
                             dataSamplingInterval: 0,
-                            accuracyPercentRelativeHumidity: 0,
+                            accuracy: 0,
                             aspiration: '(UNASPIRATED/NATURAL/FAN/etc)',
                             notes: '(multiple lines)',
                             manufacturer: 'Vaisala',
@@ -354,7 +354,7 @@ export class JsonServiceSpecData {
                                 ]
                             },
                             dataSamplingInterval: 0,
-                            accuracyHPa: 0,
+                            accuracy: 0,
                             notes: null,
                             manufacturer: 'Vaisala',
                             serialNumber: 'P2240006',
@@ -398,7 +398,7 @@ export class JsonServiceSpecData {
                                 ]
                             },
                             dataSamplingInterval: 0,
-                            accuracyDegreesCelcius: 0,
+                            accuracy: 0,
                             notes: null,
                             manufacturer: 'Vaisala',
                             serialNumber: 'P2240006',
