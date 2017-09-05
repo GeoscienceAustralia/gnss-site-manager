@@ -74,11 +74,10 @@ export class TestUtils {
         });
     }
 
-    public static checkInputValueContain(elemFinder: ElementFinder, elemName: string, expectValue: string) {
-        elemFinder.getAttribute('value').then((value: string) => {
-            console.log('Check if ' + elemName + ' "' + value + '" contains "' + expectValue + '": ' + (value.indexOf(expectValue) !== -1));
-            expect(value).toContain(expectValue);
-        });
+    public static async checkInputValueContainAsync(elemFinder: ElementFinder, elemName: string, expectValue: string) {
+        let value: string = await elemFinder.getAttribute('value');
+        console.log('Check if ' + elemName + ' "' + value + '" contains "' + expectValue + '": ' + (value.indexOf(expectValue) !== -1));
+        expect(value).toContain(expectValue);
     }
 
     public static checkInputValueNotNull(elemFinder: ElementFinder, elemName: string) {
@@ -95,15 +94,16 @@ export class TestUtils {
         });
     }
 
-    public static appendTimestamp(elemFinder: ElementFinder, timestamp: string) {
-        elemFinder.getAttribute('value').then((value: string) => {
+    public static async appendTimestampAsync(elemFinder: ElementFinder, timestamp: string) {
+        let value: string = await elemFinder.getAttribute('value');
+        if (value) {
             let index: number = value.indexOf('@');
             if(index > 0) {
                 value = value.substring(0, index);
             }
-            elemFinder.clear();
-            elemFinder.sendKeys(value + timestamp);
-        });
+        }
+        await elemFinder.clear();
+        await elemFinder.sendKeys(value + timestamp);
     }
 
     public static cacheInputValue(elemFinder: ElementFinder, fieldName: string, viewModel: any) {

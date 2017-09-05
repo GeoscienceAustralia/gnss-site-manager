@@ -19,6 +19,10 @@ export class SelectSitePage extends BasePage {
         browser.waitForAngular();
     }
 
+    public async enterSearchTextAsync(text: string) {
+        await this.searchBox.sendKeys(text);
+    }
+
     public searchFor(siteName: string) {
         this.enterSearchText(siteName);
         this.searchButton.click();
@@ -41,6 +45,14 @@ export class SelectSitePage extends BasePage {
         return new SiteLogPage();
     }
 
+    public async clickOnSiteAsync(siteName: string): Promise<SiteLogPage> {
+        browser.waitForAngular();
+        expect(TestUtils.elementArrayContaining(this.selectSiteListItems, siteName).count()).toBe(1);
+        browser.waitForAngular();
+        await this.selectSiteListItems.first().click();
+        return Promise.resolve(new SiteLogPage());
+    }
+
     /**
      * Enter a site Id for quick search and click on the selected site to open its site log page
      *
@@ -50,5 +62,11 @@ export class SelectSitePage extends BasePage {
     public openSite(siteId: string): SiteLogPage {
         this.enterSearchText(siteId);
         return this.clickOnSite(siteId);
+    }
+
+    public async openSiteAsync(siteId: string): Promise<SiteLogPage> {
+        await this.enterSearchTextAsync(siteId);
+        let page: SiteLogPage = await this.clickOnSiteAsync(siteId);
+        return Promise.resolve(page);
     }
 }

@@ -83,6 +83,13 @@ export class SiteLogPage extends BasePage {
         browser.waitForAngular();
     }
 
+    public async saveAsync() {
+        await this.siteIdMenu.click();
+        await this.saveSiteLink.click();
+        await this.confirmYesButton.click();
+        console.log('Clicked "Yes" button to confirm saving all changes made.');;
+    }
+
     public revert() {
         this.siteIdMenu.click();
         this.revertSiteLink.click();
@@ -110,6 +117,12 @@ export class SiteLogPage extends BasePage {
         browser.waitForAngular();
     }
 
+    public async closeAsync(message?: string) {
+        await this.siteIdMenu.click();
+        await this.closeSiteLink.click();
+        console.log(message + ' Closed the site log page.');
+    }
+
     public closeAfterConfirmation() {
         this.siteIdMenu.click();
         this.closeSiteLink.click().then(() => {
@@ -121,5 +134,4 @@ export class SiteLogPage extends BasePage {
         });
         browser.waitForAngular();
     }
-
 }

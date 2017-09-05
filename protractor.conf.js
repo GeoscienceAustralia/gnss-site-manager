@@ -30,6 +30,7 @@ const config = {
   // 'jasmine' by default will use the latest jasmine framework
   framework: 'jasmine',
   chromeDriver: process.env.CHROMEDRIVER_BIN ? process.env.CHROMEDRIVER_BIN : undefined,
+  SELENIUM_PROMISE_MANAGER: false,
 
   // allScriptsTimeout: 110000,
 

@@ -44,39 +44,37 @@ describe('All GNSS sites', () => {
         });
     });
 
-    it('expect should be able to modify and save all sites', () => {
+    it('expect should be able to modify and save all sites', async () => {
         console.log('Total number of sites found: ' + allSiteIds.length);
         expect(allSiteIds.length).toBeGreaterThan(0);
 
-        let count: number = 0;
-        allSiteIds.forEach((siteId: string) => {
-            browser.waitForAngular();
-            let siteLogPage: SiteLogPage = selectSitePage.openSite(siteId);
-            browser.waitForAngular();
+        let modifyAndSaveSite = async (siteId: string, count: number): Promise<void> => {
+            let siteLogPage: SiteLogPage = await selectSitePage.openSiteAsync(siteId);
+            await siteLogPage.siteInformationHeader.click();
+            await siteLogPage.siteIdentificationHeader.click();
+            await TestUtils.appendTimestampAsync(siteLogPage.siteNameInput, timestamp);
+            await siteLogPage.saveAsync();
+            await siteLogPage.closeAsync(count + '. Modify and save site - ' + siteId + ': done.');
+            return Promise.resolve();
+        };
 
-            count += 1;
-            siteLogPage.siteInformationHeader.click();
-            siteLogPage.siteIdentificationHeader.click();
-            TestUtils.appendTimestamp(siteLogPage.siteNameInput, timestamp);
-            browser.waitForAngular();
-            siteLogPage.save();
-            siteLogPage.close(count + '. Modify and save site - ' + siteId + ': done.');
-        });
+        for (let i = 0; i < allSiteIds.length; i ++) {
+            await modifyAndSaveSite(allSiteIds[i], i);
+        }
     });
 
-    it('expect should have changes saved for all sites', () => {
-        let count: number = 0;
-        allSiteIds.forEach((siteId: string) => {
-            count += 1;
-            browser.waitForAngular();
-            let siteLogPage: SiteLogPage = selectSitePage.openSite(siteId);
-            browser.waitForAngular();
+    it('expect should have changes saved for all sites', async () => {
+        let checkValuesSaved = async (siteId: string, count: number): Promise<void> => {
+            let siteLogPage: SiteLogPage = await selectSitePage.openSiteAsync(siteId);
+            await siteLogPage.siteInformationHeader.click();
+            await siteLogPage.siteIdentificationHeader.click();
+            await TestUtils.checkInputValueContainAsync(siteLogPage.siteNameInput, 'Site Name', timestamp);
+            await siteLogPage.closeAsync(count + '. Verify changes saved for site - ' + siteId + ': done.');
+            return Promise.resolve();
+        };
 
-            siteLogPage.siteInformationHeader.click();
-            siteLogPage.siteIdentificationHeader.click();
-            browser.waitForAngular();
-            TestUtils.checkInputValueContain(siteLogPage.siteNameInput, 'Site Name', timestamp);
-            siteLogPage.close(count + '. Verify changes saved for site - ' + siteId + ': done.');
-        });
+        for (let i = 0; i < allSiteIds.length; i ++) {
+            await checkValuesSaved(allSiteIds[i], i);
+        }
     });
 });
