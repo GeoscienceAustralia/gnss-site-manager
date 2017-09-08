@@ -159,7 +159,7 @@ export class DataViewTranslatorSpecData {
                     endDate: null,
                     calibrationDate: null,
                     dataSamplingInterval: 0,
-                    accuracyPercentRelativeHumidity: 0,
+                    accuracy: 0,
                     aspiration: '(UNASPIRATED/NATURAL/FAN/etc)',
                     notes: '(multiple lines)',
                     manufacturer: 'Vaisala',
@@ -173,7 +173,7 @@ export class DataViewTranslatorSpecData {
                     endDate: null,
                     calibrationDate: null,
                     dataSamplingInterval: 0,
-                    accuracyHPa: 0,
+                    accuracy: 0,
                     notes: null,
                     manufacturer: 'Vaisala',
                     serialNumber: 'P2240006',
@@ -186,7 +186,7 @@ export class DataViewTranslatorSpecData {
                     endDate: null,
                     calibrationDate: null,
                     dataSamplingInterval: 0,
-                    accuracyDegreesCelcius: 0,
+                    accuracy: 0,
                     notes: null,
                     manufacturer: 'Vaisala',
                     serialNumber: 'P2240006',
@@ -326,7 +326,7 @@ export class DataViewTranslatorSpecData {
                             TYPE_NAME: 'GML_3_2_1.TimePrimitivePropertyType'
                         },
                         dataSamplingInterval: 900,
-                        accuracyPercentRelativeHumidity: 0,
+                        accuracy: 0,
                         aspiration: '(UNASPIRATED/NATURAL/FAN/etc)'
                     },
                     dateInserted: {
@@ -888,7 +888,7 @@ export class DataViewTranslatorSpecData {
                             TYPE_NAME: 'GML_3_2_1.TimePrimitivePropertyType'
                         },
                         dataSamplingInterval: 900,
-                        accuracyHPa: 0
+                        accuracy: 0
                     },
                     dateInserted: {
                         TYPE_NAME: 'GML_3_2_1.TimePositionType',
@@ -941,7 +941,7 @@ export class DataViewTranslatorSpecData {
                             TYPE_NAME: 'GML_3_2_1.TimePrimitivePropertyType'
                         },
                         dataSamplingInterval: 900,
-                        accuracyDegreesCelcius: 0,
+                        accuracy: 0,
                         aspiration: '(UNASPIRATED/NATURAL/FAN/etc)'
                     },
                     dateInserted: {

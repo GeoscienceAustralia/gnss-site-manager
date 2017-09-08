@@ -46,7 +46,7 @@ export class TemperatureSensorItemComponent extends AbstractItemComponent {
             manufacturer: [' ', [Validators.required, Validators.maxLength(100)]],
             serialNumber: [' ', [Validators.maxLength(100)]],
             dataSamplingInterval: [''],
-            accuracyDegreesCelcius: [''],
+            accuracy: [''],
             heightDiffToAntenna: [''],
             aspiration: ['', [Validators.maxLength(100)]],
             calibrationDate: [''],

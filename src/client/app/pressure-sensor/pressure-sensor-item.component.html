@@ -33,7 +33,7 @@
                 <text-input [form]="itemGroup" controlName="type" [required]="true">Type</text-input>
                 <text-input [form]="itemGroup" controlName="serialNumber">Serial Number</text-input>
                 <number-input [form]="itemGroup" controlName="dataSamplingInterval" step="0.01">Data Sampling Interval (seconds)</number-input>
-                <number-input [form]="itemGroup" controlName="accuracyHPa" [required]="true" min="0" step="0.01">Accuracy (hPa)</number-input>
+                <number-input [form]="itemGroup" controlName="accuracy" [required]="true" min="0" step="0.01">Accuracy (hPa)</number-input>
                 <number-input [form]="itemGroup" controlName="heightDiffToAntenna" [required]="true" step="0.01">Height Diff to Antenna (m)</number-input>
                 <datetime-input [form]="itemGroup" controlName="calibrationDate">Calibration Date</datetime-input>
                 <datetime-input [form]="itemGroup" controlName="startDate" [required]="true">Date Installed (UTC)</datetime-input>

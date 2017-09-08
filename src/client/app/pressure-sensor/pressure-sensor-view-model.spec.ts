@@ -11,7 +11,7 @@ export function main() {
 
     it('test default constructor and all fields are created', () => {
       expect(pressureSensorsViewModel).toBeDefined();
-      expect(pressureSensorsViewModel.accuracyHPa).toBeNull();
+      expect(pressureSensorsViewModel.accuracy).toBeNull();
       expect(pressureSensorsViewModel.dataSamplingInterval).toBeNull();
       expect(pressureSensorsViewModel.heightDiffToAntenna).toBeNull();
       expect(pressureSensorsViewModel.manufacturer).toBeNull();

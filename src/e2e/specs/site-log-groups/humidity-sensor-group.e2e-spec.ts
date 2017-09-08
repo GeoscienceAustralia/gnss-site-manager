@@ -44,7 +44,7 @@ describe('Humidity Sensor Group Component', () => {
         itemGroup.typeInput.sendKeys(viewModel.type);
         itemGroup.serialNumberInput.sendKeys(viewModel.serialNumber);
         itemGroup.dataSamplingIntervalInput.sendKeys(viewModel.dataSamplingInterval.toString());
-        itemGroup.accuracyPercentRelativeHumidityInput.sendKeys(viewModel.accuracyPercentRelativeHumidity.toString());
+        itemGroup.accuracyInput.sendKeys(viewModel.accuracy.toString());
         itemGroup.heightDiffToAntennaInput.sendKeys(viewModel.heightDiffToAntenna.toString());
         itemGroup.aspirationInput.sendKeys(viewModel.aspiration);
         itemGroup.calibrationDateInput.sendKeys(viewModel.calibrationDate);
@@ -69,8 +69,7 @@ describe('Humidity Sensor Group Component', () => {
             TestUtils.checkInputValueEqual(itemGroup.typeInput, 'Type', viewModel.type);
             TestUtils.checkInputValueEqual(itemGroup.serialNumberInput, 'Serial Number', viewModel.serialNumber);
             TestUtils.checkInputValueEqual(itemGroup.dataSamplingIntervalInput, 'Data Sampling Interval', viewModel.dataSamplingInterval);
-            TestUtils.checkInputValueEqual(itemGroup.accuracyPercentRelativeHumidityInput,
-                                                        'Accuracy HPa', viewModel.accuracyPercentRelativeHumidity);
+            TestUtils.checkInputValueEqual(itemGroup.accuracyInput, 'Accuracy Percent Relative Humidity', viewModel.accuracy);
             TestUtils.checkInputValueEqual(itemGroup.heightDiffToAntennaInput, 'Height Diff To Antenna', viewModel.heightDiffToAntenna);
             TestUtils.checkInputValueEqual(itemGroup.aspirationInput, 'Serial Number', viewModel.aspiration);
             TestUtils.checkInputValueEqual(itemGroup.calibrationDateInput, 'Calibration Date', viewModel.calibrationDate);

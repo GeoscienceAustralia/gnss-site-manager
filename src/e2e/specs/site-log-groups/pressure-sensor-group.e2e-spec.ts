@@ -44,7 +44,7 @@ describe('Pressure Sensor Group Component', () => {
         itemGroup.typeInput.sendKeys(viewModel.type);
         itemGroup.serialNumberInput.sendKeys(viewModel.serialNumber);
         itemGroup.dataSamplingIntervalInput.sendKeys(viewModel.dataSamplingInterval.toString());
-        itemGroup.accuracyHPaInput.sendKeys(viewModel.accuracyHPa.toString());
+        itemGroup.accuracyInput.sendKeys(viewModel.accuracy.toString());
         itemGroup.heightDiffToAntennaInput.sendKeys(viewModel.heightDiffToAntenna.toString());
         itemGroup.calibrationDateInput.sendKeys(viewModel.calibrationDate);
         itemGroup.notesInput.sendKeys(viewModel.notes);
@@ -68,7 +68,7 @@ describe('Pressure Sensor Group Component', () => {
             TestUtils.checkInputValueEqual(itemGroup.typeInput, 'Type', viewModel.type);
             TestUtils.checkInputValueEqual(itemGroup.serialNumberInput, 'Serial Number', viewModel.serialNumber);
             TestUtils.checkInputValueEqual(itemGroup.dataSamplingIntervalInput, 'Data Sampling Interval', viewModel.dataSamplingInterval);
-            TestUtils.checkInputValueEqual(itemGroup.accuracyHPaInput, 'Accuracy HPa', viewModel.accuracyHPa);
+            TestUtils.checkInputValueEqual(itemGroup.accuracyInput, 'Accuracy HPa', viewModel.accuracy);
             TestUtils.checkInputValueEqual(itemGroup.heightDiffToAntennaInput, 'Height Diff To Antenna', viewModel.heightDiffToAntenna);
             TestUtils.checkInputValueEqual(itemGroup.calibrationDateInput, 'Calibration Date', viewModel.calibrationDate);
             TestUtils.checkInputValueEqual(itemGroup.notesInput, 'Notes', viewModel.notes);

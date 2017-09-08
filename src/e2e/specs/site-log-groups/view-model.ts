@@ -42,9 +42,9 @@ export const meteorologicalSensorCommonProperties: any = {
 };
 
 export const mockPressureSensor: PressureSensorViewModel = <PressureSensorViewModel>_.extend(meteorologicalSensorCommonProperties,
-        { dataSamplingInterval: 600, accuracyHPa: 0.3 });
+        { dataSamplingInterval: 600, accuracy: 0.3 });
 export const mockHumiditySensor: HumiditySensorViewModel = <HumiditySensorViewModel>_.extend(meteorologicalSensorCommonProperties,
-        { dataSamplingInterval: 600, accuracyPercentRelativeHumidity: 0, aspiration: 'Natural' });
+        { dataSamplingInterval: 600, accuracy: 0, aspiration: 'Natural' });
 export const mockTemperatureSensor: TemperatureSensorViewModel = <TemperatureSensorViewModel>_.extend(meteorologicalSensorCommonProperties,
-        { dataSamplingInterval: 600, accuracyDegreesCelcius: 0, aspiration: 'Natural' });
+        { dataSamplingInterval: 600, accuracy: 0, aspiration: 'Natural' });
 export const mockWaterVaporSensor: WaterVaporSensorViewModel = <WaterVaporSensorViewModel>meteorologicalSensorCommonProperties;

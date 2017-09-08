@@ -46,7 +46,7 @@ export class PressureSensorItemComponent extends AbstractItemComponent {
             manufacturer: ['', [Validators.required, Validators.maxLength(100)]],
             serialNumber: ['', [Validators.maxLength(100)]],
             dataSamplingInterval: [''],
-            accuracyHPa: [''],
+            accuracy: [''],
             heightDiffToAntenna: [''],
             calibrationDate: [''],
             startDate: [''],

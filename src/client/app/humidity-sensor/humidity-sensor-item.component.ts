@@ -46,7 +46,7 @@ export class HumiditySensorItemComponent extends AbstractItemComponent {
             manufacturer: ['', [Validators.required, Validators.maxLength(100)]],
             serialNumber: ['', [Validators.maxLength(100)]],
             dataSamplingInterval: [''],
-            accuracyPercentRelativeHumidity: [''],
+            accuracy: [''],
             aspiration: ['', [Validators.maxLength(100)]],
             heightDiffToAntenna: [''],
             calibrationDate: [''],
