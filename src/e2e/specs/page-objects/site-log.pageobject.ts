@@ -137,15 +137,11 @@ export class SiteLogPage extends BasePage {
         console.log(message + ' Closed the site log page.');
     }
 
-    public closeAfterConfirmation() {
-        this.siteIdMenu.click();
-        this.closeSiteLink.click().then(() => {
-            this.confirmYesButton.isPresent().then((askConfirmation: boolean) => {
-                if (askConfirmation) {
-                    this.confirmYesButton.click();
-                }
-            });
-        });
-        browser.waitForAngular();
+    public async closeAfterConfirmationAsync() {
+        await this.siteIdMenu.click();
+        await this.closeSiteLink.click();
+        if (await this.confirmYesButton.isPresent()) {
+            await this.confirmYesButton.click();
+        }
     }
 }

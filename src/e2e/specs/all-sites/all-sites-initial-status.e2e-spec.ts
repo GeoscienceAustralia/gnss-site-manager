@@ -42,58 +42,50 @@ describe('All GNSS sites', () => {
         });
     });
 
-    it('expect should have no sitelogs modified after initial loading', () => {
+    it('expect should have no fields modified after initial loading', async () => {
         console.log('Total number of sites found: ' + allSiteIds.length);
         expect(allSiteIds.length).toBeGreaterThan(0);
 
-        let count: number = 0;
-        allSiteIds.forEach((siteId: string) => {
+        let siteLogPage: SiteLogPage = new SiteLogPage();
+        let dirtySiteCount: number = 0;
+        let checkInitialModifyStatus = async (siteId: string) => {
+            await browser.get('/siteLog/' + siteId);
             browser.waitForAngular();
-            let siteLogPage: SiteLogPage = selectSitePage.openSite(siteId);
-            browser.waitForAngular();
+            await siteLogPage.levelOneDirtyHeaders.then(async (dirtyGroups) => {
+                if (dirtyGroups.length > 0) {
+                    dirtySiteCount += 1;
+                    console.log(dirtySiteCount + '. ' + siteId + ' is initially dirty (modified)');
+                }
 
-            siteLogPage.statusInfoBar.getText().then((statusInfo) => {
-                if (statusInfo.includes('modified')) {
-                    count += 1;
-                    console.log(count + '. ' + siteId + ': modified');
-                    siteLogPage.levelOneDirtyHeaders.then((dirtyGroups) => {
-                        dirtyGroups.forEach((dirtyGroup) => {
-                            let dirtyGroupHeader: ElementFinder = siteLogPage.getGroupHeader(dirtyGroup);
-                            dirtyGroupHeader.click();
-                            dirtyGroupHeader.getText().then((groupName) => {
-                                console.log('    Modified group: ', groupName);
-                                browser.waitForAngular();
-
-                                siteLogPage.getDirtyItems(groupName).then((dirtyItems) => {
-                                    dirtyItems.forEach((dirtyItem) => {
-                                        let dirtyItemHeader: ElementFinder = siteLogPage.getItemHeader(dirtyItem);
-                                        dirtyItemHeader.click();
-                                        dirtyItemHeader.getText().then((itemName) => {
-                                            console.log('        Modified item: ', itemName);
-                                        });
-                                        browser.waitForAngular();
-
-                                        siteLogPage.getDirtyFields(dirtyItem).then((dirtyFields) => {
-                                            dirtyFields.forEach((dirtyField) => {
-                                                siteLogPage.getDirtyFieldInput(dirtyField).isPresent().then((isModified: boolean) => {
-                                                    if (isModified) {
-                                                        siteLogPage.getDirtyFieldLabel(dirtyField).getText().then((fieldName) => {
-                                                            console.log('            Modified field: ', fieldName);
-                                                        });
-                                                    }
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
+                for (let dirtyGroup of dirtyGroups) {
+                    let dirtyGroupHeader: ElementFinder = siteLogPage.getGroupHeader(dirtyGroup);
+                    await dirtyGroupHeader.click();
+                    let groupName: string = await dirtyGroupHeader.getText();
+                    console.log('  Modified group: ', groupName);
+                    await siteLogPage.getDirtyItems(groupName).then(async (dirtyItems) => {
+                        for (let dirtyItem of dirtyItems) {
+                            let dirtyItemHeader: ElementFinder = siteLogPage.getItemHeader(dirtyItem);
+                            await dirtyItemHeader.click();
+                            let itemName: string = await dirtyItemHeader.getText();
+                            console.log('    Modified item: ', itemName);
+                            await siteLogPage.getDirtyFields(dirtyItem).then(async (dirtyFields) =>  {
+                                for (let dirtyField of dirtyFields) {
+                                    if (await siteLogPage.getDirtyFieldInput(dirtyField).isPresent()) {
+                                        let fieldName: string = await siteLogPage.getDirtyFieldLabel(dirtyField).getText();
+                                        console.log('      Modified field: ', fieldName);
+                                    }
+                                }
                             });
-                        });
+                        }
                     });
                 }
-                expect(statusInfo).not.toContain('modified');
+                expect(dirtyGroups.length).toBe(0);
+                await siteLogPage.closeAfterConfirmationAsync();
             });
-            browser.waitForAngular();
-            siteLogPage.closeAfterConfirmation();
-        });
+        };
+
+        for (let i = 0; i < allSiteIds.length; i ++) {
+            await checkInitialModifyStatus(allSiteIds[i]);
+        }
     });
 });
