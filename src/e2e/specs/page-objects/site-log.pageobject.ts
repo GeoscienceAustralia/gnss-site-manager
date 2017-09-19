@@ -18,6 +18,7 @@ export class SiteLogPage extends BasePage {
     readonly siteInformationHeader: ElementFinder = element(by.cssContainingText('span.panel-title', 'Site Information'));
     readonly siteIdentificationHeader: ElementFinder = element(by.cssContainingText('span.panel-title', 'Site Identification'));
     readonly levelOneDirtyHeaders: ElementArrayFinder = element.all(by.css('div.panel-level-1.ng-dirty'));
+    readonly siteIdInput: ElementFinder = element(by.css('site-identification text-input[controlName="fourCharacterID"] input'));
     readonly siteNameInput: ElementFinder = element(by.css('site-identification text-input[controlName="siteName"] input'));
     readonly confirmYesButton: ElementFinder = element(by.buttonText('Yes'));
     readonly statusInfoBar: ElementFinder = element(by.css('div.status-info-bar'));

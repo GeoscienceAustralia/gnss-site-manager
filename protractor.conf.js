@@ -14,6 +14,9 @@ const config = {
     siteLogGroups: [
       './dist/e2e/specs/site-log-groups/**/*.e2e-spec.js'
     ],
+    newSiteLog: [
+      './dist/e2e/specs/new-site/**/*.e2e-spec.js'
+    ],
     allSites: [
       './dist/e2e/specs/all-sites/**/all-sites-save.e2e-spec.js',
       './dist/e2e/specs/all-sites/**/all-sites-initial-status.e2e-spec.js',
