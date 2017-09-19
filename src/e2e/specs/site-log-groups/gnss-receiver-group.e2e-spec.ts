@@ -4,17 +4,14 @@ import { SelectSitePage } from '../page-objects/select-site.pageobject';
 import { LoginActions } from '../utils/login.actions';
 import { SiteLogPage } from '../page-objects/site-log.pageobject';
 import { GnssReceiverGroup } from '../page-objects/gnss-receiver-group.pageobject';
+import { GnssReceiverViewModel } from '../../../client/app/gnss-receiver/gnss-receiver-view-model';
+import { mockGnssReceiver } from '../site-log-groups/view-model';
 
 describe('GNSS Receiver Group Component', () => {
 
     let timestamp: string = TestUtils.getTimeStamp();
     let siteId: string = 'ADE1';
-    let receiverType: string = 'ASHTECH Z-XII3';
-    let serialNumber: string = '8888';
-    let firmwareVersion: string = '8Y08-8D08';
-    let elevationCutoffSetting: string = '5';
-    let temperatureStabilization: string = '10';
-    let notes: string = 'e2e testing - add a new item ' + timestamp;
+    let viewModel: GnssReceiverViewModel = mockGnssReceiver;
     let deleteReason: string = 'e2e testing - delete an item ' + timestamp;
     let noOfItems: number = 0;
 
@@ -47,12 +44,12 @@ describe('GNSS Receiver Group Component', () => {
                 TestUtils.checkInputValueNotNull(itemGroup.prevDateRemovedInput, 'previous DateRemoved');
             }
 
-            itemGroup.receiverTypeInput.sendKeys(receiverType);
-            itemGroup.serialNumberInput.sendKeys(serialNumber);
-            itemGroup.firmwareVersionInput.sendKeys(firmwareVersion);
-            itemGroup.elevationCutoffSettingInput.sendKeys(elevationCutoffSetting);
-            itemGroup.temperatureStabilizationInput.sendKeys(temperatureStabilization);
-            itemGroup.notesInput.sendKeys(notes);
+            itemGroup.receiverTypeInput.sendKeys(viewModel.receiverType);
+            itemGroup.serialNumberInput.sendKeys(viewModel.manufacturerSerialNumber);
+            itemGroup.firmwareVersionInput.sendKeys(viewModel.firmwareVersion);
+            itemGroup.elevationCutoffSettingInput.sendKeys(viewModel.elevationCutoffSetting.toString());
+            itemGroup.temperatureStabilizationInput.sendKeys(viewModel.temperatureStabilization.toString());
+            itemGroup.notesInput.sendKeys(viewModel.notes);
             browser.waitForAngular();
             siteLogPage.save();
         });
@@ -69,12 +66,14 @@ describe('GNSS Receiver Group Component', () => {
             });
             browser.waitForAngular();
 
-            TestUtils.checkInputValueEqual(itemGroup.receiverTypeInput, 'ReceiverType', receiverType);
-            TestUtils.checkInputValueEqual(itemGroup.serialNumberInput, 'SerialNumber', serialNumber);
-            TestUtils.checkInputValueEqual(itemGroup.firmwareVersionInput, 'FirmwareVersion', firmwareVersion);
-            TestUtils.checkInputValueEqual(itemGroup.elevationCutoffSettingInput, 'ElevationCutoffSetting', elevationCutoffSetting);
-            TestUtils.checkInputValueEqual(itemGroup.temperatureStabilizationInput, 'TemperatureStabilization', temperatureStabilization);
-            TestUtils.checkInputValueEqual(itemGroup.notesInput, 'Notes', notes);
+            TestUtils.checkInputValueEqual(itemGroup.receiverTypeInput, 'ReceiverType', viewModel.receiverType);
+            TestUtils.checkInputValueEqual(itemGroup.serialNumberInput, 'SerialNumber', viewModel.manufacturerSerialNumber);
+            TestUtils.checkInputValueEqual(itemGroup.firmwareVersionInput, 'FirmwareVersion', viewModel.firmwareVersion);
+            TestUtils.checkInputValueEqual(itemGroup.elevationCutoffSettingInput,
+                                                        'ElevationCutoffSetting', viewModel.elevationCutoffSetting);
+            TestUtils.checkInputValueEqual(itemGroup.temperatureStabilizationInput,
+                                                        'TemperatureStabilization', viewModel.temperatureStabilization);
+            TestUtils.checkInputValueEqual(itemGroup.notesInput, 'Notes', viewModel.notes);
         });
     });
 

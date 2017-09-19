@@ -4,23 +4,14 @@ import { SelectSitePage } from '../page-objects/select-site.pageobject';
 import { LoginActions } from '../utils/login.actions';
 import { SiteLogPage } from '../page-objects/site-log.pageobject';
 import { GnssAntennaGroup } from '../page-objects/gnss-antenna-group.pageobject';
+import { GnssAntennaViewModel } from '../../../client/app/gnss-antenna/gnss-antenna-view-model';
+import { mockGnssAntenna } from '../site-log-groups/view-model';
 
 describe('GNSS Antenna Group Component', () => {
 
     let timestamp: string = TestUtils.getTimeStamp();
     let siteId: string = 'ADE1';
-    let antennaType: string = 'ASH700936B_L';
-    let serialNumber: string = '1616';
-    let antennaReferencePoint: string = 'BBPPAA';
-    let markerArpEastEcc: string = '1';
-    let markerArpUpEcc: string = '2';
-    let markerArpNorthEcc: string = '3';
-    let alignmentFromTrueNorth: string = '0';
-    let antennaRadomeType: string = 'SNOW_1';
-    let radomeSerialNumber: string = 'SNOW_Test';
-    let antennaCableType: string = 'SNOW_2';
-    let antennaCableLength: string = '100';
-    let notes: string = 'e2e testing - add a new item ' + timestamp;
+    let viewModel: GnssAntennaViewModel = mockGnssAntenna;
     let deleteReason: string = 'e2e testing - delete an item ' + timestamp;
     let noOfItems: number = 0;
 
@@ -53,18 +44,18 @@ describe('GNSS Antenna Group Component', () => {
                 TestUtils.checkInputValueNotNull(itemGroup.prevDateRemovedInput, 'previous DateRemoved');
             }
 
-            itemGroup.antennaTypeInput.sendKeys(antennaType);
-            itemGroup.serialNumberInput.sendKeys(serialNumber);
-            itemGroup.antennaReferencePointInput.sendKeys(antennaReferencePoint);
-            itemGroup.markerArpEastEccInput.sendKeys(markerArpEastEcc);
-            itemGroup.markerArpUpEccInput.sendKeys(markerArpUpEcc);
-            itemGroup.markerArpNorthEccInput.sendKeys(markerArpNorthEcc);
-            itemGroup.alignmentFromTrueNorthInput.sendKeys(alignmentFromTrueNorth);
-            itemGroup.antennaRadomeTypeInput.sendKeys(antennaRadomeType);
-            itemGroup.radomeSerialNumberInput.sendKeys(radomeSerialNumber);
-            itemGroup.antennaCableTypeInput.sendKeys(antennaCableType);
-            itemGroup.antennaCableLengthInput.sendKeys(antennaCableLength);
-            itemGroup.notesInput.sendKeys(notes);
+            itemGroup.antennaTypeInput.sendKeys(viewModel.antennaType);
+            itemGroup.serialNumberInput.sendKeys(viewModel.serialNumber);
+            itemGroup.antennaReferencePointInput.sendKeys(viewModel.antennaReferencePoint);
+            itemGroup.markerArpUpEccInput.sendKeys(viewModel.markerArpUpEcc.toString());
+            itemGroup.markerArpNorthEccInput.sendKeys(viewModel.markerArpNorthEcc.toString());
+            itemGroup.markerArpEastEccInput.sendKeys(viewModel.markerArpEastEcc.toString());
+            itemGroup.alignmentFromTrueNorthInput.sendKeys(viewModel.alignmentFromTrueNorth.toString());
+            itemGroup.antennaRadomeTypeInput.sendKeys(viewModel.antennaRadomeType);
+            itemGroup.radomeSerialNumberInput.sendKeys(viewModel.radomeSerialNumber);
+            itemGroup.antennaCableTypeInput.sendKeys(viewModel.antennaCableType);
+            itemGroup.antennaCableLengthInput.sendKeys(viewModel.antennaCableLength.toString());
+            itemGroup.notesInput.sendKeys(viewModel.notes);
             browser.waitForAngular();
             siteLogPage.save();
         });
@@ -81,18 +72,21 @@ describe('GNSS Antenna Group Component', () => {
             });
             browser.waitForAngular();
 
-            TestUtils.checkInputValueEqual(itemGroup.antennaTypeInput, 'AntennaType', antennaType);
-            TestUtils.checkInputValueEqual(itemGroup.serialNumberInput, 'SerialNumber', serialNumber);
-            TestUtils.checkInputValueEqual(itemGroup.antennaReferencePointInput, 'AntennaReferencePoint', antennaReferencePoint);
-            TestUtils.checkInputValueEqual(itemGroup.markerArpEastEccInput, 'MarkerArpEastEcc', markerArpEastEcc);
-            TestUtils.checkInputValueEqual(itemGroup.markerArpUpEccInput, 'MarkerArpUpEcc', markerArpUpEcc);
-            TestUtils.checkInputValueEqual(itemGroup.markerArpNorthEccInput, 'MarkerArpNorthEcc', markerArpNorthEcc);
-            TestUtils.checkInputValueEqual(itemGroup.alignmentFromTrueNorthInput, 'AlignmentFromTrueNorth', alignmentFromTrueNorth);
-            TestUtils.checkInputValueEqual(itemGroup.antennaRadomeTypeInput, 'AntennaRadomeType', antennaRadomeType);
-            TestUtils.checkInputValueEqual(itemGroup.radomeSerialNumberInput, 'RadomeSerialNumber', radomeSerialNumber);
-            TestUtils.checkInputValueEqual(itemGroup.antennaCableTypeInput, 'antennaCableType', antennaCableType);
-            TestUtils.checkInputValueEqual(itemGroup.antennaCableLengthInput, 'AntennaCableLength', antennaCableLength);
-            TestUtils.checkInputValueEqual(itemGroup.notesInput, 'Notes', notes);
+            TestUtils.checkInputValueEqual(itemGroup.antennaTypeInput, 'AntennaType', viewModel.antennaType);
+            TestUtils.checkInputValueEqual(itemGroup.serialNumberInput, 'SerialNumber', viewModel.serialNumber);
+            TestUtils.checkInputValueEqual(itemGroup.antennaReferencePointInput,
+                                                'AntennaReferencePoint', viewModel.antennaReferencePoint);
+            TestUtils.checkInputValueEqual(itemGroup.markerArpUpEccInput, 'MarkerArpUpEcc', viewModel.markerArpUpEcc);
+            TestUtils.checkInputValueEqual(itemGroup.markerArpNorthEccInput, 'MarkerArpNorthEcc', viewModel.markerArpNorthEcc);
+            TestUtils.checkInputValueEqual(itemGroup.markerArpEastEccInput, 'MarkerArpEastEcc', viewModel.markerArpEastEcc);
+            TestUtils.checkInputValueEqual(itemGroup.alignmentFromTrueNorthInput,
+                                                'AlignmentFromTrueNorth', viewModel.alignmentFromTrueNorth);
+            TestUtils.checkInputValueEqual(itemGroup.antennaRadomeTypeInput,
+                                                'AntennaRadomeType', viewModel.antennaRadomeType);
+            TestUtils.checkInputValueEqual(itemGroup.radomeSerialNumberInput, 'RadomeSerialNumber', viewModel.radomeSerialNumber);
+            TestUtils.checkInputValueEqual(itemGroup.antennaCableTypeInput, 'antennaCableType', viewModel.antennaCableType);
+            TestUtils.checkInputValueEqual(itemGroup.antennaCableLengthInput, 'AntennaCableLength', viewModel.antennaCableLength);
+            TestUtils.checkInputValueEqual(itemGroup.notesInput, 'Notes', viewModel.notes);
         });
     });
 

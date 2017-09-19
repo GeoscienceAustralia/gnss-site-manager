@@ -69,4 +69,17 @@ export class SelectSitePage extends BasePage {
         let page: SiteLogPage = await this.clickOnSiteAsync(siteId);
         return Promise.resolve(page);
     }
+
+    /**
+     * Create a new site log with all fields empty
+     *
+     * @return the page object of the new site log
+     */
+    public createNewSite(): SiteLogPage {
+        console.log('Create a new site log ...');
+        this.navigationMenu.click();
+        this.newSiteLink.click();
+        browser.waitForAngular();
+        return new SiteLogPage();
+    }
 }

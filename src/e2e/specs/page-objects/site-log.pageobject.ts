@@ -91,6 +91,19 @@ export class SiteLogPage extends BasePage {
         console.log('Clicked "Yes" button to confirm saving all changes made.');;
     }
 
+    public saveNewSite() {
+        this.siteIdMenu.click();
+        this.saveSiteLink.click();
+        this.confirmYesButton.click().then(() => {
+            console.log('Clicked "Yes" button to send out the requesting of a new site.');
+        });
+        browser.waitForAngular();
+        this.confirmYesButton.click().then(() => {
+            console.log('Clicked "Yes" button to close the notification dialog.');
+        });
+        browser.waitForAngular();
+    }
+
     public revert() {
         this.siteIdMenu.click();
         this.revertSiteLink.click();
