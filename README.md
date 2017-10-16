@@ -13,7 +13,7 @@ managing GNSS CORS site metadata. It is based on
 | Environment | Branch | Trigger | URL |
 | ----------- | ------ | :-----: | --- |
 | integration | `next`   | on commit | https://dev.gnss-site-manager.geodesy.ga.gov.au |
-| testing     | `master` | on commit | https://test.gnss-site-manager.geodesy.ga.gov.au |
+| testing     | `master` | on commit | decomissioned |
 | production  | `master` | manual    | https://gnss-site-manager.geodesy.ga.gov.au |
 
 ## Access
