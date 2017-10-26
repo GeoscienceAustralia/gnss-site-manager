@@ -20,8 +20,8 @@ export function main() {
     });
 
     it('should parse valid GeodesyML', () => {
-      let geodesyml: string = `<geo:GeodesyML xsi:schemaLocation="urn:xml-gov-au:icsm:egeodesy:0.4"
- xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.4"
+      let geodesyml: string = `<geo:GeodesyML xsi:schemaLocation="urn:xml-gov-au:icsm:egeodesy:0.5"
+ xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.5"
  xmlns:gml="http://www.opengis.net/gml/3.2"
  xmlns:ns9="http://www.w3.org/1999/xlink"
  xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -35,14 +35,14 @@ export function main() {
     });
 
     it('should parse valid Json', () => {
-      let json: string = `{"geo:siteLog":{"TYPE_NAME":"GEODESYML_0_4.SiteLogType"}}`;
+      let json: string = `{"geo:siteLog":{"TYPE_NAME":"GEODESYML_0_5.SiteLogType"}}`;
       let geodesyMl: string = jsonixService.jsonToGeodesyML(JSON.parse(json));
       expect(geodesyMl).not.toBeNull();
     });
 
     it('should error on invalid GeodesyML', () => {
-      let geodesyml: string = `<geo:GeodesyML xsi:schemaLocation="urn:xml-gov-au:icsm:egeodesy:0.4"
- xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.4"
+      let geodesyml: string = `<geo:GeodesyML xsi:schemaLocation="urn:xml-gov-au:icsm:egeodesy:0.5"
+ xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.5"
  xmlns:gml="http://www.opengis.net/gml/3.2"
  xmlns:ns9="http://www.w3.org/1999/xlink"
  xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -55,7 +55,7 @@ export function main() {
     });
 
     it('should error on invalid Json', () => {
-      let json: string = `{"geo:siteLog":{"TYPE_NAME":"GEODESYML_0_4.SiteLogType"`;
+      let json: string = `{"geo:siteLog":{"TYPE_NAME":"GEODESYML_0_5.SiteLogType"`;
       expect(function() {
         jsonixService.jsonToGeodesyML(JSON.parse(json));
       }).toThrowError(/Unexpected end of JSON input|JSON.parse: end of data/);
@@ -159,9 +159,9 @@ export function main() {
         "geo:siteLog": {
 	        "gnssReceivers": [
 	          {
-	            "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+	            "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
 	            "gnssReceiver": {
-	              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+	              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
 	              "description": {
 	                "TYPE_NAME": "GML_3_2_1.StringOrRefType",
 	                "value": ""
@@ -191,11 +191,11 @@ export function main() {
 	              "manufacturerDescription": "",
 	              "manufacturerSerialNumber": "3209",
 	              "igsModelCode": {
-	                "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+	                "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
 	                "value": ""
 	              },
 	              "receiverType": {
-	                "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+	                "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
 	                "codeList":
 	                "http://xml.gov.au/icsm/geodesyml/codelists/antenna-receiver-codelists.xml#GeodesyML_GNSSReceiverTypeCode",
 	                "codeListValue": "ASHTECH Z-XII3",

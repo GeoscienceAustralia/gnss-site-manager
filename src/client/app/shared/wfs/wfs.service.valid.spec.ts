@@ -15,22 +15,22 @@ export function main() {
         let validResponse: string = `<?xml version="1.0" encoding="UTF-8"?>
 <wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.4" 
+    xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.5" 
     xmlns:gml="http://www.opengis.net/gml/3.2" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     numberMatched="unknown" numberReturned="1" 
     timeStamp="2016-09-28T22:25:28.703Z" 
     xsi:schemaLocation="http://www.opengis.net/wfs/2.0 
         http://localhost:8080/geoserver/schemas/wfs/2.0/wfs.xsd 
-        urn:xml-gov-au:icsm:egeodesy:0.4 
+        urn:xml-gov-au:icsm:egeodesy:0.5 
         http://schemas.ga.gov.au/geodesyml/0.3/geodesyML.xsd 
         http://www.opengis.net/gml/3.2 
         http://localhost:8080/geoserver/schemas/gml/3.2.1/gml.xsd">
     <wfs:member>
         <geo:Site gml:id="Site.14252">
-            <gml:identifier codeSpace="urn:xml-gov-au:icsm:egeodesy:0.4:SiteIdentifier">ADE1</gml:identifier>
-            <gml:name codeSpace="urn:xml-gov-au:icsm:egeodesy:0.4:SiteName">Australia NGA collocated</gml:name>
-            <geo:type codeSpace="urn:xml-gov-au:icsm:egeodesy:0.4:SiteType">CORS</geo:type>
+            <gml:identifier codeSpace="urn:xml-gov-au:icsm:egeodesy:0.5:SiteIdentifier">ADE1</gml:identifier>
+            <gml:name codeSpace="urn:xml-gov-au:icsm:egeodesy:0.5:SiteName">Australia NGA collocated</gml:name>
+            <geo:type codeSpace="urn:xml-gov-au:icsm:egeodesy:0.5:SiteType">CORS</geo:type>
         </geo:Site>
     </wfs:member>
 </wfs:FeatureCollection>`;

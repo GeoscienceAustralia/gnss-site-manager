@@ -51,7 +51,7 @@ module.exports = function (config) {
       'node_modules/ogc-schemas/lib/ISO19139_GSS_20070417.js',
       'node_modules/ogc-schemas/lib/OM_2_0.js',
       'node_modules/ogc-schemas/lib/WFS_2_0.js',
-      'node_modules/geodesyml-js/lib/GEODESYML_0_4.js',
+      'node_modules/geodesyml-js/lib/GEODESYML_0_5.js',
 
       'node_modules/alertify.js/dist/js/alertify.js',
       'node_modules/lodash/lodash.js',

@@ -1,14 +1,14 @@
 {
   "geo:GeodesyML": {
-    "TYPE_NAME": "GEODESYML_0_4.GeodesyMLType",
+    "TYPE_NAME": "GEODESYML_0_5.GeodesyMLType",
     "id": "GeodesyMLType_20",
     "elements": [
       {
         "geo:siteLog": {
-          "TYPE_NAME": "GEODESYML_0_4.SiteLogType",
+          "TYPE_NAME": "GEODESYML_0_5.SiteLogType",
           "id": "SiteLogType_20",
           "formInformation": {
-            "TYPE_NAME": "GEODESYML_0_4.FormInformationType",
+            "TYPE_NAME": "GEODESYML_0_5.FormInformationType",
             "preparedBy": "Nick Dando",
             "datePrepared": {
               "TYPE_NAME": "GML_3_2_1.TimePositionType",
@@ -19,7 +19,7 @@
             "reportType": "UPDATE"
           },
           "siteIdentification": {
-            "TYPE_NAME": "GEODESYML_0_4.SiteIdentificationType",
+            "TYPE_NAME": "GEODESYML_0_5.SiteIdentificationType",
             "siteName": "Alice Springs AU012",
             "fourCharacterID": "ALIC",
             "monumentInscription": "National Geodetic Fiducial Ntwk (AUSLIG) AU012",
@@ -51,7 +51,7 @@
             "notes": "Monument is a 600mm dia concrete pillar, 0.5 metes above ground surface."
           },
           "siteLocation": {
-            "TYPE_NAME": "GEODESYML_0_4.SiteLocationType",
+            "TYPE_NAME": "GEODESYML_0_5.SiteLocationType",
             "city": "Alice Springs",
             "state": "Northern Territory",
             "countryCodeISO": "AUS",
@@ -61,7 +61,7 @@
               "value": "Australian"
             },
             "approximatePositionITRF": {
-              "TYPE_NAME": "GEODESYML_0_4.SiteLocationType.ApproximatePositionITRF",
+              "TYPE_NAME": "GEODESYML_0_5.SiteLocationType.ApproximatePositionITRF",
               "xCoordinateInMeters": "-4052051.767",
               "yCoordinateInMeters": "4212836.215",
               "zCoordinateInMeters": "-2545106.027",
@@ -73,13 +73,13 @@
           },
           "gnssReceivers": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_81",
                 "manufacturerSerialNumber": "C128",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -116,13 +116,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_82",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -160,13 +160,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_83",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -203,13 +203,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_84",
                 "manufacturerSerialNumber": "C126U",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -247,13 +247,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_85",
                 "manufacturerSerialNumber": "UC2200302004",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -291,13 +291,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_86",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -332,13 +332,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_87",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -375,13 +375,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_88",
                 "manufacturerSerialNumber": "C102U",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -419,13 +419,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_89",
                 "manufacturerSerialNumber": "C128",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -463,13 +463,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_90",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -507,13 +507,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_91",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -550,13 +550,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssReceiverPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssReceiverPropertyType",
               "gnssReceiver": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssReceiverType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssReceiverType",
                 "id": "GnssReceiverType_92",
                 "manufacturerSerialNumber": "355318",
                 "receiverType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsReceiverModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsReceiverModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "DummyCodeSpace",
@@ -595,13 +595,13 @@
           ],
           "gnssAntennas": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssAntennaPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssAntennaPropertyType",
               "gnssAntenna": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssAntennaType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssAntennaType",
                 "id": "GnssAntennaType_35",
                 "manufacturerSerialNumber": "318",
                 "antennaType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsAntennaModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsAntennaModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "codespace",
@@ -618,7 +618,7 @@
                 "markerArpEastEcc": 0,
                 "alignmentFromTrueNorth": 0,
                 "antennaRadomeType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsRadomeModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsRadomeModelCodeType",
                   "codeSpace": "CodeSpaceAttr",
                   "value": "AUST"
                 },
@@ -647,13 +647,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssAntennaPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssAntennaPropertyType",
               "gnssAntenna": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssAntennaType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssAntennaType",
                 "id": "GnssAntennaType_36",
                 "manufacturerSerialNumber": "09370001",
                 "antennaType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsAntennaModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsAntennaModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "codespace",
@@ -670,7 +670,7 @@
                 "markerArpEastEcc": 0,
                 "alignmentFromTrueNorth": 0,
                 "antennaRadomeType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsRadomeModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsRadomeModelCodeType",
                   "codeSpace": "CodeSpaceAttr",
                   "value": "NONE"
                 },
@@ -696,13 +696,13 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.GnssAntennaPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.GnssAntennaPropertyType",
               "gnssAntenna": {
-                "TYPE_NAME": "GEODESYML_0_4.GnssAntennaType",
+                "TYPE_NAME": "GEODESYML_0_5.GnssAntennaType",
                 "id": "GnssAntennaType_37",
                 "manufacturerSerialNumber": "318",
                 "antennaType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsAntennaModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsAntennaModelCodeType",
                   "codeList": "codelist",
                   "codeListValue": "codeListValue",
                   "codeSpace": "codespace",
@@ -719,7 +719,7 @@
                 "markerArpEastEcc": 0,
                 "alignmentFromTrueNorth": 0,
                 "antennaRadomeType": {
-                  "TYPE_NAME": "GEODESYML_0_4.IgsRadomeModelCodeType",
+                  "TYPE_NAME": "GEODESYML_0_5.IgsRadomeModelCodeType",
                   "codeSpace": "CodeSpaceAttr",
                   "value": "NONE"
                 },
@@ -750,16 +750,16 @@
           ],
           "surveyedLocalTies": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesPropertyType",
               "surveyedLocalTies": {
-                "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesType",
+                "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesType",
                 "id": "SurveyedLocalTiesType_5",
                 "tiedMarkerName": "RM2",
                 "tiedMarkerUsage": "",
                 "tiedMarkerCDPNumber": "",
                 "tiedMarkerDOMESNumber": "",
                 "differentialComponentsGNSSMarkerToTiedMonumentITRS": {
-                  "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS",
+                  "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS",
                   "dx": 6.89,
                   "dy": -0.437,
                   "dz": -9.874
@@ -781,16 +781,16 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesPropertyType",
               "surveyedLocalTies": {
-                "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesType",
+                "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesType",
                 "id": "SurveyedLocalTiesType_6",
                 "tiedMarkerName": "RM3",
                 "tiedMarkerUsage": "",
                 "tiedMarkerCDPNumber": "",
                 "tiedMarkerDOMESNumber": "",
                 "differentialComponentsGNSSMarkerToTiedMonumentITRS": {
-                  "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS",
+                  "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS",
                   "dx": 4.399,
                   "dy": 15.434,
                   "dz": 18.074
@@ -812,16 +812,16 @@
               }
             },
             {
-              "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesPropertyType",
               "surveyedLocalTies": {
-                "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesType",
+                "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesType",
                 "id": "SurveyedLocalTiesType_7",
                 "tiedMarkerName": "RM1",
                 "tiedMarkerUsage": "",
                 "tiedMarkerCDPNumber": "",
                 "tiedMarkerDOMESNumber": "",
                 "differentialComponentsGNSSMarkerToTiedMonumentITRS": {
-                  "TYPE_NAME": "GEODESYML_0_4.SurveyedLocalTiesType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS",
+                  "TYPE_NAME": "GEODESYML_0_5.SurveyedLocalTiesType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS",
                   "dx": -15.366,
                   "dy": -9.632,
                   "dz": 9.099
@@ -845,9 +845,9 @@
           ],
           "frequencyStandards": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.FrequencyStandardPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.FrequencyStandardPropertyType",
               "frequencyStandard": {
-                "TYPE_NAME": "GEODESYML_0_4.FrequencyStandardType",
+                "TYPE_NAME": "GEODESYML_0_5.FrequencyStandardType",
                 "id": "FrequencyStandardType_58",
                 "standardType": {
                   "TYPE_NAME": "GML_3_2_1.CodeType",
@@ -886,9 +886,9 @@
           ],
           "humiditySensors": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.HumiditySensorPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.HumiditySensorPropertyType",
               "humiditySensor": {
-                "TYPE_NAME": "GEODESYML_0_4.HumiditySensorType",
+                "TYPE_NAME": "GEODESYML_0_5.HumiditySensorType",
                 "id": "HumiditySensorType_7",
                 "type": {
                   "TYPE_NAME": "GML_3_2_1.CodeType",
@@ -936,9 +936,9 @@
           ],
           "pressureSensors": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.PressureSensorPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.PressureSensorPropertyType",
               "pressureSensor": {
-                "TYPE_NAME": "GEODESYML_0_4.PressureSensorType",
+                "TYPE_NAME": "GEODESYML_0_5.PressureSensorType",
                 "id": "PressureSensorType_7",
                 "type": {
                   "TYPE_NAME": "GML_3_2_1.CodeType",
@@ -985,9 +985,9 @@
           ],
           "temperatureSensors": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.TemperatureSensorPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.TemperatureSensorPropertyType",
               "temperatureSensor": {
-                "TYPE_NAME": "GEODESYML_0_4.TemperatureSensorType",
+                "TYPE_NAME": "GEODESYML_0_5.TemperatureSensorType",
                 "id": "TemperatureSensorType_7",
                 "type": {
                   "TYPE_NAME": "GML_3_2_1.CodeType",
@@ -1035,9 +1035,9 @@
           ],
           "waterVaporSensors": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.WaterVaporSensorPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.WaterVaporSensorPropertyType",
               "waterVaporSensor": {
-                "TYPE_NAME": "GEODESYML_0_4.WaterVaporSensorType",
+                "TYPE_NAME": "GEODESYML_0_5.WaterVaporSensorType",
                 "id": "WaterVaporSensorType_2",
                 "type": {
                   "TYPE_NAME": "GML_3_2_1.CodeType",
@@ -1083,9 +1083,9 @@
           ],
           "localEpisodicEffects": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.LocalEpisodicEffectsPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.LocalEpisodicEffectsPropertyType",
               "localEpisodicEffects": {
-                "TYPE_NAME": "GEODESYML_0_4.LocalEpisodicEffectType",
+                "TYPE_NAME": "GEODESYML_0_5.LocalEpisodicEffectType",
                 "id": "LocalEpisodicEffectType_1",
                 "validTime": {
                   "TYPE_NAME": "GML_3_2_1.TimePrimitivePropertyType",
@@ -1117,7 +1117,7 @@
           ],
           "siteContact": [
             {
-              "TYPE_NAME": "GEODESYML_0_4.AgencyPropertyType",
+              "TYPE_NAME": "GEODESYML_0_5.AgencyPropertyType",
               "id": "AgencyPropertyType_40",
               "mdSecurityConstraints": {
                 "TYPE_NAME": "ISO19139_GMD_20070417.MDSecurityConstraintsType",
@@ -1213,7 +1213,7 @@
             }
           ],
           "siteMetadataCustodian": {
-            "TYPE_NAME": "GEODESYML_0_4.AgencyPropertyType",
+            "TYPE_NAME": "GEODESYML_0_5.AgencyPropertyType",
             "id": "AgencyPropertyType_41",
             "mdSecurityConstraints": {
               "TYPE_NAME": "ISO19139_GMD_20070417.MDSecurityConstraintsType",
@@ -1263,7 +1263,7 @@
             }
           },
           "moreInformation": {
-            "TYPE_NAME": "GEODESYML_0_4.MoreInformationType",
+            "TYPE_NAME": "GEODESYML_0_5.MoreInformationType",
             "dataCenter": [
               ""
             ],

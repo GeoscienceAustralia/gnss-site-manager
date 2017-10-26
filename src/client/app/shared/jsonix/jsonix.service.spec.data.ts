@@ -888,7 +888,7 @@ export class JsonServiceSpecData {
                     }
                 },
                 moreInformation: {
-                    TYPE_NAME: 'GEODESYML_0_4.MoreInformationType',
+                    TYPE_NAME: 'GEODESYML_0_5.MoreInformationType',
                     dataCenter: [
                         'CDDIS',
                         'SIO'
@@ -909,7 +909,7 @@ export class JsonServiceSpecData {
                     }
                 },
                 dataStreams: {
-                    TYPE_NAME: 'GEODESYML_0_4.DataStreamPropertyType'
+                    TYPE_NAME: 'GEODESYML_0_5.DataStreamPropertyType'
                 }
             }
         };
