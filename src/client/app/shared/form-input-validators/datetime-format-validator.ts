@@ -3,7 +3,7 @@ import * as moment from 'moment';
 
 export const datetimeFormat: string = 'YYYY-MM-DD HH:mm:ss';
 
-export class DatetimeValidator implements Validator {
+export class DatetimeFormatValidator implements Validator {
 
     constructor() { }
 

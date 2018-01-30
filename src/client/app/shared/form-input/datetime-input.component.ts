@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, DoCheck } from '@angular/core';
 import { Validators, FormControl } from '@angular/forms';
 import { AbstractInput } from './abstract-input.component';
-import { DatetimeValidator } from '../form-input-validators/datetime-validator';
+import { DatetimeFormatValidator } from '../form-input-validators/datetime-format-validator';
 import { DatetimeRangeValidator } from '../form-input-validators/datetime-range-validator';
 import { MiscUtils } from '../index';
 
@@ -66,14 +66,13 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit, DoC
             validators.push(Validators.required);
         }
 
+        validators.push(new DatetimeFormatValidator());
         if (this.controlName === 'endDate') {
             let startDateControl: FormControl = <FormControl>this.form.controls.startDate;
             validators.push(new DatetimeRangeValidator(startDateControl, true));
         } else if (this.controlName === 'startDate') {
             let endDateControl: FormControl = <FormControl>this.form.controls.endDate;
             validators.push(new DatetimeRangeValidator(endDateControl, false));
-        } else {
-            validators.push(new DatetimeValidator());
         }
 
         setTimeout( () => {

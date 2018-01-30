@@ -22,18 +22,17 @@ export class DatetimeRangeValidator implements Validator {
     }
 
     validate(thisDateControl: FormControl): { [key: string]: any } {
-        let otherDateString: string = this.otherDateControl.value;
         let thisDateString: string = thisDateControl.value;
+        let otherDateString: string = this.otherDateControl.value;
         if (!otherDateString || !thisDateString) {
             return null;
         } else {
-            let otherDate = moment(otherDateString, datetimeFormat, true);
             let thisDate = moment(thisDateString, datetimeFormat, true);
+            let otherDate = moment(otherDateString, datetimeFormat, true);
             if (!thisDate.isValid()) {
                 if (otherDate.isValid()) {
                     this.otherDateControl.setErrors(null);
                 }
-                return {invalid_datetime_format: 'Invalid date (valid format: ' + datetimeFormat + ')'};
             } else if (!otherDate.isValid()) {
                 return null;
             }
