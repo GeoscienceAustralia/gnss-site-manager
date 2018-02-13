@@ -30,8 +30,8 @@
         <div *ngIf="getItem() != null" [ngClass]="{'container-dirty': getItem().dateDeleted}">
             <div class="form-group">
                 <text-input [form]="itemGroup" controlName="possibleProblemSource">Possible Problem Source</text-input>
-                <datetime-input [form]="itemGroup" controlName="startDate" [required]="true">Start Date (UTC)</datetime-input>
-                <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">End Date (UTC)</datetime-input>
+                <datetime-input [form]="itemGroup" controlName="startDate" [required]="true" dateType="Start-End">Start Date (UTC)</datetime-input>
+                <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0" dateType="Start-End">End Date (UTC)</datetime-input>
                 <textarea-input [form]="itemGroup" controlName="notes" rows="2">Notes</textarea-input>
             </div>
        </div>

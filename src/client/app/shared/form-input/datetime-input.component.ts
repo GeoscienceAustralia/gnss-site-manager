@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostListener, OnInit, DoCheck } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, ElementRef, HostListener, Input, OnInit, DoCheck } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { AbstractInput } from './abstract-input.component';
-import { DatetimeValidator } from '../form-input-validators/datetime-validator';
+import { DatetimeFormatValidator } from '../form-input-validators/datetime-format-validator';
+import { DatetimeRangeValidator } from '../form-input-validators/datetime-range-validator';
 import { MiscUtils } from '../index';
 
 /**
@@ -14,6 +15,7 @@ import { MiscUtils } from '../index';
     styleUrls: ['datetime-input.component.css']
 })
 export class DatetimeInputComponent extends AbstractInput implements OnInit, DoCheck {
+    @Input() dateType: string = 'Installed-Removed';
     public miscUtils: any = MiscUtils;
     public datetime: string = '';
     public datetimeModel: Date;
@@ -64,7 +66,16 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit, DoC
         if (this.required) {
             validators.push(Validators.required);
         }
-        validators.push(new DatetimeValidator());
+
+        validators.push(new DatetimeFormatValidator());
+        if (this.controlName === 'endDate') {
+            let startDateControl: FormControl = <FormControl>this.form.controls.startDate;
+            validators.push(new DatetimeRangeValidator(this.dateType, startDateControl, true));
+        } else if (this.controlName === 'startDate') {
+            let endDateControl: FormControl = <FormControl>this.form.controls.endDate;
+            validators.push(new DatetimeRangeValidator(this.dateType, endDateControl, false));
+        }
+
         setTimeout( () => {
             this.formControl.setValidators(validators);
         });

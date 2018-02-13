@@ -29,8 +29,8 @@
         </div>
         <div *ngIf=" localEpisodicEffect != null" [ngClass]="{'container-dirty': localEpisodicEffect.dateDeleted}">
             <textarea-input [form]="itemGroup" controlName="event" [required]="true">Event</textarea-input>
-            <datetime-input [form]="itemGroup" controlName="startDate" [required]="true">Start Date (UTC)</datetime-input>
-            <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0">End Date (UTC)</datetime-input>
+            <datetime-input [form]="itemGroup" controlName="startDate" [required]="true" dateType="Start-End">Start Date (UTC)</datetime-input>
+            <datetime-input [form]="itemGroup" controlName="endDate" [required]="index != 0" dateType="Start-End">End Date (UTC)</datetime-input>
         </div>
     </div>
 </div>

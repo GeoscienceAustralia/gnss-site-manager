@@ -7,7 +7,7 @@ import { DialogService } from '../shared/index';
 import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { SiteLogService } from '../shared/site-log/site-log.service';
-import { DatetimeValidator } from '../shared/form-input-validators/datetime-validator';
+import { DatetimeFormatValidator } from '../shared/form-input-validators/datetime-format-validator';
 
 /**
  * This component represents a single Surveyed Local Tie.
@@ -112,7 +112,7 @@ export class SurveyedLocalTieItemComponent extends AbstractItemComponent impleme
         if (startDateFormControl.value) {
             hasValue = true;
         }
-        let validators: any = [ new DatetimeValidator() ];
+        let validators: any = [ new DatetimeFormatValidator() ];
         if (hasValue) {
             validators.push(Validators.required);
         }
