@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 
 import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
+import { SiteAdministrationModel } from '../site-administration/site-administration-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { ApplicationSaveState } from '../shared/site-log/site-log.service';
 import { ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
@@ -37,6 +38,7 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     public miscUtils: any = MiscUtils;
     public siteLogForm: FormGroup;
     public siteLogModel: SiteLogViewModel;
+    public siteAdminModel: SiteAdministrationModel;
 
     private siteId: string;
     private isLoading: boolean = false;
@@ -76,13 +78,16 @@ export class SiteLogComponent implements OnInit, OnDestroy {
         });
 
         this.isLoading = true;
-        this.route.data.subscribe((data: {siteLogModel: SiteLogViewModel}) => {
+        this.route.data.subscribe((data: {siteLogModel: SiteLogViewModel, siteAdminModel: SiteAdministrationModel}) => {
 
             // if we already have a siteLogForm then this looks like a good place to reload the page
             // TODO possibly work out a way to clear out all the data instead
             if (this.siteLogForm) {
                 window.location.reload();
             }
+
+            this.siteAdminModel = data.siteAdminModel;
+            console.log('Cors Site loaded successfully for ' + this.siteId + ': Site Status=' + this.siteAdminModel.siteStatus);
 
             this.siteLogModel = data.siteLogModel;
             this.setupForm();
@@ -95,6 +100,7 @@ export class SiteLogComponent implements OnInit, OnDestroy {
             this.isLoading = false;
             this.dialogService.showSuccessMessage('Site log loaded successfully for ' + this.siteId);
         });
+
         this.isLoading = false;
     }
 
@@ -108,6 +114,7 @@ export class SiteLogComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.siteId = null;
         this.siteLogModel = null;
+        this.siteAdminModel = null;
     }
 
     /**

@@ -7,6 +7,7 @@ import { CorsSiteService } from './cors-site.service';
 import { JsonixService } from '../jsonix/jsonix.service';
 import { WFSService } from '../wfs/wfs.service';
 import { ConstantsService } from '../global/constants.service';
+import { SiteAdministrationModel } from '../../site-administration/site-administration-model';
 
 export function main() {
   describe('CorsSite Service', () => {
@@ -50,6 +51,13 @@ export function main() {
       let names: any = undefined;
       initialResponse.subscribe((data: any) => names = data);
       expect(names).toEqual(['AAAA', 'ALIC']);
+    });
+
+    it('should get the access status of the CORS site being tested', () => {
+      let siteAccessList = ['PUBLIC', 'PRIVATE'];
+      corsSiteService.getSiteAdministration('ALIC').map((siteAdmin: SiteAdministrationModel) => {
+        expect(siteAccessList).toContain(siteAdmin.siteStatus);
+      });
     });
   });
 }
