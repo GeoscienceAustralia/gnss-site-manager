@@ -87,7 +87,7 @@ export class SiteLogComponent implements OnInit, OnDestroy {
             }
 
             this.siteAdminModel = data.siteAdminModel;
-            console.log('Cors Site loaded successfully for ' + this.siteId + ': Site Status=' + this.siteAdminModel.siteStatus);
+            console.log('Site administration data loaded from CORS site successfully for ' + this.siteId);
 
             this.siteLogModel = data.siteLogModel;
             this.setupForm();
