@@ -1,15 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable, pipe } from 'rxjs/Rx';
+import { mergeMap } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
-import { UserAuthService } from '../global/user-auth.service';
-import { User } from 'oidc-client';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { SelectSiteSearchType, WFSService } from '../wfs/wfs.service';
+import { User } from 'oidc-client';
+import { UserAuthService } from '../global/user-auth.service';
 import { HttpUtilsService } from '../global/http-utils.service';
 import { ConstantsService } from '../global/constants.service';
+import { SelectSiteSearchType, WFSService } from '../wfs/wfs.service';
 import { SiteAdministrationModel } from '../../site-administration/site-administration-model';
 
 /**
@@ -85,9 +86,8 @@ export class CorsSiteService implements OnDestroy {
    * @return {object[]} The Observable for the HTTP request.
    */
   getAllCorsSites(): Observable<any[]> {
-    return this.http.get(this.constantsService.getWebServiceURL()+'/corsSites?size=1000')
-      .map(HttpUtilsService.handleJsonData)
-      .catch(HttpUtilsService.handleError);
+    let url = this.constantsService.getWebServiceURL() + '/corsSites?size=1000&page=0';
+    return this.getCorsSitesFromPage([], url);
   }
 
   getSiteById(id: number): Observable<any> {
@@ -119,6 +119,29 @@ export class CorsSiteService implements OnDestroy {
     });
     console.debug('cors-site service - from wfsService - fixWFSeData - return: ', fieldsDefined);
     return fieldsDefined; //data;
+  }
+
+  private getCorsSitesFromPage(sites: any[], url: string): Observable<any[]> {
+    return this.http.get(url).pipe(
+      mergeMap((data: any) => {
+        sites.push(...this.parsePage(data));
+        let nextUrl = this.parseNextLink(data);
+        if (nextUrl) {
+          return this.getCorsSitesFromPage(sites, nextUrl);
+        } else {
+          console.info('Number of public GNSS sites retrieved: ' + sites.length);
+          return Observable.of(sites);
+        }
+      })
+    );
+  }
+
+  private parseNextLink(data: any): string {
+    return (data && data['_links']['next']) ? data['_links']['next']['href'] : null;
+  }
+
+  private parsePage(data: any): any[] {
+    return data ? data['_embedded']['corsSites'] : [];
   }
 }
 
