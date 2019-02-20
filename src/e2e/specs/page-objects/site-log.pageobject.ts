@@ -1,7 +1,6 @@
 import { browser, by, element, ElementFinder, ElementArrayFinder } from 'protractor';
 import * as _ from 'lodash';
 import { BasePage } from './base.pageobject';
-import { ResponsiblePartyGroup } from './responsible-party-group.pageobject';
 import { GnssReceiverGroup } from './gnss-receiver-group.pageobject';
 import { GnssAntennaGroup } from './gnss-antenna-group.pageobject';
 import { SurveyedLocalTieGroup } from './surveyed-local-tie-group.pageobject';
@@ -13,6 +12,8 @@ import { OtherInstrumentationGroup } from './other-instrumentation-group.pageobj
 import { RadioInterferenceGroup } from './radio-interference-group.pageobject';
 import { SignalObstructionGroup } from './signal-obstruction-group.pageobject';
 import { MultipathSourceGroup } from './multipath-source-group.pageobject';
+import { mockHumiditySensor, mockPressureSensor, mockTemperatureSensor, mockWaterVaporSensor } from './view-model';
+import { LogItemGroup } from './log-item-group.pageobject';
 
 export class SiteLogPage extends BasePage {
     readonly siteInformationHeader: ElementFinder = element(by.cssContainingText('span.panel-title', 'Site Information'));
@@ -22,25 +23,22 @@ export class SiteLogPage extends BasePage {
     readonly confirmYesButton: ElementFinder = element(by.buttonText('Yes'));
     readonly statusInfoBar: ElementFinder = element(by.css('div.status-info-bar'));
 
-    readonly siteOwnerGroup = new ResponsiblePartyGroup('Site Owner');
-    readonly siteContactGroup = new ResponsiblePartyGroup('Site Contact');
-    readonly siteMetadataCustodianGroup = new ResponsiblePartyGroup('Site Metadata Custodian');
-    readonly siteDataCenterGroup = new ResponsiblePartyGroup('Site Data Center');
-    readonly siteDataSourceGroup = new ResponsiblePartyGroup('Site Data Source');
-    readonly gnssReceiverGroup = new GnssReceiverGroup();
-    readonly gnssAntennaGroup = new GnssAntennaGroup();
-    readonly surveyedLocalTieGroup = new SurveyedLocalTieGroup();
-    readonly frequencyStandardGroup = new FrequencyStandardGroup();
-    readonly collocationInformationGroup = new CollocationInformationGroup();
-    readonly localEpisodicEffectGroup = new LocalEpisodicEffectGroup();
-    readonly humiditySensorGroup = new MeteorologicalSensorGroup('Humidity Sensor');
-    readonly pressureSensorGroup = new MeteorologicalSensorGroup('Pressure Sensor');
-    readonly temperatureSensorGroup = new MeteorologicalSensorGroup('Temperature Sensor');
-    readonly waterVaporSensorGroup = new MeteorologicalSensorGroup('Water Vapor Sensor');
-    readonly otherInstrumentationGroup = new OtherInstrumentationGroup();
-    readonly radioInterferenceGroup = new RadioInterferenceGroup();
-    readonly signalObstructionGroup = new SignalObstructionGroup();
-    readonly multipathSourceGroup = new MultipathSourceGroup();
+    public siteLogGroups: LogItemGroup[] = [
+        new GnssReceiverGroup(),
+        new GnssAntennaGroup(),
+        new SurveyedLocalTieGroup(),
+        new FrequencyStandardGroup(),
+        new CollocationInformationGroup(),
+        new LocalEpisodicEffectGroup(),
+        new MeteorologicalSensorGroup('Humidity Sensor', mockHumiditySensor),
+        new MeteorologicalSensorGroup('Pressure Sensor', mockPressureSensor),
+        new MeteorologicalSensorGroup('Temperature Sensor', mockTemperatureSensor),
+        new MeteorologicalSensorGroup('Water Vapor Sensor', mockWaterVaporSensor),
+        new OtherInstrumentationGroup(),
+        new RadioInterferenceGroup(),
+        new SignalObstructionGroup(),
+        new MultipathSourceGroup(),
+    ];
 
     public identifyingElement(): ElementFinder {
         return this.siteInformationHeader;
@@ -75,20 +73,25 @@ export class SiteLogPage extends BasePage {
     }
 
     public save() {
-        this.siteIdMenu.click();
-        this.saveSiteLink.click();
-        this.confirmYesButton.click().then(() => {
-            console.log('Clicked "Yes" button to confirm saving all changes made.');
+        this.siteIdMenu.click().then(() => {
+            this.saveSiteLink.click().then(() => {
+                this.confirmYesButton.click().then(() => {
+                    console.log('\tSave all changes made.');
+                });
+            });
         });
         browser.waitForAngular();
     }
 
     public revert() {
-        this.siteIdMenu.click();
-        this.revertSiteLink.click();
-        this.confirmYesButton.click().then(() => {
-            console.log('Clicked "Yes" button to confirm reverting the site log page');
+        this.siteIdMenu.click().then(() => {
+            this.revertSiteLink.click().then(() => {
+                this.confirmYesButton.click().then(() => {
+                    console.log('\tRevert the site log page');
+                });
+            });
         });
+        browser.waitForAngular();
     }
 
     /*
@@ -116,23 +119,28 @@ export class SiteLogPage extends BasePage {
     }
 
     public close(message?: string) {
-        this.siteIdMenu.click();
-        this.closeSiteLink.click().then(() => {
-            console.log(message + ' Closed the site log page.');
-        });
-        browser.waitForAngular();
-    }
-
-    public closeAfterConfirmation() {
-        this.siteIdMenu.click();
-        this.closeSiteLink.click().then(() => {
-            this.confirmYesButton.isPresent().then((askConfirmation: boolean) => {
-                if (askConfirmation) {
-                    this.confirmYesButton.click();
+        this.siteIdMenu.click().then(() => {
+            this.closeSiteLink.click().then(() => {
+                if (message) {
+                    console.log('\t' + message + ' Closed the site log page.');
+                } else {
+                    console.log('\tClosed the site log page.');
                 }
             });
         });
         browser.waitForAngular();
     }
 
+    public closeAfterConfirmation() {
+        this.siteIdMenu.click().then(() => {
+            this.closeSiteLink.click().then(() => {
+                this.confirmYesButton.isPresent().then((askConfirmation: boolean) => {
+                    if (askConfirmation) {
+                        this.confirmYesButton.click();
+                    }
+                });
+            });
+        });
+        browser.waitForAngular();
+    }
 }

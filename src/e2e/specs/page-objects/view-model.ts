@@ -12,7 +12,7 @@ export const mockResponsibleParty: ResponsiblePartyViewModel = {
     individualName: 'Homer Simpson',
     organisationName: 'Geoscience Australia',
     positionName: 'Manager ' + timestamp,
-    deliveryPoint: 'Cnr Jerrabomberra Ave and Hindmarsh Drive\nSymonston, ACT',
+    deliveryPoint: 'Cnr Jerrabomberra Ave and Hindmarsh Drive, Symonston, ACT',
     city: 'Symonston',
     administrativeArea: 'ACT',
     postalCode: '2609',

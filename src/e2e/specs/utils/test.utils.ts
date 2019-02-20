@@ -66,31 +66,32 @@ export class TestUtils {
         elemFinder.getAttribute('value').then((value: string) => {
             if(typeof expectValue === 'number') {
                 expect(value).toEqual(expectValue.toString());
-                console.log('Check if ' + elemName + ' is "' + value + '": ' + (expectValue.toString() === value));
+                console.log('\tCheck if ' + elemName + ' is "' + value + '": ' + (expectValue.toString() === value));
             } else {
                 expect(value).toEqual(expectValue);
-                console.log('Check if ' + elemName + ' is "' + value + '": ' + (expectValue === value));
+                console.log('\tCheck if ' + elemName + ' is "' + value + '": ' + (expectValue === value));
             }
         });
     }
 
     public static checkInputValueContain(elemFinder: ElementFinder, elemName: string, expectValue: string) {
         elemFinder.getAttribute('value').then((value: string) => {
-            console.log('Check if ' + elemName + ' "' + value + '" contains "' + expectValue + '": ' + (value.indexOf(expectValue) !== -1));
+            console.log('\tCheck if ' + elemName + ' "' + value + '" contains "' + expectValue + '": '
+                        + (value.indexOf(expectValue) !== -1));
             expect(value).toContain(expectValue);
         });
     }
 
     public static checkInputValueNotNull(elemFinder: ElementFinder, elemName: string) {
         elemFinder.getAttribute('value').then((value: string) => {
-            console.log('Check if ' + elemName + ' is not null (value=' + value + ')');
+            console.log('\tCheck if ' + elemName + ' is not null (value=' + value + ')');
             expect(value).not.toBeNull();
         });
     }
 
     public static checkItemCount(elemArrayFinder: ElementArrayFinder, action: string, expectCount: number) {
         elemArrayFinder.count().then((count: number) => {
-            console.log('Number of items after ' + action + ': ' + count);
+            console.log('\tNumber of items after ' + action + ': ' + count);
             expect(count).toBe(expectCount);
         });
     }
@@ -106,21 +107,20 @@ export class TestUtils {
         });
     }
 
-    public static cacheInputValue(elemFinder: ElementFinder, fieldName: string, viewModel: any) {
+    public static cacheInputValue(elemFinder: ElementFinder, fieldName: string, model: any) {
         elemFinder.getAttribute('value').then((value: string) => {
-            viewModel[fieldName] = value;
-            console.log('Cache value for ' + fieldName + ': ' + value);
+            model[fieldName] = value;
+            console.log('\tCache value for ' + fieldName + ': ' + value);
         });
     }
 
-    public static changeInputValue(elemFinder: ElementFinder, fieldName: string, viewModel: any, backupModel?: any) {
+    public static changeInputValue(elemFinder: ElementFinder, fieldName: string, model: any, backup?: any) {
         elemFinder.getAttribute('value').then((value: string) => {
-            if (backupModel) {
-                backupModel[fieldName] = value;
+            if (backup) {
+                backup[fieldName] = value;
             }
             elemFinder.clear();
-            elemFinder.sendKeys(viewModel[fieldName]);
-            console.log('Change value for ' + fieldName + ' from "' + value + '" to "' + viewModel[fieldName] + '"');
+            elemFinder.sendKeys(model[fieldName]);
         });
     }
 
