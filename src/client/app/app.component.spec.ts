@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { CorsSiteService } from './shared/cors-site/cors-site.service';
 import { WFSService } from './shared/wfs/wfs.service';
 import { JsonixService } from './shared/jsonix/jsonix.service';
 import { ConstantsService } from './shared/global/constants.service';
@@ -36,6 +37,7 @@ export function main() {
           {provide: APP_BASE_HREF, useValue: '/'},
           {provide: 'Window', useValue: mockWindow},
           MockBackend,
+          CorsSiteService,
           WFSService,
           JsonixService,
           ConstantsService,

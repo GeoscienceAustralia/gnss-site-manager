@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
-import { Observable, pipe } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { mergeMap } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -86,7 +86,7 @@ export class CorsSiteService implements OnDestroy {
    * @return {object[]} The Observable for the HTTP request.
    */
   getAllCorsSites(): Observable<any[]> {
-    let url = this.constantsService.getWebServiceURL() + '/corsSites?size=1000&page=0';
+    let url = this.constantsService.getWebServiceURL() + '/corsSites?size=1000';
     return this.getCorsSitesFromPage([], url);
   }
 

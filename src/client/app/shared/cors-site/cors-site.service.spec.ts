@@ -41,7 +41,7 @@ export function main() {
 
       let connection: any = undefined;
       backend.connections.subscribe((c: any) => connection = c);
-      initialResponse = corsSiteService.getAllCorsSites();
+      initialResponse = corsSiteService.getSiteById(0);
       connection.mockRespond(new Response(new ResponseOptions({ body: '["AAAA", "ALIC"]' })));
     });
 
