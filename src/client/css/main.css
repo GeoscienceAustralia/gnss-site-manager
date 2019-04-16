@@ -98,7 +98,9 @@ input[readonly],
   border-radius: 4px;
 }
 .form-group.required .control-label::after,
-.form-group .control-label.required::after {
+.form-group .control-label.required::after,
+.form-group.required .textarea-label::after,
+.form-group .textarea-label.required::after {
   color: red;
   content: "*";
 }
@@ -445,8 +447,17 @@ input[readonly],
   margin-bottom: 0 !important;
   padding: 5px;
 }
-.control-label {
+label {
+  margin-bottom: 0;
+}
+.form-horizontal .checkbox-group-label,
+.form-horizontal .control-label,
+.form-horizontal .textarea-label {
   font-weight: normal;
+  padding: 0 15px 0 5px;
+}
+.form-horizontal .checkbox-group-label:before {
+  height: 56px;
 }
 
 .ajax-loader-img {
@@ -590,6 +601,13 @@ textarea.ng-invalid {
     max-width: 980px !important;
   }
 }
+
+@media (max-width: 991px) {
+  .form-horizontal .checkbox-group-label:before {
+    height: 78px;
+  }
+}
+
 @media (min-width: 451px) AND (max-width: 550px) {
   .col-xs-10,
   .col-xs-9,
@@ -606,11 +624,26 @@ textarea.ng-invalid {
 }
 
 @media (min-width: 451px) {
-  .form-horizontal .control-label {
-    padding-top: 0 !important;
-    text-align: right;
+  .form-horizontal .checkbox-group-label:before,
+  .form-horizontal .control-label:before,
+  .form-horizontal .textarea-label:before {
+    content: '';
     display: inline-block;
     vertical-align: middle;
+  }
+  .form-horizontal .control-label:before {
+    height: 34px;
+  }
+  .form-horizontal .textarea-label:before {
+    height: 48px;
+  }
+  .form-horizontal .checkbox-group-label,
+  .form-horizontal .control-label,
+  .form-horizontal .textarea-label {
+    display: inline-block;
+    line-height: 0.1;
+    text-align: right;
+    white-space: no-wrap;
   }
 }
 
@@ -671,6 +704,9 @@ textarea.ng-invalid {
   .extra-v-margin {
     margin-top: 10px;
     margin-bottom: 5px;
+  }
+  .form-horizontal .checkbox-group-label:before {
+    height: 100px;
   }
 
   /* Increase sizes of font and button icons on mobile devices */
@@ -934,8 +970,9 @@ textarea.ng-invalid {
   .form-horizontal .form-group {
     margin: 0 -5px 5px -5px;
   }
-  .form-horizontal .control-label {
-    margin: 2px 0 0;
+  .form-horizontal .control-label,
+  .form-horizontal .textarea-label {
+    margin: 2px 0;
   }
 
   .navbar-btn.btn {
