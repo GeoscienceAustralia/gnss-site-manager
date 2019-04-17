@@ -260,6 +260,9 @@ input[readonly],
 .panel-group .panel + .panel {
   margin-top: 15px !important;
 }
+.panel-heading i.glyphicon {
+  top: 2px;
+}
 
 .accordion-group-icon {
   color: #fff !important;
