@@ -332,7 +332,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel>
 
     private updateEndDate(itemComponent: AbstractItemComponent, date: string, flags: { overwrite: boolean }): void {
         let item = itemComponent.itemGroup;
-        if (item.controls['endDate']) {
+        if (date && item.controls['endDate']) {
             let endDateControl = item.controls.endDate;
             if (!endDateControl.value || flags.overwrite) {
                 endDateControl.setValue(date);

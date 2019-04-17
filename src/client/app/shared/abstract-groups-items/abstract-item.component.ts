@@ -216,29 +216,25 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
 
         let startDatetime: any = this.itemGroup.controls.startDate.value;
         let endDatetime: any = this.itemGroup.controls.endDate.value;
-
-        let headerHtml: string = '<span class="hidden-xsm">'
-                               + (this.itemGroup.controls['endDate'].value ? 'Previous' : 'Current')
-                               + ' </span>';
-
-        if (startDatetime) {
-            headerHtml += '<span class="hidden-xxs">' + this.getItemName() + ' </span>';
-            let dateRange: string = '';
-            let startDateString: string = MiscUtils.isDate(startDatetime) ? MiscUtils.formatDateToDateString(startDatetime):
-                MiscUtils.getDateComponent(startDatetime);
-            if (endDatetime) {
-                let endDateString: string = MiscUtils.isDate(endDatetime) ? MiscUtils.formatDateToDateString(endDatetime):
-                    MiscUtils.getDateComponent(endDatetime);
-                dateRange = startDateString + ' &ndash; ' + endDateString;
-            } else {
-                dateRange = 'Since ' + startDateString;
-            }
-            headerHtml += '<span class="hidden-xxs">(</span>' + dateRange + '<span class="hidden-xxs">)</span>';
-        } else {
-            headerHtml += '<span>' + this.getItemName() + ' </span>';
+        if (!startDatetime && !endDatetime) {
+            return '<span>' + this.getItemName() + ' </span>';
         }
 
-        return headerHtml;
+        let startDateString: string = MiscUtils.isDate(startDatetime) ? MiscUtils.formatDateToDateString(startDatetime):
+                                      MiscUtils.getDateComponent(startDatetime);
+        let endDateString: string = MiscUtils.isDate(endDatetime) ? MiscUtils.formatDateToDateString(endDatetime):
+                                    MiscUtils.getDateComponent(endDatetime);
+
+        let dateRange: string = startDateString ? startDateString : '?';
+        if (endDateString) {
+            dateRange += ' &ndash; ' + endDateString;
+        } else {
+            dateRange = 'Since ' + dateRange;
+        }
+
+        return '<span class="hidden-xsm">' + (endDateString ? 'Previous' : 'Current') + ' </span>'
+             + '<span class="hidden-xxs">' + this.getItemName() + ' </span>'
+             + '<span class="hidden-xxs">(</span>' + dateRange + '<span class="hidden-xxs">)</span>';
     }
 
     /**
