@@ -148,6 +148,11 @@
   cursor: not-allowed;
 }
 
+.checkbox-group .small-padding {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
 /* extra grid system with 24 divisions */
 @media (min-width: 451px){
   .align-horizontal {
@@ -259,12 +264,7 @@
     position: relative;
   }
 }
-@media (max-width: 1200px) and (min-width: 768px){
-  .checkbox-group .small-padding {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-}
+
 @media (max-width: 768px){
   .list-box-btn-group .btn {
     padding: 3px 8px;

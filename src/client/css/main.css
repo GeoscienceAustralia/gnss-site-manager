@@ -178,7 +178,7 @@ input[readonly],
   margin-bottom: 15px;
 }
 .panel-group .panel-heading {
-  padding: 4px 15px;
+  padding: 6px 15px;
 }
 .panel-group .panel-level-1 .panel-body {
   padding: 15px 15px 0;
@@ -263,6 +263,9 @@ input[readonly],
 .panel-heading i.glyphicon {
   top: 2px;
 }
+.panel-heading span.pull-right {
+   margin-top: -1px;
+ }
 
 .accordion-group-icon {
   color: #fff !important;
