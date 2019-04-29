@@ -59,6 +59,19 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
 
     ngOnInit() {
         this.setupForm();
+        this.stateSubscription = this.siteLogService.getApplicationState().subscribe((applicationState: ApplicationState) => {
+            if (applicationState.applicationSaveState === ApplicationSaveState.saved) {
+                this.isNew = false;
+                this.isDeleted = false;
+            }
+        });
+        setTimeout(() => {
+            if (this.isEditable && this.isItemEditable) {
+                this.siteLocationForm.enable();
+            } else {
+                this.siteLocationForm.disable();
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -85,6 +98,84 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
 
     public isFormInvalid(): boolean {
         return this.siteLocationForm && this.siteLocationForm.invalid;
+    }
+
+    public isDeleteDisabled(): boolean {
+        if (this.isNew) {
+            return false;
+        }
+        return !this.isEditable || this.isDeleted;
+    }
+
+    public getRemoveOrDeletedText(): string {
+        return this.isNew ? 'Cancel' : 'Delete';
+    }
+
+    public addNew(event: UIEvent): void {
+        event.preventDefault();
+        this.isNew = true;
+        this.isOpen = true;
+        this.siteLocation = new SiteLocationViewModel();
+        setTimeout(() => {
+            if (this.siteLocationForm) {
+                this.siteLocationForm.markAsDirty();
+            }
+        });
+    }
+
+    /**
+     * Remove an item from the UI and delete if it is an existing record.
+     */
+    public removeItem(): boolean {
+
+        if (this.isNew) {
+            this.cancelNew();
+        } else {
+            this.dialogService.confirmDeleteDialog(
+                this.getItemName(),
+                (deleteReason : string) => {  // ok callback
+                    this.deleteItem(deleteReason);
+                },
+                () => {  // cancel callback
+                    console.log('delete cancelled by user');
+                }
+            );
+        }
+        return false;
+    }
+
+    public cancelNew() {
+        this.siteLocation = null;
+        this.isNew = false;
+        if (this.siteLocationForm) {
+            this.siteLocationForm.markAsPristine();
+            this.parentForm.removeControl(this.getControlName());
+        }
+    }
+
+    /**
+     * Toggle on/off the edit flag for the item by user
+     */
+    public toggleItemEditFlag() {
+        this.isOpen = true;
+        this.isItemEditable = !this.isItemEditable;
+        if (this.isItemEditable) {
+            this.siteLocationForm.enable();
+        } else {
+            this.siteLocationForm.disable();
+        }
+    }
+
+    /**
+     *  Mark an item for deletion with the given reason.
+     */
+    private deleteItem(deleteReason : string | null): void {
+        this.isDeleted = true;
+        let date: string = MiscUtils.getUTCDateTime();
+        this.siteLocation.dateDeleted = date;
+        this.siteLocation.deletedReason = deleteReason;
+        this.siteLocationForm.markAsDirty();
+        this.siteLocationForm.disable();
     }
 
     private setupForm() {
@@ -129,7 +220,7 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
         this.siteLocation = this.siteLogModel.siteInformation.siteLocation;
         this.siteLocationForm.patchValue(this.siteLocation);
         this.siteLogService.isUserAuthorisedToEditSite.subscribe(authorised => {
-            if (authorised) {
+            if (authorised && this.isItemEditable) {
                 this.siteLocationForm.enable();
             } else {
                 this.siteLocationForm.disable();

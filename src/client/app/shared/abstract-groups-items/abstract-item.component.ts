@@ -57,7 +57,7 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            if (this.isEditable && (this.enableEditItem || this.isNew)) {
+            if (this.isEditable && (this.isItemEditable || this.isNew)) {
                 this.itemGroup.enable();
             } else {
                 this.itemGroup.disable();
@@ -254,8 +254,8 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
         }
 
         this.isItemOpen = true;
-        this.enableEditItem = !this.enableEditItem;
-        if (this.enableEditItem) {
+        this.isItemEditable = !this.isItemEditable;
+        if (this.isItemEditable) {
             this.itemGroup.enable();
         } else {
             this.itemGroup.disable();

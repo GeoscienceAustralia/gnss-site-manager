@@ -17,10 +17,10 @@
                     type="button"
                     [disabled]="isDeleteDisabled()"
                     class="btn btn-xs"
-                    [ngClass]="{'btn-danger': enableEditItem, 'btn-similar': !enableEditItem}"
-                    title="Click to {{enableEditItem ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
+                    [ngClass]="{'btn-danger': isItemEditable, 'btn-similar': !isItemEditable}"
+                    title="Click to {{isItemEditable ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
                     (click)="toggleItemEditFlag()">
-                <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': enableEditItem, 'glyphicon-edit': !enableEditItem}"></i>
+                <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': isItemEditable, 'glyphicon-edit': !isItemEditable}"></i>
                 <span class="hidden-xs">Edit</span>
             </button>
             <button type="button" [disabled]="isDeleteDisabled()"

@@ -57,6 +57,13 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
 
     ngOnInit() {
         this.setupForm();
+        setTimeout(() => {
+            if (this.isEditable && this.isItemEditable) {
+                this.siteIdentificationForm.enable();
+            } else {
+                this.siteIdentificationForm.disable();
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -88,6 +95,19 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
         return this.siteIdentification && this.siteIdentification.fourCharacterID ? 'readonly' : null;
     }
 
+    /**
+     * Toggle on/off the edit flag for the item by user
+     */
+    public toggleItemEditFlag() {
+        this.isOpen = true;
+        this.isItemEditable = !this.isItemEditable;
+        if (this.isItemEditable) {
+            this.siteIdentificationForm.enable();
+        } else {
+            this.siteIdentificationForm.disable();
+        }
+    }
+
     private setupForm() {
         this.siteIdentificationForm = this.formBuilder.group({
             siteName: ['', [Validators.maxLength(50)]],
@@ -113,7 +133,7 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
         this.siteIdentification = this.siteLogModel.siteInformation.siteIdentification;
         this.siteIdentificationForm.patchValue(this.siteIdentification);
         this.subscription = this.siteLogService.isUserAuthorisedToEditSite.subscribe(authorised => {
-            if (authorised) {
+            if (authorised && this.isItemEditable) {
                 this.siteIdentificationForm.enable();
             } else {
                 this.siteIdentificationForm.disable();

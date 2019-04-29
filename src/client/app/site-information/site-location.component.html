@@ -9,8 +9,16 @@
             </i>
             Site Location
         </span>
-        <span *ngIf="isLoading" class="pull-right">
-            <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
+        <span class="pull-right">
+            <button type="button"
+                    [disabled]="!isEditable"
+                    class="btn btn-xs"
+                    [ngClass]="{'btn-danger': isItemEditable, 'btn-similar': !isItemEditable}"
+                    title="Click to {{isItemEditable ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
+                    (click)="toggleItemEditFlag()">
+                <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': isItemEditable, 'glyphicon-edit': !isItemEditable}"></i>
+                <span class="hidden-xs">Edit</span>
+            </button>
         </span>
         <span [hidden]="siteLocation != null" class="pull-right">
             <button class="btn btn-similar btn-xs"
