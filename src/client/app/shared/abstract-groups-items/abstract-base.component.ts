@@ -5,6 +5,8 @@ import { SiteLogService } from '../site-log/site-log.service';
 export abstract class AbstractBaseComponent implements OnDestroy {
 
     public isEditable: boolean;
+    public enableEditItem: boolean = false;
+
     private authorisedSubscription: Subscription;
 
     constructor(siteLogService: SiteLogService) {

@@ -57,7 +57,7 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            if (this.isEditable) {
+            if (this.isEditable && (this.enableEditItem || this.isNew)) {
                 this.itemGroup.enable();
             } else {
                 this.itemGroup.disable();
@@ -246,6 +246,23 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
     }
 
     /**
+     * Toggle on/off the edit flag for the item by user
+     */
+    protected toggleItemEditFlag() {
+        if (this.isDeleteDisabled()) {
+            return;
+        }
+
+        this.isItemOpen = true;
+        this.enableEditItem = !this.enableEditItem;
+        if (this.enableEditItem) {
+            this.itemGroup.enable();
+        } else {
+            this.itemGroup.disable();
+        }
+    }
+
+    /**
      *  Mark an item for deletion using the specified reason.
      */
     protected cancelNew(index: number): void {
@@ -264,7 +281,6 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
         this.getReturnEvents().emit(geodesyEvent);
         this.itemGroup.disable();
     }
-
 
     /**
      * Event Handler - if this item has the given indexOfNew, then update relevant flags for the new item.

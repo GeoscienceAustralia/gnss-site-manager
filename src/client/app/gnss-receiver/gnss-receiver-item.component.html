@@ -14,6 +14,16 @@
             (<span [ngClass]="{'hidden-xxxs': index != 0}">marked </span>to delete)
         </span>
         <span class="pull-right" [ngClass]="{'hidden-xs': gnssReceiver.dateDeleted}">
+            <button *ngIf="!isNew"
+                    type="button"
+                    [disabled]="isDeleteDisabled()"
+                    class="btn btn-xs"
+                    [ngClass]="{'btn-danger': enableEditItem, 'btn-similar': !enableEditItem}"
+                    title="Click to {{enableEditItem ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
+                    (click)="toggleItemEditFlag()">
+                <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': enableEditItem, 'glyphicon-edit': !enableEditItem}"></i>
+                <span class="hidden-xs">Edit</span>
+            </button>
             <button type="button" [disabled]="isDeleteDisabled()"
                   class="btn btn-danger btn-xs"
                   title="{{getRemoveOrDeletedText()}} the GNSS receiver"
