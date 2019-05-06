@@ -62,6 +62,11 @@ export class SiteLogPage extends BasePage {
         return parentElem.element(by.css('div.item-header>span.panel-title'));
     }
 
+    public getItemEditButton(itemHeader: ElementFinder): ElementFinder {
+        let parentElem: ElementFinder = itemHeader.element(by.xpath('..'));
+        return parentElem.element(by.buttonText('Edit'));
+    }
+
     public getDirtyFields(parentElem: ElementFinder): ElementArrayFinder {
         return parentElem.all(by.css('div.form-group.ng-dirty'));
     }

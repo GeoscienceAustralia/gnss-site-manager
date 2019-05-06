@@ -53,7 +53,12 @@ export class LogItemGroup {
 
     public getDeleteButton(): ElementFinder {
         let itemContainer: ElementFinder = this.getItemContainer(this.newItemIndex);
-        return itemContainer.element(by.buttonText('Delete'));;
+        return itemContainer.element(by.buttonText('Delete'));
+    }
+
+    public getEditButton(): ElementFinder {
+        let itemContainer: ElementFinder = this.getItemContainer(this.newItemIndex);
+        return itemContainer.element(by.buttonText('Edit'));
     }
 
     /**

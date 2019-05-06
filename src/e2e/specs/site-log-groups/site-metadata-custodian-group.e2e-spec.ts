@@ -47,21 +47,22 @@ describe('Responsible Party - Site Metadata Custodian Group Component', () => {
             console.log('Open ' + itemGroup.itemName + ' group');
         });
 
-        TestUtils.changeInputValue(itemGroup.individualNameInput, 'individualName', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.organisationNameInput, 'organisationName', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.positionNameInput, 'positionName', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.deliveryPointInput, 'deliveryPoint', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.cityInput, 'city', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.administrativeAreaInput, 'administrativeArea', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.postalCodeInput, 'postalCode', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.countryInput, 'country', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.emailInput, 'email', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.primaryPhoneInput, 'primaryPhone', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.secondaryPhoneInput, 'secondaryPhone', viewModel, backupModel);
-        TestUtils.changeInputValue(itemGroup.faxInput, 'fax', viewModel, backupModel);
+        itemGroup.getEditButton().click().then(() => {
+            TestUtils.changeInputValue(itemGroup.individualNameInput, 'individualName', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.organisationNameInput, 'organisationName', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.positionNameInput, 'positionName', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.deliveryPointInput, 'deliveryPoint', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.cityInput, 'city', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.administrativeAreaInput, 'administrativeArea', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.postalCodeInput, 'postalCode', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.countryInput, 'country', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.emailInput, 'email', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.primaryPhoneInput, 'primaryPhone', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.secondaryPhoneInput, 'secondaryPhone', viewModel, backupModel);
+            TestUtils.changeInputValue(itemGroup.faxInput, 'fax', viewModel, backupModel);
 
-        siteLogPage.save();
-        browser.waitForAngular();
+            siteLogPage.save();
+        });
     });
 
     it('expect should have all new values saved for the item', () => {
@@ -87,22 +88,23 @@ describe('Responsible Party - Site Metadata Custodian Group Component', () => {
     });
 
     it('expect should have all values changed back to original ones for the first item', () => {
-        TestUtils.changeInputValue(itemGroup.individualNameInput, 'individualName', backupModel);
-        TestUtils.changeInputValue(itemGroup.organisationNameInput, 'organisationName', backupModel);
-        TestUtils.changeInputValue(itemGroup.positionNameInput, 'positionName', backupModel);
-        TestUtils.changeInputValue(itemGroup.deliveryPointInput, 'deliveryPoint', backupModel);
-        TestUtils.changeInputValue(itemGroup.cityInput, 'city', backupModel);
-        TestUtils.changeInputValue(itemGroup.administrativeAreaInput, 'administrativeArea', backupModel);
-        TestUtils.changeInputValue(itemGroup.postalCodeInput, 'postalCode', backupModel);
-        TestUtils.changeInputValue(itemGroup.countryInput, 'country', backupModel);
-        TestUtils.changeInputValue(itemGroup.emailInput, 'email', backupModel);
-        TestUtils.changeInputValue(itemGroup.primaryPhoneInput, 'primaryPhone', backupModel);
-        TestUtils.changeInputValue(itemGroup.secondaryPhoneInput, 'secondaryPhone', backupModel);
-        TestUtils.changeInputValue(itemGroup.faxInput, 'fax', backupModel);
+        itemGroup.getEditButton().click().then(() => {
+            TestUtils.changeInputValue(itemGroup.individualNameInput, 'individualName', backupModel);
+            TestUtils.changeInputValue(itemGroup.organisationNameInput, 'organisationName', backupModel);
+            TestUtils.changeInputValue(itemGroup.positionNameInput, 'positionName', backupModel);
+            TestUtils.changeInputValue(itemGroup.deliveryPointInput, 'deliveryPoint', backupModel);
+            TestUtils.changeInputValue(itemGroup.cityInput, 'city', backupModel);
+            TestUtils.changeInputValue(itemGroup.administrativeAreaInput, 'administrativeArea', backupModel);
+            TestUtils.changeInputValue(itemGroup.postalCodeInput, 'postalCode', backupModel);
+            TestUtils.changeInputValue(itemGroup.countryInput, 'country', backupModel);
+            TestUtils.changeInputValue(itemGroup.emailInput, 'email', backupModel);
+            TestUtils.changeInputValue(itemGroup.primaryPhoneInput, 'primaryPhone', backupModel);
+            TestUtils.changeInputValue(itemGroup.secondaryPhoneInput, 'secondaryPhone', backupModel);
+            TestUtils.changeInputValue(itemGroup.faxInput, 'fax', backupModel);
 
-        siteLogPage.save();
-        browser.waitForAngular();
-        console.log('Changed all values back to original ones for the ' + itemGroup.itemName + ' item');
+            siteLogPage.save();
+            console.log('Changed all values back to original ones for the ' + itemGroup.itemName + ' item');
+        });
     });
 
     it('expect should have all original values saved for the item', () => {
