@@ -1,6 +1,6 @@
 import { ReceiverAntennaCodeService } from './../receiver-antenna-code/receiver-antenna-code.service';
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, FormGroup } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbstractInput } from './abstract-input.component';
 
 @Component({

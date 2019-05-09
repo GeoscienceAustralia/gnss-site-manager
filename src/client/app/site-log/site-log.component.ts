@@ -27,7 +27,6 @@ import { OtherInstrumentationGroupComponent } from '../other-instrumentation/oth
 import { RadioInterferenceGroupComponent } from '../radio-interference/radio-interference-group.component';
 import { SignalObstructionGroupComponent } from '../signal-obstruction/signal-obstruction-group.component';
 import { MultipathSourceGroupComponent } from '../multipath-source/multipath-source-group.component';
-import { ReceiverAntennaCodeService } from '../shared/receiver-antenna-code/receiver-antenna-code.service';
 
 /**
  * This class represents the SiteLogComponent for viewing and editing the details of site/receiver/antenna.
