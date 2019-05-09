@@ -28,7 +28,7 @@
         </div>
         <div *ngIf="antenna != null" [ngClass]="{'container-dirty': antenna.dateDeleted}">
             <div class="form-group">
-                <text-input [form]="itemGroup" controlName="antennaType">Antenna Type</text-input>
+                <antenna-input [form]="itemGroup" controlName="antennaType">Antenna Type</antenna-input>
                 <text-input [form]="itemGroup" controlName="serialNumber">Serial Number</text-input>
                 <text-input [form]="itemGroup" controlName="antennaReferencePoint">Antenna Reference Point</text-input>
                 <number-input [form]="itemGroup" controlName="markerArpUpEcc" [required]="true" step="0.0001" min="0.0000">
