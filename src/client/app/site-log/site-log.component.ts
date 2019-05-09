@@ -27,6 +27,7 @@ import { OtherInstrumentationGroupComponent } from '../other-instrumentation/oth
 import { RadioInterferenceGroupComponent } from '../radio-interference/radio-interference-group.component';
 import { SignalObstructionGroupComponent } from '../signal-obstruction/signal-obstruction-group.component';
 import { MultipathSourceGroupComponent } from '../multipath-source/multipath-source-group.component';
+import { ReceiverAntennaCodeService } from '../shared/receiver-antenna-code/receiver-antenna-code.service';
 
 /**
  * This class represents the SiteLogComponent for viewing and editing the details of site/receiver/antenna.
@@ -44,6 +45,7 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     public siteAdminModel: SiteAdministrationModel;
     public siteAdminModelOrigin: SiteAdministrationModel;
     public corsNetworkList: CorsNetworkModel[];
+    public receiverAntennaCodeJson: any;
 
     private siteId: string;
     private isLoading: boolean = false;
@@ -86,7 +88,9 @@ export class SiteLogComponent implements OnInit, OnDestroy {
         this.isLoading = true;
         this.route.data.subscribe((data: {siteLogModel: SiteLogViewModel,
                                           siteAdminModel: SiteAdministrationModel,
-                                          corsNetworkList: CorsNetworkModel[]}) => {
+                                          corsNetworkList: CorsNetworkModel[],
+                                          receiverAntennaCodeJson: any
+                                        }) => {
 
             // if we already have a siteLogForm then this looks like a good place to reload the page
             // TODO possibly work out a way to clear out all the data instead
@@ -99,6 +103,7 @@ export class SiteLogComponent implements OnInit, OnDestroy {
             this.siteAdminModelOrigin = _.cloneDeep(data.siteAdminModel);
 
             this.siteLogModel = data.siteLogModel;
+            this.receiverAntennaCodeJson = data.receiverAntennaCodeJson;
             this.setupForm();
             this.setupSubscriptions();
             this.siteLogService.sendApplicationStateMessage({

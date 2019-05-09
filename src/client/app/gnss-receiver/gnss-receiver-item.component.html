@@ -28,7 +28,7 @@
             No information available for current {{getItemName()}}
         </div>
         <div *ngIf="gnssReceiver != null" [ngClass]="{'container-dirty': gnssReceiver.dateDeleted}">
-            <text-input [form]="itemGroup" controlName="receiverType">Receiver Type</text-input>
+            <receiver-input [form]="itemGroup" controlName="receiverType">Receiver Type</receiver-input>
             <text-input [form]="itemGroup" controlName="manufacturerSerialNumber">Serial Number</text-input>
             <text-input [form]="itemGroup" controlName="firmwareVersion">Firmware Version</text-input>
             <checkboxes-input [form]="itemGroup" controlName="satelliteSystems" [options]="satelliteSystemList">Satellite Systems</checkboxes-input>

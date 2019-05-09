@@ -2,6 +2,7 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Config, CorsSiteService, CorsSetupService, SiteLogService, DialogService, MiscUtils,
          ServiceWorkerService, JsonixService } from './shared/index';
+import { ReceiverAntennaCodeService } from "./shared/receiver-antenna-code/receiver-antenna-code.service";
 import { SiteLogComponent } from './site-log/site-log.component';
 import { JsonViewModelService } from './shared/json-data-view-model/json-view-model.service';
 
@@ -20,6 +21,7 @@ import { JsonViewModelService } from './shared/json-data-view-model/json-view-mo
     JsonixService,
     ServiceWorkerService,
     SiteLogService,
+    ReceiverAntennaCodeService,
     SiteLogComponent,
     JsonViewModelService,
   ],

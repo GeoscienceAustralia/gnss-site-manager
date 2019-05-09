@@ -5,6 +5,7 @@ import { ConfirmDeactivateSiteLogGuard } from './site-log-deactivate.module';
 import { PrefetchSiteLogResolver } from '../shared/site-log/prefetch-site-log.service';
 import { PrefetchCorsSiteResolver } from '../shared/cors-site/prefetch-cors-site.service';
 import { PrefetchCorsNetworkResolver } from '../shared/cors-network/prefetch-cors-network.service';
+import { PrefetchReceiverAntennaCodeResolver } from '../shared/receiver-antenna-code/prefetch-receiver-antenna-code.service';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { PrefetchCorsNetworkResolver } from '../shared/cors-network/prefetch-cor
                 siteLogModel: PrefetchSiteLogResolver,
                 siteAdminModel: PrefetchCorsSiteResolver,
                 corsNetworkList: PrefetchCorsNetworkResolver,
+                receiverAntennaCodeJson: PrefetchReceiverAntennaCodeResolver
             },
             canDeactivate: [ConfirmDeactivateSiteLogGuard]
         }
@@ -26,6 +28,7 @@ import { PrefetchCorsNetworkResolver } from '../shared/cors-network/prefetch-cor
         PrefetchSiteLogResolver,
         PrefetchCorsSiteResolver,
         PrefetchCorsNetworkResolver,
+        PrefetchReceiverAntennaCodeResolver
     ]
 })
 export class SiteLogRoutingModule { }

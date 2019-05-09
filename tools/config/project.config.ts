@@ -35,6 +35,7 @@ export class ProjectConfig extends SeedConfig {
       {src: 'ogc-schemas/lib/GML_3_2_1.js', inject: 'libs'},
       {src: 'ogc-schemas/lib/ISO19139_GMD_20070417.js', inject: 'libs'},
       {src: 'ogc-schemas/lib/ISO19139_GCO_20070417.js', inject: 'libs'},
+      {src: 'ogc-schemas/lib/ISO19139_GMX_20070417.js', inject: 'libs'},
       {src: 'ogc-schemas/lib/ISO19139_GSR_20070417.js', inject: 'libs'},
       {src: 'ogc-schemas/lib/ISO19139_GTS_20070417.js', inject: 'libs'},
       {src: 'ogc-schemas/lib/ISO19139_GSS_20070417.js', inject: 'libs'},
