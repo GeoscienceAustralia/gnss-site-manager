@@ -60,8 +60,7 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
             if (this.isEditable) {
                 this.itemGroup.enable();
             } else {
-                //this.itemGroup.disable();
-                this.itemGroup.enable();
+                this.itemGroup.disable();
             }
         });
     }
