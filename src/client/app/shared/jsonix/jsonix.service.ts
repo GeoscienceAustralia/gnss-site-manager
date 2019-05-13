@@ -59,6 +59,17 @@ export class JsonixService {
     };
 
     /**
+     * Given a valid GMX instance, translate to JSON.
+     *
+     * @param gmx valid GMX xml input to translate
+     * @return The JSON representation of the given GMX xml
+     */
+    gmxToJson(gmx: string): string {
+        let json: string = unmarshaller.unmarshalString(gmx);
+        return json;
+    };
+
+    /**
      * Given 'valid' JSON insance, translate to valid GeodesyMl.
      * @param json that is 'valid' to translate
      * @returns {string} the valid GeodesyMl

@@ -79,7 +79,7 @@ export class ReceiverAntennaCodeService implements OnDestroy {
     private handleXMLData(response: Response): string {
         if (response.status === 200) {
             let codeXML: any = response.text();
-            let json: any = this.jsonixService.geodesyMLToJson(codeXML);
+            let json: any = this.jsonixService.gmxToJson(codeXML);
             for (let codeList of json.CT_CodelistCatalogue.codelistItem) {
                 if (codeList.codeListDictionary.CodeListDictionary.id.includes('ReceiverType')) {
                     ReceiverAntennaCodeService.allReceiverCodes =

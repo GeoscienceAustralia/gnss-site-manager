@@ -5,27 +5,25 @@ import { AbstractInput } from './abstract-input.component';
 
 @Component({
     moduleId: module.id,
-    selector: 'antenna-input',
-    templateUrl: 'antenna-input.component.html',
+    selector: 'antenna-type-input',
+    templateUrl: 'antenna-type-input.component.html',
     styleUrls: ['form-input.component.css'],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => AntennaInputComponent),
+        useExisting: forwardRef(() => AntennaTypeInputComponent),
         multi: true
     }]
 })
-export class AntennaInputComponent extends AbstractInput implements ControlValueAccessor, OnInit {
+export class AntennaTypeInputComponent extends AbstractInput implements ControlValueAccessor, OnInit {
     @Input() readonly: string = null;
-    @Input() maxlength: number = 10000;
 
-    allAntennaCodes : string[] = [];
+    allAntennaCodes: string[] = [];
 
     propagateChange: Function = (_: any) => { };
     propagateTouch: Function = () => { };
 
     /**
-    * Creates a new AntennaInputComponent with the injected Http.
-    * @param {Http} http - The injected Http.
+    * Creates a new AntennaTypeInputComponent with the injected Http.
     * @param receiverAntennaCodeService - Service for fetching XML and converting to IGS Receiver Code
     * @constructor
     */
@@ -41,7 +39,7 @@ export class AntennaInputComponent extends AbstractInput implements ControlValue
         this.allAntennaCodes = this.receiverAntennaCodeService.antennaCodes();
     }
 
-    writeValue(value: string) {}
+    writeValue(value: string) { }
 
     registerOnChange(fn: Function) {
         this.propagateChange = fn;

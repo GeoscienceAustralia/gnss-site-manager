@@ -1,22 +1,21 @@
-import { ReceiverAntennaCodeService } from './../receiver-antenna-code/receiver-antenna-code.service';
+import { ReceiverAntennaCodeService } from '../receiver-antenna-code/receiver-antenna-code.service';
 import { Component, Input, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbstractInput } from './abstract-input.component';
 
 @Component({
     moduleId: module.id,
-    selector: 'receiver-input',
-    templateUrl: 'receiver-input.component.html',
+    selector: 'receiver-type-input',
+    templateUrl: 'receiver-type-input.component.html',
     styleUrls: ['form-input.component.css'],
     providers: [{
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => ReceiverInputComponent),
+        useExisting: forwardRef(() => ReceiverTypeInputComponent),
         multi: true
     }]
 })
-export class ReceiverInputComponent extends AbstractInput implements ControlValueAccessor, OnInit {
+export class ReceiverTypeInputComponent extends AbstractInput implements ControlValueAccessor, OnInit {
     @Input() readonly: string = null;
-    @Input() maxlength: number = 10000;
 
     allReceiverCodes : string[] = [];
 
@@ -24,8 +23,7 @@ export class ReceiverInputComponent extends AbstractInput implements ControlValu
     propagateTouch: Function = () => { };
 
     /**
-    * Creates a new ReceiverInputComponent with the injected Http.
-    * @param {Http} http - The injected Http.
+    * Creates a new ReceiverTypeInputComponent with the injected Http.
     * @param receiverAntennaCodeService - Service for fetching XML and converting to IGS Receiver Code
     * @constructor
     */
