@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import * as _ from 'lodash';
+
 import { MiscUtils } from '../shared/index';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
@@ -43,6 +45,9 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
     public miscUtils: any = MiscUtils;
     public siteIdentificationForm: FormGroup;
     public siteIdentification: SiteIdentificationViewModel;
+    protected isItemEditable: boolean;
+    protected itemEditButtonName: string;
+    protected itemBackup: SiteIdentificationViewModel;
 
     @Input() parentForm: FormGroup;
     @Input() siteLogModel: SiteLogViewModel;
@@ -53,6 +58,8 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
                 private formBuilder: FormBuilder,
                 private changeDetectionRef: ChangeDetectorRef) {
         super(siteLogService);
+        this.isItemEditable = false;
+        this.itemEditButtonName = 'Edit';
     }
 
     ngOnInit() {
@@ -103,8 +110,15 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
         this.isItemEditable = !this.isItemEditable;
         if (this.isItemEditable) {
             this.siteIdentificationForm.enable();
+            this.itemEditButtonName = 'Cancel';
+            this.itemBackup = _.cloneDeep(this.siteIdentificationForm.getRawValue());
         } else {
+            if (this.isFormDirty()) {
+                this.siteIdentificationForm.patchValue(this.itemBackup);
+                this.itemBackup = null;
+            }
             this.siteIdentificationForm.disable();
+            this.itemEditButtonName = 'Edit';
         }
     }
 

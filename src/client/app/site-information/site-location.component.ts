@@ -38,6 +38,9 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
     public isOpen: boolean = false;
     public isCartesianPositionRequired: boolean = false;
     public isGeodeticPositionRequired: boolean = false;
+    protected isItemEditable: boolean;
+    protected itemEditButtonName: string;
+    protected itemBackup: SiteLocationViewModel;
 
     @Input() parentForm: FormGroup;
     @Input() siteLogModel: SiteLogViewModel;
@@ -55,6 +58,8 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
                 protected dialogService: DialogService,
                 protected formBuilder: FormBuilder) {
         super(siteLogService);
+        this.isItemEditable = false;
+        this.itemEditButtonName = 'Edit';
     }
 
     ngOnInit() {
@@ -161,8 +166,15 @@ export class SiteLocationComponent extends AbstractBaseComponent implements OnIn
         this.isItemEditable = !this.isItemEditable;
         if (this.isItemEditable) {
             this.siteLocationForm.enable();
+            this.itemEditButtonName = 'Cancel';
+            this.itemBackup = _.cloneDeep(this.siteLocationForm.getRawValue());
         } else {
+            if (this.isFormDirty()) {
+                this.siteLocationForm.patchValue(this.itemBackup);
+                this.itemBackup = null;
+            }
             this.siteLocationForm.disable();
+            this.itemEditButtonName = 'Edit';
         }
     }
 

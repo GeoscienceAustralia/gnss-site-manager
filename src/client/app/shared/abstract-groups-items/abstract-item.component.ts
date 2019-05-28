@@ -1,6 +1,8 @@
 import { EventEmitter, Input, Output, OnInit, OnChanges, AfterViewInit, SimpleChange, OnDestroy } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import * as _ from 'lodash';
+
 import { AbstractBaseComponent } from './abstract-base.component';
 import { GeodesyEvent, EventNames } from '../events-messages/Event';
 import { DialogService } from '../index';
@@ -40,6 +42,9 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
 
     protected isNew: boolean = false;
     protected isItemOpen: boolean = false;
+    protected isItemEditable: boolean;
+    protected itemEditButtonName: string;
+    protected itemBackup: AbstractViewModel;
 
     private _isDeleted: boolean = false;
     private subscription: Subscription;
@@ -53,6 +58,8 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
                 protected dialogService: DialogService,
                 protected siteLogService: SiteLogService) {
         super(siteLogService);
+        this.isItemEditable = false;
+        this.itemEditButtonName = 'Edit';
     }
 
     ngAfterViewInit(): void {
@@ -257,8 +264,15 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
         this.isItemEditable = !this.isItemEditable;
         if (this.isItemEditable) {
             this.itemGroup.enable();
+            this.itemEditButtonName = 'Cancel';
+            this.itemBackup = _.cloneDeep(this.itemGroup.getRawValue());
         } else {
+            if (this.isFormDirty()) {
+                this.itemGroup.patchValue(this.itemBackup);
+                this.itemBackup = null;
+            }
             this.itemGroup.disable();
+            this.itemEditButtonName = 'Edit';
         }
     }
 

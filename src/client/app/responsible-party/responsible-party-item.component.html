@@ -20,7 +20,7 @@
                     title="Click to {{isItemEditable ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
                     (click)="toggleItemEditFlag()">
                 <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': isItemEditable, 'glyphicon-edit': !isItemEditable}"></i>
-                <span class="hidden-xs">Edit</span>
+                <span class="hidden-xs">{{itemEditButtonName}}</span>
             </button>
             <button type="button" [disabled]="isDeleteDisabled()"
                     *ngIf="isNew || !isMandatory"
