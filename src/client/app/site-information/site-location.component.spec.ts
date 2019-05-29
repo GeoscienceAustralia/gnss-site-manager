@@ -7,8 +7,9 @@ import { Subscriber } from 'rxjs/Subscriber';
 import { SiteLocationComponent } from './site-location.component';
 import { SiteLocationModule } from './site-location.module';
 import { ApplicationSaveState, ApplicationState, SiteLogService } from '../shared/site-log/site-log.service';
+import { UserAuthService } from '../shared/global/user-auth.service';
 import { DialogService } from '../shared/global/dialog.service';
-import { SiteLogViewModel } from '../site-log/site-log-view-model';
+import { SiteLocationViewModel } from './site-location-view-model';
 
 export function main() {
     describe('SiteLocation Positions', () => {
@@ -16,6 +17,12 @@ export function main() {
         let comp: SiteLocationComponent;
         let fixture: ComponentFixture<SiteLocationComponent>;
         let dom: HTMLElement;
+
+        let fakeUserAuthService = {
+            hasAuthorityToEditSite(siteId: string): Observable<boolean> {
+                return Observable.of(true);
+            }
+        };
 
         let fakeSiteLogService = {
             isUserAuthorisedToEditSite: new BehaviorSubject(true),
@@ -33,9 +40,7 @@ export function main() {
         };
 
         let fakeDialogService = {
-            hasAuthorityToEditSite() {
-                return true;
-            }
+            confirmDeleteDialog() {},
         };
 
         beforeEach(async(() => {
@@ -46,6 +51,7 @@ export function main() {
                     RouterTestingModule,
                 ],
                 providers: [
+                    {provide: UserAuthService, useValue: fakeUserAuthService},
                     {provide: SiteLogService, useValue: fakeSiteLogService},
                     {provide: DialogService, useValue: fakeDialogService},
                 ]
@@ -57,8 +63,9 @@ export function main() {
             dom = fixture.debugElement.children[0].nativeElement as HTMLElement;
 
             comp = fixture.componentInstance; // BannerComponent test instance
-            comp.siteLogModel = new SiteLogViewModel();
+            comp.siteLocation = new SiteLocationViewModel();
             comp.parentForm = new FormGroup({});
+            comp.itemGroup = new FormGroup({});
             fixture.detectChanges();
         });
 
