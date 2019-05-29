@@ -148,6 +148,7 @@ input[readonly],
 .btn-primary {
   background-color: #006983;
   border-color: #007592;
+  margin-right: 2px;
 }
 .btn-primary:hover,
 .btn-primary:focus {

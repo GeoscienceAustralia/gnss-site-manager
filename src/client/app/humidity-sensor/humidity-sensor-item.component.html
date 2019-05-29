@@ -17,7 +17,7 @@
                     type="button"
                     [disabled]="isDeleteDisabled()"
                     class="btn btn-xs"
-                    [ngClass]="{'btn-danger': isItemEditable, 'btn-similar': !isItemEditable}"
+                    [ngClass]="{'btn-danger': isItemEditable, 'btn-primary': !isItemEditable}"
                     title="Click to {{isItemEditable ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
                     (click)="toggleItemEditFlag()">
                 <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': isItemEditable, 'glyphicon-edit': !isItemEditable}"></i>
