@@ -1,11 +1,11 @@
-<div [formGroup]="siteIdentificationForm" class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading item-header">
         <span class="panel-title cursor-ptr" tabindex="0"
-            (keyup.space)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-            (keyup.enter)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-            (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+            (keyup.space)="isItemOpen = miscUtils.scrollIntoView($event, isItemOpen)"
+            (keyup.enter)="isItemOpen = miscUtils.scrollIntoView($event, isItemOpen)"
+            (click)="isItemOpen = miscUtils.scrollIntoView($event, isItemOpen)">
             <i class="glyphicon"
-               [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
+               [ngClass]="{'glyphicon-minus-sign': isItemOpen, 'glyphicon-plus-sign': !isItemOpen}">
             </i>
             Site Identification
         </span>
@@ -13,55 +13,55 @@
             <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
         </span>
     </div>
-    <div class="panel-body item-body" [hidden]="!isOpen">
+    <div class="panel-body item-body" [hidden]="!isItemOpen">
         <div class="margin-bottom15" [hidden]="siteIdentification != null">
             No information available for {{getItemName()}}
         </div>
         <div class="margin-bottom15" [hidden]="siteIdentification == null">
             <div class="form-group">
-                <text-input [form]="siteIdentificationForm"
+                <text-input [form]="itemGroup"
                             controlName="fourCharacterID"
                             [readonly]="getFourCharacterIdReadOnlyAttribute()">Four Character Id
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="siteName">Site Name
+                <text-input [form]="itemGroup" controlName="siteName">Site Name
                 </text-input>
                 <!-- TODO: These fields exist in the XML but not in the Java bindings.
                 <text-input controlName="monumentNumber"
-                            [form]="siteIdentificationForm">Monument Number</text-input>
+                            [form]="itemGroup">Monument Number</text-input>
                 <text-input controlName="receiverNumber"
-                            [form]="siteIdentificationForm">Receiver Number</text-input> -->
-                <text-input [form]="siteIdentificationForm" controlName="monumentInscription">Monument Inscription
+                            [form]="itemGroup">Receiver Number</text-input> -->
+                <text-input [form]="itemGroup" controlName="monumentInscription">Monument Inscription
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="iersDOMESNumber">IERS DOMES Number
+                <text-input [form]="itemGroup" controlName="iersDOMESNumber">IERS DOMES Number
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="cdpNumber">CDP Number
+                <text-input [form]="itemGroup" controlName="cdpNumber">CDP Number
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="monumentDescription">Monument Description
+                <text-input [form]="itemGroup" controlName="monumentDescription">Monument Description
                 </text-input>
-                <number-input [form]="siteIdentificationForm" controlName="heightOfTheMonument">Height of the Monument (m)
+                <number-input [form]="itemGroup" controlName="heightOfTheMonument">Height of the Monument (m)
                 </number-input>
-                <text-input [form]="siteIdentificationForm" controlName="monumentFoundation">Monument Foundation
+                <text-input [form]="itemGroup" controlName="monumentFoundation">Monument Foundation
                 </text-input>
-                <number-input [form]="siteIdentificationForm" controlName="foundationDepth">Foundation Depth (m)
+                <number-input [form]="itemGroup" controlName="foundationDepth">Foundation Depth (m)
                 </number-input>
-                <text-input [form]="siteIdentificationForm" controlName="markerDescription">Marker Description
+                <text-input [form]="itemGroup" controlName="markerDescription">Marker Description
                 </text-input>
-                <datetime-input [form]="siteIdentificationForm"
+                <datetime-input [form]="itemGroup"
                                 controlName="dateInstalled">Date Installed
                 </datetime-input>
-                <text-input [form]="siteIdentificationForm" controlName="geologicCharacteristic">Geologic Characteristic
+                <text-input [form]="itemGroup" controlName="geologicCharacteristic">Geologic Characteristic
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="bedrockType">Bedrock Type
+                <text-input [form]="itemGroup" controlName="bedrockType">Bedrock Type
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="bedrockCondition">Bedrock Condition
+                <text-input [form]="itemGroup" controlName="bedrockCondition">Bedrock Condition
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="fractureSpacing">Fracture Spacing
+                <text-input [form]="itemGroup" controlName="fractureSpacing">Fracture Spacing
                 </text-input>
-                <text-input [form]="siteIdentificationForm" controlName="faultZonesNearby">Fault Zones Nearby
+                <text-input [form]="itemGroup" controlName="faultZonesNearby">Fault Zones Nearby
                 </text-input>
-                <textarea-input [form]="siteIdentificationForm" controlName="distanceActivity">Distance / Activity
+                <textarea-input [form]="itemGroup" controlName="distanceActivity">Distance / Activity
                 </textarea-input>
-                <textarea-input [form]="siteIdentificationForm" controlName="notes">Notes
+                <textarea-input [form]="itemGroup" controlName="notes">Notes
                 </textarea-input>
             </div>
         </div>

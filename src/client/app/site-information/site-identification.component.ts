@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { MiscUtils } from '../shared/index';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SiteLogViewModel }  from '../site-log/site-log-view-model';
+
+import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { SiteIdentificationViewModel } from './site-identification-view-model';
-import { AbstractBaseComponent } from '../shared/abstract-groups-items/abstract-base.component';
+import { AbstractItemComponent } from '../shared/abstract-groups-items/abstract-item.component';
+import { UserAuthService } from '../shared/global/user-auth.service';
+import { DialogService } from '../shared/index';
 import { SiteLogService } from '../shared/site-log/site-log.service';
 
 /**
@@ -37,31 +38,33 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     selector: 'site-identification',
     templateUrl: 'site-identification.component.html'
 })
-export class SiteIdentificationComponent extends AbstractBaseComponent implements OnInit, OnDestroy {
-
-    public isOpen: boolean = false;
-    public miscUtils: any = MiscUtils;
-    public siteIdentificationForm: FormGroup;
-    public siteIdentification: SiteIdentificationViewModel;
+export class SiteIdentificationComponent extends AbstractItemComponent {
 
     @Input() parentForm: FormGroup;
-    @Input() siteLogModel: SiteLogViewModel;
+    @Input() siteIdentification: SiteIdentificationViewModel;
 
-    private subscription: Subscription;
+    /**
+    * Event mechanism to communicate with children.  Simply change the value of this and the children detect the change.
+    * @type {{name: EventNames}}
+    */
+    //private geodesyEvent: GeodesyEvent = new GeodesyEvent(EventNames.none);
 
-    constructor(private siteLogService: SiteLogService,
-                private formBuilder: FormBuilder,
+    constructor(protected userAuthService: UserAuthService,
+                protected dialogService: DialogService,
+                protected siteLogService: SiteLogService,
+                protected formBuilder: FormBuilder,
                 private changeDetectionRef: ChangeDetectorRef) {
-        super(siteLogService);
+        super(userAuthService, dialogService, siteLogService);
     }
 
-    ngOnInit() {
-        this.setupForm();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        this.subscription.unsubscribe();
+    /**
+     * Override parent's setupForm() method to deal with single form group, instead of form array.
+     *
+     */
+    setupForm() {
+        this.itemGroup = this.getItemForm();
+        this.itemGroup.patchValue(this.getItem());
+        this.parentForm.addControl('siteIdentification', this.itemGroup);
     }
 
     public getItemName(): string {
@@ -72,14 +75,6 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
         return 'siteIdentification';
     }
 
-    public isFormDirty(): boolean {
-        return this.siteIdentificationForm && this.siteIdentificationForm.dirty;
-    }
-
-    public isFormInvalid(): boolean {
-        return this.siteIdentificationForm && this.siteIdentificationForm.invalid;
-    }
-
     /**
      * Gets a value for the fourCharacterID field's readonly attribute
      * based on whether the user is editing a site or is making a new site.
@@ -88,8 +83,12 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
         return this.siteIdentification && this.siteIdentification.fourCharacterID ? 'readonly' : null;
     }
 
-    private setupForm() {
-        this.siteIdentificationForm = this.formBuilder.group({
+    getItem(): AbstractViewModel {
+        return this.siteIdentification;
+    }
+
+    getItemForm(): FormGroup {
+        return this.formBuilder.group({
             siteName: ['', [Validators.maxLength(50)]],
             fourCharacterID: ['', [Validators.minLength(4), Validators.maxLength(25)]],
             monumentInscription: ['', [Validators.maxLength(100)]],
@@ -110,15 +109,5 @@ export class SiteIdentificationComponent extends AbstractBaseComponent implement
             notes: ['', [Validators.maxLength(2000)]],
             objectMap: [''],
         });
-        this.siteIdentification = this.siteLogModel.siteInformation.siteIdentification;
-        this.siteIdentificationForm.patchValue(this.siteIdentification);
-        this.subscription = this.siteLogService.isUserAuthorisedToEditSite.subscribe(authorised => {
-            if (authorised) {
-                this.siteIdentificationForm.enable();
-            } else {
-                this.siteIdentificationForm.disable();
-            }
-        });
-        this.parentForm.addControl('siteIdentification', this.siteIdentificationForm);
     }
 }

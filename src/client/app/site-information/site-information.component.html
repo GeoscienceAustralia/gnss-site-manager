@@ -11,11 +11,11 @@
     </div>
     <div class="panel-body group-body" [hidden]="!isFormOpen">
         <site-identification [parentForm]="siteInformationForm"
-                             [siteLogModel]="siteLogModel">
+                             [siteIdentification]="siteLogModel.siteInformation.siteIdentification">
         </site-identification>
 
         <site-location [parentForm]="siteInformationForm"
-                       [siteLogModel]="siteLogModel">
+                       [siteLocation]="siteLogModel.siteInformation.siteLocation">
         </site-location>
 
         <gnss-site-image [parentForm]="siteInformationForm"

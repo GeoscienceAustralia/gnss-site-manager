@@ -1,11 +1,11 @@
-<div [formGroup]="siteLocationForm" class="panel panel-level-2">
+<div [formGroup]="itemGroup" class="panel panel-level-2">
     <div class="panel-heading item-header">
         <span class="panel-title cursor-ptr" tabindex="0"
-              (keyup.space)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-              (keyup.enter)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+              (keyup.space)="isItemOpen = miscUtils.scrollIntoView($event, isItemOpen)"
+              (keyup.enter)="isItemOpen = miscUtils.scrollIntoView($event, isItemOpen)"
+              (click)="isItemOpen = miscUtils.scrollIntoView($event, isItemOpen)">
             <i class="glyphicon"
-               [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
+               [ngClass]="{'glyphicon-minus-sign': isItemOpen, 'glyphicon-plus-sign': !isItemOpen}">
             </i>
             Site Location
         </span>
@@ -13,19 +13,19 @@
             <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
         </span>
     </div>
-    <div class="panel-body item-body" [hidden]="!isOpen">
+    <div class="panel-body item-body" [hidden]="!isItemOpen">
         <div class="margin-bottom15" [hidden]="siteLocation != null">
             No information available for {{getItemName()}}
         </div>
         <div class="margin-bottom15" [hidden]="siteLocation == null">
             <div class="form-group">
-                <text-input [form]="siteLocationForm" controlName="city">City / Town
+                <text-input [form]="itemGroup" controlName="city">City / Town
                 </text-input>
-                <text-input [form]="siteLocationForm" controlName="state">State / Province
+                <text-input [form]="itemGroup" controlName="state">State / Province
                 </text-input>
-                <text-input [form]="siteLocationForm" controlName="countryCodeISO">Country Code ISO
+                <text-input [form]="itemGroup" controlName="countryCodeISO">Country Code ISO
                 </text-input>
-                <text-input [form]="siteLocationForm" controlName="tectonicPlate">Tectonic Plate
+                <text-input [form]="itemGroup" controlName="tectonicPlate">Tectonic Plate
                 </text-input>
 
                 <div formGroupName="cartesianPosition">
@@ -45,7 +45,7 @@
                     </number-input>
                 </div>
 
-                <textarea-input [form]="siteLocationForm" controlName="notes">Notes
+                <textarea-input [form]="itemGroup" controlName="notes">Notes
                 </textarea-input>
             </div>
         </div>
