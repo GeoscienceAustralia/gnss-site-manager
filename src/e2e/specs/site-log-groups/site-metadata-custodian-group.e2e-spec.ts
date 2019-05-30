@@ -61,6 +61,7 @@ describe('Responsible Party - Site Metadata Custodian Group Component', () => {
         TestUtils.changeInputValue(itemGroup.faxInput, 'fax', viewModel, backupModel);
 
         siteLogPage.save();
+        browser.waitForAngular();
     });
 
     it('expect should have all new values saved for the item', () => {
@@ -100,6 +101,7 @@ describe('Responsible Party - Site Metadata Custodian Group Component', () => {
         TestUtils.changeInputValue(itemGroup.faxInput, 'fax', backupModel);
 
         siteLogPage.save();
+        browser.waitForAngular();
         console.log('Changed all values back to original ones for the ' + itemGroup.itemName + ' item');
     });
 

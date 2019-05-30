@@ -9,6 +9,9 @@
             </i>
             Site Location
         </span>
+        <span *ngIf="isLoading" class="pull-right">
+            <img src="../../assets/ajax-loader.gif" class="ajax-loader-img">
+        </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
         <div class="margin-bottom15" [hidden]="siteLocation != null">

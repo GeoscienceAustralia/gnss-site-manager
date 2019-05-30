@@ -34,6 +34,11 @@
         <div *ngIf="!hasItems()">
             No information available for {{getItemName()}}s
         </div>
+        <div *ngIf="hasItems()" class="explanation">
+            Note: the "New" button is for creating a new blank GNSS receiver and you need to fill in relevant fields;
+            the "Update" button is for creating a new GNSS receiver with values copied from the current receiver and
+            you may modify any fields.
+        </div>
         <div *ngFor="let gnssReceiver of getItems(); let i = index">
             <gnss-receiver-item #item
                                 [groupArray]="parentForm"
