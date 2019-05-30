@@ -16,7 +16,6 @@ describe('Authorization/Authentication', () => {
         let siteLogPage: SiteLogPage = selectSitePage.openSite('ADE1');
         siteLogPage.siteInformationHeader.click();
         siteLogPage.siteIdentificationHeader.click();
-        siteLogPage.getItemEditButton(siteLogPage.siteIdentificationHeader).click();
         expect(siteLogPage.siteNameInput.isEnabled()).toBe(true, 'siteNameInput should be enabled');
     });
 
@@ -33,7 +32,6 @@ describe('Authorization/Authentication', () => {
         siteLogPage = selectSitePage.openSite('ADE2');
         siteLogPage.siteInformationHeader.click();
         siteLogPage.siteIdentificationHeader.click();
-        siteLogPage.getItemEditButton(siteLogPage.siteIdentificationHeader).click();
         expect(siteLogPage.siteNameInput.isEnabled()).toBe(true, 'SiteName Input should be enabled');
         siteLogPage.close();
     });

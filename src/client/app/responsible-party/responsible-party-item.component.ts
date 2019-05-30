@@ -42,6 +42,7 @@ export class ResponsiblePartyItemComponent extends AbstractItemComponent impleme
                 protected siteLogService: SiteLogService,
                 protected formBuilder: FormBuilder) {
         super(userAuthService, dialogService, siteLogService);
+        this.isItemEditable = true;
     }
 
     ngOnInit() {

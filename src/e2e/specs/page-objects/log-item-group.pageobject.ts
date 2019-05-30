@@ -56,11 +56,6 @@ export class LogItemGroup {
         return itemContainer.element(by.buttonText('Delete'));
     }
 
-    public getEditButton(): ElementFinder {
-        let itemContainer: ElementFinder = this.getItemContainer(this.newItemIndex);
-        return itemContainer.element(by.buttonText('Edit'));
-    }
-
     /**
      * Delete the new item with or without a reason
      */

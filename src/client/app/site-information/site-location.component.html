@@ -9,27 +9,6 @@
             </i>
             Site Location
         </span>
-        <span class="pull-right">
-            <button type="button"
-                    [disabled]="!isEditable"
-                    class="btn btn-xs"
-                    [ngClass]="{'btn-danger': isItemEditable, 'btn-primary': !isItemEditable}"
-                    title="Click to {{isItemEditable ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
-                    (click)="toggleItemEditFlag()">
-                <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': isItemEditable, 'glyphicon-edit': !isItemEditable}"></i>
-                <span class="hidden-xs">{{itemEditButtonName}}</span>
-            </button>
-        </span>
-        <span [hidden]="siteLocation != null" class="pull-right">
-            <button class="btn btn-similar btn-xs"
-                    id="new-{{getElementName()}}"
-                    title="Add a new {{getItemName()}}"
-                    [disabled]="!isEditable"
-                    (click)="addNew($event); miscUtils.showFullView($event);">
-                <i class="glyphicon glyphicon-plus-sign"></i>
-                New
-            </button>
-        </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
         <div class="margin-bottom15" [hidden]="siteLocation != null">

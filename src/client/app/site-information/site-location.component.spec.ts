@@ -75,8 +75,6 @@ export function main() {
             let yInvalid: HTMLInputElement = dom.querySelector('number-input[controlname="y"] small') as HTMLInputElement;
             let zInvalid: HTMLInputElement = dom.querySelector('number-input[controlname="z"] small') as HTMLInputElement;
 
-            comp.cartesianPositionForm.enable();  // must enable the form as it is disabled from editing by default
-
             // Setting one or two of x,y,z should cause all to become required and others to be invalid
             x.setValue(7);
             fixture.detectChanges();
@@ -126,8 +124,6 @@ export function main() {
             let latInvalid: HTMLInputElement = dom.querySelector('number-input[controlname="lat"] small') as HTMLInputElement;
             let lonInvalid: HTMLInputElement = dom.querySelector('number-input[controlname="lon"] small') as HTMLInputElement;
             let heightInvalid: HTMLInputElement = dom.querySelector('number-input[controlname="height"] small') as HTMLInputElement;
-
-            comp.geodeticPositionForm.enable();  // must enable the form as it is disabled from editing by default
 
             // Setting one or two of x,y,z should cause all to become required and others to be invalid
             lat.setValue(7);

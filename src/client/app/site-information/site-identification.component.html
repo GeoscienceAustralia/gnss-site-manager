@@ -9,17 +9,6 @@
             </i>
             Site Identification
         </span>
-        <span class="pull-right">
-            <button type="button"
-                    [disabled]="!isEditable"
-                    class="btn btn-xs"
-                    [ngClass]="{'btn-danger': isItemEditable, 'btn-primary': !isItemEditable}"
-                    title="Click to {{isItemEditable ? 'disable' : 'enable' }} editing of the {{getItemName()}}"
-                    (click)="toggleItemEditFlag()">
-                <i class="glyphicon" [ngClass]="{'glyphicon-ban-circle': isItemEditable, 'glyphicon-edit': !isItemEditable}"></i>
-                <span class="hidden-xs">{{itemEditButtonName}}</span>
-            </button>
-        </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
         <div class="margin-bottom15" [hidden]="siteIdentification != null">
