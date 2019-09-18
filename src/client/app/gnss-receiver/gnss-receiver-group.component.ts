@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 
@@ -15,6 +15,9 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
     templateUrl: 'gnss-receiver-group.component.html',
 })
 export class GnssReceiverGroupComponent extends AbstractGroupComponent<GnssReceiverViewModel> {
+
+    @Input() receiverCodelist: string[];
+
     constructor(protected siteLogService: SiteLogService) {
         super(siteLogService);
     }

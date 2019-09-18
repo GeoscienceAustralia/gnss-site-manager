@@ -1,4 +1,3 @@
-import { GeodesyMLCodelistService } from '../geodesyml-codelist/geodesyml-codelist.service';
 import { Component, Input, EventEmitter, Output, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbstractInput } from './abstract-input.component';
@@ -16,19 +15,17 @@ import { AbstractInput } from './abstract-input.component';
 })
 export class AntennaTypeInputComponent extends AbstractInput implements ControlValueAccessor, OnInit {
     @Input() readonly: string = null;
+    @Input() allAntennaCodes: string[];
     @Output() antennaRadomeTypeChange: EventEmitter<any> = new EventEmitter<any>();
-
-    allAntennaCodes: string[] = [];
 
     propagateChange: Function = (_: any) => { };
     propagateTouch: Function = () => { };
 
     /**
     * Creates a new AntennaTypeInputComponent with the injected Http.
-    * @param geodesyMLCodelistService - Service for fetching XML and converting to IGS Receiver Code
     * @constructor
     */
-    constructor(private geodesyMLCodelistService: GeodesyMLCodelistService) {
+    constructor() {
         super();
     }
 
@@ -37,7 +34,6 @@ export class AntennaTypeInputComponent extends AbstractInput implements ControlV
      */
     ngOnInit() {
         super.ngOnInit();
-        this.allAntennaCodes = this.geodesyMLCodelistService.getAntennaRadomeCodes();
     }
 
     writeValue(value: string) { }

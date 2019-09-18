@@ -42,7 +42,11 @@
         </div>
         <div *ngIf="gnssReceiver != null" [ngClass]="{'container-dirty': gnssReceiver.dateDeleted}">
             <text-input *ngIf="!isItemEditable && !isNew" [form]="itemGroup" controlName="receiverType">Receiver Type</text-input>
-            <receiver-type-input *ngIf="isItemEditable || isNew" (receiverTypeChange)="onReceiverTypeChange($event)" [form]="itemGroup" controlName="receiverType">Receiver Type</receiver-type-input>
+            <receiver-type-input *ngIf="isItemEditable || isNew"
+                                 (receiverTypeChange)="onReceiverTypeChange($event)"
+                                 [form]="itemGroup"
+                                 [allReceiverCodes]="receiverCodelist"
+                                 controlName="receiverType">Receiver Type</receiver-type-input>
             <text-input [form]="itemGroup" controlName="manufacturerSerialNumber">Serial Number</text-input>
             <text-input [form]="itemGroup" controlName="firmwareVersion">Firmware Version</text-input>
             <checkboxes-input [form]="itemGroup" controlName="satelliteSystems" [options]="satelliteSystemList">Satellite Systems</checkboxes-input>

@@ -5,7 +5,6 @@ import { GnssReceiverViewModel } from './gnss-receiver-view-model';
 import { DialogService } from '../shared/index';
 import { AbstractViewModel } from '../shared/json-data-view-model/view-model/abstract-view-model';
 import { SiteLogService } from '../shared/site-log/site-log.service';
-import { GeodesyMLCodelistService } from '../shared/geodesyml-codelist/geodesyml-codelist.service';
 import { ReceiverTypeValidator } from './../shared/form-input-validators/receiver-type-validator';
 
 /**
@@ -21,12 +20,12 @@ export class GnssReceiverItemComponent extends AbstractItemComponent {
      * The GnssReceiver in question.
      */
     @Input() gnssReceiver: GnssReceiverViewModel;
+    @Input() receiverCodelist: string[];
 
     public satelliteSystemList: string[] = ['GPS', 'GLO', 'GAL', 'BDS', 'QZSS', 'SBAS', 'IRNSS'];
 
     constructor(protected dialogService: DialogService,
                 protected siteLogService: SiteLogService,
-                private geodesyMLCodelistService: GeodesyMLCodelistService,
                 protected formBuilder: FormBuilder) {
         super(dialogService, siteLogService);
     }
@@ -38,7 +37,7 @@ export class GnssReceiverItemComponent extends AbstractItemComponent {
         return this.formBuilder.group({
             id: [null],
             receiverType: [' ', [Validators.minLength(1), Validators.maxLength(20),
-                new ReceiverTypeValidator(this.geodesyMLCodelistService)]],
+                new ReceiverTypeValidator(this.receiverCodelist)]],
             manufacturerSerialNumber: ['', [Validators.maxLength(25)]],
             startDate: [''],
             endDate: [''],

@@ -5,10 +5,12 @@
         </gnss-site-information>
 
         <gnss-receiver-group [parentForm]="siteLogForm.controls.gnssReceivers"
+                             [receiverCodelist]="receiverCodelist"
                              [siteLogModel]="siteLogModel">
         </gnss-receiver-group>
 
         <gnss-antenna-group [parentForm]="siteLogForm.controls.gnssAntennas"
+                            [antennaRadomeCodelist]="antennaRadomeCodelist"
                             [siteLogModel]="siteLogModel">
         </gnss-antenna-group>
 

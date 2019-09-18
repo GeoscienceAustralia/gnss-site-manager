@@ -17,6 +17,8 @@
                 <gnss-site-log [parentForm]="siteForm"
                                [siteId]="siteId"
                                [siteLogModel]="siteLogModel"
+                               [antennaRadomeCodelist]="antennaRadomeCodelist"
+                               [receiverCodelist]="receiverCodelist"
                                (runningStatusEmitter)="updateLoadingStatus($event)">
                 </gnss-site-log>
             </div>

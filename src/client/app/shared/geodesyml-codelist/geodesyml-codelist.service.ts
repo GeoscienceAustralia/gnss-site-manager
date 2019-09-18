@@ -12,12 +12,6 @@ import { JsonixService } from '../jsonix/jsonix.service';
 @Injectable()
 export class GeodesyMLCodelistService {
 
-    private static allReceiverCodes: string[] = [];
-
-    private static allAntennaRadomeCodes: string[] = [];
-
-    private static allRadomeCodes: string[] = [];
-
     constructor(private http: Http,
                 private jsonixService: JsonixService,
                 private constantsService: ConstantsService) {}
@@ -29,21 +23,9 @@ export class GeodesyMLCodelistService {
         return this.http.get(url)
             .map((response: Response) => {
                 let json = this.jsonixService.geodesyMLToJson(response.text());
-                return this.jsonToCodelist(json, codeName);
+                return this.jsonToCodelist(json);
             })
             .catch(this.handleError);
-    }
-
-    public getReceiverCodes(): string[] {
-        return GeodesyMLCodelistService.allReceiverCodes;
-    }
-
-    public getAntennaRadomeCodes(): string[] {
-        return GeodesyMLCodelistService.allAntennaRadomeCodes;
-    }
-
-    public getRadomeCodes(): string[] {
-        return GeodesyMLCodelistService.allRadomeCodes;
     }
 
     private handleError(error: any): ErrorObservable {
@@ -54,24 +36,13 @@ export class GeodesyMLCodelistService {
         return Observable.throw(errorMsg);
     }
 
-    private jsonToCodelist(json: any, codeName: string): string[] {
-        let codeList = [];
+    private jsonToCodelist(json: any): string[] {
+        let codelist = [];
         let codeEntries = json['gmx:CodeListDictionary']['codeEntry'];
         for (let codeEntry of codeEntries) {
             let codeValue = codeEntry.codeDefinition['gmx:CodeDefinition'].identifier.value;
-            codeList.push(codeValue);
+            codelist.push(codeValue);
         }
-        if (codeName.includes('Receiver')) {
-            GeodesyMLCodelistService.allReceiverCodes = codeList;
-        }
-        if (codeName.includes('Antenna')) {
-            GeodesyMLCodelistService.allAntennaRadomeCodes = codeList;
-            let codeSet = new Set<string>();
-            codeList.forEach((combination) => {
-                codeSet.add(combination.slice(16, 20));
-            });
-            GeodesyMLCodelistService.allRadomeCodes = Array.from(codeSet);
-        }
-        return codeList;
+        return codelist;
     }
 }
