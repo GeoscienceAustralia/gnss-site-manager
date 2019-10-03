@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DatepickerModule, TooltipModule } from 'ng2-bootstrap';
+import { DatepickerModule, TooltipModule } from 'ngx-bootstrap';
 import { TypeaheadModule } from 'ngx-bootstrap-ga';
 import { TextInputComponent } from './text-input.component';
 import { TypeaheadInputComponent } from './typeahead-input.component';

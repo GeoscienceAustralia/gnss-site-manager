@@ -16,11 +16,10 @@ export class LoginActions {
      */
     public login(username: string, password: string) {
         console.log('Log in as user "' + username + '" ...');
+        this.caller.loginMenu.click();
         this.caller.loginLink.isPresent().then((loginLinkIsPresent: boolean) => {
             if (loginLinkIsPresent) {
-                this.caller.loginMenu.click();
                 this.caller.loginLink.click();
-
                 this.disableWaitingForAngular();
                 let EC = protractor.ExpectedConditions;
                 let loginButtonExpected = EC.presenceOf(this.openAmPage.loginButton);
@@ -50,9 +49,9 @@ export class LoginActions {
      * Log out if are not already
      */
     public logout() {
+        this.caller.loginMenu.click();
         this.caller.logoutLink.isPresent().then((logoutLinkIsPresent: boolean) => {
             if (logoutLinkIsPresent) {
-                this.caller.loginMenu.click();
                 this.caller.logoutLink.click();
                 this.disableWaitingForAngular();
                 var EC = protractor.ExpectedConditions;
@@ -74,9 +73,9 @@ export class LoginActions {
      */
     public loginAs(username: string, password: string): void {
         console.log('Log in as user "' + username + '" ...');
+        this.caller.loginMenu.click();
         this.caller.profileLink.isPresent().then((isLoggedIn: boolean) => {
             if (isLoggedIn) {
-                this.caller.loginMenu.click();
                 this.caller.profileLink.getText().then((value: string) => {
                     let oldUsername: string = value.replace('Profile', '').trim();
                     if (oldUsername !== username) {
@@ -90,11 +89,10 @@ export class LoginActions {
             }
 
             browser.waitForAngular();
+            this.caller.loginMenu.click();
             this.caller.loginLink.isPresent().then((loginLinkIsPresent: boolean) => {
                 if (loginLinkIsPresent) {
-                    this.caller.loginMenu.click();
                     this.caller.loginLink.click();
-
                     this.disableWaitingForAngular();
                     let EC = protractor.ExpectedConditions;
                     let loginButtonExpected = EC.presenceOf(this.openAmPage.loginButton);

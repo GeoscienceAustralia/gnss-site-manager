@@ -11,12 +11,12 @@
             <span class="title">GNSS Site Manager</span>
         </div>
         <div class="dropdown-menu-panel" id="dropdown-menu-panel">
-            <span dropdown *ngIf="siteId" id="site-id-dropdown-menu">
+            <span dropdown *ngIf="siteId" id="site-id-dropdown-menu" class="dropdown">
                 <nav dropdownToggle class="site-id-menu">
                     <span class="site-id-menu-label">{{siteId == 'newSite' ? 'New Site' : siteId}}</span>
                     <i class="glyphicon glyphicon-triangle-bottom dropdown-icon"></i>
                 </nav>
-                <ul dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu-right">
+                <ul *dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu dropdown-menu-right">
                     <li role="menuitem" title="Save changes">
                         <a (click)="save()" [ngClass]="{'disabled': isSaveDisabled()}">Save</a>
                     </li>
@@ -29,12 +29,12 @@
                     </li>
                 </ul>
             </span>
-            <span dropdown id="profile-dropdown-menu">
+            <span dropdown *ngIf="!user" id="login-profile-dropdown-menu" class="dropdown">
                 <nav dropdownToggle class="profile-menu">
-                    <i class="glyphicon glyphicon-user" [ngClass]="{'dim-icon': !user}"></i>
+                    <i class="glyphicon glyphicon-user dim-icon"></i>
                     <i class="glyphicon glyphicon-triangle-bottom dropdown-icon"></i>
                 </nav>
-                <ul *ngIf="!user" dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu-right">
+                <ul *dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu dropdown-menu-right">
                     <li role="menuitem">
                         <a (click)="login()">Login</a>
                     </li>
@@ -42,7 +42,13 @@
                         <a [routerLink]="['/userRegistration']">Register</a>
                     </li>
                 </ul>
-                <ul *ngIf="user" dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu-right">
+            </span>
+            <span dropdown *ngIf="!!user" id="logout-profile-dropdown-menu" class="dropdown">
+                <nav dropdownToggle class="profile-menu">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <i class="glyphicon glyphicon-triangle-bottom dropdown-icon"></i>
+                </nav>
+                <ul *dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu dropdown-menu-right">
                     <li role="menuitem">
                         <a (click)="showUserProfile()">{{user.profile.sub}} Profile</a>
                     </li>
@@ -55,11 +61,11 @@
                     </li>
                 </ul>
             </span>
-            <span dropdown id="navigation-dropdown-menu">
+            <span dropdown id="navigation-dropdown-menu" class="dropdown">
                 <nav dropdownToggle class="navigation-menu">
                     <i class="glyphicon glyphicon-menu-hamburger"></i>
                 </nav>
-                <ul dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu-right">
+                <ul *dropdownMenu role="menu" aria-labelledby="menu-button" class="dropdown-menu dropdown-menu-right">
                     <li role="menuitem" title="Navigate to the Search and Select Sites page">
                         <a [routerLink]="['/']">Select Site</a>
                     </li>
@@ -74,7 +80,7 @@
                     <!-- <li role="menuitem"><a (click)="clearCache()">Update Application</a></li> -->
                     <li class="divider dropdown-divider"></li>
                     <li role="menuitem" *ngFor="let link of webUrlLinks">
-                        <a class="dropdown-item" href="{{link.url}}" target="_blank">{{link.name}}</a>
+                        <a href="{{link.url}}" target="_blank">{{link.name}}</a>
                     </li>
                 </ul>
             </span>
