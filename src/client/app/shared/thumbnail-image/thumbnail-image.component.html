@@ -1,0 +1,38 @@
+<div *ngIf="!showFullSizeImage" class="thumbnail-image-container">
+    <div class="thumbnail-image-panel"
+         [ngStyle]="{'max-height': imagePanelHeight + 'px'}">
+        <div class="thumbnail-image"
+             [ngStyle]="{'height':thumbImageHeight + 'px', 'width':thumbImageWidth + 'px'}"
+             *ngFor="let image of images; let i = index">
+            <div class="img-frame"
+                 [ngClass]="{'green-border': image.status == imageStatus.INVALID,
+                             'fat-green-border': image.status == imageStatus.DELETED}">
+                <img [src]="image.thumbnailImage" #imgRef
+                     title="Click to view full size image"
+                     [ngClass]="{'mouse-pointer': allowViewFullSizeImage,
+                                 'fat-green-border': image.status == imageStatus.NEW_IMAGE
+                                                  || image.status == imageStatus.NEW_URL
+                                                  || image.status == imageStatus.DELETING}"
+                     (click)="viewFullSizeImage(i)"
+                     (error)="onErrorImgSrc(imgRef, image)">
+                <span class="image-tag" *ngIf="image.status == imageStatus.INVALID">Image not exist</span>
+                <span class="image-tag" *ngIf="image.status == imageStatus.DELETED">Mark to delete</span>
+                <button *ngIf="isAuthorised"
+                        class="btn btn-delete {{ getDeleteButtonCss(image) }}"
+                        [title]="getDeleteButtonTooltip(image)"
+                        (click)="deleteImage(i)">
+                    <i class="glyphicon {{ getGlyphiconRemoveCss(image) }}"></i>
+                    {{ getDeleteButtonName(image) }}
+                </button>
+            </div>
+            <div class="img-title" *ngIf="image.title">
+                {{ image.title }}<br/>{{ image.createdDate }}
+            </div>
+        </div>
+    </div>
+</div>
+<full-size-image *ngIf="showFullSizeImage"
+                 [images]="images"
+                 [currentImageIndex]="fullSizeImageIndex"
+                 (closeEvent)="closeFullSizeImage()">
+</full-size-image>
