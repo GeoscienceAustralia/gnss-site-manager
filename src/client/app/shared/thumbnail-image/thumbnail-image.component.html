@@ -1,0 +1,26 @@
+<div *ngIf="!showFullSizeImage"
+     class="thumbnail-image-container">
+    <div class="thumbnail-image-panel"
+         [ngStyle]="{'max-height': imagePanelHeight + 'px'}">
+        <div class="thumbnail-image"
+             [ngClass]="{'allow-popup-full-image': allowPopupFullSizeImage}"
+             [ngStyle]="{'height':thumbImageHeight + 'px', 'width':thumbImageWidth + 'px'}"
+             *ngFor="let image of images; let i = index">
+            <img [src]="image.thumbnailImage"
+                 [alt]="image.name"
+                 title="Click to view full size image"
+                 (click)="viewFullSizeImage(i)">
+            <button *ngIf="canDeleteImages"
+                    class="btn btn-danger btn-xs top-right-corner"
+                    (click)="deleteImage(i)">
+                <i class="glyphicon glyphicon-remove"></i>
+            </button>
+            <div class="img-title" *ngIf="image.title">{{ image.title }}<br/>{{ image.createdDate }}</div>
+        </div>
+    </div>
+</div>
+<full-size-image *ngIf="showFullSizeImage"
+                 [images]="images"
+                 [currentImageIndex]="fullSizeImageIndex"
+                 (closeEvent)="closeFullSizeImage()">
+</full-size-image>
