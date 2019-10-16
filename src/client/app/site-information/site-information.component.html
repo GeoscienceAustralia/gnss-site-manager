@@ -18,6 +18,11 @@
                        [siteLogModel]="siteLogModel">
         </site-location>
 
+        <gnss-site-image [parentForm]="siteInformationForm"
+                         [siteId]="siteId"
+                         [siteLogModel]="siteLogModel">
+        </gnss-site-image>
+
         <gnss-responsible-party-group [parentForm]="siteInformationForm.controls.siteOwner"
                                       [partyType]="responsiblePartyType.siteOwner"
                                       [isMandatory]="false"

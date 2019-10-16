@@ -74,6 +74,14 @@ let siteLocationMap = new ObjectMap()
     .addFieldMap('notes', 'notes')
 ;
 
+let siteImageMap = new ObjectMap()
+    .addFieldMap('document.name[0].value', 'name')
+    .addFieldMap('document.body.fileReference.href', 'fileReference')
+    .addFieldMap('document.type.value', 'imageType')
+    .addFieldMap('document.description.value', 'description')
+    .addFieldMap('document.createdDate.value[0]', 'createdDate')
+;
+
 let responsiblePartyMap = new ObjectMap()
 
     .addSourcePreMap((source: any): any => {
@@ -371,6 +379,7 @@ let siteLogMap = new ObjectMap()
     .addFieldMap('formInformation.formInformation', 'formInformation', formInformationMap)
     .addFieldMap('siteIdentification.siteIdentification', 'siteInformation.siteIdentification', siteIdentificationMap)
     .addFieldMap('siteLocation.siteLocation', 'siteInformation.siteLocation', siteLocationMap)
+    .addFieldMap('associatedDocument', 'siteInformation.siteImages', siteImageMap)
 
     .addFieldMap('siteOwner', 'siteOwner[0]', responsiblePartyMap)
     .addFieldMap('siteContacts', 'siteContacts', responsiblePartyMap)

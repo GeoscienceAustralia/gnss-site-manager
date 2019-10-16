@@ -1,0 +1,225 @@
+<div [formGroup]="siteImagesForm" class="panel panel-level-2">
+    <div class="panel-heading item-header">
+        <span class="panel-title cursor-ptr" tabindex="0"
+              (keyup.space)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
+              (keyup.enter)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
+              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+            <i class="glyphicon"
+               [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
+            </i>
+            {{getItemName()}}
+        </span>
+    </div>
+    <div class="panel-body item-body" [hidden]="!isOpen">
+        <div class="panel panel-level-3">
+            <div class="panel-heading item-header">
+                <span class="panel-title cursor-ptr" tabindex="0"
+                      (keyup.space)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)"
+                      (keyup.enter)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)"
+                      (click)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)">
+                    <i class="glyphicon"
+                       [ngClass]="{'glyphicon-minus-sign': isCurrentImgPanelOpen, 'glyphicon-plus-sign': !isCurrentImgPanelOpen}">
+                    </i>
+                    Current Site Images ({{ currentImageObjects.length }})
+                </span>
+            </div>
+            <div class="panel-body item-body" [hidden]="!isCurrentImgPanelOpen">
+                <div class="form-group">
+                    <thumbnail-image [images]="currentImageObjects"
+                                     [imageSize]="imageSize"></thumbnail-image>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-level-3">
+            <div class="panel-heading item-header">
+                <span class="panel-title cursor-ptr" tabindex="0"
+                      (keyup.space)="isHistoricImgPanelOpen = miscUtils.scrollIntoView($event, isHistoricImgPanelOpen)"
+                      (keyup.enter)="isHistoricImgPanelOpen = miscUtils.scrollIntoView($event, isHistoricImgPanelOpen)"
+                      (click)="isHistoricImgPanelOpen = miscUtils.scrollIntoView($event, isHistoricImgPanelOpen)">
+                    <i class="glyphicon"
+                       [ngClass]="{'glyphicon-minus-sign': isHistoricImgPanelOpen, 'glyphicon-plus-sign': !isHistoricImgPanelOpen}">
+                    </i>
+                    Historic Site Images ({{ historicImageObjects.length }})
+                </span>
+            </div>
+            <div class="panel-body item-body" [hidden]="!isHistoricImgPanelOpen">
+                <div class="form-group">
+                    <thumbnail-image [images]="historicImageObjects"
+                                     [imageSize]="imageSize"
+                                     [canDeleteImages]="isUserAuthorisedToEdit"
+                                     (imageRemoveEvent)="handleImageDeleteEvent($event)"></thumbnail-image>
+                </div>
+                <div class="form-group" *ngIf="siteImagesDeleted.length > 0" style="display: inline-block;">
+                    <table class="table table-striped table-hover" role="grid">
+                        <caption>Site Images Deleted From System Storage</caption>
+                        <thead>
+                        <tr role="row">
+                            <th>Description</th>
+                            <th>Image Name</th>
+                            <th>Image URL</th>
+                            <th>Date Taken</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" *ngFor="let image of siteImagesDeleted; let i = index">
+                            <td name="description">{{image.description}}</td>
+                            <td name="originalName">{{image.originalName}}</td>
+                            <td name="fileReference">{{image.fileReference}}</td>
+                            <td name="createdDate">{{miscUtils.formatDateTimeSimple(image.createdDate)}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-warning">Note: you must click "Save" button to save changes to sitelog geodesyML</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="container centered clear-pad overlay" *ngIf="isUploading">
+            <div class="loading-img"></div>
+        </div>
+        <div [formGroup]="imageUploadForm" class="panel panel-level-3">
+            <div class="panel-heading item-header">
+                <span class="panel-title cursor-ptr" tabindex="0"
+                      (keyup.space)="isUploadPanelOpen = miscUtils.scrollIntoView($event, isUploadPanelOpen)"
+                      (keyup.enter)="isUploadPanelOpen = miscUtils.scrollIntoView($event, isUploadPanelOpen)"
+                      (click)="isUploadPanelOpen = miscUtils.scrollIntoView($event, isUploadPanelOpen)">
+                    <i class="glyphicon"
+                       [ngClass]="{'glyphicon-minus-sign': isUploadPanelOpen, 'glyphicon-plus-sign': !isUploadPanelOpen}">
+                    </i>
+                    {{useUploadMethod ? "Upload Site Images" : "Add Site Image Links"}}
+                </span>
+            </div>
+            <div class="panel-body item-body" [hidden]="!isUploadPanelOpen">
+                <div class="form-group">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
+                        Upload Method
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <div class="gray-border">
+                            <span class="img-upload-radio">
+                                <input type="radio"
+                                       formControlName="useUploadMethod"
+                                       id="uploadImages"
+                                       [value]="true">
+                                <label for="uploadImages">Upload Images</label>
+                            </span>
+                            <span class="img-upload-radio">
+                                <input type="radio"
+                                       formControlName="useUploadMethod"
+                                       id="addImageLinks"
+                                       [value]="false">
+                                <label for="addImageLinks">Add Image Links</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
+                        Image Description
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <ng-select [allowClear]="true"
+                                   required="true"
+                                   [items]="getSiteImageDefinitionValues()"
+                                   [disabled]="imageUploadForm.disabled"
+                                   (data)="setImageDescription($event.text)">
+                        </ng-select>
+                    </div>
+                </div>
+                <datetime-input [form]="imageUploadForm"
+                                controlName="createdDate"
+                                [required]="true">Date Taken (UTC)</datetime-input>
+                <div class="form-group">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
+                        {{useUploadMethod ? 'Select Image' : 'Image Link'}}
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <input *ngIf="useUploadMethod" #imageInput
+                               type='file'
+                               accept="image/*"
+                               [disabled]="imageUploadForm.disabled"
+                               (change)="previewImageFile(imageInput)">
+                        <input *ngIf="!useUploadMethod" type="text"
+                               class="form-control"
+                               formControlName="imageUrl"
+                               (input)="previewImageLink($event)"
+                               (paste)="previewImageLink($event)">
+                        <small *ngIf="imagePreviewError" class="alert alert-danger">{{imagePreviewError}}</small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="isValidImage()">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">
+                        Preview Image
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <div class="gray-border">
+                            <img [src]="useUploadMethod ? selectedImageContent : fileReference"
+                                 (error)="setImagePreviewErrorMessage()"
+                                 width="100%" alt="Invalid site image path or URL.">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12 extra-v-margin">
+                        <button *ngIf="useUploadMethod"
+                                class="btn btn-primary btn-long-xxs"
+                                [ngClass]="{'disabled': !canAddImage()}"
+                                (click)="uploadImageFile()">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            Upload Image
+                        </button>
+                        <button *ngIf="!useUploadMethod"
+                                class="btn btn-primary btn-long-xxs"
+                                [ngClass]="{'disabled': !canAddImage()}"
+                                (click)="addImageLink()">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            Add Image Link
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group centered" *ngIf="imageUploadError">
+                    <p class="text-danger">{{imageUploadError}}</p>
+                </div>
+                <div class="form-group" *ngIf="newSiteImages.length > 0">
+                    <table class="table table-striped table-hover" style="overflow-x: auto;" role="grid">
+                        <caption>Site Images Uploaded To System Storage</caption>
+                        <thead>
+                            <tr role="row">
+                                <th>Description</th>
+                                <th>Image Name</th>
+                                <th>Image URL</th>
+                                <th>Date Taken</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" *ngFor="let image of newSiteImages; let i = index">
+                                <td name="description">{{image.description}}</td>
+                                <td name="originalName">{{image.originalName}}</td>
+                                <td name="fileReference">{{image.fileReference}}</td>
+                                <td name="createdDate">{{miscUtils.formatDateTimeSimple(image.createdDate)}}</td>
+                                <td name="remove">
+                                    <button class="btn btn-danger btn-xs"
+                                                   (click)="removeImageFromUploadList(i, image.name)">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-warning">Note: you must click "Save" button to save changes to sitelog geodesyML</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
