@@ -1,0 +1,81 @@
+ng-select a.btn-xs {
+  margin-right: 20px !important;
+  margin-top: 2px;
+}
+.img-upload-radio {
+  padding-left: 5px;
+}
+input[type="file"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  color: #333;
+  font-size: 14px;
+  height: 34px;
+  line-height: 1.42857143;
+  transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  width: 100%;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+}
+/* ::-ms-browse,   for IE */
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #006983;
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  padding: 0 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+input[type="file"]:disabled::-webkit-file-upload-button {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+.gray-border {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+}
+.gray-border label {
+  font-weight: normal;
+  margin: 0;
+  padding: 0 2px;
+}
+.gray-border:hover {
+  cursor: pointer;
+}
+.gray-border input[disabled]:hover {
+  cursor: not-allowed;
+}
+table {
+  border: 1px solid #e9f5fa;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+caption {
+  background-color: #e9f5fa;
+  color: #222;
+  font-size: 15px;
+  font-weight: bold;
+  height: 34px;
+  text-align: center;
+}
+thead,
+tfoot {
+  text-align: center;
+  vertical-align: middle;
+}
+tbody,
+tbody > tr > td {
+  vertical-align: middle;
+}

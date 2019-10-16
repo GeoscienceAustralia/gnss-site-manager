@@ -17,6 +17,7 @@ export class SiteInformationComponent implements OnInit {
 
     @Input() parentForm: FormGroup;
     @Input() siteLogModel: SiteLogViewModel;
+    @Input() siteId: string;
 
     public siteInformationForm: FormGroup;
     public miscUtils: any = MiscUtils;

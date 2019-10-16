@@ -21,23 +21,88 @@ export function main() {
 
     it('should parse valid GeodesyML', () => {
       let geodesyml: string = `<geo:GeodesyML xsi:schemaLocation="urn:xml-gov-au:icsm:egeodesy:0.5"
- xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.5"
- xmlns:gml="http://www.opengis.net/gml/3.2"
- xmlns:ns9="http://www.w3.org/1999/xlink"
- xmlns:gmd="http://www.isotc211.org/2005/gmd"
- xmlns:gmx="http://www.isotc211.org/2005/gmx"
- xmlns:om="http://www.opengis.net/om/2.0" xmlns:gco="http://www.isotc211.org/2005/gco"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" gml:id="GeodesyMLType_20">
-<geo:siteLog></geo:siteLog>
-</geo:GeodesyML>`;
-      let json: string = jsonixService.geodesyMLToJson(geodesyml);
+         xmlns:geo="urn:xml-gov-au:icsm:egeodesy:0.5"
+         xmlns:gml="http://www.opengis.net/gml/3.2"
+         xmlns:ns9="http://www.w3.org/1999/xlink"
+         xmlns:gmd="http://www.isotc211.org/2005/gmd"
+         xmlns:gmx="http://www.isotc211.org/2005/gmx"
+         xmlns:om="http://www.opengis.net/om/2.0" xmlns:gco="http://www.isotc211.org/2005/gco"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" gml:id="GeodesyMLType_20">
+            <geo:siteLog>
+                <geo:associatedDocument>
+                    <geo:Document gml:id="image_1">
+                        <gml:description>Antenna North Facing</gml:description>
+                        <gml:name>ALIC_ant_000_20191027T143000.jpg</gml:name>
+                        <geo:type>image/jpg</geo:type>
+                        <geo:createdDate>2019-10-27T14:30:00Z</geo:createdDate>
+                        <geo:body>
+                            <geo:fileReference
+                                ns9:href="http://localhost:4572/gnss-metadata-document-storage-local/ALIC_ant_000_20191027T143000.jpg"/>
+                        </geo:body>
+                    </geo:Document>
+                </geo:associatedDocument>
+                <geo:associatedDocument>
+                    <geo:Document gml:id="image_2">
+                        <gml:description>Antenna East Facing</gml:description>
+                        <gml:name>ALIC_ant_090_20191027T143500.jpg</gml:name>
+                        <geo:type>image/jpg</geo:type>
+                        <geo:createdDate>2019-10-27T14:35:00Z</geo:createdDate>
+                        <geo:body>
+                            <geo:fileReference
+                                ns9:href="http://localhost:4572/gnss-metadata-document-storage-local/ALIC_ant_090_20191027T143500.jpg"/>
+                        </geo:body>
+                    </geo:Document>
+                </geo:associatedDocument>
+            </geo:siteLog>
+        </geo:GeodesyML>`;
+      let json: any = jsonixService.geodesyMLToJson(geodesyml);
       expect(json).not.toBeNull();
+      let documentObj = json['geo:GeodesyML'].elements[0]['geo:siteLog'].associatedDocument[0].document;
+      expect(documentObj).not.toBeUndefined();
+      expect(documentObj.description.value).toEqual('Antenna North Facing');
     });
 
     it('should parse valid Json', () => {
-      let json: string = `{"geo:siteLog":{"TYPE_NAME":"GEODESYML_0_5.SiteLogType"}}`;
+      let json: string = `{"geo:siteLog":{"TYPE_NAME":"GEODESYML_0_5.SiteLogType",
+        "associatedDocument": [
+            {
+                "TYPE_NAME": "GEODESYML_0_5.DocumentPropertyType",
+                "document": {
+                    "TYPE_NAME": "GEODESYML_0_5.DocumentType",
+                    "description": {
+                        "TYPE_NAME": "GML_3_2_1.StringOrRefType",
+                        "value": "Antenna East Facing"
+                    },
+                    "name": [
+                        {
+                            "TYPE_NAME": "GML_3_2_1.CodeType",
+                            "value": "ALIC_ant_090_20200214T043900.png"
+                        }
+                    ],
+                    "type": {
+                        "TYPE_NAME": "GML_3_2_1.CodeType",
+                        "value": "image/png"
+                    },
+                    "createdDate": {
+                        "TYPE_NAME": "GML_3_2_1.TimePositionType",
+                        "value": [
+                            "2020-02-14T04:39:00.000Z"
+                        ]
+                    },
+                    "body": {
+                        "TYPE_NAME": "GEODESYML_0_5.DocumentType.BODY",
+                        "fileReference": {
+                            "TYPE_NAME": "GML_3_2_1.ReferenceType",
+                            "href": "http://localstack:4572/gnss-metadata-document-storage-local/ALIC_ant_090_20200214T043900.png"
+                        }
+                    }
+                }
+            }
+        ]
+        }}`;
       let geodesyMl: string = jsonixService.jsonToGeodesyML(JSON.parse(json));
       expect(geodesyMl).not.toBeNull();
+      expect(geodesyMl).toContain('<geo:associatedDocument>');
     });
 
     it('should error on invalid GeodesyML', () => {
