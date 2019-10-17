@@ -92,6 +92,8 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.subscription = this.siteLogService.getApplicationState().subscribe((applicationState: ApplicationState) => {
             if (applicationState.applicationSaveState === ApplicationSaveState.saved) {
                 this.init();
+                this.imageUploadForm.controls['imageUrl'].setValue(null);
+                this.imageUploadForm.controls['imageUrl'].markAsPristine();
                 this.imageUploadForm.controls['createdDate'].markAsPristine();
             }
         });
@@ -164,9 +166,11 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
             if (authorised) {
                 this.siteImagesForm.enable();
                 this.imageUploadForm.enable();
+                this.isUserAuthorisedToEdit = true;
             } else {
                 this.siteImagesForm.disable();
                 this.imageUploadForm.disable();
+                this.isUserAuthorisedToEdit = false;
             }
         });
     }
@@ -337,14 +341,16 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.imageFileSelected = null;
         this.imagePreviewError = null;
         this.selectedImageContent = null;
+        this.description = null;
 
         if (this.useUploadMethod) {
-            if (this.fileInputElem) {
-                this.fileInputElem.value = '';
-            }
-        } else {
             this.imageUploadForm.controls['imageUrl'].setValue(null);
             this.imageUploadForm.controls['imageUrl'].markAsPristine();
+        } else {
+            if (this.fileInputElem) {
+                this.fileInputElem.value = '';
+                console.log('2. this.useUploadMethod='+this.useUploadMethod);
+            }
         }
 
         if (this.newSiteImages.length > 0) {

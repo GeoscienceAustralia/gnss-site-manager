@@ -78,6 +78,14 @@ export class ProjectConfig extends SeedConfig {
         path: 'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
       },
       {
+        name: 'ng2-select',
+        path: 'node_modules/ng2-select/bundles/ng2-select.umd.min.js'
+      },
+      {
+        name: 'ng2-select/*',
+        path: 'node_modules/ng2-select/bundles/ng2-select.umd.min.js'
+      },
+      {
         name: 'moment-timezone',
         path: 'node_modules/moment-timezone/moment-timezone.js'
         //builds/moment-timezone-with-data.js'
