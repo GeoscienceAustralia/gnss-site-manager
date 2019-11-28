@@ -5,6 +5,7 @@ export * from './cors-site/index';
 export * from './cors-network/index';
 export * from './cors-setup/index';
 export * from './geodesyml-codelist/index';
+export * from './associated-document/index';
 export * from './site-log/index';
 export * from './global/index';
 export * from './service-worker/index';
