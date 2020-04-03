@@ -1,5 +1,5 @@
 import { ReflectiveInjector } from '@angular/core';
-import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
+import { BaseRequestOptions, ConnectionBackend, Headers, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { User } from 'oidc-client';
 
@@ -12,7 +12,7 @@ export function main() {
         let service: AssociatedDocumentService;
         const statusCreated = 201;
         const statusNoContent = 204;
-        const documentName = 'AssociatedDocument_Upload_Testing.txt';
+        const documentName = 'document_to_upload.txt';
         const mockUserService = new (class MockUserService {
             userSettings: any = {id_token: '', session_state: '', access_token: '',
                                  refresh_token: '', token_type: '', scope: '',
@@ -41,9 +41,10 @@ export function main() {
             service = injector.get(AssociatedDocumentService);
 
             let backend = injector.get(MockBackend);
+            let mockHeaders = new Headers({'location': 'http://localhost:1234/storage/' + documentName});
             let responses: Response[] = [
                 new Response(new ResponseOptions({
-                    body: 'document-url:' + documentName,
+                    headers: mockHeaders,
                     status: statusCreated
                 })),
                 new Response(new ResponseOptions({status: statusNoContent}))
@@ -57,9 +58,9 @@ export function main() {
         it('should upload a document to data storage', () => {
             let file = new File(['A dummy file for testing.'], documentName, {type: 'text/plain'});
             service.uploadDocument(documentName, file).subscribe((response: Response) => {
-                const fileReference = response.text();
                 expect(response.status).toBe(statusCreated);
-                expect(fileReference).toContain(documentName);
+                const location = response.headers.get('location');
+                expect(location).toContain(documentName);
             });
         });
 
