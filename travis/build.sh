@@ -10,11 +10,15 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
     aws configure set region ap-southeast-2 --profile geodesy
     aws configure set output json --profile geodesy
     case "${TRAVIS_BRANCH}" in
-        "next")
-            npm run build.prod -- --config-env dev
-            ./deploy.sh dev
+        "test")
+            npm run build.prod -- --config-env test
+            ./deploy.sh test
         ;;
-        "master")
+        "prod")
+            npm run build.prod -- --config-env prod
+            ./deploy.sh prod
+        ;;
+        *)
             npm run build.prod -- --config-env dev
             ./deploy.sh dev
         ;;
