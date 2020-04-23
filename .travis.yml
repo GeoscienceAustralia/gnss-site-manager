@@ -21,7 +21,8 @@ after_failure:
 branches:
   only:
     - master
-    - next
+    - test
+    - prod
 
 cache:
   directories: node_modules
