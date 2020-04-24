@@ -1,0 +1,25 @@
+<div class="input-group" [formGroup]="form">
+    <input type="text"
+           id="site-image-input"
+           class="form-control z-lowest"
+           [formControlName]="controlName"
+           [disabled]="true"
+           (click)="openFileBrowser($event)">
+    <span class="input-group-btn">
+        <button type="button"
+                id="browse-image-btn"
+                class="btn btn-default btn-image z-lowest"
+                [disabled]="form.disabled"
+                (click)="openFileBrowser($event)">
+            <i class="glyphicon glyphicon-picture"></i>
+        </button>
+    </span>
+    <input type="file" #imageInput
+           id="dummy-file-input"
+           [disabled]="form.disabled"
+           (change)="chooseFile(imageInput)">
+    <small [hidden]="!formControl.errors"
+           class="alert alert-danger">
+        {{getErrorReport()}}
+    </small>
+</div>
