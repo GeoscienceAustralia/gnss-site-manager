@@ -1,0 +1,18 @@
+<div class="input-group" [formGroup]="form">
+    <input type='text'
+           [formControlName]="controlName"
+           class="form-control z-lowest"
+           [disabled]="true">
+    <span class="input-group-btn z-lowest">
+        <label for="dummy-file-input"
+               class="btn btn-primary">
+            <!-- <i class="glyphicon glyphicon-picture hide-sm"></i> -->
+            Choose File
+        </label>
+        <input id="dummy-file-input"
+               type="file" #imageInput
+               [disabled]="form.disabled"
+               (change)="chooseFile(imageInput)">
+    </span>
+    <small [hidden]="!formControl.errors" class="alert alert-danger">{{getErrorReport()}}</small>
+</div>{{imageFileSelected}}

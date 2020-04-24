@@ -138,11 +138,11 @@
                         {{useUploadMethod ? 'Select Image' : 'Image Link'}}
                     </label>
                     <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                        <input *ngIf="useUploadMethod" #imageInput
-                               type='file'
-                               accept="image/*"
-                               [disabled]="imageUploadForm.disabled"
-                               (change)="previewImageFile(imageInput)">
+                        <file-input *ngIf="useUploadMethod"
+                                    [form]="imageUploadForm"
+                                    controlName="imageUrl"
+                                    [required]="true"
+                                    (fileSelectEvent)="handleImageSelectEvent($event)"></file-input>
                         <input *ngIf="!useUploadMethod" type="text"
                                class="form-control"
                                formControlName="imageUrl"

@@ -199,18 +199,13 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.description = value;
     }
 
-    public previewImageFile(imageInput: HTMLInputElement): void {
-        this.fileInputElem = imageInput;
-        this.selectedImageContent = null;
-        this.imageUploadError = '';
-        if (imageInput.files && imageInput.files[0]) {
-            this.imageFileSelected = imageInput.files[0];
-            this.fileReader = new FileReader();
-            this.fileReader.readAsDataURL(this.imageFileSelected);
-            this.fileReader.onload = (event: any) => {
-                this.selectedImageContent = event.target.result;
-            };
-        }
+    public handleImageSelectEvent(imageSelected: File) {
+        this.imageFileSelected = imageSelected;
+        this.fileReader = new FileReader();
+        this.fileReader.readAsDataURL(this.imageFileSelected);
+        this.fileReader.onload = (event: any) => {
+            this.selectedImageContent = event.target.result;
+        };
     }
 
     public previewImageLink(event: any) {
