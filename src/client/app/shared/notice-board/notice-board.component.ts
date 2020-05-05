@@ -14,5 +14,7 @@ export class NoticeBoardComponent {
     public noticeText: string;
 
     constructor() {
+        this.noticeTitle = 'System Outage Notice';
+        this.noticeText = 'GNSS Site Manager application may be down for scheduled maintenance on 6 May 2020, between 9 am and 12 pm AEST.';
     }
 }
