@@ -6,6 +6,7 @@ import { DropdownModule, TooltipModule, CollapseModule  } from 'ng2-bootstrap';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { NoticeBoardComponent } from './notice-board/notice-board.component';
 import { StatusInfoComponent } from './status-info/status-info.component';
 import { CorsSiteService } from './cors-site/index';
 import { GeodesyMLCodelistService } from './geodesyml-codelist/geodesyml-codelist.service';
@@ -31,11 +32,13 @@ import { JsonViewModelService } from './json-data-view-model/index';
   declarations: [
     HeaderComponent,
     FooterComponent,
+    NoticeBoardComponent,
     StatusInfoComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
+    NoticeBoardComponent,
     StatusInfoComponent,
     CommonModule,
     FormsModule,
