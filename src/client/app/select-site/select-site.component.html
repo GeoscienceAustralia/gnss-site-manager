@@ -30,19 +30,14 @@
         </div>
       </div>
       <div class="panel-error" *ngIf="errorMessage">
-      <span class="alert-danger">
-        <i class="glyphicon glyphicon-exclamation-sign"></i>
-        Error in searching CORS sites
-      </span>
-        <br><br>
-      <span class="alert-warning">
-        {{errorMessage}}
-      </span>
-        <br><br>
-      <span>
-        Please <a href="http://www.ga.gov.au/contact-us" target="_blank">contact Geoscience Australia</a>
-        to report the error.
-      </span>
+        <p class="alert-danger">
+          <i class="glyphicon glyphicon-exclamation-sign"></i>
+          Error
+        </p>
+        <p>
+          We have encountered an unexpected error. We would like to fix this problem as soon as possible.
+          Please let us know by emailing us at <a href="mailto:gnss@ga.gov.au">gnss@ga.gov.au</a>.
+        </p>
       </div>
       <div class="panel panel-level-1">
         <div class="panel-heading">
