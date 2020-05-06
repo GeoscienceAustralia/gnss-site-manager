@@ -20,8 +20,10 @@ after_failure:
 
 branches:
   only:
+    - geodesyml-0.4
     - master
-    - next
+    - test
+    - prod
 
 cache:
   directories: node_modules
