@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Config, CorsSiteService, CorsSetupService, SiteLogService, DialogService, MiscUtils,
-         GeodesyMLCodelistService, ServiceWorkerService, JsonixService } from './shared/index';
+         GeodesyMLCodelistService, AssociatedDocumentService, ServiceWorkerService, JsonixService } from './shared/index';
 import { SiteComponent } from './site/site.component';
 import { JsonViewModelService } from './shared/json-data-view-model/json-view-model.service';
 
@@ -17,6 +17,7 @@ import { JsonViewModelService } from './shared/json-data-view-model/json-view-mo
     CorsSetupService,
     DialogService,
     GeodesyMLCodelistService,
+    AssociatedDocumentService,
     MiscUtils,
     JsonixService,
     ServiceWorkerService,

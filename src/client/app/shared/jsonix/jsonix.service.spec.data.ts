@@ -643,65 +643,69 @@ export class JsonServiceSpecData {
                 atSite: {},
                 formInformation: {},
                 siteIdentification: {
-                    bedrockCondition: '(FRESH/JOINTED/WEATHERED)',
-                    bedrockType: '(IGNEOUS/METAMORPHIC/SEDIMENTARY)',
-                    cdpNumber: 'n/a',
-                    dateInstalled: {
-                        value: [
-                            '1986-01-01 00:00:00'
-                        ]
-                    },
-                    distanceActivity: null,
-                    faultZonesNearby: {
-                        value: '(YES/NO/Name of the zone)'
-                    },
-                    foundationDepth: 0,
-                    fourCharacterID: 'ADE1',
-                    fractureSpacing: '(1-10 cm/11-50 cm/51-200 cm/over 200 cm)',
-                    geologicCharacteristic: {
-                        value: '(BEDROCK/CLAY/CONGLOMERATE/GRAVEL/SAND/etc)'
-                    },
-                    heightOfTheMonument: 0,
-                    iersDOMESNumber: '50109S001',
-                    markerDescription: 'None',
-                    monumentDescription: {
-                        value: 'None'
-                    },
-                    monumentFoundation: '(STEEL RODS, CONCRETE BLOCK, ROOF, etc)',
-                    monumentInscription: null,
-                    notes: null,
-                    siteName: 'A3ee'
+                    siteIdentification: {
+                        bedrockCondition: '(FRESH/JOINTED/WEATHERED)',
+                        bedrockType: '(IGNEOUS/METAMORPHIC/SEDIMENTARY)',
+                        cdpNumber: 'n/a',
+                        dateInstalled: {
+                            value: [
+                                '1986-01-01 00:00:00'
+                            ]
+                        },
+                        distanceActivity: null,
+                        faultZonesNearby: {
+                            value: '(YES/NO/Name of the zone)'
+                        },
+                        foundationDepth: 0,
+                        fourCharacterID: 'ADE1',
+                        fractureSpacing: '(1-10 cm/11-50 cm/51-200 cm/over 200 cm)',
+                        geologicCharacteristic: {
+                            value: '(BEDROCK/CLAY/CONGLOMERATE/GRAVEL/SAND/etc)'
+                        },
+                        heightOfTheMonument: 0,
+                        iersDOMESNumber: '50109S001',
+                        markerDescription: 'None',
+                        monumentDescription: {
+                            value: 'None'
+                        },
+                        monumentFoundation: '(STEEL RODS, CONCRETE BLOCK, ROOF, etc)',
+                        monumentInscription: null,
+                        notes: null,
+                        siteName: 'A3ee'
+                    }
                 },
                 siteLocation: {
-                    city: 'Salisbury',
-                    state: 'South Australia',
-                    countryCodeISO: {
-                        value: 'Australia'
-                    },
-                    tectonicPlate: {
-                        value: 'Australian'
-                    },
-                    notes: null,
-                    approximatePositionITRF: {
-                        cartesianPosition: {
-                            point: {
-                                pos: {
-                                    value: [
-                                        12,
-                                        2,
-                                        3
-                                    ]
-                                }
-                            }
+                    siteLocation: {
+                        city: 'Salisbury',
+                        state: 'South Australia',
+                        countryCodeISO: {
+                            value: 'Australia'
                         },
-                        geodeticPosition: {
-                            point: {
-                                pos: {
-                                    value: [
-                                        4,
-                                        5,
-                                        6
-                                    ]
+                        tectonicPlate: {
+                            value: 'Australian'
+                        },
+                        notes: null,
+                        approximatePositionITRF: {
+                            cartesianPosition: {
+                                point: {
+                                    pos: {
+                                        value: [
+                                            12,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                }
+                            },
+                            geodeticPosition: {
+                                point: {
+                                    pos: {
+                                        value: [
+                                            4,
+                                            5,
+                                            6
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -888,28 +892,30 @@ export class JsonServiceSpecData {
                     }
                 },
                 moreInformation: {
-                    TYPE_NAME: 'GEODESYML_0_4.MoreInformationType',
-                    dataCenter: [
-                        'CDDIS',
-                        'SIO'
-                    ],
-                    urlForMoreInformation: '',
-                    siteMap: '(Y or URL)',
-                    siteDiagram: '(Y or URL)',
-                    horizonMask: '(Y or URL)',
-                    monumentDescription: '(Y or URL)',
-                    sitePictures: '(Y or URL)',
-                    notes: '',
-                    antennaGraphicsWithDimensions: '',
-                    insertTextGraphicFromAntenna: '',
-                    doi: {
-                        TYPE_NAME: 'GML_3_2_1.CodeType',
-                        codeSpace: 'eGeodesy/doi',
-                        value: 'TODO'
+                    moreInformation: {
+                        TYPE_NAME: 'GEODESYML_0_5.MoreInformationType',
+                        dataCenter: [
+                            'CDDIS',
+                            'SIO'
+                        ],
+                        urlForMoreInformation: '',
+                        siteMap: '(Y or URL)',
+                        siteDiagram: '(Y or URL)',
+                        horizonMask: '(Y or URL)',
+                        monumentDescription: '(Y or URL)',
+                        sitePictures: '(Y or URL)',
+                        notes: '',
+                        antennaGraphicsWithDimensions: '',
+                        insertTextGraphicFromAntenna: '',
+                        doi: {
+                            TYPE_NAME: 'GML_3_2_1.CodeType',
+                            codeSpace: 'eGeodesy/doi',
+                            value: 'TODO'
+                        }
                     }
                 },
                 dataStreams: {
-                    TYPE_NAME: 'GEODESYML_0_4.DataStreamPropertyType'
+                    TYPE_NAME: 'GEODESYML_0_5.DataStreamPropertyType'
                 }
             }
         };
