@@ -44,28 +44,30 @@ export class DataViewTranslatorSpecData {
                 }
             },
             moreInformation: {
-                TYPE_NAME: 'GEODESYML_0_4.MoreInformationType',
-                dataCenter: [
-                    'CDDIS',
-                    'SIO'
-                ],
-                urlForMoreInformation: '',
-                siteMap: '(Y or URL)',
-                siteDiagram: '(Y or URL)',
-                horizonMask: '(Y or URL)',
-                monumentDescription: '(Y or URL)',
-                sitePictures: '(Y or URL)',
-                notes: '',
-                antennaGraphicsWithDimensions: '',
-                insertTextGraphicFromAntenna: '',
-                doi: {
-                    TYPE_NAME: 'GML_3_2_1.CodeType',
-                    codeSpace: 'eGeodesy/doi',
-                    value: 'TODO'
+                moreInformation: {
+                    TYPE_NAME: 'GEODESYML_0_5.MoreInformationType',
+                    dataCenter: [
+                        'CDDIS',
+                        'SIO'
+                    ],
+                    urlForMoreInformation: '',
+                    siteMap: '(Y or URL)',
+                    siteDiagram: '(Y or URL)',
+                    horizonMask: '(Y or URL)',
+                    monumentDescription: '(Y or URL)',
+                    sitePictures: '(Y or URL)',
+                    notes: '',
+                    antennaGraphicsWithDimensions: '',
+                    insertTextGraphicFromAntenna: '',
+                    doi: {
+                        TYPE_NAME: 'GML_3_2_1.CodeType',
+                        codeSpace: 'eGeodesy/doi',
+                        value: 'TODO'
+                    }
                 }
             },
             dataStreams: {
-                TYPE_NAME: 'GEODESYML_0_4.DataStreamPropertyType'
+                TYPE_NAME: 'GEODESYML_0_5.DataStreamPropertyType'
             },
             gnssAntennas: [],
             gnssReceivers: [
@@ -288,9 +290,9 @@ export class DataViewTranslatorSpecData {
         return {
             humiditySensors: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.HumiditySensorPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.HumiditySensorPropertyType',
                     humiditySensor: {
-                        TYPE_NAME: 'GEODESYML_0_4.HumiditySensorType',
+                        TYPE_NAME: 'GEODESYML_0_5.HumiditySensorType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -342,9 +344,9 @@ export class DataViewTranslatorSpecData {
             ],
             gnssReceivers: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.GnssReceiverPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.GnssReceiverPropertyType',
                     gnssReceiver: {
-                        TYPE_NAME: 'GEODESYML_0_4.GnssReceiverType',
+                        TYPE_NAME: 'GEODESYML_0_5.GnssReceiverType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -374,7 +376,7 @@ export class DataViewTranslatorSpecData {
                         manufacturerDescription: '',
                         manufacturerSerialNumber: '3213',
                         igsModelCode: {
-                            TYPE_NAME: 'GEODESYML_0_4.IgsReceiverModelCodeType',
+                            TYPE_NAME: 'GEODESYML_0_5.IgsReceiverModelCodeType',
                             codeList:
                                 'http://xml.gov.au/icsm/geodesyml/codelists/antenna-receiver-codelists.xml#GeodesyML_GNSSReceiverTypeCode',
                             codeListValue: 'ASHTECH Z-XII3',
@@ -413,9 +415,9 @@ export class DataViewTranslatorSpecData {
                     deletedReason: ''
                 },
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.GnssReceiverPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.GnssReceiverPropertyType',
                     gnssReceiver: {
-                        TYPE_NAME: 'GEODESYML_0_4.GnssReceiverType',
+                        TYPE_NAME: 'GEODESYML_0_5.GnssReceiverType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -445,7 +447,7 @@ export class DataViewTranslatorSpecData {
                         manufacturerDescription: '',
                         manufacturerSerialNumber: '3213',
                         igsModelCode: {
-                            TYPE_NAME: 'GEODESYML_0_4.IgsReceiverModelCodeType',
+                            TYPE_NAME: 'GEODESYML_0_5.IgsReceiverModelCodeType',
                             codeList:
                                 'http://xml.gov.au/icsm/geodesyml/codelists/antenna-receiver-codelists.xml#GeodesyML_GNSSReceiverTypeCode',
                             codeListValue: 'ASHTECH Z-XII3',
@@ -484,9 +486,9 @@ export class DataViewTranslatorSpecData {
                     deletedReason: ''
                 },
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.GnssReceiverPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.GnssReceiverPropertyType',
                     gnssReceiver: {
-                        TYPE_NAME: 'GEODESYML_0_4.GnssReceiverType',
+                        TYPE_NAME: 'GEODESYML_0_5.GnssReceiverType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -516,7 +518,7 @@ export class DataViewTranslatorSpecData {
                         manufacturerDescription: '',
                         manufacturerSerialNumber: '3213',
                         igsModelCode: {
-                            TYPE_NAME: 'GEODESYML_0_4.IgsReceiverModelCodeType',
+                            TYPE_NAME: 'GEODESYML_0_5.IgsReceiverModelCodeType',
                             codeList:
                                 'http://xml.gov.au/icsm/geodesyml/codelists/antenna-receiver-codelists.xml#GeodesyML_GNSSReceiverTypeCode',
                             codeListValue: 'ASHTECH Z-XII3',
@@ -555,9 +557,9 @@ export class DataViewTranslatorSpecData {
                     deletedReason: ''
                 },
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.GnssReceiverPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.GnssReceiverPropertyType',
                     gnssReceiver: {
-                        TYPE_NAME: 'GEODESYML_0_4.GnssReceiverType',
+                        TYPE_NAME: 'GEODESYML_0_5.GnssReceiverType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -587,7 +589,7 @@ export class DataViewTranslatorSpecData {
                         manufacturerDescription: '',
                         manufacturerSerialNumber: '3213',
                         igsModelCode: {
-                            TYPE_NAME: 'GEODESYML_0_4.IgsReceiverModelCodeType',
+                            TYPE_NAME: 'GEODESYML_0_5.IgsReceiverModelCodeType',
                             codeList:
                                 'http://xml.gov.au/icsm/geodesyml/codelists/antenna-receiver-codelists.xml#GeodesyML_GNSSReceiverTypeCode',
                             codeListValue: 'ASHTECH Z-XII3',
@@ -626,9 +628,9 @@ export class DataViewTranslatorSpecData {
             ],
             gnssAntennas: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.GnssAntennaPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.GnssAntennaPropertyType',
                     gnssAntenna: {
-                        TYPE_NAME: 'GEODESYML_0_4.GnssAntennaType',
+                        TYPE_NAME: 'GEODESYML_0_5.GnssAntennaType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -658,7 +660,7 @@ export class DataViewTranslatorSpecData {
                         manufacturerDescription: '',
                         manufacturerSerialNumber: '1121',
                         igsModelCode: {
-                            TYPE_NAME: 'GEODESYML_0_4.IgsAntennaModelCodeType',
+                            TYPE_NAME: 'GEODESYML_0_5.IgsAntennaModelCodeType',
                             codeList:
                                 'http://xml.gov.au/icsm/geodesyml/codelists/antenna-receiver-codelists.xml#GeodesyML_GNSSAntennaTypeCode',
                             codeListValue: 'ASH700936B_M',
@@ -672,7 +674,7 @@ export class DataViewTranslatorSpecData {
                         },
                         markerArpUpEcc: 0,
                         antennaRadomeType: {
-                            TYPE_NAME: 'GEODESYML_0_4.IgsRadomeModelCodeType',
+                            TYPE_NAME: 'GEODESYML_0_5.IgsRadomeModelCodeType',
                             codeSpace: 'eGeodesy/antennaRadomeType',
                             value: 'SNOW'
                         },
@@ -702,9 +704,9 @@ export class DataViewTranslatorSpecData {
             ],
             surveyedLocalTies: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.SurveyedLocalTiePropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.SurveyedLocalTiePropertyType',
                     surveyedLocalTie: {
-                        TYPE_NAME: 'GEODESYML_0_4.SurveyedLocalTieType',
+                        TYPE_NAME: 'GEODESYML_0_5.SurveyedLocalTieType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -724,7 +726,7 @@ export class DataViewTranslatorSpecData {
                         tiedMarkerCDPNumber: '(A4)',
                         tiedMarkerDOMESNumber: '(A9)',
                         differentialComponentsGNSSMarkerToTiedMonumentITRS: {
-                            TYPE_NAME: 'GEODESYML_0_4.SurveyedLocalTieType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS',
+                            TYPE_NAME: 'GEODESYML_0_5.SurveyedLocalTieType.DifferentialComponentsGNSSMarkerToTiedMonumentITRS',
                             dx: 0,
                             dy: 0,
                             dz: 0
@@ -745,7 +747,7 @@ export class DataViewTranslatorSpecData {
                         }
                     },
                     tieMeasurement: {
-                        TYPE_NAME: 'GEODESYML_0_4.TieMeasurementType'
+                        TYPE_NAME: 'GEODESYML_0_5.TieMeasurementType'
                     },
                     dateInserted: {
                         TYPE_NAME: 'GML_3_2_1.TimePositionType',
@@ -760,9 +762,9 @@ export class DataViewTranslatorSpecData {
             ],
             frequencyStandards: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.FrequencyStandardPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.FrequencyStandardPropertyType',
                     frequencyStandard: {
-                        TYPE_NAME: 'GEODESYML_0_4.FrequencyStandardType',
+                        TYPE_NAME: 'GEODESYML_0_5.FrequencyStandardType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -850,9 +852,9 @@ export class DataViewTranslatorSpecData {
             localEpisodicEffects: [],
             pressureSensors: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.PressureSensorPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.PressureSensorPropertyType',
                     pressureSensor: {
-                        TYPE_NAME: 'GEODESYML_0_4.PressureSensorType',
+                        TYPE_NAME: 'GEODESYML_0_5.PressureSensorType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -903,9 +905,9 @@ export class DataViewTranslatorSpecData {
             ],
             temperatureSensors: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.TemperatureSensorPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.TemperatureSensorPropertyType',
                     temperatureSensor: {
-                        TYPE_NAME: 'GEODESYML_0_4.TemperatureSensorType',
+                        TYPE_NAME: 'GEODESYML_0_5.TemperatureSensorType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -957,9 +959,9 @@ export class DataViewTranslatorSpecData {
             ],
             waterVaporSensors: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.WaterVaporSensorPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.WaterVaporSensorPropertyType',
                     waterVaporSensor: {
-                        TYPE_NAME: 'GEODESYML_0_4.WaterVaporSensorType',
+                        TYPE_NAME: 'GEODESYML_0_5.WaterVaporSensorType',
                         description: {
                             TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                             value: ''
@@ -1009,7 +1011,7 @@ export class DataViewTranslatorSpecData {
             ],
             siteContacts: [
                 {
-                    TYPE_NAME: 'GEODESYML_0_4.AgencyPropertyType',
+                    TYPE_NAME: 'GEODESYML_0_5.AgencyPropertyType',
                     description: {
                         TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                         value: ''
@@ -1137,7 +1139,7 @@ export class DataViewTranslatorSpecData {
             radioInterferences: [],
             signalObstructions: [],
             multipathSources: [],
-            TYPE_NAME: 'GEODESYML_0_4.SiteLogType',
+            TYPE_NAME: 'GEODESYML_0_5.SiteLogType',
             description: {
                 TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                 value: ''
@@ -1153,141 +1155,147 @@ export class DataViewTranslatorSpecData {
                 TYPE_NAME: 'GML_3_2_1.BoundingShapeType'
             },
             atSite: {
-                TYPE_NAME: 'GEODESYML_0_4.SitePropertyType'
+                TYPE_NAME: 'GEODESYML_0_5.SitePropertyType'
             },
             formInformation: {
-                TYPE_NAME: 'GEODESYML_0_4.FormInformationType',
-                preparedBy: 'James C Berra',
-                datePrepared: {
-                    TYPE_NAME: 'GML_3_2_1.TimePositionType',
-                    value: [
-                        '2008-05-30T00:00:00.000Z'
-                    ]
-                },
-                reportType: 'NEW'
+                formInformation: {
+                    TYPE_NAME: 'GEODESYML_0_5.FormInformationType',
+                    preparedBy: 'James C Berra',
+                    datePrepared: {
+                        TYPE_NAME: 'GML_3_2_1.TimePositionType',
+                        value: [
+                            '2008-05-30T00:00:00.000Z'
+                        ]
+                    },
+                    reportType: 'NEW'
+                }
             },
             siteIdentification: {
-                TYPE_NAME: 'GEODESYML_0_4.SiteIdentificationType',
-                siteName: 'Australia NGA collocated',
-                fourCharacterID: 'ADE1',
-                monumentInscription: '',
-                iersDOMESNumber: '50109S001',
-                cdpNumber: 'n/a',
-                monumentDescription: {
-                    TYPE_NAME: 'GML_3_2_1.CodeType',
-                    codeSpace: 'eGeodesy/monumentDescription',
-                    value: 'None'
-                },
-                heightOfTheMonument: 0,
-                monumentFoundation: '(STEEL RODS, CONCRETE BLOCK, ROOF, etc)',
-                foundationDepth: 0,
-                markerDescription: 'None',
-                dateInstalled: {
-                    TYPE_NAME: 'GML_3_2_1.TimePositionType',
-                    value: [
-                        '1986-01-01T00:00:00.000Z'
-                    ]
-                },
-                geologicCharacteristic: {
-                    TYPE_NAME: 'GML_3_2_1.CodeType',
-                    codeSpace: 'eGeodesy/geologicCharacteristic',
-                    value: '(BEDROCK/CLAY/CONGLOMERATE/GRAVEL/SAND/etc)'
-                },
-                bedrockType: '(IGNEOUS/METAMORPHIC/SEDIMENTARY)',
-                bedrockCondition: '(FRESH/JOINTED/WEATHERED)',
-                fractureSpacing: '(1-10 cm/11-50 cm/51-200 cm/over 200 cm)',
-                faultZonesNearby: {
-                    TYPE_NAME: 'GML_3_2_1.CodeType',
-                    codeSpace: 'eGeodesy/faultZonesNearby',
-                    value: '(YES/NO/Name of the zone)'
-                },
-                distanceActivity: '',
-                notes: ''
+                siteIdentification: {
+                    TYPE_NAME: 'GEODESYML_0_5.SiteIdentificationType',
+                    siteName: 'Australia NGA collocated',
+                    fourCharacterID: 'ADE1',
+                    monumentInscription: '',
+                    iersDOMESNumber: '50109S001',
+                    cdpNumber: 'n/a',
+                    monumentDescription: {
+                        TYPE_NAME: 'GML_3_2_1.CodeType',
+                        codeSpace: 'eGeodesy/monumentDescription',
+                        value: 'None'
+                    },
+                    heightOfTheMonument: 0,
+                    monumentFoundation: '(STEEL RODS, CONCRETE BLOCK, ROOF, etc)',
+                    foundationDepth: 0,
+                    markerDescription: 'None',
+                    dateInstalled: {
+                        TYPE_NAME: 'GML_3_2_1.TimePositionType',
+                        value: [
+                            '1986-01-01T00:00:00.000Z'
+                        ]
+                    },
+                    geologicCharacteristic: {
+                        TYPE_NAME: 'GML_3_2_1.CodeType',
+                        codeSpace: 'eGeodesy/geologicCharacteristic',
+                        value: '(BEDROCK/CLAY/CONGLOMERATE/GRAVEL/SAND/etc)'
+                    },
+                    bedrockType: '(IGNEOUS/METAMORPHIC/SEDIMENTARY)',
+                    bedrockCondition: '(FRESH/JOINTED/WEATHERED)',
+                    fractureSpacing: '(1-10 cm/11-50 cm/51-200 cm/over 200 cm)',
+                    faultZonesNearby: {
+                        TYPE_NAME: 'GML_3_2_1.CodeType',
+                        codeSpace: 'eGeodesy/faultZonesNearby',
+                        value: '(YES/NO/Name of the zone)'
+                    },
+                    distanceActivity: '',
+                    notes: ''
+                }
             },
             siteLocation: {
-                TYPE_NAME: 'GEODESYML_0_4.SiteLocationType',
-                city: 'Salisbury',
-                state: 'South Australia',
-                countryCodeISO: {
-                    TYPE_NAME: 'GEODESYML_0_4.CountryCodeType',
-                    codeSpace: 'country',
-                    value: 'Australia'
-                },
-                tectonicPlate: {
-                    TYPE_NAME: 'GML_3_2_1.CodeType',
-                    codeSpace: 'eGeodesy/tectonicPlate',
-                    value: 'Australian'
-                },
-                approximatePositionITRF: {
-                    TYPE_NAME: 'GEODESYML_0_4.SiteLocationType.ApproximatePositionITRF',
-                    cartesianPosition: {
-                        TYPE_NAME: 'GEODESYML_0_4.CartesianPosition',
-                        point: {
-                            TYPE_NAME: 'GML_3_2_1.PointType',
-                            srsName: 'EPSG:7789',
-                            description: {
-                                TYPE_NAME: 'GML_3_2_1.StringOrRefType',
-                                value: ''
-                            },
-                            descriptionReference: {
-                                TYPE_NAME: 'GML_3_2_1.ReferenceType'
-                            },
-                            identifier: {
-                                TYPE_NAME: 'GML_3_2_1.CodeWithAuthorityType',
-                                value: ''
-                            },
-                            pos: {
-                                TYPE_NAME: 'GML_3_2_1.DirectPositionType',
-                                value: [
-                                    -3939182.131,
-                                    3467075.376,
-                                    -3613220.824
-                                ]
-                            },
-                            coordinates: {
-                                TYPE_NAME: 'GML_3_2_1.CoordinatesType',
-                                value: ''
+                siteLocation: {
+                    TYPE_NAME: 'GEODESYML_0_5.SiteLocationType',
+                    city: 'Salisbury',
+                    state: 'South Australia',
+                    countryCodeISO: {
+                        TYPE_NAME: 'GEODESYML_0_5.CountryCodeType',
+                        codeSpace: 'country',
+                        value: 'Australia'
+                    },
+                    tectonicPlate: {
+                        TYPE_NAME: 'GML_3_2_1.CodeType',
+                        codeSpace: 'eGeodesy/tectonicPlate',
+                        value: 'Australian'
+                    },
+                    approximatePositionITRF: {
+                        TYPE_NAME: 'GEODESYML_0_5.SiteLocationType.ApproximatePositionITRF',
+                        cartesianPosition: {
+                            TYPE_NAME: 'GEODESYML_0_5.CartesianPosition',
+                            point: {
+                                TYPE_NAME: 'GML_3_2_1.PointType',
+                                srsName: 'EPSG:7789',
+                                description: {
+                                    TYPE_NAME: 'GML_3_2_1.StringOrRefType',
+                                    value: ''
+                                },
+                                descriptionReference: {
+                                    TYPE_NAME: 'GML_3_2_1.ReferenceType'
+                                },
+                                identifier: {
+                                    TYPE_NAME: 'GML_3_2_1.CodeWithAuthorityType',
+                                    value: ''
+                                },
+                                pos: {
+                                    TYPE_NAME: 'GML_3_2_1.DirectPositionType',
+                                    value: [
+                                        -3939182.131,
+                                        3467075.376,
+                                        -3613220.824
+                                    ]
+                                },
+                                coordinates: {
+                                    TYPE_NAME: 'GML_3_2_1.CoordinatesType',
+                                    value: ''
+                                }
+                            }
+                        },
+                        geodeticPosition: {
+                            TYPE_NAME: 'GEODESYML_0_5.GeodeticPosition',
+                            point: {
+                                TYPE_NAME: 'GML_3_2_1.PointType',
+                                srsName: 'EPSG:7789',
+                                description: {
+                                    TYPE_NAME: 'GML_3_2_1.StringOrRefType',
+                                    value: ''
+                                },
+                                descriptionReference: {
+                                    TYPE_NAME: 'GML_3_2_1.ReferenceType'
+                                },
+                                identifier: {
+                                    TYPE_NAME: 'GML_3_2_1.CodeWithAuthorityType',
+                                    value: ''
+                                },
+                                pos: {
+                                    TYPE_NAME: 'GML_3_2_1.DirectPositionType',
+                                    value: [
+                                        11.66,
+                                        66.99,
+                                        99.11
+                                    ]
+                                },
+                                coordinates: {
+                                    TYPE_NAME: 'GML_3_2_1.CoordinatesType',
+                                    value: ''
+                                }
                             }
                         }
                     },
-                    geodeticPosition: {
-                        TYPE_NAME: 'GEODESYML_0_4.GeodeticPosition',
-                        point: {
-                            TYPE_NAME: 'GML_3_2_1.PointType',
-                            srsName: 'EPSG:7789',
-                            description: {
-                                TYPE_NAME: 'GML_3_2_1.StringOrRefType',
-                                value: ''
-                            },
-                            descriptionReference: {
-                                TYPE_NAME: 'GML_3_2_1.ReferenceType'
-                            },
-                            identifier: {
-                                TYPE_NAME: 'GML_3_2_1.CodeWithAuthorityType',
-                                value: ''
-                            },
-                            pos: {
-                                TYPE_NAME: 'GML_3_2_1.DirectPositionType',
-                                value: [
-                                    11.66,
-                                    66.99,
-                                    99.11
-                                ]
-                            },
-                            coordinates: {
-                                TYPE_NAME: 'GML_3_2_1.CoordinatesType',
-                                value: ''
-                            }
-                        }
-                    }
-                },
-                notes: ''
+                    notes: ''
+                }
             },
             siteOwner: {
-                TYPE_NAME: 'GEODESYML_0_4.AgencyPropertyType'
+                TYPE_NAME: 'GEODESYML_0_5.AgencyPropertyType'
             },
             siteMetadataCustodian: {
-                TYPE_NAME: 'GEODESYML_0_4.AgencyPropertyType',
+                TYPE_NAME: 'GEODESYML_0_5.AgencyPropertyType',
                 description: {
                     TYPE_NAME: 'GML_3_2_1.StringOrRefType',
                     value: ''
@@ -1405,31 +1413,33 @@ export class DataViewTranslatorSpecData {
                 }
             },
             siteDataSource: {
-                TYPE_NAME: 'GEODESYML_0_4.AgencyPropertyType'
+                TYPE_NAME: 'GEODESYML_0_5.AgencyPropertyType'
             },
             moreInformation: {
-                TYPE_NAME: 'GEODESYML_0_4.MoreInformationType',
-                dataCenter: [
-                    'CDDIS',
-                    'SIO'
-                ],
-                urlForMoreInformation: '',
-                siteMap: '(Y or URL)',
-                siteDiagram: '(Y or URL)',
-                horizonMask: '(Y or URL)',
-                monumentDescription: '(Y or URL)',
-                sitePictures: '(Y or URL)',
-                notes: '',
-                antennaGraphicsWithDimensions: '',
-                insertTextGraphicFromAntenna: '',
-                doi: {
-                    TYPE_NAME: 'GML_3_2_1.CodeType',
-                    codeSpace: 'eGeodesy/doi',
-                    value: 'TODO'
+                moreInformation: {
+                    TYPE_NAME: 'GEODESYML_0_5.MoreInformationType',
+                    dataCenter: [
+                        'CDDIS',
+                        'SIO'
+                    ],
+                    urlForMoreInformation: '',
+                    siteMap: '(Y or URL)',
+                    siteDiagram: '(Y or URL)',
+                    horizonMask: '(Y or URL)',
+                    monumentDescription: '(Y or URL)',
+                    sitePictures: '(Y or URL)',
+                    notes: '',
+                    antennaGraphicsWithDimensions: '',
+                    insertTextGraphicFromAntenna: '',
+                    doi: {
+                        TYPE_NAME: 'GML_3_2_1.CodeType',
+                        codeSpace: 'eGeodesy/doi',
+                        value: 'TODO'
+                    }
                 }
             },
             dataStreams: {
-                TYPE_NAME: 'GEODESYML_0_4.DataStreamPropertyType'
+                TYPE_NAME: 'GEODESYML_0_5.DataStreamPropertyType'
             }
         };
     }

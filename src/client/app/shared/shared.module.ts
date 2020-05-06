@@ -10,6 +10,7 @@ import { NoticeBoardComponent } from './notice-board/notice-board.component';
 import { StatusInfoComponent } from './status-info/status-info.component';
 import { CorsSiteService } from './cors-site/index';
 import { GeodesyMLCodelistService } from './geodesyml-codelist/geodesyml-codelist.service';
+import { AssociatedDocumentService } from './associated-document/associated-document.service';
 import { CorsNetworkService } from './cors-network/index';
 import { SiteLogService } from './site-log/index';
 import { JsonixService } from './jsonix/index';
@@ -51,7 +52,7 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [MiscUtils, JsonixService, SiteLogService, DialogService, GeodesyMLCodelistService,
-                  CorsSiteService, CorsNetworkService, WFSService, ConstantsService,
+                  AssociatedDocumentService, CorsSiteService, CorsNetworkService, WFSService, ConstantsService,
                   HttpUtilsService, JsonViewModelService, UserAuthService,
                  ]
     };
