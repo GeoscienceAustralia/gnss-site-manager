@@ -1,45 +1,27 @@
 ng-select a.btn-xs {
-  margin-right: 20px !important;
-  margin-top: 2px;
+    margin-right: 20px !important;
+    margin-top: 2px;
 }
-.img-upload-radio {
-  padding-left: 5px;
+.img-type-radio {
+    padding-left: 5px;
 }
 .gray-border {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
 }
 .gray-border label {
-  font-weight: normal;
-  margin: 0;
-  padding: 0 2px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 2px;
 }
 .gray-border:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 .gray-border input[disabled]:hover {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
-table {
-  border: 1px solid #e9f5fa;
-  margin-bottom: 0;
-  margin-top: 20px;
-}
-caption {
-  background-color: #e9f5fa;
-  color: #222;
-  font-size: 15px;
-  font-weight: bold;
-  height: 34px;
-  text-align: center;
-}
-thead,
-tfoot {
-  text-align: center;
-  vertical-align: middle;
-}
-tbody,
-tbody > tr > td {
-  vertical-align: middle;
+
+.panel-level-2 .panel-body {
+    padding-top: 5px;
 }

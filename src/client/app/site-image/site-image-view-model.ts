@@ -4,13 +4,14 @@ export class SiteImageViewModel {
     public fileReference: string;
     public imageType: string;
     public createdDate: string;
-    public originalName: string;
 
     /*
      * Format "YYYY-MM-DD HH:mm:ss" obtained from datetime picker to "YYYY-MM-DDTHH:mm:ss.SSSZ"
      */
-    public setCreatedDate(date: string): void {
+    public formatCreatedDate(date: string): void {
         this.createdDate = date.trim().replace(' ', 'T');
-        this.createdDate += '.000Z';
+        if (this.createdDate.length <= 19) {
+            this.createdDate += '.000Z';
+        }
     }
 }

@@ -29,8 +29,9 @@ export class FileInputComponent extends AbstractInput implements OnInit {
     public chooseFile(imageInput: HTMLInputElement): void {
         if (imageInput.files && imageInput.files[0]) {
             let fileSelected: File = imageInput.files[0];
-            this.form.controls['imageUrl'].setValue(fileSelected.name);
+            this.form.controls[this.controlName].setValue(fileSelected.name);
             this.fileSelectEvent.emit(fileSelected);
+            imageInput.value = '';
         }
     }
 }

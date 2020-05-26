@@ -112,7 +112,10 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
         } else if (image.status === ImageStatus.DELETED) {
             image.status = ImageStatus.INVALID;
             this.imageDeletionEvent.emit(image);
-        } else {
+        } else if (image.status === ImageStatus.INVALID) {
+            image.status = ImageStatus.DELETED;
+            this.imageDeletionEvent.emit(image);
+        } else if (image.status === ImageStatus.OK) {
             const confirmInfo = '<div>'
                 + '<div class="title">Site Image Deletion</div><p/>'
                 + '<div class="body">"' + image.title + ' ' + image.createdDate
@@ -125,8 +128,7 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
             this.dialogService.showConfirmDialog(
                 confirmInfo,
                 () => {
-                    image.status = (image.status === ImageStatus.INVALID)
-                                    ? ImageStatus.DELETED : ImageStatus.DELETING;
+                    image.status = ImageStatus.DELETING;
                     this.imageDeletionEvent.emit(image);
                 },
                 () => {}
