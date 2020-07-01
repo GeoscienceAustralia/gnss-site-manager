@@ -21,13 +21,16 @@
         </span>
     </div>
     <div class="panel-body item-body" [hidden]="!isOpen">
+        <div class="container centered clear-pad overlay" *ngIf="isUploading">
+            <div class="loading-img"></div>
+        </div>
         <div [formGroup]="addImageForm"
              class="panel panel-level-3"
              [hidden]="!isAddNewPanelOpen"
              style="margin-top: 5px">
             <div class="panel-heading item-header">
                 <span class="panel-title cursor-ptr" tabindex="1">
-                    Add Site Images
+                    Add Site Image
                 </span>
                 <span class="pull-right">
                     <button type="button"
@@ -40,29 +43,6 @@
             </div>
             <div class="panel-body item-body">
                 <div class="form-group" style="margin-top: 10px">
-                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
-                        Image Type
-                    </label>
-                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                        <div class="gray-border">
-                            <span class="img-type-radio">
-                                <input type="radio"
-                                       formControlName="useImageFileType"
-                                       id="addImageFile"
-                                       [value]="true">
-                                <label for="addImageFile">Image File</label>
-                            </span>
-                            <span class="img-type-radio">
-                                <input type="radio"
-                                       formControlName="useImageFileType"
-                                       id="addImageURL"
-                                       [value]="false">
-                                <label for="addImageURL">Image URL</label>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
                         Image Description
                     </label>
@@ -78,6 +58,26 @@
                 <datetime-input [form]="addImageForm"
                                 controlName="createdDate"
                                 [required]="true">Date Taken (UTC)</datetime-input>
+                <div class="form-group">
+                    <div class="col-md-5 col-md-offset-4 col-sm-6 col-sm-offset-4 col-xs-6 col-xs-offset-5 col-xxs-12">
+                        <div>
+                            <span class="img-type-radio">
+                                <input type="radio"
+                                       formControlName="useImageFileType"
+                                       id="addImageFile"
+                                       [value]="true">
+                                <span for="addImageFile">File Upload</span>
+                            </span>
+                            <span class="img-type-radio">
+                                <input type="radio"
+                                       formControlName="useImageFileType"
+                                       id="addImageURL"
+                                       [value]="false">
+                                <span for="addImageURL">Image URL</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
                         {{useImageFileType ? 'Image File' : 'Image URL'}}
@@ -112,22 +112,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">
-                    </label>
-                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12 extra-v-margin">
-                        <button *ngIf="useImageFileType"
-                                class="btn btn-primary btn-long-xxs"
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary btn-long-center"
                                 [disabled]="!canAddImage()"
-                                (click)="addSiteImage()">
+                                (click)="addSiteImageFileOrURL()">
                             <i class="glyphicon glyphicon-plus-sign"></i>
-                            Add Image File
-                        </button>
-                        <button *ngIf="!useImageFileType"
-                                class="btn btn-primary btn-long-xxs"
-                                [disabled]="!canAddImage()"
-                                (click)="addImageUrl()">
-                            <i class="glyphicon glyphicon-plus-sign"></i>
-                            Add Image URL
+                            Add
                         </button>
                     </div>
                 </div>
@@ -166,7 +156,7 @@
                     <thumbnail-image [images]="currentImageObjects"
                                      [imageSize]="imageSize"
                                      [isAuthorised]="isUserAuthorisedToEdit && isCurrentImgPanelEditable"
-                                     (imageDeletionEvent)="handleImageDeletionEvent($event)">
+                                     (imageDeletionEvent)="handleImageDeletionEvent(true, $event)">
                     </thumbnail-image>
                 </div>
             </div>
@@ -205,7 +195,7 @@
                     <thumbnail-image [images]="previousImageObjects"
                                      [imageSize]="imageSize"
                                      [isAuthorised]="isUserAuthorisedToEdit && isPreviousImgPanelEditable"
-                                     (imageDeletionEvent)="handleImageDeletionEvent($event)">
+                                     (imageDeletionEvent)="handleImageDeletionEvent(false, $event)">
                     </thumbnail-image>
                 </div>
             </div>

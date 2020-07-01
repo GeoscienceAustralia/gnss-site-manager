@@ -103,7 +103,9 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
      */
     deleteImage(imageIndex: number) {
         let image: ImageObject = this.images[imageIndex];
-        if (image.status === ImageStatus.NEW_IMAGE || image.status === ImageStatus.NEW_URL) {
+        if (this.isDuplicateImage(image)) {
+            ;  // Do nothing for duplicate images
+        } else if (image.status === ImageStatus.NEW_IMAGE || image.status === ImageStatus.NEW_URL) {
             image.status = ImageStatus.CANCEL;
             this.imageDeletionEvent.emit(image);
         } else if (image.status === ImageStatus.DELETING) {
@@ -137,7 +139,9 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     getDeleteButtonName(image: ImageObject): string {
-        if (image.status === ImageStatus.NEW_IMAGE || image.status === ImageStatus.NEW_URL) {
+        if (this.isDuplicateImage(image)) {
+            return 'Duplicate';
+        } else if (image.status === ImageStatus.NEW_IMAGE || image.status === ImageStatus.NEW_URL) {
             return 'Cancel';
         } else if (image.status === ImageStatus.DELETING || image.status === ImageStatus.DELETED) {
             return 'Undelete';
@@ -147,7 +151,9 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     getDeleteButtonCss(image: ImageObject): string {
-        if (image.status === ImageStatus.OK || image.status === ImageStatus.INVALID) {
+        if (this.isDuplicateImage(image)) {
+            return 'btn-primary';
+        } else if (image.status === ImageStatus.OK || image.status === ImageStatus.INVALID) {
             return 'btn-danger';
         } else {
             return 'btn-primary';
@@ -155,7 +161,9 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     getGlyphiconRemoveCss(image: ImageObject): string {
-        if (image.status === ImageStatus.NEW_IMAGE
+        if (this.isDuplicateImage(image)) {
+            return '';
+        } else if (image.status === ImageStatus.NEW_IMAGE
          || image.status === ImageStatus.NEW_URL
          || image.status === ImageStatus.DELETING) {
             return 'glyphicon-share-alt';
@@ -165,13 +173,19 @@ export class ThumbnailImageComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     getDeleteButtonTooltip(image: ImageObject): string {
-        if (image.status === ImageStatus.NEW_IMAGE || image.status === ImageStatus.NEW_URL) {
+        if (this.isDuplicateImage(image)) {
+            return '';
+        } else if (image.status === ImageStatus.NEW_IMAGE || image.status === ImageStatus.NEW_URL) {
             return 'Cancel the image';
         } else if (image.status === ImageStatus.DELETING) {
             return 'Undelete the image';
         } else {
             return 'Delete the image';
         }
+    }
+
+    isDuplicateImage(image: ImageObject): boolean {
+        return image.name.indexOf('duplicate_') !== -1;
     }
 
     viewFullSizeImage(index: number) {

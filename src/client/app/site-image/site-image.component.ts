@@ -8,6 +8,7 @@ import { SelectComponent } from 'ng2-select';
 import * as _ from 'lodash';
 
 import { MiscUtils } from '../shared/global/misc-utils';
+import { DialogService } from '../shared/index';
 import { SiteLogService, ApplicationSaveState, ApplicationState } from '../shared/site-log/site-log.service';
 import { AssociatedDocumentService } from '../shared/associated-document/associated-document.service';
 import { AbstractBaseComponent } from '../shared/abstract-groups-items/abstract-base.component';
@@ -51,11 +52,14 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         width: 145,
     };
 
+    public currentImageObjects: ImageObject[] = [];
+    public previousImageObjects: ImageObject[] = [];
+
+    public miscUtils: MiscUtils = MiscUtils;
     public siteImageForm: FormGroup;
     public currentImageForm: FormGroup;
     public previousImageForm: FormGroup;
     public addImageForm: FormGroup;
-
     public isOpen: boolean = false;
     public isCurrentImgPanelOpen: boolean = false;
     public isPreviousImgPanelOpen: boolean = false;
@@ -64,24 +68,21 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     public isUserAuthorisedToEdit: boolean = false;
     public isCurrentImgPanelEditable: boolean = false;
     public isPreviousImgPanelEditable: boolean = false;
-
-    public allImageObjects: ImageObject[];
-    public currentImageObjects: ImageObject[];
-    public previousImageObjects: ImageObject[];
-
-    public description: string;
-    public createdDate: string;
+    public isUploading: boolean = false;
+    public description: string = null;
+    public createdDate: string = MiscUtils.getUTCDateTime();;
     public fileReference: string = null;
     public selectedImageContent: string = null;
-    public imagePreviewError: string;
-    public miscUtils: MiscUtils = MiscUtils;
+    public imagePreviewError: string = null;
 
+    private duplicateMarker: string = 'duplicate_';
     private selectedImageFile: File = null;
     private fileReader: FileReader;
     private subscription: Subscription;
 
     constructor(protected associatedDocumentService: AssociatedDocumentService,
                 protected siteLogService: SiteLogService,
+                protected dialogService: DialogService,
                 protected formBuilder: FormBuilder) {
         super(siteLogService);
     }
@@ -90,16 +91,14 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         if (this.siteLogModel.siteInformation.siteImages === null) {
             this.siteLogModel.siteInformation.siteImages = [];
         }
-        this.initialise();
         this.setupForm();
-        this.processInputSiteImages();
+        this.initialise();
 
         this.subscription = this.siteLogService.getApplicationState()
                             .subscribe((applicationState: ApplicationState) => {
             if (applicationState.applicationSaveState === ApplicationSaveState.saved) {
                 this.initialise();
                 this.addImageForm.markAsPristine();
-                this.processInputSiteImages();
             }
         });
     }
@@ -137,15 +136,15 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         }
 
         if (this.useImageFileType) {
-            return  this.selectedImageContent !== null;
+            return this.selectedImageContent !== null;
         } else {
-            return this.fileReference !== null;
+            return !!this.fileReference;
         }
     }
 
     public handleImagePreviewError(): void {
         if (this.fileReference) {
-            this.imagePreviewError = 'Invalid image URL.';
+            this.imagePreviewError = 'Invalid image URL or not an image URL.';
         }
     }
 
@@ -170,11 +169,29 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     public toggleCurrentImgPanelEditButton(): void {
         this.isCurrentImgPanelOpen = true;
         this.isCurrentImgPanelEditable = !this.isCurrentImgPanelEditable;
+        if (!this.isCurrentImgPanelEditable) {
+            this.currentImageObjects.forEach((imageObject: ImageObject) => {
+                if (imageObject.status === ImageStatus.DELETING) {
+                    imageObject.status = ImageStatus.OK;
+                } else if (imageObject.status === ImageStatus.DELETED) {
+                    imageObject.status = ImageStatus.INVALID;
+                }
+            });
+        }
     }
 
     public togglePreviousImgPanelEditButton(): void {
         this.isPreviousImgPanelOpen = true;
         this.isPreviousImgPanelEditable = !this.isPreviousImgPanelEditable;
+        if (!this.isPreviousImgPanelEditable) {
+            this.previousImageObjects.forEach((imageObject: ImageObject) => {
+                if (imageObject.status === ImageStatus.DELETING) {
+                    imageObject.status = ImageStatus.OK;
+                } else if (imageObject.status === ImageStatus.DELETED) {
+                    imageObject.status = ImageStatus.INVALID;
+                }
+            });
+        }
     }
 
     public setupForm(): void {
@@ -210,23 +227,6 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         });
     }
 
-    public processInputSiteImages(): void {
-        this.currentImageObjects = [];
-        this.previousImageObjects = [];
-
-        this.sortSiteImagesByDescriptionAndCreatedDate('asc', 'desc');
-        let descriptionTypes = this.getSiteImageDefinitionValues();
-        this.allImageObjects.forEach((imageObject: ImageObject) => {
-            const index = descriptionTypes.indexOf(imageObject.title);
-            if (index > -1) {
-                this.currentImageObjects.push(imageObject);
-                descriptionTypes.splice(index, 1);
-            } else {
-                this.previousImageObjects.push(imageObject);
-            }
-        });
-    }
-
     public setImageDescription(value: string): void {
         this.description = value;
     }
@@ -237,16 +237,16 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
 
     public handleImageSelectEvent(imgFile: File): void {
         this.selectedImageContent = null;
-        this.imagePreviewError = null;
         this.selectedImageFile = imgFile;
         if (imgFile && imgFile.type.includes('image/')) {
+            this.imagePreviewError = null;
             this.fileReader = new FileReader();
             this.fileReader.readAsDataURL(this.selectedImageFile);
             this.fileReader.onload = (event: any) => {
                 this.selectedImageContent = event.target.result;
             };
         } else {
-            this.imagePreviewError = 'Invalid image file path.';
+            this.imagePreviewError = 'Invalid image file path or not an image file.';
         }
     }
 
@@ -255,18 +255,41 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.fileReference = this.addImageForm.controls['imageUrl'].value;
     }
 
+    public addSiteImageFileOrURL(): void {
+        if (this.useImageFileType) {
+            this.addSiteImage();
+        } else {
+            this.addImageUrl();
+        }
+    }
+
     public addSiteImage(): void {
         let imageObject = new ImageObject(ImageStatus.NEW_IMAGE);
         imageObject.name = this.getNewImageName(this.selectedImageFile.name);
         imageObject.title = this.description;
         imageObject.createdDate = this.createdDate;
-        imageObject.imageFile = this.selectedImageFile;
         imageObject.imageType = this.selectedImageFile.type;
-        imageObject.setFileReference(this.selectedImageContent);
-        this.allImageObjects.push(imageObject);
-        this.markImageFormsAsDirty();
-        this.processInputSiteImages();
-        this.resetAddImageForm();
+        let duplicateImage = this.findDuplicateImage(imageObject.name);
+        if (duplicateImage) {
+            const msgHtml = '<div><div class="title">Duplicate Image Name</div>'
+                    + '<div class="body">The image name "<b>' + imageObject.name
+                    + '</b>" has already been added to the sitelog. Click "Yes" '
+                    + 'will overwrite the existing image. You may change <b>Image'
+                    + ' Description</b> (<i>' + imageObject.title + '</i>)'
+                    + ' and/or <b>Date Taken</b> (<i>' + imageObject.createdDate
+                    + '</i>) and try again.</div><p class="footer">Do you really want'
+                    + ' to overwrite the existing image?</p></div>';
+                this.dialogService.showConfirmDialog(
+                    msgHtml,
+                    () => {
+                        this.markDuplicateImage(duplicateImage);
+                        this.uploadSiteImage(imageObject, this.selectedImageFile);
+                    },
+                    () => {}
+                );
+        } else {
+            this.uploadSiteImage(imageObject, this.selectedImageFile);
+        }
     }
 
     public addImageUrl(): void {
@@ -276,43 +299,72 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         imageObject.setFileReference(this.fileReference);
         imageObject.createdDate = this.createdDate;
         imageObject.imageType = 'image/' + this.getFileExtension(this.fileReference);
-        this.allImageObjects.push(imageObject);
-        this.markImageFormsAsDirty();
-        this.processInputSiteImages();
-        this.resetAddImageForm();
+        let duplicateImage = this.findDuplicateImage(imageObject.name, imageObject.fullSizeImage);
+        if (duplicateImage) {
+            const msgHtml = '<div><div class="title">Duplicate Image Name/URL</div>'
+                    + '<div class="body">The image name "<b>' + imageObject.name
+                    + '</b>" or URL "<b>' + imageObject.fullSizeImage + '</b>" '
+                    + 'has already been added to the sitelog. Click "Yes" will '
+                    + 'overwrite the existing data.</div><p class="footer">Do '
+                    + 'you really want to overwrite the existing data?</p></div>';
+                this.dialogService.showConfirmDialog(
+                    msgHtml,
+                    () => {
+                        this.markDuplicateImage(duplicateImage);
+                        this.addNewImage(imageObject);
+                    },
+                    () => {}
+                );
+        } else {
+            this.addNewImage(imageObject);
+        }
     }
 
-    public handleImageDeletionEvent(imageDeleted: ImageObject): void {
-        for (let i in this.allImageObjects) {
+    public handleImageDeletionEvent(isCurrentImage: boolean, imageDeleted: ImageObject): void {
+        const imageObjects = isCurrentImage ? this.currentImageObjects : this.previousImageObjects;
+        for (let i in imageObjects) {
             const index = Number(i);
-            let imageObject = this.allImageObjects[index];
+            let imageObject = imageObjects[index];
             if (imageObject.name === imageDeleted.name) {
                 if (imageDeleted.status === ImageStatus.CANCEL) {
-                    this.allImageObjects.splice(index, 1);
+                    this.unmarkDuplicateImage(imageDeleted);
+                    imageObjects.splice(index, 1);
+                    this.processInputImages();
                     this.markFormAsPristine();
                 } else if (imageDeleted.status === ImageStatus.OK
                         || imageDeleted.status === ImageStatus.INVALID) {
                     this.markFormAsPristine();
                 } else {
                     imageObject.status = imageDeleted.status;
-                    this.markImageFormsAsDirty();
+                    if (isCurrentImage) {
+                        this.currentImageForm.markAsDirty();
+                    } else {
+                        this.previousImageForm.markAsDirty();
+                    }
+
+                    this.siteLogService.sendApplicationStateMessage({
+                        applicationFormModified: true,
+                        applicationFormInvalid: false,
+                        applicationSaveState: ApplicationSaveState.idle
+                    });
                 }
                 break;
             }
         };
-        this.processInputSiteImages();
     }
 
     public save(): Observable<boolean> {
         this.siteLogModel.siteInformation.siteImages = [];
         let pendingImageObjects: ImageObject[] = [];
-        this.allImageObjects.forEach((imageObject: ImageObject) => {
-            if ([ImageStatus.OK, ImageStatus.INVALID, ImageStatus.NEW_URL]
+        let allImageObjects = this.getAllImageObjects();
+        allImageObjects.forEach((imageObject: ImageObject) => {
+            if (this.isDuplicateImage(imageObject)) {
+                ;  // ignore duplicate image
+            } else if ([ImageStatus.OK, ImageStatus.INVALID,
+                ImageStatus.NEW_IMAGE, ImageStatus.NEW_URL]
                     .includes(imageObject.status)) {
                 let siteImage = this.convertToSiteImage(imageObject);
                 this.siteLogModel.siteInformation.siteImages.push(siteImage);
-            } else if (imageObject.status === ImageStatus.NEW_IMAGE) {
-                pendingImageObjects.push(imageObject);
             } else if (imageObject.status === ImageStatus.DELETING) {
                 pendingImageObjects.push(imageObject);
             }
@@ -321,57 +373,102 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.isCurrentImgPanelEditable = false;
         this.isPreviousImgPanelEditable = false;
         return (pendingImageObjects.length === 0) ? Observable.of(false) :
-                this.processOutputSiteImages(pendingImageObjects);
+                this.deletePendingSiteImages(pendingImageObjects);
     }
 
     /**
-     * Recursively upload or delete site images from the pending list
+     * Recursively delete site images from the pending list
      */
-    private processOutputSiteImages(pendingImageObjects: ImageObject[]): Observable<boolean> {
+    private deletePendingSiteImages(pendingImageObjects: ImageObject[]): Observable<boolean> {
         let imageObject: ImageObject = pendingImageObjects.pop();
-        if (imageObject.status === ImageStatus.DELETING) {
-            return this.associatedDocumentService.deleteDocument(imageObject.name).pipe(
-                mergeMap((response: Response) => {
-                    if (response.status !== 204) {
-                        console.error('Error in deleting site image ' + imageObject.name
-                                     + ': status code = ' + response.status);
-                    } else {
-                        console.log(imageObject.name + ' has been deleted');
-                    }
+        return this.associatedDocumentService.deleteDocument(imageObject.name).pipe(
+            mergeMap((response: Response) => {
+                if (response.status !== 204) {
+                    console.error('Error in deleting site image ' + imageObject.name
+                                    + ': status code = ' + response.status);
+                } else {
+                    console.log(imageObject.name + ' has been deleted');
+                }
 
-                    return (pendingImageObjects.length === 0) ? Observable.of(true)
-                            : this.processOutputSiteImages(pendingImageObjects);
-                })
-            );
-        } else {
-            return this.associatedDocumentService.uploadDocument(imageObject.name,
-                        imageObject.imageFile).pipe(
-                mergeMap((response: Response) => {
-                    const location = response.headers.get('location');
+                return (pendingImageObjects.length === 0) ? Observable.of(true)
+                        : this.deletePendingSiteImages(pendingImageObjects);
+            })
+        );
+    }
+
+    private getAllImageObjects(): ImageObject[] {
+        return this.currentImageObjects.concat(this.previousImageObjects);
+    }
+
+    private findDuplicateImage(imageName: string, fileReference: string = null): ImageObject {
+        let allImageObjects = this.getAllImageObjects();
+        for (let imageObject of allImageObjects) {
+            if (this.isDuplicateImage(imageObject)) {
+                continue;
+            } else if (imageObject.name === imageName) {
+                return imageObject;
+            } else if (fileReference && imageObject.fullSizeImage === fileReference) {
+                return imageObject;
+            }
+        }
+        return null;
+    }
+
+    private isDuplicateImage(imageObject: ImageObject): boolean {
+        return imageObject && imageObject.name.indexOf(this.duplicateMarker) !== -1;
+    }
+
+    private markDuplicateImage(imageObject: ImageObject): void {
+        if (imageObject && !this.isDuplicateImage(imageObject)) {
+            imageObject.name = this.duplicateMarker + imageObject.name;
+        }
+    }
+
+    private unmarkDuplicateImage(imageObject: ImageObject): void {
+        for (let image of this.getAllImageObjects()) {
+            if (!this.isDuplicateImage(image)) {
+                continue;
+            } else if (imageObject.name === image.name
+                    || imageObject.fullSizeImage === image.fullSizeImage) {
+                image.name = image.name.replace(this.duplicateMarker, '');
+                break;
+            }
+        }
+    }
+
+    private uploadSiteImage(imageObject: ImageObject, imageFile: File): void {
+        this.isUploading = true;
+        this.associatedDocumentService.uploadDocument(imageObject.name, imageFile).subscribe(
+            (response: Response) => {
+                const location = response.headers.get('location');
                     if (!location) {
                         console.error('Failed in uploading site image ' + imageObject.name
                                     + ': returned file reference is empty.');
                     } else {
-                        let fileReference = location.replace(/"/g, '').replace('stack', 'host');
-                        let siteImage = this.convertToSiteImage(imageObject, fileReference);
-                        this.siteLogModel.siteInformation.siteImages.push(siteImage);
+                        let fileReference = this.associatedDocumentService.getWebServiceURL() + location;
+                        imageObject.setFileReference(fileReference);
+                        this.addNewImage(imageObject);
                         console.log('Image uploaded successfully: ' + fileReference);
                     }
-
-                    return (pendingImageObjects.length === 0) ? Observable.of(true)
-                            : this.processOutputSiteImages(pendingImageObjects);
-                })
-            );
-        }
+            },
+            (error: Error) => {
+                this.isUploading = false;
+                console.error('Failed in uploading site image ' + imageObject.name
+                            + ': ' + error.message);
+            },
+            () => {
+                this.isUploading = false;
+            }
+        );
     }
 
-    private convertToSiteImage(imageObject: ImageObject, fileReference?: string): SiteImageViewModel {
+    private convertToSiteImage(imageObject: ImageObject): SiteImageViewModel {
         let siteImage = new SiteImageViewModel();
         siteImage.name = imageObject.name;
         siteImage.description = imageObject.title;
         siteImage.imageType = imageObject.imageType;
         siteImage.formatCreatedDate(imageObject.createdDate);
-        siteImage.fileReference = fileReference ? fileReference : imageObject.fullSizeImage;
+        siteImage.fileReference = imageObject.fullSizeImage;
         return siteImage;
     }
 
@@ -380,7 +477,8 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.fileReference = null;
         this.imagePreviewError = null;
         this.createdDate = MiscUtils.getUTCDateTime();
-        this.allImageObjects = [];
+
+        let allImageObjects: ImageObject[] = [];
         this.siteLogModel.siteInformation.siteImages.forEach((siteImage: SiteImageViewModel) => {
             let imageObject = new ImageObject();
             imageObject.name = siteImage.name;
@@ -388,7 +486,28 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
             imageObject.setFileReference(siteImage.fileReference);
             imageObject.createdDate = MiscUtils.formatDateTimeSimple(siteImage.createdDate);
             imageObject.imageType = siteImage.imageType;
-            this.allImageObjects.push(imageObject);
+            allImageObjects.push(imageObject);
+        });
+
+        this.processInputImages(allImageObjects);
+    }
+
+    private processInputImages(imageObjects: ImageObject[] = []): void {
+        if (!imageObjects || imageObjects.length === 0) {
+            imageObjects = this.getAllImageObjects();
+        }
+        this.currentImageObjects = [];
+        this.previousImageObjects = [];
+        let descriptionTypes = this.getSiteImageDefinitionValues();
+        this.sortImagesByDescriptionAndCreatedDate(imageObjects, 'asc', 'desc');
+        imageObjects.forEach((imageObject: ImageObject) => {
+            const index = descriptionTypes.indexOf(imageObject.title);
+            if (index > -1) {
+                this.currentImageObjects.push(imageObject);
+                descriptionTypes.splice(index, 1);
+            } else {
+                this.previousImageObjects.push(imageObject);
+            }
         });
     }
 
@@ -402,34 +521,61 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.addImageForm.controls['imageUrl'].reset();
     }
 
-    private markImageFormsAsDirty(): void {
-        this.currentImageForm.markAsDirty();
-        this.previousImageForm.markAsDirty();
+    private addNewImage(newImage: ImageObject): void {
+        let isInCurrentImages: boolean = false;
+        for (let i in this.currentImageObjects) {
+            const index = Number(i);
+            let currentImage = this.currentImageObjects[index];
+            if (currentImage.title === newImage.title) {
+                isInCurrentImages = true;
+                if (newImage.createdDate >= currentImage.createdDate) {
+                    this.currentImageObjects.splice(index, 1, newImage);
+                    this.currentImageForm.markAsDirty();
+                    this.previousImageObjects.unshift(currentImage);
+                    this.previousImageForm.markAsDirty();
+                } else {
+                    this.previousImageObjects.unshift(newImage);
+                    this.previousImageForm.markAsDirty();
+                }
+            }
+        }
+
+        if (!isInCurrentImages) {
+            this.currentImageObjects.push(newImage);
+            this.currentImageForm.markAsDirty();
+        }
+
         this.siteLogService.sendApplicationStateMessage({
             applicationFormModified: true,
             applicationFormInvalid: false,
             applicationSaveState: ApplicationSaveState.idle
         });
+        this.resetAddImageForm();
     }
 
     private markFormAsPristine(): void {
-        let currentImagePanelDirty = false;
-        this.currentImageObjects.forEach((imageObject: ImageObject) => {
+        let isCurrentImagePanelPristine = true;
+        for (let imageObject of this.currentImageObjects) {
             if (imageObject.status !== ImageStatus.OK && imageObject.status !== ImageStatus.INVALID) {
-                currentImagePanelDirty = true;
+                isCurrentImagePanelPristine = false;
+                break;
             }
-        });
-        if (!currentImagePanelDirty) {
-            this.currentImageForm.markAsPristine();
         }
 
-        let previousImagePanelDirty = false;
-        this.previousImageObjects.forEach((imageObject: ImageObject) => {
+        if (isCurrentImagePanelPristine) {
+            this.currentImageForm.markAsPristine();
+            this.previousImageForm.markAsPristine();
+        }
+
+        let isPreviousImagePanelPristine = true;
+        for (let imageObject of this.previousImageObjects) {
             if (imageObject.status !== ImageStatus.OK && imageObject.status !== ImageStatus.INVALID) {
-                previousImagePanelDirty = true;
+                isPreviousImagePanelPristine = false;
+                break;
             }
-        });
-        if (!previousImagePanelDirty) {
+        }
+
+        if (isPreviousImagePanelPristine) {
             this.previousImageForm.markAsPristine();
         }
     }
@@ -463,8 +609,8 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         return imagePath.substring(index + 1).toLowerCase();
     }
 
-    private sortSiteImagesByDescriptionAndCreatedDate(sort1: string, sort2: string): void {
-        this.allImageObjects.sort((previous: ImageObject, current: ImageObject) => {
+    private sortImagesByDescriptionAndCreatedDate(imageObjects: ImageObject[], sort1: string, sort2: string): void {
+        imageObjects.sort((previous: ImageObject, current: ImageObject) => {
             if (previous.title > current.title) {
                 return sort1 === 'desc' ? -1 : 1;
             } else if (previous.title < current.title) {

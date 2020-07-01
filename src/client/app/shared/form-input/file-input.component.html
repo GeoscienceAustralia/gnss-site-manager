@@ -3,7 +3,7 @@
            id="site-image-input"
            class="form-control z-lowest"
            [formControlName]="controlName"
-           [disabled]="true"
+           [disabled]="form.disabled"
            (click)="openFileBrowser($event)">
     <span class="input-group-btn">
         <button type="button"

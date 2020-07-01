@@ -23,7 +23,6 @@ export class ImageObject {
     public thumbnailImage: string;
     public createdDate: string;
     public imageType: string;
-    public imageFile: File;
     public status: ImageStatus;
 
     constructor(status: ImageStatus = ImageStatus.OK) {

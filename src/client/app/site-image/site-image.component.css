@@ -25,3 +25,25 @@ ng-select a.btn-xs {
 .panel-level-2 .panel-body {
     padding-top: 5px;
 }
+
+.btn-long-center {
+    display: block;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    min-width: 200px;
+}
+@media (max-width: 767px) {
+    .btn-long-center {
+        width: 50%;
+    }
+}
+@media (max-width: 450px) {
+    .btn-long-center {
+        width: 75%;
+    }
+    .col-xs-offset-5 {
+        margin-left: 0;
+    }
+}

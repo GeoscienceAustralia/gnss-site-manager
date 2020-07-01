@@ -15,7 +15,7 @@
                                                   || image.status == imageStatus.DELETING}"
                      (click)="viewFullSizeImage(i)"
                      (error)="onErrorImgSrc(imgRef, image)">
-                <span class="image-tag" *ngIf="image.status == imageStatus.INVALID">Image not exist</span>
+                <span class="image-tag" *ngIf="image.status == imageStatus.INVALID">Image does not exist</span>
                 <span class="image-tag" *ngIf="image.status == imageStatus.DELETED">Mark to delete</span>
                 <button *ngIf="isAuthorised"
                         class="btn btn-delete {{ getDeleteButtonCss(image) }}"
