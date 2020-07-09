@@ -1,0 +1,19 @@
+<div class="form-group" [formGroup]="form">
+    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label"
+           [ngClass]="{'required': required}">
+        <ng-content></ng-content>
+    </label>
+    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+        <input [formControlName]="controlName"
+               [typeahead]="codelist"
+               [typeaheadOptionsLimit]="1000"
+               [typeaheadMinLength]="0"
+               [typeaheadScrollable]="true"
+               [typeaheadOptionsInScrollableView]="12"
+               (typeaheadOnSelect)="onSelect($event)"
+               (keyup)="onKeyUp($event)"
+               placeholder="{{placeholder}}"
+               class="form-control"/>
+        <small [hidden]="!formControl.errors" class="alert alert-danger">{{getErrorReport()}}</small>
+    </div>
+</div>

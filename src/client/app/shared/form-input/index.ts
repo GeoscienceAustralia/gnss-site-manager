@@ -3,8 +3,7 @@
  */
 export * from './form-input.module';
 export * from './text-input.component';
-export * from './antenna-type-input.component';
-export * from './receiver-type-input.component';
+export * from './typeahead-input.component';
 export * from './number-input.component';
 export * from './textarea-input.component';
 export * from './datetime-input.component';

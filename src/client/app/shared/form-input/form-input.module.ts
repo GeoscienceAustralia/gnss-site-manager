@@ -4,8 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatepickerModule, TooltipModule } from 'ng2-bootstrap';
 import { TypeaheadModule } from 'ngx-bootstrap-ga';
 import { TextInputComponent } from './text-input.component';
-import { ReceiverTypeInputComponent } from './receiver-type-input.component';
-import { AntennaTypeInputComponent } from './antenna-type-input.component';
+import { TypeaheadInputComponent } from './typeahead-input.component';
 import { TextAreaInputComponent } from './textarea-input.component';
 import { NumberInputComponent } from './number-input.component';
 import { DatetimeInputComponent } from './datetime-input.component';
@@ -26,8 +25,7 @@ import { ListBoxComponent } from './list-box.component';
     TypeaheadModule.forRoot()
   ],
   declarations: [
-    AntennaTypeInputComponent,
-    ReceiverTypeInputComponent,
+    TypeaheadInputComponent,
     TextInputComponent,
     TextAreaInputComponent,
     NumberInputComponent,
@@ -40,8 +38,7 @@ import { ListBoxComponent } from './list-box.component';
     ListBoxComponent
   ],
   exports: [
-    AntennaTypeInputComponent,
-    ReceiverTypeInputComponent,
+    TypeaheadInputComponent,
     TextInputComponent,
     TextAreaInputComponent,
     NumberInputComponent,
