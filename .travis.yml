@@ -1,6 +1,6 @@
 dist: trusty
 language: node_js
-node_js: 6.4.0
+node_js: 6.17.1
 
 install: true  # yarn bug
 
