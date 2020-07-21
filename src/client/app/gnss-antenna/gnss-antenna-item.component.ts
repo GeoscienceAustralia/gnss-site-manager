@@ -63,9 +63,9 @@ export class GnssAntennaItemComponent extends AbstractItemComponent {
         });
     }
 
-    onAntennaRadomeTypeChange(event:any) {
-        this.antenna.antennaType = event.value;
-        this.antenna.antennaRadomeType = event.value.substring(16, 20);
+    onAntennaRadomeTypeChange(event: any) {
+        this.antenna.antennaType = event;
+        this.antenna.antennaRadomeType = event.substring(16, 20);
         this.itemGroup.controls.antennaType.setValue(this.antenna.antennaType);
         this.itemGroup.controls.antennaRadomeType.setValue(this.antenna.antennaRadomeType);
     }

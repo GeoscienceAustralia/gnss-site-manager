@@ -3,10 +3,8 @@ import { LogItemGroup } from './log-item-group.pageobject';
 
 export class GnssReceiverGroup extends LogItemGroup {
 
-    readonly receiverTypeInputEditable: ElementFinder = this.newItemContainer
-                    .element(by.css('receiver-type-input[controlName="receiverType"]'));
     readonly receiverTypeInput: ElementFinder = this.newItemContainer
-                    .element(by.css('text-input[controlName="receiverType"]'));
+                    .element(by.css('typeahead-input[controlName="receiverType"]'));
     readonly manufacturerSerialNumberInput: ElementFinder = this.newItemContainer
                     .element(by.css('text-input[controlName="manufacturerSerialNumber"]'));
     readonly firmwareVersionInput: ElementFinder = this.newItemContainer
@@ -20,14 +18,6 @@ export class GnssReceiverGroup extends LogItemGroup {
 
     public constructor() {
         super('GNSS Receiver');
-    }
-
-    public getAllInputFieldsEditable(): ElementFinder[] {
-        return [
-            this.receiverTypeInputEditable,
-            this.manufacturerSerialNumberInput,
-        ]
-        .concat(this.getUpdatableInputFields());
     }
 
     public getAllInputFields(): ElementFinder[] {
