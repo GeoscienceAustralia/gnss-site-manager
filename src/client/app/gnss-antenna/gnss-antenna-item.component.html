@@ -42,7 +42,11 @@
         <div *ngIf="antenna != null" [ngClass]="{'container-dirty': antenna.dateDeleted}">
             <div class="form-group">
                 <text-input *ngIf="!isItemEditable && !isNew" [form]="itemGroup" controlName="antennaType">Antenna Radome Type</text-input>
-                <antenna-type-input *ngIf="isItemEditable || isNew" (antennaRadomeTypeChange)="onAntennaRadomeTypeChange($event)" [form]="itemGroup" controlName="antennaType">Antenna Radome Type</antenna-type-input>
+                <antenna-type-input *ngIf="isItemEditable || isNew"
+                                    (antennaRadomeTypeChange)="onAntennaRadomeTypeChange($event)"
+                                    [form]="itemGroup"
+                                    [allAntennaCodes]="antennaRadomeCodelist"
+                                    controlName="antennaType">Antenna Radome Type</antenna-type-input>
                 <text-input [form]="itemGroup" controlName="serialNumber">Serial Number</text-input>
                 <text-input [form]="itemGroup" controlName="antennaReferencePoint">Antenna Reference Point</text-input>
                 <number-input [form]="itemGroup" controlName="markerArpUpEcc" [required]="true" step="0.0001" min="0.0000">

@@ -24,6 +24,8 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     @Input() parentForm: FormGroup;
     @Input() siteId: string;
     @Input() siteLogModel: SiteLogViewModel;
+    @Input() antennaRadomeCodelist: string[];
+    @Input() receiverCodelist: string[];
     @Output() runningStatusEmitter = new EventEmitter<boolean>();
 
     public miscUtils: any = MiscUtils;
