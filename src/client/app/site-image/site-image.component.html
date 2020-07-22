@@ -59,29 +59,22 @@
                                 controlName="createdDate"
                                 [required]="true">Date Taken (UTC)</datetime-input>
                 <div class="form-group">
-                    <div class="col-md-5 col-md-offset-4 col-sm-6 col-sm-offset-4 col-xs-6 col-xs-offset-5 col-xxs-12">
-                        <div>
-                            <span class="img-type-radio">
-                                <input type="radio"
-                                       formControlName="useImageFileType"
-                                       id="addImageFile"
-                                       [value]="true">
-                                <span for="addImageFile">File Upload</span>
-                            </span>
-                            <span class="img-type-radio">
-                                <input type="radio"
-                                       formControlName="useImageFileType"
-                                       id="addImageURL"
-                                       [value]="false">
-                                <span for="addImageURL">Image URL</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
-                        {{useImageFileType ? 'Image File' : 'Image URL'}}
-                    </label>
+                    <span class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 radio-button-group required">
+                        <span class="img-type-radio-first">
+                            <input type="radio"
+                                    formControlName="useImageFileType"
+                                    id="addImageFile"
+                                    [value]="true">
+                            <span for="addImageFile">Image File</span>
+                        </span>
+                        <span class="img-type-radio-last">
+                            <input type="radio"
+                                    formControlName="useImageFileType"
+                                    id="addImageURL"
+                                    [value]="false">
+                            <span for="addImageURL">Image URL</span>
+                        </span>
+                    </span>
                     <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
                         <file-input *ngIf="useImageFileType"
                                     [form]="addImageForm"

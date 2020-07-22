@@ -2,8 +2,34 @@ ng-select a.btn-xs {
     margin-right: 20px !important;
     margin-top: 2px;
 }
-.img-type-radio {
+
+.radio-button-group {
+    text-align: right;
+    margin-top: 5px;
     padding-left: 5px;
+}
+.img-type-radio-last {
+    padding-left: 5px;
+}
+.img-type-radio-last::after {
+    color: red;
+    content: "*";
+}
+@media (min-width: 451px) AND (max-width: 585px) {
+    .radio-button-group {
+        margin-top: -2px;
+    }
+    .img-type-radio-last {
+        display: block;
+        padding-left: 0;
+    }
+    .img-type-radio-first {
+        display: block;
+        margin-right: 15px;
+    }
+    input[type=radio] {
+        margin: 0;
+    }
 }
 .gray-border {
     border: 1px solid #ccc;
@@ -32,16 +58,20 @@ ng-select a.btn-xs {
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
-    min-width: 200px;
+    min-width: 100px;
 }
 @media (max-width: 767px) {
     .btn-long-center {
-        width: 50%;
+        width: 25%;
     }
 }
 @media (max-width: 450px) {
+    .radio-button-group {
+        text-align: left;
+        margin: 2px 0;
+    }
     .btn-long-center {
-        width: 75%;
+        width: 50%;
     }
     .col-xs-offset-5 {
         margin-left: 0;
