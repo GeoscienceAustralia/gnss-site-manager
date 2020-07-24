@@ -70,27 +70,17 @@ export class SiteLogComponent implements OnInit, OnDestroy {
 
     public save() {
         this.startRunning();
-        this.siteInformationComponent.saveSiteImages().subscribe(
-            () => {
-                let formValueClone: any = _.cloneDeep(this.siteLogForm.getRawValue());
-                this.moveSiteInformationUp(formValueClone);
-                this.sortArrays(formValueClone);
-                console.log(' formValue before merge and after reverse: ', formValueClone);
+        this.siteInformationComponent.processSiteImagesForSave();
+        let formValueClone: any = _.cloneDeep(this.siteLogForm.getRawValue());
+        this.moveSiteInformationUp(formValueClone);
+        this.sortArrays(formValueClone);
+        console.log(' formValue before merge and after reverse: ', formValueClone);
 
-                if (this.siteId === 'newSite') {
-                    this.saveNewSiteLog(formValueClone);
-                } else {
-                    this.saveExistingSiteLog(formValueClone);
-                }
-            },
-            (error: Error) => {
-                this.stopRunning();
-                console.error('Failed in saving site images');
-            },
-            () => {
-                this.stopRunning();
-            }
-        );
+        if (this.siteId === 'newSite') {
+            this.saveNewSiteLog(formValueClone);
+        } else {
+            this.saveExistingSiteLog(formValueClone);
+        }
     }
 
     public saveNewSiteLog(formValue: any) {

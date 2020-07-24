@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { mergeMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs/Subscription';
 import { SelectComponent } from 'ng2-select';
 import * as _ from 'lodash';
@@ -211,7 +209,11 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         });
         this.addImageForm.controls['useImageFileType'].valueChanges.subscribe((value: boolean) => {
             this.useImageFileType = value;
-            this.resetAddImageForm();
+            this.fileReference = null;
+            this.selectedImageFile = null;
+            this.selectedImageContent = null;
+            this.imagePreviewError = null;
+            this.addImageForm.controls['imageUrl'].reset();
         });
 
         this.siteLogService.isUserAuthorisedToEditSite.subscribe((authorised: boolean) => {
@@ -329,7 +331,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
                 if (imageDeleted.status === ImageStatus.CANCEL) {
                     this.unmarkDuplicateImage(imageDeleted);
                     imageObjects.splice(index, 1);
-                    this.processInputImages();
+                    this.processInputImages(this.getAllImageObjects());
                     this.markFormAsPristine();
                 } else if (imageDeleted.status === ImageStatus.OK
                         || imageDeleted.status === ImageStatus.INVALID) {
@@ -353,47 +355,18 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         };
     }
 
-    public save(): Observable<boolean> {
+    public prepareForSave(): void {
         this.siteLogModel.siteInformation.siteImages = [];
-        let pendingImageObjects: ImageObject[] = [];
-        let allImageObjects = this.getAllImageObjects();
-        allImageObjects.forEach((imageObject: ImageObject) => {
-            if (this.isDuplicateImage(imageObject)) {
-                ;  // ignore duplicate image
-            } else if ([ImageStatus.OK, ImageStatus.INVALID,
-                ImageStatus.NEW_IMAGE, ImageStatus.NEW_URL]
-                    .includes(imageObject.status)) {
+        this.getAllImageObjects().forEach((imageObject: ImageObject) => {
+            if (!this.isDuplicateImage(imageObject) && [ImageStatus.OK, ImageStatus.INVALID,
+                ImageStatus.NEW_IMAGE, ImageStatus.NEW_URL].includes(imageObject.status)) {
                 let siteImage = this.convertToSiteImage(imageObject);
                 this.siteLogModel.siteInformation.siteImages.push(siteImage);
-            } else if (imageObject.status === ImageStatus.DELETING) {
-                pendingImageObjects.push(imageObject);
             }
         });
 
         this.isCurrentImgPanelEditable = false;
         this.isPreviousImgPanelEditable = false;
-        return (pendingImageObjects.length === 0) ? Observable.of(false) :
-                this.deletePendingSiteImages(pendingImageObjects);
-    }
-
-    /**
-     * Recursively delete site images from the pending list
-     */
-    private deletePendingSiteImages(pendingImageObjects: ImageObject[]): Observable<boolean> {
-        let imageObject: ImageObject = pendingImageObjects.pop();
-        return this.associatedDocumentService.deleteDocument(imageObject.name).pipe(
-            mergeMap((response: Response) => {
-                if (response.status !== 204) {
-                    console.error('Error in deleting site image ' + imageObject.name
-                                    + ': status code = ' + response.status);
-                } else {
-                    console.log(imageObject.name + ' has been deleted');
-                }
-
-                return (pendingImageObjects.length === 0) ? Observable.of(true)
-                        : this.deletePendingSiteImages(pendingImageObjects);
-            })
-        );
     }
 
     private getAllImageObjects(): ImageObject[] {
@@ -415,7 +388,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     }
 
     private isDuplicateImage(imageObject: ImageObject): boolean {
-        return imageObject && imageObject.name.indexOf(this.duplicateMarker) !== -1;
+        return imageObject && imageObject.name.startsWith(this.duplicateMarker);
     }
 
     private markDuplicateImage(imageObject: ImageObject): void {
@@ -492,15 +465,12 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.processInputImages(allImageObjects);
     }
 
-    private processInputImages(imageObjects: ImageObject[] = []): void {
-        if (!imageObjects || imageObjects.length === 0) {
-            imageObjects = this.getAllImageObjects();
-        }
+    private processInputImages(allImageObjects: ImageObject[]): void {
         this.currentImageObjects = [];
         this.previousImageObjects = [];
         let descriptionTypes = this.getSiteImageDefinitionValues();
-        this.sortImagesByDescriptionAndCreatedDate(imageObjects, 'asc', 'desc');
-        imageObjects.forEach((imageObject: ImageObject) => {
+        this.sortImagesByDescriptionAndCreatedDate(allImageObjects, 'asc', 'desc');
+        allImageObjects.forEach((imageObject: ImageObject) => {
             const index = descriptionTypes.indexOf(imageObject.title);
             if (index > -1) {
                 this.currentImageObjects.push(imageObject);
@@ -531,11 +501,14 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
                 if (newImage.createdDate >= currentImage.createdDate) {
                     this.currentImageObjects.splice(index, 1, newImage);
                     this.currentImageForm.markAsDirty();
+                    this.isCurrentImgPanelOpen = true;
                     this.previousImageObjects.unshift(currentImage);
                     this.previousImageForm.markAsDirty();
+                    this.isPreviousImgPanelOpen = true;
                 } else {
                     this.previousImageObjects.unshift(newImage);
                     this.previousImageForm.markAsDirty();
+                    this.isPreviousImgPanelOpen = true;
                 }
             }
         }
@@ -543,6 +516,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         if (!isInCurrentImages) {
             this.currentImageObjects.push(newImage);
             this.currentImageForm.markAsDirty();
+            this.isCurrentImgPanelOpen = true;
         }
 
         this.siteLogService.sendApplicationStateMessage({
@@ -589,7 +563,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     }
 
     private getOriginalImageName(url: string): string {
-        return url.split('/').pop().split('\\').pop().split('?').pop().split('=').pop().split('#')[0];
+        return url.split('/').pop().split('\\').pop().split('?').shift().split('#').shift();
     }
 
     private getMapKey(value: string): string {
@@ -602,11 +576,18 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     }
 
     private getFileExtension(imagePath: string): string {
-        if (!imagePath || imagePath.length < 4 || imagePath.lastIndexOf('.') === -1) {
+        if (!imagePath || imagePath.length < 4) {
             return null;
         }
-        let index = imagePath.lastIndexOf('.');
-        return imagePath.substring(index + 1).toLowerCase();
+        let index1 = imagePath.indexOf('?');
+        if (index1 !== -1) {
+            imagePath = imagePath.substring(0, index1);
+        }
+        let index2 = imagePath.lastIndexOf('.');
+        if (index2 === -1) {
+            return null;
+        }
+        return imagePath.substring(index2 + 1).toLowerCase();
     }
 
     private sortImagesByDescriptionAndCreatedDate(imageObjects: ImageObject[], sort1: string, sort2: string): void {

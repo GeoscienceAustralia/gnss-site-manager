@@ -30,6 +30,8 @@ export class ImageObject {
     }
 
     public setFileReference(fileReference: string): void {
+        // '&' in XML starts an entity and should be escaped with '&amp;'
+        fileReference = fileReference.replace(/&/g, '&amp;');
         this.fullSizeImage = fileReference;
         this.thumbnailImage = fileReference;
     }
