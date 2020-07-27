@@ -75,7 +75,7 @@ module.exports = function (config) {
       { pattern: 'dist/dev/assets/**/*', watched: false, included: false, served: true },
 
       { pattern: 'node_modules/ngx-bootstrap-ga/**/*.js', included: false, watched: false },  // for typeahead
-      { pattern: 'node_modules/ng2-bootstrap/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/ngx-bootstrap/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/ng2-validation/bundles/ng2-validation.umd.js', included: false, watched: false },
       { pattern: 'node_modules/libphonenumber-js/bundle/libphonenumber-js.min.js', included: false, watched: false },
       { pattern: 'node_modules/moment/**/*.js', included: false, watched: false },

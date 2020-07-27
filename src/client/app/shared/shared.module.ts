@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { DropdownModule, TooltipModule, CollapseModule  } from 'ng2-bootstrap';
+import { BsDropdownModule, TooltipModule, CollapseModule  } from 'ngx-bootstrap';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -27,7 +27,7 @@ import { JsonViewModelService } from './json-data-view-model/index';
     CommonModule,
     RouterModule,
     CollapseModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     TooltipModule.forRoot()
   ],
   declarations: [
