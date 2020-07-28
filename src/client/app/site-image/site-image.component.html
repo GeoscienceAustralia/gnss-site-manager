@@ -1,9 +1,9 @@
 <div [formGroup]="siteImageForm" class="panel panel-level-2">
     <div class="panel-heading item-header" id="site-image-panel">
         <span class="panel-title cursor-ptr" tabindex="0"
-              (keyup.space)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-              (keyup.enter)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+              (keyup.space)="isOpen = !isOpen"
+              (keyup.enter)="isOpen = !isOpen"
+              (click)="isOpen = !isOpen">
             <i class="glyphicon"
                [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
             </i>
@@ -14,7 +14,7 @@
                     title="Add new {{getItemName()}}"
                     id="new-{{getElementName()}}"
                     [disabled]="!isAuthorised"
-                    (click)="addNew($event); miscUtils.showFullView($event);">
+                    (click)="addNew($event)">
                 <i class="glyphicon glyphicon-plus-sign"></i>
                 New
             </button>
@@ -120,9 +120,9 @@
         <div [formGroup]="currentImageForm" class="panel panel-level-3" id="current-image-panel">
             <div class="panel-heading item-header">
                 <span class="panel-title cursor-ptr" tabindex="3"
-                      (keyup.space)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)"
-                      (keyup.enter)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)"
-                      (click)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)">
+                      (keyup.space)="isCurrentImgPanelOpen = !isCurrentImgPanelOpen"
+                      (keyup.enter)="isCurrentImgPanelOpen = !isCurrentImgPanelOpen"
+                      (click)="isCurrentImgPanelOpen = !isCurrentImgPanelOpen">
                     <i class="glyphicon"
                        [ngClass]="{'glyphicon-minus-sign': isCurrentImgPanelOpen,
                                    'glyphicon-plus-sign': !isCurrentImgPanelOpen}">
@@ -159,9 +159,9 @@
         <div [formGroup]="previousImageForm" class="panel panel-level-3" id="previous-image-panel">
             <div class="panel-heading item-header">
                 <span class="panel-title cursor-ptr" tabindex="4"
-                      (keyup.space)="isPreviousImgPanelOpen = miscUtils.scrollIntoView($event, isPreviousImgPanelOpen)"
-                      (keyup.enter)="isPreviousImgPanelOpen = miscUtils.scrollIntoView($event, isPreviousImgPanelOpen)"
-                      (click)="isPreviousImgPanelOpen = miscUtils.scrollIntoView($event, isPreviousImgPanelOpen)">
+                      (keyup.space)="isPreviousImgPanelOpen = !isPreviousImgPanelOpen"
+                      (keyup.enter)="isPreviousImgPanelOpen = !isPreviousImgPanelOpen"
+                      (click)="isPreviousImgPanelOpen = !isPreviousImgPanelOpen">
                     <i class="glyphicon"
                        [ngClass]="{'glyphicon-minus-sign': isPreviousImgPanelOpen,
                                    'glyphicon-plus-sign': !isPreviousImgPanelOpen}">

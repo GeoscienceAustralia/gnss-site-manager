@@ -16,7 +16,6 @@ import { MiscUtils } from '../index';
 })
 export class DatetimeInputComponent extends AbstractInput implements OnInit, DoCheck {
     @Input() dateType: string = 'Installed-Removed';
-    public miscUtils: any = MiscUtils;
     public datetime: string = '';
     public datetimeModel: Date;
     public hoursString: string = '00';

@@ -15,7 +15,7 @@
               id="new-{{getElementName()}}"
               [disabled]="!isAuthorised"
               title="Add a new {{getItemName()}}"
-              (click)="addNew($event); miscUtils.showFullView($event);">
+              (click)="addNew($event)">
 	    <i class="glyphicon glyphicon-plus-sign"></i>
 	    New
 	  </button>
@@ -25,7 +25,7 @@
               class="btn btn-similar btn-xs"
               title="Add a new {{getItemName()}} by updating the current one"
               [disabled]="!isAuthorised"
-              (click)="addNewByCopying($event); miscUtils.showFullView($event);">
+              (click)="addNewByCopying($event)">
         <i class="glyphicon glyphicon-plus-sign"></i>
         Update
       </button>

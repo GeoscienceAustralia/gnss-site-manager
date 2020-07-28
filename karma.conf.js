@@ -80,8 +80,6 @@ module.exports = function (config) {
       { pattern: 'node_modules/ng2-validation/bundles/ng2-validation.umd.js', included: false, watched: false },
       { pattern: 'node_modules/libphonenumber-js/bundle/libphonenumber-js.min.js', included: false, watched: false },
       { pattern: 'node_modules/moment/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/scroll-into-view/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/raf/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/performance-now/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/oidc-client/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/map-factory/dist/lib/**/*.js', included: false, watched: false },
