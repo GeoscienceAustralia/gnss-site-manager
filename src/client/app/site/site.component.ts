@@ -66,6 +66,9 @@ export class SiteComponent implements OnInit, OnDestroy {
         this.route.params.forEach((params: Params) => {
             let id: string = params['id'];
             this.siteId = id;
+            if (this.siteId && this.siteId !== 'newSite') {
+                this.siteId = this.siteId.toUpperCase();
+            }
         });
 
         this.isLoading = true;
