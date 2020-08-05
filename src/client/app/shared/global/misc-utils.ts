@@ -15,6 +15,14 @@ export class MiscUtils {
         return moment.utc(date).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     }
 
+    public static formatDateTimeSimple(date: string): string {
+        return moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    public static formatDateTimeString(date: string): string {
+        return moment.utc(date).format('YYYYMMDDTHHmmss');
+    }
+
     public static prettyFormatDateTime(date: string) {
         let regex = new RegExp('([^T]*)T([^\.]*)\.(.*)');  // date'T'time.ms
         let groups: RegExpExecArray;

@@ -14,6 +14,7 @@ import { CheckboxesInputComponent } from './checkboxes-input.component';
 import { RadioButtonsInputComponent } from './radiobuttons-input.component';
 import { MultiSelectBoxesComponent } from './multi-select-boxes.component';
 import { ListBoxComponent } from './list-box.component';
+import { FileInputComponent } from './file-input.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { ListBoxComponent } from './list-box.component';
     CheckboxesInputComponent,
     RadioButtonsInputComponent,
     MultiSelectBoxesComponent,
-    ListBoxComponent
+    ListBoxComponent,
+    FileInputComponent,
   ],
   exports: [
     TypeaheadInputComponent,
@@ -48,7 +50,8 @@ import { ListBoxComponent } from './list-box.component';
     CheckboxesInputComponent,
     RadioButtonsInputComponent,
     MultiSelectBoxesComponent,
-    ListBoxComponent
+    ListBoxComponent,
+    FileInputComponent,
   ]
 })
 export class FormInputModule {}
