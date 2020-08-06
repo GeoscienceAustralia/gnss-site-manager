@@ -1,6 +1,6 @@
 import { FormControl, Validator } from '@angular/forms';
 
-const antennaRadomeTypePattern = /^[A-Z0-9\/._-]+( [A-Z0-9\/._-]+)* +[A-Z0-9]{4}$/;
+const antennaRadomeTypePattern = /^[A-Z\d]+[A-Z\d\s\/\+\._-]*[\s]+[A-Z\d]{4}$/;
 
 /**
  * A Validator class for antenna and radome type input component.
