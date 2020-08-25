@@ -1,5 +1,5 @@
 <div [formGroup]="siteImageForm" class="panel panel-level-2">
-    <div class="panel-heading item-header">
+    <div class="panel-heading item-header" id="site-image-panel">
         <span class="panel-title cursor-ptr" tabindex="0"
               (keyup.space)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
               (keyup.enter)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
@@ -27,6 +27,7 @@
         <div [formGroup]="addImageForm"
              class="panel panel-level-3"
              [hidden]="!isAddNewPanelOpen"
+             id="add-image-panel"
              style="margin-top: 5px">
             <div class="panel-heading item-header">
                 <span class="panel-title cursor-ptr" tabindex="1">
@@ -116,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div [formGroup]="currentImageForm" class="panel panel-level-3">
+        <div [formGroup]="currentImageForm" class="panel panel-level-3" id="current-image-panel">
             <div class="panel-heading item-header">
                 <span class="panel-title cursor-ptr" tabindex="3"
                       (keyup.space)="isCurrentImgPanelOpen = miscUtils.scrollIntoView($event, isCurrentImgPanelOpen)"
@@ -155,7 +156,7 @@
             </div>
         </div>
 
-        <div [formGroup]="previousImageForm" class="panel panel-level-3">
+        <div [formGroup]="previousImageForm" class="panel panel-level-3" id="previous-image-panel">
             <div class="panel-heading item-header">
                 <span class="panel-title cursor-ptr" tabindex="4"
                       (keyup.space)="isPreviousImgPanelOpen = miscUtils.scrollIntoView($event, isPreviousImgPanelOpen)"
