@@ -1,6 +1,6 @@
 import { FormControl, Validator } from '@angular/forms';
 
-const receiverTypePattern = /^[A-Z0-9._-]+( [A-Z0-9._-]+)*$/;
+const receiverTypePattern = /^[A-Z\d]+[A-Z\d\s\/\+\._-]*$/;
 
 /**
  * A Validator class for receiver type input component.
