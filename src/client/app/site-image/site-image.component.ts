@@ -228,16 +228,16 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         });
     }
 
-    public onCreatedDateChange(date: Date): void {
-        this.createdDate = MiscUtils.formatDateToDateString(date);
-    }
-
     public setImageDescription(value: string): void {
         this.description = value;
     }
 
     public getSiteImageDefinitionValues(): string[] {
         return Array.from(this.siteImageDefinitions.values());
+    }
+
+    public handleCreatedDateChangeEvent(date: string): void {
+        this.createdDate = date;
     }
 
     public handleImageSelectEvent(imgFile: File): void {

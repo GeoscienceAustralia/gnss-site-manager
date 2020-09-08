@@ -56,35 +56,12 @@
                         </ng-select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label"
-                            [ngClass]="{'required': required}">
-                        Date Taken (UTC)
-                    </label>
-                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
-                        <div class="input-group">
-                            <input class="form-control"
-                                    #dp="bsDatepicker"
-                                    bsDatepicker
-                                    formControlName="createdDate"
-                                    (bsValueChange)="onCreatedDateChange($event)"
-                                    (focus)="miscUtils.showFullView($event);"
-                                    [isDisabled]="addImageForm.disabled"
-                                    [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD',
-                                                  containerClass: 'theme-dark-blue',
-                                                  adaptivePosition: true }">
-                            <span class="input-group-btn">
-                                <button type="button"
-                                        class="btn btn-default"
-                                        (click)="dp.toggle(); miscUtils.showFullView($event)"
-                                        [attr.aria-expanded]="dp.isOpen"
-                                        [disabled]="addImageForm.disabled">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <date-input [form]="addImageForm"
+                            controlName="createdDate"
+                            (dateSelectEvent)="handleCreatedDateChangeEvent($event)"
+                            [required]="true">
+                    Date Taken (UTC)
+                </date-input>
                 <div class="form-group">
                     <span class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 radio-button-group required">
                         <span class="img-type-radio-first">

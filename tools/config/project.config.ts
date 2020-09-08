@@ -30,7 +30,6 @@ export class ProjectConfig extends SeedConfig {
       ...this.NPM_DEPENDENCIES,
       {src: 'systemjs/dist/system.src.js', inject: 'shims'},
       {src: 'bootstrap/dist/css/bootstrap.min.css', inject: true}, // inject into css section
-      {src: 'ngx-bootstrap/datepicker/bs-datepicker.css', inject: true},
       {src: 'jsonix/jsonix.js', inject: 'libs'},
       {src: 'w3c-schemas/lib/XLink_1_0.js', inject: 'libs'},
       {src: 'ogc-schemas/lib/GML_3_2_1.js', inject: 'libs'},
