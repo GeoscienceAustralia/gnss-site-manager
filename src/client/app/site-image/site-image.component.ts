@@ -53,7 +53,6 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     public currentImageObjects: ImageObject[] = [];
     public previousImageObjects: ImageObject[] = [];
 
-    public miscUtils: MiscUtils = MiscUtils;
     public siteImageForm: FormGroup;
     public currentImageForm: FormGroup;
     public previousImageForm: FormGroup;

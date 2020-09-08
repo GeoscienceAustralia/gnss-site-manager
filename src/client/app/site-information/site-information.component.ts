@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MiscUtils } from '../shared/index';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { ResponsiblePartyType } from '../responsible-party/responsible-party-group.component';
 import { SiteImageComponent } from '../site-image/site-image.component';
@@ -24,7 +23,6 @@ export class SiteInformationComponent implements OnInit {
     siteImageComponent: SiteImageComponent;
 
     public siteInformationForm: FormGroup;
-    public miscUtils: any = MiscUtils;
     public responsiblePartyType: any = ResponsiblePartyType;    // Used in template
     public isFormOpen: boolean = false;
 

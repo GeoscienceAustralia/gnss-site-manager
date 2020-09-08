@@ -11,7 +11,6 @@ import { AbstractViewModel } from '../json-data-view-model/view-model/abstract-v
 import { SiteLogService, ApplicationState, ApplicationSaveState } from '../site-log/site-log.service';
 
 export abstract class AbstractItemComponent extends AbstractBaseComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-    protected miscUtils: any = MiscUtils;
 
     public itemGroup: FormGroup;
 
@@ -240,7 +239,7 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
      */
     public toggleItem(event: UIEvent) {
         event.preventDefault();
-        this.isItemOpen = this.miscUtils.scrollIntoView(event, this.isItemOpen);
+        this.isItemOpen = !this.isItemOpen;
     }
 
     /**

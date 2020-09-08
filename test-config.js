@@ -6,7 +6,6 @@ System.config({
       'ngx-bootstrap': 'ngx-bootstrap/ngx-bootstrap',
       'lodash': 'lodash/lodash',
       'alertify.js': 'alertify.js/dist/js/alertify.js',
-      'scroll-into-view': 'scroll-into-view/scrollIntoView.js',
       'foreach': 'foreach/index',
       'raf': 'raf/index',
       'performance-now': 'performance-now/lib/performance-now',

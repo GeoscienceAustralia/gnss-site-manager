@@ -99,10 +99,6 @@ export class ProjectConfig extends SeedConfig {
         path: 'node_modules/json-pointer/index.js'
       },
       {
-        name: 'scroll-into-view',
-        path: 'node_modules/scroll-into-view/scrollIntoView.js'
-      },
-      {
         name: 'foreach',
         path: 'node_modules/foreach/index.js'
       },

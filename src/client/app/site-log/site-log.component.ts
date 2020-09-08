@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { User } from 'oidc-client';
 import * as _ from 'lodash';
 
-import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
+import { DialogService, SiteLogService } from '../shared/index';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { ApplicationSaveState } from '../shared/site-log/site-log.service';
@@ -32,7 +32,6 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     @ViewChild(SiteInformationComponent)
     siteInformationComponent: SiteInformationComponent;
 
-    public miscUtils: any = MiscUtils;
     public siteLogForm: FormGroup;
 
     private unsubscribe: Subject<void> = new Subject<void>();

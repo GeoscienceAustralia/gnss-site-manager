@@ -11,12 +11,12 @@
                        [formControlName]="controlName"
                        [ngClass]="{ 'ng-invalid': invalidDatetime }"
                        (change)="updateCalendar()"
-                       (focus)="miscUtils.scrollIntoView($event, showDatetimePicker); showDatetimePicker = true;"
+                       (focus)="showDatetimePicker = true;"
                        [disabled]="isFormDisabled()"/>
                 <span class="input-group-btn z-lowest">
                     <button id="calendar-btn" type="button"
                             class="btn btn-default btn-calendar z-lowest"
-                            (click)="showDatetimePicker = miscUtils.scrollIntoView($event, showDatetimePicker)"
+                            (click)="showDatetimePicker = !showDatetimePicker"
                             [disabled]="isFormDisabled()" >
                         <span id="calendar-icon" class="glyphicon glyphicon-calendar"></span>
                     </button>
