@@ -10,16 +10,24 @@ export class MiscUtils {
         return moment().utc().format('YYYY-MM-DD HH:mm:ss');
     }
 
+    public static getUTCDate(): string {
+        return moment().utc().format('YYYY-MM-DD');
+    }
+
     public static formatUTCDateTime(date: string): string {
         return moment.utc(date).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     }
 
-    public static formatDateTimeSimple(date: string): string {
-        return moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
+    public static formatUTCDate(date: string): string {
+        return moment.utc(date).format('YYYY-MM-DD');
     }
 
     public static formatDateTimeString(date: string): string {
         return moment.utc(date).format('YYYYMMDDTHHmmss');
+    }
+
+    public static formatDateSimple(date: string): string {
+        return moment.utc(date).format('YYYYMMDD');
     }
 
     public static prettyFormatDateTime(date: string) {

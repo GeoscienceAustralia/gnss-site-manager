@@ -2,7 +2,13 @@ ng-select a.btn-xs {
     margin-right: 20px !important;
     margin-top: 2px;
 }
-
+.input-group-btn:last-child>.btn,
+.input-group .form-control {
+    z-index: 0 !important;
+}
+.input-group-btn > .btn {
+    padding: 6px 11px;
+}
 .radio-button-group {
     text-align: right;
     margin-top: 5px;

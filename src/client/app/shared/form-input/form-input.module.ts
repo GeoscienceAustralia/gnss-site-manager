@@ -7,6 +7,7 @@ import { TextInputComponent } from './text-input.component';
 import { TypeaheadInputComponent } from './typeahead-input.component';
 import { TextAreaInputComponent } from './textarea-input.component';
 import { NumberInputComponent } from './number-input.component';
+import { DateInputComponent } from './date-input.component';
 import { DatetimeInputComponent } from './datetime-input.component';
 import { UrlInputComponent } from './url-input.component';
 import { EmailInputComponent } from './email-input.component';
@@ -30,6 +31,7 @@ import { FileInputComponent } from './file-input.component';
     TextInputComponent,
     TextAreaInputComponent,
     NumberInputComponent,
+    DateInputComponent,
     DatetimeInputComponent,
     UrlInputComponent,
     EmailInputComponent,
@@ -44,6 +46,7 @@ import { FileInputComponent } from './file-input.component';
     TextInputComponent,
     TextAreaInputComponent,
     NumberInputComponent,
+    DateInputComponent,
     DatetimeInputComponent,
     UrlInputComponent,
     EmailInputComponent,

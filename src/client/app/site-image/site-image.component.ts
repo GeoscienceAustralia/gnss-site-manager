@@ -67,7 +67,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     public isPreviousImgPanelEditable: boolean = false;
     public isUploading: boolean = false;
     public description: string = null;
-    public createdDate: string = MiscUtils.getUTCDateTime();;
+    public createdDate: string = MiscUtils.getUTCDate();;
     public fileReference: string = null;
     public selectedImageContent: string = null;
     public imagePreviewError: string = null;
@@ -234,6 +234,10 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
 
     public getSiteImageDefinitionValues(): string[] {
         return Array.from(this.siteImageDefinitions.values());
+    }
+
+    public handleCreatedDateChangeEvent(date: string): void {
+        this.createdDate = date;
     }
 
     public handleImageSelectEvent(imgFile: File): void {
@@ -439,7 +443,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         siteImage.name = imageObject.name;
         siteImage.description = imageObject.title;
         siteImage.imageType = imageObject.imageType;
-        siteImage.formatCreatedDate(imageObject.createdDate);
+        siteImage.createdDate = MiscUtils.formatUTCDate(imageObject.createdDate);
         siteImage.fileReference = imageObject.fullSizeImage;
         return siteImage;
     }
@@ -448,7 +452,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         this.description = null;
         this.fileReference = null;
         this.imagePreviewError = null;
-        this.createdDate = MiscUtils.getUTCDateTime();
+        this.createdDate = MiscUtils.getUTCDate();
 
         let allImageObjects: ImageObject[] = [];
         this.siteLogModel.siteInformation.siteImages.forEach((siteImage: SiteImageViewModel) => {
@@ -456,7 +460,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
             imageObject.name = siteImage.name;
             imageObject.title = siteImage.description;
             imageObject.setFileReference(siteImage.fileReference);
-            imageObject.createdDate = MiscUtils.formatDateTimeSimple(siteImage.createdDate);
+            imageObject.createdDate = MiscUtils.formatUTCDate(siteImage.createdDate);
             imageObject.imageType = siteImage.imageType;
             allImageObjects.push(imageObject);
         });
@@ -555,9 +559,8 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
 
     private getNewImageName(url: string): string {
         let originalImageName = this.getOriginalImageName(url);
-        this.createdDate = this.addImageForm.controls['createdDate'].value;
         return this.siteId + '_' + this.getMapKey(this.description) + '_'
-            + MiscUtils.formatDateTimeString(this.createdDate) + '.'
+            + MiscUtils.formatDateSimple(this.createdDate) + '.'
             + this.getFileExtension(originalImageName);
     }
 
