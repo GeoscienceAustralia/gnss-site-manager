@@ -6,18 +6,18 @@
     <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
         <div>
             <div class="input-group">
-                <input type="text" maxlength="24" (keyup.enter)="ignoreEvent($event);"
+                <input type="text" maxlength="{{datetimeLength}}"
+                       (keyup.enter)="ignoreEvent($event)"
                        class="form-control z-lowest"
                        [formControlName]="controlName"
-                       [ngClass]="{ 'ng-invalid': invalidDatetime }"
-                       (change)="updateCalendar()"
-                       (focus)="showDatetimePicker = true;"
+                       (change)="updateDatetimePicker()"
+                       (focus)="showDatetimePicker = true"
                        [disabled]="isFormDisabled()"/>
                 <span class="input-group-btn z-lowest">
                     <button id="calendar-btn" type="button"
                             class="btn btn-default btn-calendar z-lowest"
                             (click)="showDatetimePicker = !showDatetimePicker"
-                            [disabled]="isFormDisabled()" >
+                            [disabled]="isFormDisabled()">
                         <span id="calendar-icon" class="glyphicon glyphicon-calendar"></span>
                     </button>
                 </span>
@@ -30,69 +30,79 @@
                 <datepicker [(ngModel)]="datetimeModel"
                             [ngModelOptions]="{standalone: true}"
                             [showWeeks]="false"
-                            (selectionDone)="updateDate($event)"></datepicker>
+                            (selectionDone)="updateDatetimeInput($event)">
+                </datepicker>
                 <div class="center-time">
                     <table>
                         <tbody>
                         <tr class="text-center">
                             <td>
-                                <a (click)="incrementHours()" class="btn btn-time">
+                                <a (click)="updateHoursByStep(true)" class="btn btn-time">
                                     <span class="glyphicon glyphicon-chevron-up"></span>
                                 </a>
                             </td>
                             <td>&nbsp;</td>
                             <td>
-                                <a (click)="incrementMinutes()" class="btn btn-time">
+                                <a (click)="updateMinutesByStep(true)" class="btn btn-time">
                                     <span class="glyphicon glyphicon-chevron-up"></span>
                                 </a>
                             </td>
                             <td>&nbsp;</td>
                             <td>
-                                <a (click)="incrementSeconds()" class="btn btn-time">
+                                <a (click)="updateSecondsByStep(true)" class="btn btn-time">
                                     <span class="glyphicon glyphicon-chevron-up"></span>
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td class="form-group">
-                                <input type="text" [(ngModel)]="hoursString"
+                                <input type="number" maxlength="2" required
+                                       min="0" max="23" step="1"
+                                       [ngModel]="hours | number:'2.0-0'"
+                                       (ngModelChange)="hours = $event"
                                        [ngModelOptions]="{standalone: true}"
                                        [ngClass]="{'ng-invalid': invalidHours}"
-                                       (change)="updateHours()"
-                                       class="form-control text-center input-time" maxlength="2">
+                                       (change)="modifyHours()"
+                                       class="form-control text-center input-time">
                             </td>
-                            <td>:</td>
+                            <td class="time-separator">:</td>
                             <td class="form-group">
-                                <input type="text" [(ngModel)]="minutesString"
+                                <input type="number" maxlength="2" required
+                                       min="0" max="59" step="1"
+                                       [ngModel]="minutes | number:'2.0-0'"
+                                       (ngModelChange)="minutes = $event"
                                        [ngModelOptions]="{standalone: true}"
                                        [ngClass]="{'ng-invalid': invalidMinutes}"
-                                       (change)="updateMinutes()"
-                                       class="form-control text-center input-time" maxlength="2">
+                                       (change)="modifyMinutes()"
+                                       class="form-control text-center input-time">
                             </td>
-                            <td>:</td>
+                            <td class="time-separator">:</td>
                             <td class="form-group">
-                                <input type="text" [(ngModel)]="secondsString"
+                                <input type="number" maxlength="2" required
+                                       min="0" max="59" step="1"
+                                       [ngModel]="seconds | number:'2.0-0'"
+                                       (ngModelChange)="seconds = $event"
                                        [ngModelOptions]="{standalone: true}"
                                        [ngClass]="{'ng-invalid': invalidSeconds}"
-                                       (change)="updateSeconds()"
-                                       class="form-control text-center input-time" maxlength="2">
+                                       (change)="modifySeconds()"
+                                       class="form-control text-center input-time">
                             </td>
                         </tr>
                         <tr class="text-center">
                             <td>
-                                <a (click)="decrementHours()" class="btn btn-time">
+                                <a (click)="updateHoursByStep(false)" class="btn btn-time">
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                 </a>
                             </td>
                             <td>&nbsp;</td>
                             <td>
-                                <a (click)="decrementMinutes()" class="btn btn-time">
+                                <a (click)="updateMinutesByStep(false)" class="btn btn-time">
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                 </a>
                             </td>
                             <td>&nbsp;</td>
                             <td>
-                                <a (click)="decrementSeconds()" class="btn btn-time">
+                                <a (click)="updateSecondsByStep(false)" class="btn btn-time">
                                     <span class="glyphicon glyphicon-chevron-down"></span>
                                 </a>
                             </td>
@@ -102,16 +112,10 @@
                 </div>
                 <div class="center-btns">
                     <button class="btn btn-ok" type="button"
-                            (click)="setSelectedDatetime()"
+                            (click)="close()"
                             title="Set selected date/time and close calendar">
                         <i class="glyphicon glyphicon-ok"></i>
-                        OK
-                    </button>
-                    <button class="btn btn-cancel pull-right" type="button"
-                            (click)="cancelSelectedDatetime()"
-                            title="Cancel selected date/time and close calendar">
-                        <i class="glyphicon glyphicon-remove"></i>
-                        Cancel
+                        Close
                     </button>
                 </div>
             </div>
