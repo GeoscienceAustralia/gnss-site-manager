@@ -236,10 +236,6 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
         return Array.from(this.siteImageDefinitions.values());
     }
 
-    public handleCreatedDateChangeEvent(date: string): void {
-        this.createdDate = date;
-    }
-
     public handleImageSelectEvent(imgFile: File): void {
         this.selectedImageContent = null;
         this.selectedImageFile = imgFile;
@@ -269,6 +265,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     }
 
     public addSiteImage(): void {
+        this.createdDate = this.addImageForm.controls['createdDate'].value;
         let imageObject = new ImageObject(ImageStatus.NEW_IMAGE);
         imageObject.name = this.getNewImageName(this.selectedImageFile.name);
         imageObject.title = this.description;
@@ -298,6 +295,7 @@ export class SiteImageComponent extends AbstractBaseComponent implements OnInit,
     }
 
     public addImageUrl(): void {
+        this.createdDate = this.addImageForm.controls['createdDate'].value;
         let imageObject = new ImageObject(ImageStatus.NEW_URL);
         imageObject.name = this.getNewImageName(this.fileReference);
         imageObject.title = this.description;

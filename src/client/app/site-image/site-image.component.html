@@ -56,12 +56,12 @@
                         </ng-select>
                     </div>
                 </div>
-                <date-input [form]="addImageForm"
+                <datetime-input [form]="addImageForm"
                             controlName="createdDate"
-                            (dateSelectEvent)="handleCreatedDateChangeEvent($event)"
+                            [showTime]="false"
                             [required]="true">
                     Date Taken (UTC)
-                </date-input>
+                </datetime-input>
                 <div class="form-group">
                     <span class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 radio-button-group required">
                         <span class="img-type-radio-first">

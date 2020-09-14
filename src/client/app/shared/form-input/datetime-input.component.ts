@@ -19,12 +19,14 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
     @Input()
     dateType: string = 'Installed-Removed';
 
+    @Input()
+    showTime: boolean = true;
+
     public datetimeModel: Date;
     public hours: number = 0;
     public minutes: number = 0;
     public seconds: number = 0;
-    public datetimeLength: number = 19;
-    public dtPickerHeight: number = 380;
+    public datetimeLength: number;
     public showDatetimePicker: boolean = false;
 
     private datetimeRegExp: RegExp;
@@ -35,7 +37,13 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
 
     ngOnInit() {
         super.ngOnInit();
-        this.datetimeRegExp = /\d{2,4}-\d\d-\d\d(T| )\d\d:\d\d:\d\d/g;
+        if (this.showTime) {
+            this.datetimeLength = 19;
+            this.datetimeRegExp = /\d{4}-\d\d-\d\d(T| )\d\d:\d\d:\d\d/g;
+        } else {
+            this.datetimeLength = 10;
+            this.datetimeRegExp = /\d{4}-\d\d-\d\d/g;
+        }
         this.updateDatetimePicker();
         this.addValidatorsToFormControl();
     }
@@ -46,13 +54,15 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
             validators.push(Validators.required);
         }
 
-        validators.push(new DatetimeFormatValidator());
-        if (this.controlName === 'endDate') {
-            let startDateControl: FormControl = <FormControl>this.form.controls.startDate;
-            validators.push(new DatetimeRangeValidator(this.dateType, startDateControl, true));
-        } else if (this.controlName === 'startDate') {
-            let endDateControl: FormControl = <FormControl>this.form.controls.endDate;
-            validators.push(new DatetimeRangeValidator(this.dateType, endDateControl, false));
+        validators.push(new DatetimeFormatValidator(this.showTime));
+        if (this.showTime) {
+            if (this.controlName === 'endDate') {
+                let startDateControl: FormControl = <FormControl>this.form.controls.startDate;
+                validators.push(new DatetimeRangeValidator(this.dateType, startDateControl, true));
+            } else if (this.controlName === 'startDate') {
+                let endDateControl: FormControl = <FormControl>this.form.controls.endDate;
+                validators.push(new DatetimeRangeValidator(this.dateType, endDateControl, false));
+            }
         }
 
         setTimeout( () => {
@@ -105,13 +115,17 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
     public updateDatetimeInput(date: Date = null): void {
         if (!date) {
             return;
+        } else if (this.showTime) {
+            date.setHours(this.hours);
+            date.setMinutes(this.minutes);
+            date.setSeconds(this.seconds);
         }
-        date.setHours(this.hours);
-        date.setMinutes(this.minutes);
-        date.setSeconds(this.seconds);
         let datetimeString: string = this.convertDateToString(date);
         this.formControl.setValue(datetimeString);
         this.formControl.markAsDirty();
+        if (!this.showTime) {
+            this.showDatetimePicker = false;
+        }
     }
 
    /**
@@ -124,9 +138,11 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
         }
 
         this.datetimeModel = datetimeObject;
-        this.hours = this.datetimeModel.getHours();
-        this.minutes = this.datetimeModel.getMinutes();
-        this.seconds = this.datetimeModel.getSeconds();
+        if (this.showTime) {
+            this.hours = this.datetimeModel.getHours();
+            this.minutes = this.datetimeModel.getMinutes();
+            this.seconds = this.datetimeModel.getSeconds();
+        }
         let datetimeString = this.convertDateToString(this.datetimeModel);
         this.formControl.setValue(datetimeString);
     }
@@ -205,9 +221,14 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
         let dateStr: string = date.getFullYear() + '-'
             + MiscUtils.padTwo(date.getMonth() + 1) + '-'
             + MiscUtils.padTwo(date.getDate());
+
+        if (!this.showTime) {
+            return dateStr;
+        }
+
         let timeStr: string = MiscUtils.padTwo(date.getHours()) + ':'
             + MiscUtils.padTwo(date.getMinutes()) + ':'
             + MiscUtils.padTwo(date.getSeconds());
-        return  dateStr + ' ' + timeStr;
+        return dateStr + ' ' + timeStr;
     }
 }
