@@ -26,13 +26,14 @@
                 {{getErrorReport()}}
             </small>
 
-            <div class="calendar-popup" *ngIf="showDatetimePicker">
+            <div *ngIf="showDatetimePicker" class="calendar-popup"
+                 [ngClass]="{'datetime-picker': showTime, 'date-picker': !showTime}">
                 <datepicker [(ngModel)]="datetimeModel"
                             [ngModelOptions]="{standalone: true}"
                             [showWeeks]="false"
                             (selectionDone)="updateDatetimeInput($event)">
                 </datepicker>
-                <div class="center-time">
+                <div *ngIf="showTime" class="center-time">
                     <table>
                         <tbody>
                         <tr class="text-center">
@@ -110,7 +111,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="center-btns">
+                <div *ngIf="showTime" class="center-btns">
                     <button class="btn btn-ok" type="button"
                             (click)="close()"
                             title="Set selected date/time and close calendar">
