@@ -1,5 +1,4 @@
 import { FormControl, Validator } from '@angular/forms';
-import { GeodesyMLCodelistService } from '../geodesyml-codelist/geodesyml-codelist.service';
 
 const radomeTypePattern = /^[A-Z0-9]{4}$/;
 
@@ -8,7 +7,7 @@ const radomeTypePattern = /^[A-Z0-9]{4}$/;
  */
 export class RadomeTypeValidator implements Validator {
 
-    constructor(private geodesyMLCodelistService: GeodesyMLCodelistService) { }
+    constructor(private codelist: string[]) { }
 
     validate(formControl: FormControl): { [key: string]: any } {
         const value: string = formControl.value;
@@ -16,8 +15,7 @@ export class RadomeTypeValidator implements Validator {
             const matches = value.match(radomeTypePattern);
             const warning = 'Unrecognised IGS radome type';
             if (matches && matches.length > 0) {
-                const codeList: string[] = this.geodesyMLCodelistService.getRadomeCodes();
-                const index = codeList.indexOf(value);
+                const index = this.codelist.indexOf(value);
                 return index >= 0 ? null : { invalid_radome_type : warning };
             } else {
                 return { invalid_radome_type : warning };

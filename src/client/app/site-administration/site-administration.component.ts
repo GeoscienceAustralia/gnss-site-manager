@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { User } from 'oidc-client';
 import * as _ from 'lodash';
 
-import { CorsSiteService, CorsNetworkService, DialogService, MiscUtils, SiteLogService } from '../shared/index';
+import { CorsSiteService, CorsNetworkService, DialogService, SiteLogService } from '../shared/index';
 import { CorsNetworkModel } from '../shared/cors-network/cors-network-model';
 import { SiteAdministrationModel } from './site-administration-model';
 import { RadioButtonOption } from '../shared/form-input/radiobuttons-input.component';
@@ -44,7 +44,6 @@ export class SiteAdministrationComponent implements OnInit, OnDestroy {
     @Output() runningStatusEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public siteAdministrationForm: FormGroup;
-    public miscUtils: any = MiscUtils;
     public isFormOpen: boolean = false;
     public isSiteStatusPanelOpen: boolean = true;
     public isNetworkPanelOpen: boolean = true;

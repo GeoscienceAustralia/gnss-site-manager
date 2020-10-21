@@ -1,9 +1,9 @@
 <div [formGroup]="siteInformationForm" class="panel panel-level-1">
     <div class="panel-heading group-header">
         <span class="panel-title cursor-ptr" tabindex="0"
-              (keyup.space)="isFormOpen = miscUtils.scrollIntoView($event, isFormOpen)"
-              (keyup.enter)="isFormOpen = miscUtils.scrollIntoView($event, isFormOpen)"
-              (click)="isFormOpen = miscUtils.scrollIntoView($event, isFormOpen)">
+              (keyup.space)="isFormOpen = !isFormOpen"
+              (keyup.enter)="isFormOpen = !isFormOpen"
+              (click)="isFormOpen = !isFormOpen">
             <i class="glyphicon"
                [ngClass]="{'glyphicon-minus-sign': isFormOpen, 'glyphicon-plus-sign': !isFormOpen}"></i>
             Site Information
@@ -17,6 +17,11 @@
         <site-location [parentForm]="siteInformationForm"
                        [siteLogModel]="siteLogModel">
         </site-location>
+
+        <gnss-site-image [parentForm]="siteInformationForm"
+                         [siteId]="siteId"
+                         [siteLogModel]="siteLogModel">
+        </gnss-site-image>
 
         <gnss-responsible-party-group [parentForm]="siteInformationForm.controls.siteOwner"
                                       [partyType]="responsiblePartyType.siteOwner"

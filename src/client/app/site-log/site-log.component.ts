@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import { User } from 'oidc-client';
 import * as _ from 'lodash';
 
-import { DialogService, MiscUtils, SiteLogService } from '../shared/index';
+import { DialogService, SiteLogService } from '../shared/index';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { UserAuthService } from '../shared/global/user-auth.service';
 import { ApplicationSaveState } from '../shared/site-log/site-log.service';
 import { AbstractGroupComponent } from '../shared/abstract-groups-items/abstract-group.component';
 import { ResponsiblePartyGroupComponent } from '../responsible-party/responsible-party-group.component';
+import { SiteInformationComponent } from '../site-information/site-information.component';
 
 /**
  * This class represents the SiteLogComponent for viewing and editing the details of site/receiver/antenna.
@@ -24,9 +25,13 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     @Input() parentForm: FormGroup;
     @Input() siteId: string;
     @Input() siteLogModel: SiteLogViewModel;
+    @Input() antennaRadomeCodelist: string[];
+    @Input() receiverCodelist: string[];
     @Output() runningStatusEmitter = new EventEmitter<boolean>();
 
-    public miscUtils: any = MiscUtils;
+    @ViewChild(SiteInformationComponent)
+    siteInformationComponent: SiteInformationComponent;
+
     public siteLogForm: FormGroup;
 
     private unsubscribe: Subject<void> = new Subject<void>();
@@ -63,6 +68,8 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     }
 
     public save() {
+        this.startRunning();
+        this.siteInformationComponent.processSiteImagesForSave();
         let formValueClone: any = _.cloneDeep(this.siteLogForm.getRawValue());
         this.moveSiteInformationUp(formValueClone);
         this.sortArrays(formValueClone);
@@ -93,9 +100,11 @@ export class SiteLogComponent implements OnInit, OnDestroy {
                     );
                 },
                 (error: Error) => {
-                    this.stopRunning();
                     console.error(error);
                     this.dialogService.showErrorMessage('Error in saving new site log data');
+                },
+                () => {
+                    this.stopRunning();
                 }
             );
     }
@@ -133,7 +142,6 @@ export class SiteLogComponent implements OnInit, OnDestroy {
             .takeUntil(this.unsubscribe)
             .subscribe(
                 (responseJson: any) => {
-                    this.stopRunning();
                     this.siteLogForm.markAsPristine();
                     this.siteLogService.sendApplicationStateMessage({
                         applicationFormModified: false,
@@ -148,9 +156,11 @@ export class SiteLogComponent implements OnInit, OnDestroy {
                     this.dialogService.showSuccessMessage('Done in saving SiteLog data for ' + this.siteId);
                 },
                 (error: Error) => {
-                    this.stopRunning();
                     console.error(error);
                     this.dialogService.showErrorMessage('Error in saving SiteLog data for ' + this.siteId);
+                },
+                () => {
+                    this.stopRunning();
                 }
             );
     }
@@ -232,7 +242,6 @@ export class SiteLogComponent implements OnInit, OnDestroy {
     }
 
     private resetFormStatusAfterSave() {
-        this.stopRunning();
         this.siteLogForm.markAsPristine();
         this.siteLogService.sendApplicationStateMessage({
             applicationFormModified: false,

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
-import { MiscUtils } from '../shared/global/misc-utils';
 import { DialogService } from '../shared/index';
 import { SiteLogService } from '../shared/site-log/site-log.service';
 import { AbstractBaseComponent } from '../shared/abstract-groups-items/abstract-base.component';
@@ -34,7 +33,6 @@ import * as _ from 'lodash';
 })
 export class SiteLocationComponent extends AbstractBaseComponent implements OnInit, OnDestroy {
 
-    public miscUtils: any = MiscUtils;
     public isOpen: boolean = false;
     public isCartesianPositionRequired: boolean = false;
     public isGeodeticPositionRequired: boolean = false;

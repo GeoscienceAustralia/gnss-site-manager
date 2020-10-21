@@ -14,6 +14,7 @@ import { SignalObstructionViewModel } from '../signal-obstruction/signal-obstruc
 import { MultipathSourceViewModel } from '../multipath-source/multipath-source-view-model';
 import { SiteLocationViewModel } from '../site-information/site-location-view-model';
 import { SiteIdentificationViewModel } from '../site-information/site-identification-view-model';
+import { SiteImageViewModel } from '../site-image/site-image-view-model';
 
 export class FormInformationViewModel {
     preparedBy: string = null;
@@ -24,6 +25,7 @@ export class FormInformationViewModel {
 export class SiteInformationViewModel {
     siteIdentification = new SiteIdentificationViewModel();
     siteLocation = new SiteLocationViewModel();
+    siteImages: SiteImageViewModel[] = [];
 }
 
 /**

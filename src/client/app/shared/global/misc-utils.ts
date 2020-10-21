@@ -2,7 +2,6 @@ import * as lodash from 'lodash';
 import * as moment from 'moment';
 
 export class MiscUtils {
-    private static scrollToView: any = require('scroll-into-view');
 
     /**
      * Get UTC date and time string in format of "yyyy-mm-dd HH:mm:ss"
@@ -11,8 +10,24 @@ export class MiscUtils {
         return moment().utc().format('YYYY-MM-DD HH:mm:ss');
     }
 
+    public static getUTCDate(): string {
+        return moment().utc().format('YYYY-MM-DD');
+    }
+
     public static formatUTCDateTime(date: string): string {
         return moment.utc(date).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    }
+
+    public static formatUTCDate(date: string): string {
+        return moment.utc(date).format('YYYY-MM-DD');
+    }
+
+    public static formatDateTimeString(date: string): string {
+        return moment.utc(date).format('YYYYMMDDTHHmmss');
+    }
+
+    public static formatDateSimple(date: string): string {
+        return moment.utc(date).format('YYYYMMDD');
     }
 
     public static prettyFormatDateTime(date: string) {
@@ -103,56 +118,6 @@ export class MiscUtils {
             return null;
         }
         return Object.prototype.toString.call(obj).match(/^\[object\s(.*)\]$/)[1];
-    }
-
-    /**
-     * Scroll the element clicked into full-view on the page and return a flag for switching block open/hide option.
-     */
-    public static scrollIntoView(event: any, isBlockOpen: boolean): boolean {
-        isBlockOpen = !isBlockOpen;
-        if (isBlockOpen && event && event.target) {
-            this.smoothScrollTo(event.target);
-        }
-
-        return isBlockOpen;
-    }
-
-    /**
-     * Scroll the element clicked into full-view on the page.
-     */
-    public static showFullView(event: UIEvent) {
-        event.preventDefault();
-        if (event && event.target) {
-            this.smoothScrollTo(event.target);
-        }
-    }
-
-    /**
-     * Scroll the element defined by Id into full-view on the page.
-     */
-    public static scrollToElementById(event: UIEvent, id: string) {
-        event.preventDefault();
-        let elem: any = document.getElementById(id);
-        if (elem) {
-            this.smoothScrollTo(elem);
-        }
-    }
-
-    /**
-     * Smoothly scroll the element elem into full-view on the page for FF, Chrome, Opera and Safari. Note that it dose not
-     * work in IE at all, so we have to use scrollIntoView() function instead (not smooth).
-     */
-    public static smoothScrollTo(elem: any): void {
-        if (!elem) {
-            return;
-        } else if (navigator.userAgent.indexOf('MSIE') !== -1 || !!navigator.userAgent.match(/Trident\/7\./)) {
-            setTimeout(function () {
-                elem.scrollIntoView({behavior: 'smooth'});
-            }, 500);
-        } else {
-            let settings: any = {time: 1000, align: {top: 0, left: 0}};
-            this.scrollToView(elem, settings);
-        }
     }
 
     public static isNumeric(n: any) {

@@ -19,8 +19,6 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel>
     // flag to indicate that the current or latest item in a group has an end date set
     currentItemAlreadyHasEndDate: boolean = false;
 
-    miscUtils: any = MiscUtils;
-
     @Input() parentForm: FormArray;
     @Input('siteLogModel') siteLogModel: SiteLogViewModel;
 
@@ -313,7 +311,7 @@ export abstract class AbstractGroupComponent<T extends AbstractViewModel>
      */
     public toggleGroup(event: UIEvent) {
         event.preventDefault();
-        this.isGroupOpen = this.miscUtils.scrollIntoView(event, this.isGroupOpen);
+        this.isGroupOpen = !this.isGroupOpen;
     }
 
     /**

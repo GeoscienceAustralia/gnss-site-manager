@@ -5,6 +5,7 @@ import { FormInputModule } from '../shared/form-input/form-input.module';
 import { SiteInformationComponent } from './site-information.component';
 import { SiteIdentificationModule } from './site-identification.module';
 import { SiteLocationModule } from './site-location.module';
+import { SiteImageModule } from '../site-image/site-image.module';
 import { ResponsiblePartyModule } from '../responsible-party/responsible-party.module';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ResponsiblePartyModule } from '../responsible-party/responsible-party.m
         FormInputModule,
         SiteIdentificationModule,
         SiteLocationModule,
+        SiteImageModule,
         ResponsiblePartyModule
     ],
     declarations: [SiteInformationComponent],
