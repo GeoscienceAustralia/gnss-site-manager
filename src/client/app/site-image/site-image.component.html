@@ -1,0 +1,201 @@
+<div [formGroup]="siteImageForm" class="panel panel-level-2">
+    <div class="panel-heading item-header" id="site-image-panel">
+        <span class="panel-title cursor-ptr" tabindex="0"
+              (keyup.space)="isOpen = !isOpen"
+              (keyup.enter)="isOpen = !isOpen"
+              (click)="isOpen = !isOpen">
+            <i class="glyphicon"
+               [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
+            </i>
+            {{getItemName()}}
+        </span>
+        <span class="pull-right">
+            <button class="btn btn-similar btn-xs"
+                    title="Add new {{getItemName()}}"
+                    id="new-{{getElementName()}}"
+                    [disabled]="!isAuthorised"
+                    (click)="addNew($event)">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                New
+            </button>
+        </span>
+    </div>
+    <div class="panel-body item-body" [hidden]="!isOpen">
+        <div class="container centered clear-pad overlay" *ngIf="isUploading">
+            <div class="loading-img"></div>
+        </div>
+        <div [formGroup]="addImageForm"
+             class="panel panel-level-3"
+             [hidden]="!isAddNewPanelOpen"
+             id="add-image-panel"
+             style="margin-top: 5px">
+            <div class="panel-heading item-header">
+                <span class="panel-title cursor-ptr" tabindex="1">
+                    Add Site Image
+                </span>
+                <span class="pull-right">
+                    <button type="button"
+                            class="btn btn-xs btn-danger"
+                            (click)="closeAddNewPanel()">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <span class="hidden-xs">Close</span>
+                    </button>
+                </span>
+            </div>
+            <div class="panel-body item-body">
+                <div class="form-group" style="margin-top: 10px">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label required">
+                        Image Description
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <ng-select [allowClear]="true"
+                                   required="true"
+                                   [items]="getSiteImageDefinitionValues()"
+                                   [disabled]="addImageForm.disabled"
+                                   (data)="setImageDescription($event.text)">
+                        </ng-select>
+                    </div>
+                </div>
+                <datetime-input [form]="addImageForm"
+                            controlName="createdDate"
+                            [showTime]="false"
+                            [required]="true">
+                    Date Taken (UTC)
+                </datetime-input>
+                <div class="form-group">
+                    <span class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 radio-button-group required">
+                        <span class="img-type-radio-first">
+                            <input type="radio"
+                                    formControlName="useImageFileType"
+                                    id="addImageFile"
+                                    [value]="true">
+                            <span for="addImageFile">Image File</span>
+                        </span>
+                        <span class="img-type-radio-last">
+                            <input type="radio"
+                                    formControlName="useImageFileType"
+                                    id="addImageURL"
+                                    [value]="false">
+                            <span for="addImageURL">Image URL</span>
+                        </span>
+                    </span>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <file-input *ngIf="useImageFileType"
+                                    [form]="addImageForm"
+                                    controlName="imageUrl"
+                                    [required]="true"
+                                    (fileSelectEvent)="handleImageSelectEvent($event)">
+                        </file-input>
+                        <input *ngIf="!useImageFileType" type="text"
+                               class="form-control"
+                               formControlName="imageUrl"
+                               (input)="previewImageUrl($event)"
+                               (paste)="previewImageUrl($event)">
+                        <small *ngIf="imagePreviewError" class="alert alert-danger">
+                            {{imagePreviewError}}
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="isValidImage()">
+                    <label class="col-md-4 col-sm-4 col-xs-5 col-xxs-12 control-label">
+                        Preview Image
+                    </label>
+                    <div class="col-md-5 col-sm-6 col-xs-6 col-xxs-12">
+                        <div class="gray-border">
+                            <img [src]="useImageFileType ? selectedImageContent : fileReference"
+                                 (error)="handleImagePreviewError()"
+                                 width="100%" alt="Invalid site image path or URL.">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary btn-long-center"
+                                [disabled]="!canAddImage()"
+                                (click)="addSiteImageFileOrURL()">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [formGroup]="currentImageForm" class="panel panel-level-3" id="current-image-panel">
+            <div class="panel-heading item-header">
+                <span class="panel-title cursor-ptr" tabindex="3"
+                      (keyup.space)="isCurrentImgPanelOpen = !isCurrentImgPanelOpen"
+                      (keyup.enter)="isCurrentImgPanelOpen = !isCurrentImgPanelOpen"
+                      (click)="isCurrentImgPanelOpen = !isCurrentImgPanelOpen">
+                    <i class="glyphicon"
+                       [ngClass]="{'glyphicon-minus-sign': isCurrentImgPanelOpen,
+                                   'glyphicon-plus-sign': !isCurrentImgPanelOpen}">
+                    </i>
+                    Current Site Images ({{ currentImageObjects.length }})
+                </span>
+                <span *ngIf="currentImageObjects.length > 0" class="pull-right">
+                    <button type="button"
+                            [disabled]="!isUserAuthorisedToEdit"
+                            class="btn btn-xs"
+                            [ngClass]="{'btn-danger': isCurrentImgPanelEditable,
+                                        'btn-primary': !isCurrentImgPanelEditable}"
+                            (click)="toggleCurrentImgPanelEditButton()">
+                        <i class="glyphicon" [ngClass]="{'glyphicon-share-alt': isCurrentImgPanelEditable,
+                                                         'glyphicon-edit': !isCurrentImgPanelEditable}">
+                        </i>
+                        <span class="hidden-xs">
+                            {{ isCurrentImgPanelEditable ? 'Cancel' : 'Edit' }}
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="panel-body item-body" [hidden]="!isCurrentImgPanelOpen">
+                <div class="form-group">
+                    <thumbnail-image [images]="currentImageObjects"
+                                     [imageSize]="imageSize"
+                                     [isAuthorised]="isUserAuthorisedToEdit && isCurrentImgPanelEditable"
+                                     (imageDeletionEvent)="handleImageDeletionEvent(true, $event)">
+                    </thumbnail-image>
+                </div>
+            </div>
+        </div>
+
+        <div [formGroup]="previousImageForm" class="panel panel-level-3" id="previous-image-panel">
+            <div class="panel-heading item-header">
+                <span class="panel-title cursor-ptr" tabindex="4"
+                      (keyup.space)="isPreviousImgPanelOpen = !isPreviousImgPanelOpen"
+                      (keyup.enter)="isPreviousImgPanelOpen = !isPreviousImgPanelOpen"
+                      (click)="isPreviousImgPanelOpen = !isPreviousImgPanelOpen">
+                    <i class="glyphicon"
+                       [ngClass]="{'glyphicon-minus-sign': isPreviousImgPanelOpen,
+                                   'glyphicon-plus-sign': !isPreviousImgPanelOpen}">
+                    </i>
+                    Previous Site Images ({{ previousImageObjects.length }})
+                </span>
+                <span *ngIf="previousImageObjects.length > 0" class="pull-right">
+                    <button type="button"
+                            [disabled]="!isUserAuthorisedToEdit"
+                            class="btn btn-xs"
+                            [ngClass]="{'btn-danger': isPreviousImgPanelEditable,
+                                        'btn-primary': !isPreviousImgPanelEditable}"
+                            (click)="togglePreviousImgPanelEditButton()">
+                        <i class="glyphicon" [ngClass]="{'glyphicon-share-alt': isPreviousImgPanelEditable,
+                                                         'glyphicon-edit': !isPreviousImgPanelEditable}">
+                        </i>
+                        <span class="hidden-xs">
+                            {{ isPreviousImgPanelEditable ? 'Cancel' : 'Edit' }}
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="panel-body item-body" [hidden]="!isPreviousImgPanelOpen">
+                <div class="form-group">
+                    <thumbnail-image [images]="previousImageObjects"
+                                     [imageSize]="imageSize"
+                                     [isAuthorised]="isUserAuthorisedToEdit && isPreviousImgPanelEditable"
+                                     (imageDeletionEvent)="handleImageDeletionEvent(false, $event)">
+                    </thumbnail-image>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

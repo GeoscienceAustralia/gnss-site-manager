@@ -6,7 +6,7 @@ import { Http, BaseRequestOptions, ConnectionBackend, HttpModule } from '@angula
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend } from '@angular/http/testing';
-import { CollapseModule } from 'ng2-bootstrap';
+import { CollapseModule } from 'ngx-bootstrap';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { HeaderComponent } from './shared/header/header.component';

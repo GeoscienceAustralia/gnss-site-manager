@@ -91,12 +91,4 @@ export abstract class LogItemGroup {
      * Define abstract methods to be implemented by subclasses
      */
     public abstract getAllInputFields(): ElementFinder[];
-
-    /**
-     * Define fields for updating editable fields,
-     * Overridden by Antenna and Receiver groups
-     */
-    public getAllInputFieldsEditable(): ElementFinder[] {
-        return this.getAllInputFields();
-    }
 }

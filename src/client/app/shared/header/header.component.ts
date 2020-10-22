@@ -170,6 +170,9 @@ export class HeaderComponent extends AbstractBaseComponent implements OnInit, On
                 }
                 routeRoot.params.subscribe((params: Params) => {
                     this.siteId = params['id'];
+                    if (this.siteId && this.siteId !== 'newSite') {
+                        this.siteId = this.siteId.toUpperCase();
+                    }
                 });
             });
     }

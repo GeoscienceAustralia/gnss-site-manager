@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { MiscUtils } from '../shared/index';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SiteLogViewModel }  from '../site-log/site-log-view-model';
 import { SiteIdentificationViewModel } from './site-identification-view-model';
@@ -40,7 +39,6 @@ import { SiteLogService } from '../shared/site-log/site-log.service';
 export class SiteIdentificationComponent extends AbstractBaseComponent implements OnInit, OnDestroy {
 
     public isOpen: boolean = false;
-    public miscUtils: any = MiscUtils;
     public siteIdentificationForm: FormGroup;
     public siteIdentification: SiteIdentificationViewModel;
 

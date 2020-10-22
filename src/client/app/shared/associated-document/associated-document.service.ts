@@ -42,6 +42,10 @@ export class AssociatedDocumentService {
             .catch(this.handleError);
     }
 
+    public getWebServiceURL(): string {
+        return this.constantsService.getWebServiceURL();
+    }
+
     private getHttpHeaders(): Headers {
         const user: User = this.userAuthService.user.value;
         const headers = new Headers();

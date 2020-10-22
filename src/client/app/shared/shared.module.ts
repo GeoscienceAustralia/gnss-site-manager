@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { DropdownModule, TooltipModule, CollapseModule  } from 'ng2-bootstrap';
+import { BsDropdownModule, TooltipModule, CollapseModule  } from 'ngx-bootstrap';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -15,7 +15,7 @@ import { CorsNetworkService } from './cors-network/index';
 import { SiteLogService } from './site-log/index';
 import { JsonixService } from './jsonix/index';
 import { WFSService } from './wfs/index';
-import { DialogService, MiscUtils, UserAuthService  } from './global/index';
+import { DialogService, UserAuthService  } from './global/index';
 import { ConstantsService, HttpUtilsService } from './global/index';
 import { JsonViewModelService } from './json-data-view-model/index';
 
@@ -27,7 +27,7 @@ import { JsonViewModelService } from './json-data-view-model/index';
     CommonModule,
     RouterModule,
     CollapseModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     TooltipModule.forRoot()
   ],
   declarations: [
@@ -51,7 +51,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [MiscUtils, JsonixService, SiteLogService, DialogService, GeodesyMLCodelistService,
+      providers: [JsonixService, SiteLogService, DialogService, GeodesyMLCodelistService,
                   AssociatedDocumentService, CorsSiteService, CorsNetworkService, WFSService, ConstantsService,
                   HttpUtilsService, JsonViewModelService, UserAuthService,
                  ]

@@ -17,6 +17,8 @@ export class PrefetchSiteLogResolver implements Resolve<SiteLogViewModel> {
         let fourCharacterId: string = route.params['id'];
         if (fourCharacterId === 'newSite') {
             return Observable.of(new SiteLogViewModel());
+        } else if (fourCharacterId) {
+            fourCharacterId = fourCharacterId.toUpperCase();
         }
         return this.siteLogService.getSiteLogByFourCharacterId(fourCharacterId)
             .catch((error: any): any => {

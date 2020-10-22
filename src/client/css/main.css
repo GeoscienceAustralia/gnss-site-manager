@@ -546,6 +546,10 @@ textarea.ng-invalid {
 .alert-danger {
   background-color: transparent !important;
 }
+ng-select a.btn-xs {
+  margin-right: 20px !important;
+  margin-top: 2px;
+}
 
 .col-lg-1,
 .col-lg-10,

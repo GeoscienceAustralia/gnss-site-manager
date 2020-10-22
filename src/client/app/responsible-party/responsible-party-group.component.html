@@ -13,7 +13,7 @@
             <button type="button" class="btn btn-similar btn-xs" title="Add a new {{getItemName()}}"
                     id="new-{{getElementName()}}"
                     [disabled]="!isAuthorised"
-                    (click)="addNew($event); miscUtils.scrollToElementById($event, getElementName()+'-group');">
+                    (click)="addNew($event)">
                 <i class="glyphicon glyphicon-plus-sign"></i>
                 New
             </button>

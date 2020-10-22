@@ -9,15 +9,19 @@ fi
 
 env=$1
 
-if [ "${env}" == "prod" ]; then
+if [ "$env" == "prod" ]; then
     bucket="gnss-site-manager"
 else
-    bucket="${env}-gnss-site-manager"
+    bucket="$env-gnss-site-manager"
 fi
 
-backupBucket=${bucket}-backup-$(date +%s)
+backupBucket=$bucket-backup
+timestamp=$(date +'%Y%m%dT%H%M%S')
 
-aws s3 --profile geodesy mb "s3://${backupBucket}"
-aws s3 --profile geodesy sync "s3://${bucket}" "s3://${backupBucket}"
-aws s3 --profile geodesy rm "s3://${bucket}" --recursive
-aws --profile geodesy s3 sync dist/prod "s3://${bucket}" --acl public-read
+if aws s3 --profile geodesy ls "s3://$backupBucket" 2>&1 | grep -q 'NoSuchBucket'; then
+    aws s3 --profile geodesy mb "s3://$backupBucket"
+fi
+
+aws s3 --profile geodesy sync "s3://$bucket" "s3://$backupBucket/$timestamp"
+aws s3 --profile geodesy rm "s3://$bucket" --recursive
+aws s3 --profile geodesy sync dist/prod "s3://$bucket" --acl public-read

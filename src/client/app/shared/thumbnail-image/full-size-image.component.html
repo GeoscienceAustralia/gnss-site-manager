@@ -1,0 +1,19 @@
+<div class="full-image-container">
+    <div class="full-size-image">
+        <img [src]="currentImage.fullSizeImage">
+        <span class="img-title">{{ currentImage.title }}  {{ currentImage.createdDate }}</span>
+        <span class="btn btn-danger close-button"
+              (click)="close()">
+            <i class="glyphicon glyphicon-remove"></i>
+        </span>
+        <span class="btn btn-primary prev-image"
+              (click)="showPrevImage()">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </span>
+        <span class="btn btn-primary next-image"
+              (click)="showNextImage()">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </span>
+        <span class="img-indexing">{{currentImageIndex + 1}} of {{images.length}}</span>
+    </div>
+</div>

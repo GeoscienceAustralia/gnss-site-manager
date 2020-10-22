@@ -1,14 +1,17 @@
 <div [formGroup]="siteLogForm" class="form-horizontal">
     <div class="panel-group">
         <gnss-site-information [parentForm]="siteLogForm"
+                               [siteId]="siteId"
                                [siteLogModel]="siteLogModel">
         </gnss-site-information>
 
         <gnss-receiver-group [parentForm]="siteLogForm.controls.gnssReceivers"
+                             [receiverCodelist]="receiverCodelist"
                              [siteLogModel]="siteLogModel">
         </gnss-receiver-group>
 
         <gnss-antenna-group [parentForm]="siteLogForm.controls.gnssAntennas"
+                            [antennaRadomeCodelist]="antennaRadomeCodelist"
                             [siteLogModel]="siteLogModel">
         </gnss-antenna-group>
 

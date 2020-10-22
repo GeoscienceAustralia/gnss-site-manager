@@ -17,6 +17,8 @@ export class PrefetchCorsSiteResolver implements Resolve<SiteAdministrationModel
         let fourCharacterId: string = route.params['id'];
         if (fourCharacterId === 'newSite') {
             return Observable.of(new SiteAdministrationModel());
+        } else if (fourCharacterId) {
+            fourCharacterId = fourCharacterId.toUpperCase();
         }
         return this.corsSiteService.getSiteAdministration(fourCharacterId)
             .catch((error: any): any => {

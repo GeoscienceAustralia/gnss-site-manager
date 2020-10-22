@@ -1,9 +1,9 @@
 <div [formGroup]="siteLocationForm" class="panel panel-level-2">
     <div class="panel-heading item-header">
         <span class="panel-title cursor-ptr" tabindex="0"
-              (keyup.space)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-              (keyup.enter)="isOpen = miscUtils.scrollIntoView($event, isOpen)"
-              (click)="isOpen = miscUtils.scrollIntoView($event, isOpen)">
+              (keyup.space)="isOpen = !isOpen"
+              (keyup.enter)="isOpen = !isOpen"
+              (click)="isOpen = !isOpen">
             <i class="glyphicon"
                [ngClass]="{'glyphicon-minus-sign': isOpen, 'glyphicon-plus-sign': !isOpen}">
             </i>
