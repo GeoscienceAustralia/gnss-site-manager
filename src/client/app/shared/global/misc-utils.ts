@@ -52,35 +52,22 @@ export class MiscUtils {
         return datetime.substring(0, 10);
     }
 
-    public static formatDateToDateString(date: Date): string {
+    public static toDateString(date: Date): string {
         if (!MiscUtils.isDate(date)) {
             throw new Error(`Input isnt a date - type: ${typeof date}, value: ${date}`);
         }
-        let dateStr: string = date.getFullYear() + '-'
-            + MiscUtils.padTwo(date.getMonth() + 1) + '-'
-            + MiscUtils.padTwo(date.getDate());
-        return dateStr;
+        return date.getFullYear() + '-' +
+               MiscUtils.padTwo(date.getMonth() + 1) + '-' +
+               MiscUtils.padTwo(date.getDate());
     }
 
-    /**
-     * Return a date as a string in the "YYYY-MM-DD'T'HH:mm:ss.000Z" format.
-     *
-     * @param date
-     * @return {string}
-     */
-    public static formatDateToDatetimeString(date: Date): string {
+    public static toTimeString(date: Date): string {
         if (!MiscUtils.isDate(date)) {
             throw new Error(`Input isnt a date - type: ${typeof date}, value: ${date}`);
         }
-        let dateStr: string = MiscUtils.formatDateToDateString(date);
-
-        let timeStr: string = this.padTwo(date.getHours()) + ':'
-            + MiscUtils.padTwo(date.getMinutes()) + ':'
-            + MiscUtils.padTwo(date.getSeconds());
-
-        let dateTime: string = dateStr + 'T' + timeStr + '.000Z';
-
-        return dateTime;
+        return MiscUtils.padTwo(date.getHours()) + ':' +
+               MiscUtils.padTwo(date.getMinutes()) + ':' +
+               MiscUtils.padTwo(date.getSeconds());
     }
 
     public static isDate(date: Date): boolean {
@@ -96,9 +83,9 @@ export class MiscUtils {
      */
     public static padTwo(index: number): string {
         if (index < 10) {
-            return '0' + index.toString();
+            return '0' + String(index);
         }
-        return index.toString();
+        return String(index);
     }
 
     /**

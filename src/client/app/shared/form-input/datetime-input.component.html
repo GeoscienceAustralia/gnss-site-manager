@@ -16,7 +16,7 @@
                 <span class="input-group-btn z-lowest">
                     <button id="calendar-btn" type="button"
                             class="btn btn-default btn-calendar z-lowest"
-                            (click)="showDatetimePicker = !showDatetimePicker"
+                            (click)="toggleDatetimePicker()"
                             [disabled]="isFormDisabled()">
                         <span id="calendar-icon" class="glyphicon glyphicon-calendar"></span>
                     </button>
@@ -28,88 +28,18 @@
 
             <div *ngIf="showDatetimePicker" class="calendar-popup"
                  [ngClass]="{'datetime-picker': showTime, 'date-picker': !showTime}">
-                <datepicker [(ngModel)]="datetimeModel"
+                <datepicker [(ngModel)]="dateModel"
                             [ngModelOptions]="{standalone: true}"
                             [showWeeks]="false"
-                            (selectionDone)="updateDatetimeInput($event)">
+                            (ngModelChange)="updateDateInput($event)"
+                            (selectionDone)="onDateSelectionDone($event)">
                 </datepicker>
                 <div *ngIf="showTime" class="center-time">
-                    <table>
-                        <tbody>
-                        <tr class="text-center">
-                            <td>
-                                <a (click)="updateHoursByStep(true)" class="btn btn-time">
-                                    <span class="glyphicon glyphicon-chevron-up"></span>
-                                </a>
-                            </td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <a (click)="updateMinutesByStep(true)" class="btn btn-time">
-                                    <span class="glyphicon glyphicon-chevron-up"></span>
-                                </a>
-                            </td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <a (click)="updateSecondsByStep(true)" class="btn btn-time">
-                                    <span class="glyphicon glyphicon-chevron-up"></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="form-group">
-                                <input type="number" maxlength="2" required
-                                       min="0" max="23" step="1"
-                                       [ngModel]="hours | number:'2.0-0'"
-                                       (ngModelChange)="hours = $event"
-                                       [ngModelOptions]="{standalone: true}"
-                                       [ngClass]="{'ng-invalid': invalidHours}"
-                                       (change)="modifyHours()"
-                                       class="form-control text-center input-time">
-                            </td>
-                            <td class="time-separator">:</td>
-                            <td class="form-group">
-                                <input type="number" maxlength="2" required
-                                       min="0" max="59" step="1"
-                                       [ngModel]="minutes | number:'2.0-0'"
-                                       (ngModelChange)="minutes = $event"
-                                       [ngModelOptions]="{standalone: true}"
-                                       [ngClass]="{'ng-invalid': invalidMinutes}"
-                                       (change)="modifyMinutes()"
-                                       class="form-control text-center input-time">
-                            </td>
-                            <td class="time-separator">:</td>
-                            <td class="form-group">
-                                <input type="number" maxlength="2" required
-                                       min="0" max="59" step="1"
-                                       [ngModel]="seconds | number:'2.0-0'"
-                                       (ngModelChange)="seconds = $event"
-                                       [ngModelOptions]="{standalone: true}"
-                                       [ngClass]="{'ng-invalid': invalidSeconds}"
-                                       (change)="modifySeconds()"
-                                       class="form-control text-center input-time">
-                            </td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>
-                                <a (click)="updateHoursByStep(false)" class="btn btn-time">
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                </a>
-                            </td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <a (click)="updateMinutesByStep(false)" class="btn btn-time">
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                </a>
-                            </td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <a (click)="updateSecondsByStep(false)" class="btn btn-time">
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <timepicker [(ngModel)]="timeModel"
+                                [ngModelOptions]="{standalone: true}"
+                                [showMeridian]="false"
+                                [showSeconds]="true"
+                                (ngModelChange)="updateTimeInput($event)"></timepicker>
                 </div>
                 <div *ngIf="showTime" class="center-btns">
                     <button class="btn btn-ok" type="button"

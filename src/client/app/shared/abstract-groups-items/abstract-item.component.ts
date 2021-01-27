@@ -209,9 +209,9 @@ export abstract class AbstractItemComponent extends AbstractBaseComponent implem
             return '<span>' + this.getItemName() + ' </span>';
         }
 
-        let startDateString: string = MiscUtils.isDate(startDatetime) ? MiscUtils.formatDateToDateString(startDatetime):
+        let startDateString: string = MiscUtils.isDate(startDatetime) ? MiscUtils.toDateString(startDatetime):
                                       MiscUtils.getDateComponent(startDatetime);
-        let endDateString: string = MiscUtils.isDate(endDatetime) ? MiscUtils.formatDateToDateString(endDatetime):
+        let endDateString: string = MiscUtils.isDate(endDatetime) ? MiscUtils.toDateString(endDatetime):
                                     MiscUtils.getDateComponent(endDatetime);
 
         let dateRange: string = startDateString ? startDateString : '?';

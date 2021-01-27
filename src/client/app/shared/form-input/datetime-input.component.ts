@@ -22,10 +22,8 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
     @Input()
     showTime: boolean = true;
 
-    public datetimeModel: Date;
-    public hours: number = 0;
-    public minutes: number = 0;
-    public seconds: number = 0;
+    public dateModel: Date;
+    public timeModel: Date;
     public datetimeLength: number;
     public showDatetimePicker: boolean = false;
 
@@ -102,6 +100,13 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
         }
     }
 
+    /**
+     * Toggle on/off the datetime picker
+     */
+     public toggleDatetimePicker(): void {
+         this.showDatetimePicker = !this.showDatetimePicker;
+     }
+
    /**
     * Close the datetime picker
     */
@@ -110,23 +115,41 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
     }
 
    /**
-    * Update the value of the datetime input box
+    * Hide datepicker in response to a date selectionDone event
     */
-    public updateDatetimeInput(date: Date = null): void {
-        if (!date) {
+    public onDateSelectionDone(dateObject: Date = null): void {
+        if (!dateObject) {
             return;
-        } else if (this.showTime) {
-            date.setHours(this.hours);
-            date.setMinutes(this.minutes);
-            date.setSeconds(this.seconds);
-        }
-        let datetimeString: string = this.convertDateToString(date);
-        this.formControl.setValue(datetimeString);
-        this.formControl.markAsDirty();
-        if (!this.showTime) {
+        } else if (!this.showTime) {
             this.showDatetimePicker = false;
         }
     }
+
+    /**
+     * Update the value of the date input box in response to modelChange event
+     */
+     public updateDateInput(dateObject: Date = null): void {
+         if (!dateObject) {
+             return;
+         }
+ 
+         this.dateModel = dateObject;
+         this.formControl.setValue(this.convertDateToString());
+         this.formControl.markAsDirty();
+     }
+
+    /**
+     * Update the value of the time input box in response to modelChange event
+     */
+    public updateTimeInput(timeObject: Date = null): void {
+        if (!timeObject) {
+            return;
+        }
+
+        this.timeModel = timeObject;
+        this.formControl.setValue(this.convertDateToString());
+        this.formControl.markAsDirty();
+     }
 
    /**
     * Update the datetime picker in response to direct changes made in the input box
@@ -137,62 +160,9 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
             return;
         }
 
-        this.datetimeModel = datetimeObject;
-        if (this.showTime) {
-            this.hours = this.datetimeModel.getHours();
-            this.minutes = this.datetimeModel.getMinutes();
-            this.seconds = this.datetimeModel.getSeconds();
-        }
-        let datetimeString = this.convertDateToString(this.datetimeModel);
-        this.formControl.setValue(datetimeString);
-    }
-
-    public modifyHours(): void {
-        if (this.hours !== null && this.hours >= 0 && this.hours < 24) {
-            this.updateDatetimeInput(this.datetimeModel);
-        }
-    }
-
-    public modifyMinutes(): void {
-        if (this.minutes !== null && this.minutes >= 0 && this.minutes < 60) {
-            this.updateDatetimeInput(this.datetimeModel);
-        }
-    }
-
-    public modifySeconds(): void {
-        if (this.seconds !== null && this.seconds >= 0 && this.seconds < 60) {
-            this.updateDatetimeInput(this.datetimeModel);
-        }
-    }
-
-    public updateHoursByStep(increment: boolean): void {
-        this.hours = increment ? this.hours + 1 : this.hours - 1;
-        this.hours = (this.hours + 24) % 24;
-        this.updateDatetimeInput(this.datetimeModel);
-    }
-
-    public updateMinutesByStep(increment: boolean): void {
-        this.minutes = increment ? this.minutes + 1 : this.minutes - 1;
-        if (this.minutes > 59) {
-            this.minutes = 0;
-            this.updateHoursByStep(increment);
-        } else if (this.minutes < 0) {
-            this.minutes = 59;
-            this.updateHoursByStep(increment);
-        }
-        this.updateDatetimeInput(this.datetimeModel);
-    }
-
-    public updateSecondsByStep(increment: boolean): void {
-        this.seconds = increment ? this.seconds + 1 : this.seconds - 1;
-        if (this.seconds > 59) {
-            this.seconds = 0;
-            this.updateMinutesByStep(increment);
-        } else if (this.seconds < 0) {
-            this.seconds = 59;
-            this.updateMinutesByStep(increment);
-        }
-        this.updateDatetimeInput(this.datetimeModel);
+        this.dateModel = datetimeObject;
+        this.timeModel = datetimeObject;
+        this.formControl.setValue(this.convertDateToString());
     }
 
    /**
@@ -211,24 +181,17 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
     }
 
    /**
-    * Convert a Date object to a string in format of 'YYYY-MM-DD[THH:mm:ss]'.
+    * Convert date and time models to a string in format of 'YYYY-MM-DD[ HH:mm:ss]'.
     */
-    private convertDateToString(date: Date): string {
-        if (!date) {
+    private convertDateToString(): string {
+        if (!this.dateModel) {
             return null;
         }
 
-        let dateStr: string = date.getFullYear() + '-'
-            + MiscUtils.padTwo(date.getMonth() + 1) + '-'
-            + MiscUtils.padTwo(date.getDate());
-
-        if (!this.showTime) {
-            return dateStr;
+        let datetimeString: string = MiscUtils.toDateString(this.dateModel);
+        if (this.showTime && this.timeModel) {
+            datetimeString += ' ' + MiscUtils.toTimeString(this.timeModel);
         }
-
-        let timeStr: string = MiscUtils.padTwo(date.getHours()) + ':'
-            + MiscUtils.padTwo(date.getMinutes()) + ':'
-            + MiscUtils.padTwo(date.getSeconds());
-        return dateStr + ' ' + timeStr;
+        return datetimeString;
     }
 }
