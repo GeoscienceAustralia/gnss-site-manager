@@ -207,7 +207,7 @@ export class DatetimeInputComponent extends AbstractInput implements OnInit {
         if (!datetimeDisplay.match(this.datetimeRegExp)) {
             return null;
         }
-        return new Date(datetimeDisplay);
+        return new Date(datetimeDisplay.replace(/-/g, "/"));
     }
 
    /**
